@@ -29,7 +29,7 @@ RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ 
 RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 RewriteCond %{HTTP_HOST} ^vemend.web-pro.hu$ [NC,OR]
 RewriteCond %{HTTP_HOST} ^www.vemend.web-pro.hu$
-RewriteCond %{REQUEST_URI} !shop/
+RewriteCond %{REQUEST_URI} !site/
 RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
 RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
-RewriteRule (.*) /shop/$1 [L]
+RewriteRule (.*) /site/$1 [L]
