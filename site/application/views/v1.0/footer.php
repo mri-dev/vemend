@@ -71,8 +71,12 @@
 												</div>
 											</div>
 											<div class="aszf">
-												<input type="checkbox" name="aszf" id="subs_aszf" value=""> <label for="subs_aszf"> Adataim magadásával, elfogadom az <a href="/p/aszf" target="_blank">ÁSZF</a> feltételeit és hozzájárulok ahhoz, hogy a <?php echo $this->settings['page_author']; ?> ismertető leveleket küldjön nekem a megadott névre és email címre.</label>
+												<input type="checkbox" name="cb_av" id="subs_av" value=""> <label for="subs_av"> <a href="/p/adatvedelmi-tajekoztato" target="_blank">Adatvédelmi Tájékoztatót</a> elolvastam és megértettem.</label>
 											</div>
+											<div class="aszf">
+												<input type="checkbox" name="cv_marketing" id="subs_marketing" value=""> <label for="subs_marketing"> Hozzájárulok e-mail címem marketing célú használatához.</label>
+											</div>
+
 											<div class="button">
 												<button type="submit" name="subscribe">Mehet</button>
 											</div>
@@ -88,7 +92,7 @@
 			            <form class="" action="/termekek/" method="get">
 			            <div class="flex flexmob-exc-resp">
 			              <div class="input">
-			                <input type="text" name="src" value="<?=$_GET['src']?>" placeholder="Keresési kifejezés megadása">
+			                <input type="text" name="src" value="<?=$_GET['src']?>" placeholder="Keresőszó megadása">
 			              </div>
 			              <div class="button">
 			                <button type="submit"><i class="fa fa-search"></i></button>
@@ -99,6 +103,7 @@
 			        </div>
 							<div class="contact">
 								<h3>Kapcsolat</h3>
+								<h2>Polgármesteri hivatal</h2>
 								<div class="">
 									<i class="fa fa-phone"></i> Telefon: <a href="tel:<?php echo $this->settings['page_author_phone']; ?>"><?php echo $this->settings['page_author_phone']; ?></a>
 								</div>
@@ -142,13 +147,32 @@
 			<div class="pw">
 				<div class="flex">
 					<div class="contact">
-						<div class="phone">
-							Mobil: <a href="tel:<?=$this->settings['mobile_number']?>"><?=$this->settings['mobile_number']?></a>
+						<div class="megbizott">
+							<i class="fa fa-user"></i> Körzeti megbízott neve: <?=$this->settings['korzeti_megbizott']?>
 						</div>
-						Elérhetőség: <?=$this->settings['mobile_number_elerhetoseg']?>
+						<div class="phone">
+							 <i class="fa fa-phone"></i> <?=$this->settings['mobile_number']?>
+						</div>
+						<div class="fogadoora">
+							<div class="flex">
+								<div class="ido">
+									<i class="fa fa-clock-o"></i> <strong>Fogadóóra:</strong> <?=$this->settings['mobile_number_elerhetoseg']?>
+								</div>
+								<div class="hely">
+									<i class="fa fa-map-pin"></i> <strong>Fogadóóra helye:</strong> <?=$this->settings['fogadoora_helye']?>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="resellers">
-						<a href="/viszontelado"><i class="fa fa-users"></i> Viszonteladók jelentkezése <div class="ico"><i class="fa fa-angle-right"></i></div></a>
+					<div class="right-side">
+						<div class="flex emblems">
+							<div class="tett">
+								<img src="<?=IMG?>tett_emblem.png" alt="Tett">
+							</div>
+							<div class="kerekpar">
+								<img src="<?=IMG?>kerekparbarat_emblem.png" alt="Kerékpárbarát munkahely">
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

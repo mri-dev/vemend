@@ -5079,16 +5079,16 @@ input[type=checkbox] {
 	display: none;
 }
 input[type=checkbox] + label {
-	margin-left:30px !important;
+	margin-left: 20px !important;
 	line-height: 24px !important;
 	cursor: pointer;
 }
 input[type=checkbox] + label:before {
 	position: absolute;
 	content: "";
-	width: 24px;
-	margin-left:-30px;
-	height: 24px;
+	width: 18px;
+	margin-left: -22px;
+	height: 18px;
 	background-color: #ffffff;
 	border: 0.5px solid darken($color-grey, 20%);
 }
@@ -5096,9 +5096,9 @@ input[type=checkbox]:checked + label:before {
 	content: "\f00c";
 	font-family: FontAwesome;
     color: $color-grey-dark;
-    font-size:18px;
+    font-size: 14px;
     text-align: center;
-    line-height: 24px;
+    line-height: 17px;
 }
 
 .viewSwitcher{

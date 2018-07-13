@@ -38,18 +38,11 @@
       <div class="flex">
         <div class="navs">
           <div class="flex">
-            <div class="viszonteladok">
-              <a href="/viszontelado"><i class="fa fa-users"></i> Viszonteladók jelentkezése</a>
+            <? foreach ( $this->menu_header->tree as $menu ): ?>
+            <div class="<?=$menu['css_class']?>">
+              <a href="<?=($menu['link']?:'')?>"> <?=$menu['nev']?></a>
             </div>
-            <div class="login">
-              <a href="/user/login"><i class="fa fa-user"></i> Belépés</a>
-            </div>
-            <div class="kedvencek">
-              <a href="/kedvencek"><i class="fa fa-star"></i> Kedvencek</a>
-            </div>
-            <div class="elofoglalas">
-              <a href="/elofoglalasok"><i class="fa fa-pause-circle-o"></i> Előfoglalás</a>
-            </div>
+  					<? endforeach; ?>
           </div>
         </div>
         <div class="social">
@@ -160,6 +153,11 @@
   					<? endforeach; ?>
   				</ul>
   			</div>
+        <div class="nav">
+          <ul>
+            <li><a class="ws" href="/webshop/">Webshop termékek</a></li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -184,6 +182,15 @@
       	</div>
       </div>
       <? endif; ?>
+    </div>
+  </div>
+  <?php endif; ?>
+  <?php if ( !$this->hideheadimg ): ?>
+  <div class="header-img">
+    <div class="pw">
+      <div class="htitle">
+        <?=$this->head_img_title?>
+      </div>
     </div>
   </div>
   <?php endif; ?>
