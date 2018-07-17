@@ -38,7 +38,7 @@
       <div class="flex">
         <div class="navs">
           <div class="flex">
-            <? foreach ( $this->menu_header->tree as $menu ): ?>
+            <? foreach ( $this->menu_top->tree as $menu ): ?>
             <div class="<?=$menu['css_class']?>">
               <a href="<?=($menu['link']?:'')?>"> <?=$menu['nev']?></a>
             </div>
