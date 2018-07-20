@@ -21,14 +21,10 @@
         });
 
 	})
-     $(function(){
-
-    })
-
-    function responsive_filemanager_callback(field_id){
-        var imgurl = $('#'+field_id).val();
-        $('#logo_preview').attr('src',imgurl);
-    }
+  function responsive_filemanager_callback(field_id){
+      var imgurl = $('#'+field_id).val();
+      $('#logo_preview').attr('src',imgurl);
+  }
 </script>
 <h1>Beállítások</h1>
 <br><br>
@@ -272,7 +268,7 @@
                 <br>
                 <div class="row np">
                     <div class="col-md-12">
-                        <label for="basics_page_author_address">Telephely</label>
+                        <label for="basics_page_author_address">Elsődleges cím</label>
                         <input type="text" id="basics_page_author_address" name="page_author_address" class="form-control" value="<?=$this->settings['page_author_address']?>">
                     </div>
                 </div>

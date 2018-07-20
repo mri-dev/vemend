@@ -194,6 +194,29 @@
     </div>
   </div>
   <?php endif; ?>
+  <div class="pw pw-rel">
+    <div class="floating-box-menu">
+      <div class="wrapper">
+        <? foreach ( $this->menu_megabox->tree as $menu ):
+          $xcss = explode(" ", $menu['css_class']);
+          preg_match("/svg-ico-(\w+)/i", $menu['css_class'], $icomatch);
+        ?>
+        <div class="<?=$menu['css_class']?>">
+          <a href="#">
+            <?php if (in_array('svg-ico', $xcss) && isset($icomatch[1]) && $icomatch[1] != ''): ?>
+            <div class="ico">
+              <img src="<?=IMG?>icons/<?=$icomatch[1]?>.svg" alt="">
+            </div>
+            <?php endif; ?>
+            <div class="txt">
+              <?=$menu['nev']?>
+            </div>
+          </a>
+        </div>
+        <? endforeach; ?>
+      </div>
+    </div>
+  </div>
 </header>
 <?php if ( !$this->homepage ): ?>
 <!-- Content View -->

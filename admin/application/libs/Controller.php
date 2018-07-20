@@ -115,6 +115,15 @@ class Controller {
         $tree   = $menu_top->getTree();
         $this->out( 'menu_top',  $tree );
 
+        // Megabox
+        $tree = null;
+        $menu_megabox  = new Menus( false, array( 'db' => $this->db ) );
+        // Header menü
+        $menu_megabox->addFilter( 'menu_type', 'megabox' );
+        $menu_megabox->isFinal(true);
+        $tree   = $menu_megabox->getTree();
+        $this->out( 'menu_megabox',  $tree );
+
         // Footer menü
         $tree = null;
         $menu_footer  = new Menus( false, array( 'db' => $this->db ) );

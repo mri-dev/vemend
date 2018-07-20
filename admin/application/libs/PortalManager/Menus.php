@@ -13,7 +13,7 @@ class Menus
 	private $db = null;
 	private $selected_menu_id = false;
 	// Engedélyezett menü pozíciók
-	private $allowed_positions = array( 'top', 'header', 'footer' );
+	private $allowed_positions = array( 'top', 'header','megabox','footer' );
 	// Elérhető menü típusok
 	private $allowed_menu_type = array(
 		'url' 							=> 'URL',
