@@ -6,6 +6,18 @@
 	position: relative;
 }
 
+.main-content{
+	padding-top: 40px;
+}
+
+.content-wrapper{
+	padding: 25px 0;
+
+	&.white-content-wrapper{
+		background: white;
+	}
+}
+
 h1{
   color: black;
   font-size: 2.3em;

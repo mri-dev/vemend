@@ -186,7 +186,7 @@
   </div>
   <?php endif; ?>
   <?php if ( !$this->hideheadimg ): ?>
-  <div class="header-img">
+  <div class="header-img" style="background-image: url('<?=$this->head_img?>');">
     <div class="pw">
       <div class="htitle">
         <?=$this->head_img_title?>

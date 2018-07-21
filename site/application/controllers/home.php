@@ -60,6 +60,8 @@ class home extends Controller{
 			*/
 
 			$this->out( 'head_img_title', 'Üdvözöljük Véménden!' );
+			$this->out( 'head_img', IMGDOMAIN.$this->view->settings['homepage_coverimg'] );
+
 
 
 			// SEO Információk

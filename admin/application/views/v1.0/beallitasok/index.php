@@ -177,10 +177,26 @@
                             <div class="input-group-addon"><a title="Kép kiválasztása a galériából" href="<?=FILE_BROWSER_IMAGE?>&field_id=basics_logo" data-fancybox-type="iframe" class="iframe-btn" ><i class="fa fa-link"></i></a></div>
                         </div>
                         <div style="margin-top: 5px;
-    background: #c5171e;
-    padding: 10px;
-    float: left;">
+											    background: #c5171e;
+											    padding: 10px;
+											    float: left;">
                             <img src="<?=$this->settings['logo']?>" id="logo_preview" alt="" style="max-width:180px;">
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row np">
+                    <div class="col-md-5">
+                        <label for="homepage_coverimg">Főoldal borítókép</label>
+                        <div class="input-group">
+                            <input type="text" id="homepage_coverimg" name="homepage_coverimg" class="form-control" value="<?=$this->settings['homepage_coverimg']?>">
+                            <div class="input-group-addon"><a title="Kép kiválasztása a galériából" href="<?=FILE_BROWSER_IMAGE?>&field_id=homepage_coverimg" data-fancybox-type="iframe" class="iframe-btn" ><i class="fa fa-link"></i></a></div>
+                        </div>
+                        <div style="margin-top: 5px;
+											    background: #aaaaaa;
+											    padding: 5px;
+											    float: left;">
+                            <img src="<?=$this->settings['homepage_coverimg']?>" id="homepage_coverimg" alt="" style="max-width:100%;">
                         </div>
                     </div>
                 </div>
