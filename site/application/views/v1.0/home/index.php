@@ -52,7 +52,7 @@
           </div>
           <div class="more">
             <div class="wrapper">
-              <div class="head">
+              <div class="header">
                 <div class="flex">
                   <div class="title">
                     Legújabb
@@ -139,14 +139,171 @@
     </div>
   </div>
   <? endif; ?>
-  <div class="content-wrapper">
+  <div class="content-wrapper home-etlap-miserend">
     <div class="pw">
       <div class="flex">
         <div class="miserend">
-          miserend
+          <div class="header no-border">
+            <div class="flex">
+              <div class="title">
+                Miserend
+              </div>
+              <div class="more">
+                <a href="#"><i class="fa fa-bars"></i> Összes miserend</a>
+              </div>
+            </div>
+          </div>
+          <div class="content-holder">
+            <article class="top">
+              <?php if ($is_top || true): ?>
+                <div class="image">
+                  <img src="" alt="">
+                </div>
+              <?php endif; ?>
+              <div class="title">
+                <a href="#">Misrended cikk címe, xx. és xx. héten.</a>
+              </div>
+              <div class="meta">
+                <div class="date">
+                  2018. június 24-től július 8-ig
+                </div>
+              </div>
+            </article>
+
+            <article>
+              <div class="title">
+                <a href="#">Misrended cikk címe, xx. és xx. héten.</a>
+              </div>
+              <div class="meta">
+                <div class="date">
+                  2018. június 24-től július 8-ig
+                </div>
+              </div>
+            </article>
+
+            <article>
+              <div class="title">
+                <a href="#">Misrended cikk címe, xx. és xx. héten.</a>
+              </div>
+              <div class="meta">
+                <div class="date">
+                  2018. június 24-től július 8-ig
+                </div>
+              </div>
+            </article>
+
+            <article>
+              <div class="title">
+                <a href="#">Misrended cikk címe, xx. és xx. héten.</a>
+              </div>
+              <div class="meta">
+                <div class="date">
+                  2018. június 24-től július 8-ig
+                </div>
+              </div>
+            </article>
+          </div>
         </div>
         <div class="etlap">
-          étlap
+          <div class="header no-border">
+            <div class="flex">
+              <div class="title">Étlap</div>
+              <div class="more"></div>
+            </div>
+          </div>
+          <div class="holder">
+            <div class="flex">
+              <div class="naptar-block">
+                <div class="wrapper">
+                  <div class="content-holder">
+                    naptár
+                  </div>
+                </div>
+              </div>
+              <div class="etlap-visual">
+                <div class="wrapper">
+                  <div class="line-one">
+                    <div class="flex">
+                      <div class="side-left">
+                        <div class="date-on">
+                          <div class="air-text">
+                            <div class="week">
+                               24. hét
+                            </div>
+                            <div class="date">
+                              2018.06.09.
+                            </div>
+                          </div>
+                        </div>
+                        <div class="leves">
+                          <div class="image">
+
+                          </div>
+                          <div class="text">
+                            <div class="air-text">
+                              Brokkolikrémleves
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="side-right">
+                        <div class="foetel">
+                          <div class="image">
+
+                          </div>
+                          <div class="text">
+                            <div class="air-text">
+                              Tarhonyás sertéshús
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="line-two">
+                    <div class="flex">
+                      <div class="side-left">
+                        <div class="kieg1">
+                          <div class="image">
+
+                          </div>
+                          <div class="text">
+                            <div class="air-text">
+                              Csemege uborka
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="side-right">
+                        <div class="kieg2">
+                          <div class="image">
+
+                          </div>
+                          <div class="text">
+                            <div class="air-text" id="rothorwidthfix">
+                              Alma
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <script type="text/javascript">
+
+                    $(function(){
+                      fixRotateText();
+                    });
+
+                    function fixRotateText() {
+                      $('#rothorwidthfix').css({
+                        width: $('.etlap-visual .line-two').height()
+                      });
+                    }
+                  </script>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

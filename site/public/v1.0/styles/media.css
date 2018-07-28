@@ -9172,57 +9172,28 @@ a.cetelem-startrans {
 .top-articles > .flex > .more {
   flex: 1;
 }
-/* line 7350, sass/_base.scss */
-.top-articles > .flex > .more > .wrapper > .head {
-  border-bottom: 0.5px solid #a7a7a7;
-  padding: 0 0 10px 0;
-  margin: 0 0 10px 0;
-}
-/* line 7355, sass/_base.scss */
-.top-articles > .flex > .more > .wrapper > .head > .flex {
-  justify-content: flex-end;
-  align-items: center;
-}
-/* line 7359, sass/_base.scss */
-.top-articles > .flex > .more > .wrapper > .head > .flex a {
-  font-weight: bold;
-  color: #a7a7a7;
-  font-size: 0.9em;
-}
-/* line 7365, sass/_base.scss */
-.top-articles > .flex > .more > .wrapper > .head > .flex > div {
-  flex-basis: 30%;
-  text-align: right;
-}
-/* line 7370, sass/_base.scss */
-.top-articles > .flex > .more > .wrapper > .head > .flex > div.title {
-  text-align: left;
-  flex-basis: 40%;
-  font-weight: bold;
-  font-size: 1.2em;
-}
-/* line 7379, sass/_base.scss */
+/* line 7351, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .title {
   padding: 10px 0;
 }
-/* line 7382, sass/_base.scss */
+/* line 7354, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .title a {
   color: #363636;
   font-size: 1.4em;
   line-height: 1.4;
 }
-/* line 7389, sass/_base.scss */
+/* line 7361, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .image {
   position: relative;
 }
-/* line 7391, sass/_base.scss */
+/* line 7363, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .image > .wrapper {
   overflow: hidden;
   position: relative;
   background: #cecece;
   height: 180px;
 }
-/* line 7397, sass/_base.scss */
+/* line 7369, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .image .excerpt {
   position: absolute;
   background: white;
@@ -9235,24 +9206,24 @@ a.cetelem-startrans {
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
 }
-/* line 7409, sass/_base.scss */
+/* line 7381, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .image .excerpt > .wrapper {
   height: 40px;
   overflow: hidden;
 }
-/* line 7415, sass/_base.scss */
+/* line 7387, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .footer {
   font-size: 0.85em;
   color: #666666;
   margin: 25px auto 0 auto;
   width: 90%;
 }
-/* line 7421, sass/_base.scss */
+/* line 7393, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .footer > .flex {
   justify-content: space-between;
   align-items: center;
 }
-/* line 7427, sass/_base.scss */
+/* line 7399, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .footer > .flex > div {
   flex-basis: calc(70% / 3);
   text-align: center;
@@ -9260,15 +9231,15 @@ a.cetelem-startrans {
   height: 35px;
   line-height: 35px;
 }
-/* line 7434, sass/_base.scss */
+/* line 7406, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .footer > .flex > div:not(.button):not(.views) {
   border-right: 0.5px solid #666666;
 }
-/* line 7438, sass/_base.scss */
+/* line 7410, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .footer > .flex > div.button {
   flex-basis: 30%;
 }
-/* line 7441, sass/_base.scss */
+/* line 7413, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .footer > .flex > div.button a {
   display: block;
   background: #363636;
@@ -9279,14 +9250,239 @@ a.cetelem-startrans {
   line-height: 35px;
   height: 35px;
 }
-/* line 7454, sass/_base.scss */
+/* line 7426, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .footer i {
   font-size: 18px;
   margin: 0 5px 0 0;
   color: #666666;
 }
 
-/* line 7467, sass/_base.scss */
+/* line 7438, sass/_base.scss */
+.content-wrapper .header {
+  border-bottom: 0.5px solid #a7a7a7;
+  padding: 0 0 10px 0;
+  margin: 0 0 10px 0;
+}
+/* line 7443, sass/_base.scss */
+.content-wrapper .header > .flex {
+  justify-content: flex-end;
+  align-items: center;
+}
+/* line 7447, sass/_base.scss */
+.content-wrapper .header > .flex a {
+  font-weight: bold;
+  color: #a7a7a7;
+  font-size: 0.9em;
+}
+/* line 7453, sass/_base.scss */
+.content-wrapper .header > .flex > div {
+  flex-basis: 30%;
+  text-align: right;
+}
+/* line 7458, sass/_base.scss */
+.content-wrapper .header > .flex > div.title {
+  text-align: left;
+  flex-basis: 40%;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+/* line 7466, sass/_base.scss */
+.content-wrapper .header.no-border {
+  border-bottom: none;
+}
+
+/* line 7472, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex {
+  align-items: initial;
+  margin: 0 -10px;
+}
+/* line 7476, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > div {
+  padding: 0 10px;
+}
+/* line 7480, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .miserend {
+  flex-basis: 25%;
+}
+/* line 7484, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .miserend .header .title {
+  flex-basis: 50%;
+}
+/* line 7487, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .miserend .header .more {
+  flex-basis: 50%;
+}
+/* line 7492, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .miserend .content-holder {
+  background: white;
+  border: 1px solid #dbdbdb;
+}
+/* line 7496, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .miserend .content-holder article {
+  border-bottom: 0.5px solid #dbdbdb;
+  padding: 0 0 5px 0;
+}
+/* line 7500, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .miserend .content-holder article .title {
+  font-size: 1.25em;
+  line-height: 1.2;
+  padding: 5px 15px;
+}
+/* line 7504, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .miserend .content-holder article .title a {
+  color: #424242;
+  display: block;
+}
+/* line 7510, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .miserend .content-holder article .meta {
+  padding: 5px 15px;
+  font-size: 0.8em;
+  margin-bottom: 4px;
+  color: #dca501;
+}
+/* line 7517, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .miserend .content-holder article:last-child {
+  border-bottom: none;
+}
+/* line 7521, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .miserend .content-holder article .image {
+  height: 150px;
+  margin: 0 0 5px 0;
+  background: #ececec;
+  position: relative;
+  overflow: hidden;
+}
+/* line 7532, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .etlap {
+  flex: 1;
+}
+/* line 7536, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .etlap .header .title {
+  flex-basis: 100%;
+}
+/* line 7542, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .etlap > .holder > .flex {
+  margin: 0 -10px;
+  align-items: initial;
+}
+/* line 7545, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .etlap > .holder > .flex > div {
+  padding: 0 10px;
+}
+/* line 7548, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .etlap > .holder > .flex > .naptar-block {
+  flex-basis: 45%;
+}
+/* line 7550, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .etlap > .holder > .flex > .naptar-block > .wrapper {
+  border: 1px solid #dbdbdb;
+  background: white;
+  height: 100%;
+}
+/* line 7556, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .etlap > .holder > .flex > .etlap-visual {
+  flex: 1;
+}
+/* line 7560, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .etlap > .holder > .flex > .etlap-visual > .wrapper .date-on,
+.home-etlap-miserend > .pw > .flex > .etlap > .holder > .flex > .etlap-visual > .wrapper .text {
+  height: 70px;
+  position: relative;
+  font-weight: 300;
+}
+/* line 7565, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .etlap > .holder > .flex > .etlap-visual > .wrapper .date-on .air-text,
+.home-etlap-miserend > .pw > .flex > .etlap > .holder > .flex > .etlap-visual > .wrapper .text .air-text {
+  position: absolute;
+  padding: 0 10px;
+  width: 100%;
+  text-align: center;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+/* line 7576, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .etlap > .holder > .flex > .etlap-visual > .wrapper .text {
+  color: white;
+  background: #8eaf35;
+  font-size: 1.2em;
+  margin-top: 5px;
+}
+/* line 7582, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .etlap > .holder > .flex > .etlap-visual > .wrapper .date-on {
+  text-align: center;
+  color: white;
+  background: #e62b34;
+  font-size: 1.3em;
+  margin-bottom: 5px;
+}
+/* line 7589, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .etlap > .holder > .flex > .etlap-visual > .wrapper .date-on .week {
+  text-transform: uppercase;
+  font-size: 1.55em;
+  margin: 0 0 5px 0;
+  font-weight: 400;
+}
+/* line 7596, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .etlap > .holder > .flex > .etlap-visual > .wrapper .image {
+  height: 120px;
+  background: #cecece;
+  position: relative;
+  overflow: hidden;
+}
+/* line 7602, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .etlap > .holder > .flex > .etlap-visual > .wrapper .side-left {
+  flex-basis: 40%;
+}
+/* line 7605, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .etlap > .holder > .flex > .etlap-visual > .wrapper .side-right {
+  flex-basis: 60%;
+  padding-left: 5px;
+}
+/* line 7609, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .etlap > .holder > .flex > .etlap-visual > .wrapper .line-one {
+  margin-bottom: 5px;
+}
+/* line 7613, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .etlap > .holder > .flex > .etlap-visual > .wrapper .line-one .side-left .text {
+  background: #f5b801;
+}
+/* line 7619, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .etlap > .holder > .flex > .etlap-visual > .wrapper .line-one .side-right .image {
+  height: 195px;
+}
+/* line 7625, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .etlap > .holder > .flex > .etlap-visual > .wrapper .line-two > .flex {
+  align-items: initial;
+}
+/* line 7630, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .etlap > .holder > .flex > .etlap-visual > .wrapper .kieg2 {
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: nowrap;
+}
+/* line 7637, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .etlap > .holder > .flex > .etlap-visual > .wrapper .kieg2 > .image {
+  flex: 1;
+  height: 100%;
+  margin-right: 5px;
+}
+/* line 7642, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .etlap > .holder > .flex > .etlap-visual > .wrapper .kieg2 > .text {
+  height: 100%;
+  flex-basis: 70px;
+  margin: 0;
+}
+/* line 7647, sass/_base.scss */
+.home-etlap-miserend > .pw > .flex > .etlap > .holder > .flex > .etlap-visual > .wrapper .kieg2 > .text .air-text {
+  -webkit-transform: translate(-50%, -50%) rotate(-90deg);
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+/* line 7662, sass/_base.scss */
 .szalag .highlight-view {
   background: white;
   display: -webkit-box;
@@ -9295,12 +9491,12 @@ a.cetelem-startrans {
   flex-wrap: nowrap;
   align-items: center;
 }
-/* line 7475, sass/_base.scss */
+/* line 7670, sass/_base.scss */
 .szalag .highlight-view > .p {
   flex-basis: 40px;
   background: #8eaf35;
 }
-/* line 7479, sass/_base.scss */
+/* line 7674, sass/_base.scss */
 .szalag .highlight-view > .p a {
   display: block;
   color: white;
@@ -9308,50 +9504,50 @@ a.cetelem-startrans {
   text-align: center;
   line-height: 40px;
 }
-/* line 7488, sass/_base.scss */
+/* line 7683, sass/_base.scss */
 .szalag .highlight-view .items {
   flex: 1;
 }
-/* line 7490, sass/_base.scss */
+/* line 7685, sass/_base.scss */
 .szalag .highlight-view .items .hl-cont {
   padding: 0 15px;
   line-height: 40px;
 }
-/* line 7495, sass/_base.scss */
+/* line 7690, sass/_base.scss */
 .szalag .highlight-view .items ul li {
   display: none;
   font-size: 1.1em;
   text-align: center;
 }
-/* line 7499, sass/_base.scss */
+/* line 7694, sass/_base.scss */
 .szalag .highlight-view .items ul li.active {
   display: block;
 }
 
-/* line 7510, sass/_base.scss */
+/* line 7705, sass/_base.scss */
 body.homepage footer,
 body.article footer {
   margin-top: 0;
 }
 
-/* line 7516, sass/_base.scss */
+/* line 7711, sass/_base.scss */
 body.article .website {
   width: 100%;
 }
 
-/* line 7522, sass/_base.scss */
+/* line 7717, sass/_base.scss */
 body.product-page .website {
   width: 100%;
 }
-/* line 7526, sass/_base.scss */
+/* line 7721, sass/_base.scss */
 body.product-page footer {
   margin-top: 0;
 }
-/* line 7529, sass/_base.scss */
+/* line 7724, sass/_base.scss */
 body.product-page header .bottom > .pw > .flex {
   padding-left: 0;
 }
-/* line 7533, sass/_base.scss */
+/* line 7728, sass/_base.scss */
 body.product-page .nav.nav-fix {
   flex: 1;
 }

@@ -7347,34 +7347,6 @@ a.cetelem-startrans {
 			flex: 1;
 
 			& > .wrapper{
-				& > .head{
-					border-bottom: 0.5px solid #a7a7a7;
-					padding: 0 0 10px 0;
-					margin: 0 0 10px 0;
-
-					& > .flex{
-						justify-content: flex-end;
-						align-items: center;
-
-						a{
-							font-weight: bold;
-							color: #a7a7a7;
-							font-size: 0.9em;
-						}
-
-						& > div {
-							flex-basis: 30%;
-							text-align: right;
-						}
-
-						& > div.title {
-							text-align: left;
-							flex-basis: 40%;
-							font-weight: bold;
-							font-size: 1.2em;
-						}
-					}
-				}
 				& > .article{
 					.title{
 						padding: 10px 0;
@@ -7458,6 +7430,229 @@ a.cetelem-startrans {
 						}
 					}
 				}
+			}
+		}
+	}
+}
+
+.content-wrapper .header{
+	border-bottom: 0.5px solid #a7a7a7;
+	padding: 0 0 10px 0;
+	margin: 0 0 10px 0;
+
+	& > .flex{
+		justify-content: flex-end;
+		align-items: center;
+
+		a{
+			font-weight: bold;
+			color: #a7a7a7;
+			font-size: 0.9em;
+		}
+
+		& > div {
+			flex-basis: 30%;
+			text-align: right;
+		}
+
+		& > div.title {
+			text-align: left;
+			flex-basis: 40%;
+			font-weight: bold;
+			font-size: 1.2em;
+		}
+	}
+
+	&.no-border{
+		border-bottom: none;
+	}
+}
+
+.home-etlap-miserend{
+	& > .pw > .flex{
+		align-items: initial;
+		margin: 0 -10px;
+
+		& > div {
+			padding: 0 10px;
+		}
+
+		& > .miserend{
+			flex-basis: 25%;
+
+			.header{
+				.title{
+					flex-basis: 50%;
+				}
+				.more{
+					flex-basis: 50%;
+				}
+			}
+
+			.content-holder{
+				background: white;
+				border: 1px solid #dbdbdb;
+
+				article{
+					border-bottom: 0.5px solid #dbdbdb;
+					padding: 0 0 5px 0;
+
+					.title {
+						font-size: 1.25em;
+						line-height: 1.2;
+						padding: 5px 15px;
+						a{
+							color: $color-sec;
+							display: block;
+						}
+					}
+
+					.meta{
+						padding: 5px 15px;
+						font-size: 0.8em;
+						margin-bottom: 4px;
+						color: darken($color-orange, 5%);
+					}
+
+					&:last-child{
+						border-bottom: none;
+					}
+
+					.image{
+						height: 150px;
+						margin: 0 0 5px 0;
+						background: #ececec;
+						position: relative;
+						overflow: hidden;
+					}
+				}
+			}
+		}
+
+		& > .etlap{
+			flex:1;
+
+			.header{
+				.title{
+					flex-basis: 100%;
+				}
+			}
+
+			& > .holder{
+				 & > .flex{
+					 margin: 0 -10px;
+					 align-items: initial;
+					 & > div {
+						 padding: 0 10px;
+					 }
+					 & > .naptar-block{
+						flex-basis: 45%;
+						& > .wrapper{
+							border: 1px solid #dbdbdb;
+							background: white;
+							height: 100%;
+						}
+					 }
+					 & > .etlap-visual{
+						 flex: 1;
+						 & > .wrapper{
+							 .date-on,
+							 .text {
+								 height: 70px;
+								 position: relative;
+								 font-weight: 300;
+
+								 .air-text{
+									 position: absolute;
+									 padding: 0 10px;
+									 width: 100%;
+									 text-align: center;
+									 left: 50%;
+									 top: 50%;
+									 -webkit-transform:translate(-50%,-50%);
+          					transform:translate(-50%,-50%);
+								 }
+							 }
+							 .text{
+								 color: white;
+								 background: $color-green;
+								 font-size: 1.2em;
+								 margin-top: 5px;
+							 }
+							 .date-on{
+								 text-align: center;
+								 color: white;
+								 background: $color-red;
+								 font-size: 1.3em;
+								 margin-bottom: 5px;
+
+								 .week{
+									 text-transform: uppercase;
+									 font-size: 1.55em;
+									 margin: 0 0 5px 0;
+									 font-weight: 400;
+								 }
+							 }
+							 .image {
+								 height: 120px;
+								 background: #cecece;
+								 position: relative;
+								 overflow: hidden;
+							 }
+							 .side-left{
+								 flex-basis: 40%;
+							 }
+							 .side-right{
+								 flex-basis: 60%;
+								 padding-left: 5px;
+							 }
+							 .line-one{
+								 margin-bottom: 5px;
+
+								 .side-left{
+									 .text{
+										 background: $color-orange;
+									 }
+								 }
+
+								 .side-right{
+									 .image{
+										 height: 195px;
+									 }
+								 }
+							 }
+							 .line-two{
+							 	& > .flex{
+									align-items: initial;
+								}
+							 }
+
+							 .kieg2{
+								 	height: 100%;
+							 		display: -webkit-box;
+							  	display: -ms-flexbox;
+							  	display: flex;
+									flex-wrap: nowrap;
+
+									& > .image{
+										flex:1;
+										height: 100%;
+										margin-right: 5px;
+									}
+									& > .text{
+										height: 100%;
+										flex-basis: 70px;
+										margin: 0;
+
+										.air-text{
+											-webkit-transform: translate(-50%, -50%) rotate(-90deg);
+          						transform: translate(-50%, -50%) rotate(-90deg);
+										}
+									}
+							 }
+						 }
+					 }
+				 }
 			}
 		}
 	}
