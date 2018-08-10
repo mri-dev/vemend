@@ -203,6 +203,14 @@ body, html {
 	& > div.flex-g-3p3 {
 		flex-basis: calc(100%/3);
 	}
+
+	&.wmargin{
+		margin: 0 -15px;
+
+		& > div {
+			padding: 0 15px;
+		}
+	}
 }
 
 .vra-top{ vertical-align: top !important; }
