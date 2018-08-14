@@ -60,21 +60,5 @@
         08.00 - 12.00
       </div>
     </div>
-    <div class="flex">
-      <div class="day">
-        Szombat
-      </div>
-      <div class="hours">
-        08.00 - 12.00
-      </div>
-    </div>
-    <div class="flex">
-      <div class="day">
-        Vasárnap
-      </div>
-      <div class="hours">
-        08.00 - 12.00
-      </div>
-    </div>
   </div>
 </div>

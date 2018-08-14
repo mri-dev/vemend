@@ -7219,15 +7219,25 @@ a.cetelem-startrans {
 	display: block;
 }
 
+.rendelo-program{
+	& > .pw > .holder{
+		margin: -10px;
+	}
+}
+
 body.homepage{
 	.rendelo{
 		flex-basis: 30%;
 
 		& > .wrapper{
-			border: 0.5px solid #cccccc;
-			padding: 15px;
+			padding: 10px;
 
-			& > .title{
+			& > .holder{
+				border: 0.5px solid #cccccc;
+				padding: 15px;
+			}
+
+			& > .holder > .title{
 				color: $color-green;
 				text-align: center;
 				margin: 0 0 15px 0;
@@ -7255,7 +7265,7 @@ body.homepage{
 				margin: 0 0 10px 0;
 
 				& > div{
-					padding: 5px 0;
+					padding: 3px 0;
 					font-size: 0.9em;
 
 					i {
@@ -7288,16 +7298,35 @@ body.homepage{
 		}
 	}
 
-	.programs{
+	.programs {
 		fleX: 1;
 
+		& > .wrapper{
+			padding: 10px;
+		}
+
 		.cont-holder{
+			border: 0.5px solid #cecece;
+			position: relative;
+
 			& > .wrapper{
 				display: -webkit-box;
 				display: -ms-flexbox;
 				display: flex;
 				flex-wrap: wrap;
 
+				.napico{
+					background: $color-orange;
+					padding: 10px;
+					color: white;
+					position: absolute;
+					right: 0;
+					top: 0;
+
+					i {
+						font-size: 24px;
+					}
+				}
 
 				& > .image{
 					flex-basis: 40%;
@@ -7336,6 +7365,7 @@ body.homepage{
 						.data-content{
 							margin: 40px 0;
 							height: 190px;
+							padding: 20px 0 0 0;
 
 							h3 {
 								font-size: 2em;
@@ -7363,7 +7393,7 @@ body.homepage{
 									height: 35px;
 									line-height: 35px;
 								}
-								& > div:not(.button):not(.views) {
+								& > div:not(.button):not(.views):not(.off) {
 									border-right: 0.5px solid #666666;
 								}
 
@@ -7439,106 +7469,107 @@ body.homepage{
 }
 
 .top-articles{
+	margin: -10px;
 	& > .flex{
-		margin: -15px;
-		& > div {
-			padding: 15px;
-		}
 		& > .top {
 			flex-basis: 65%;
 			& > .wrapper{
-				background: white;
-     		border: 1px solid #cecece;
-				& > .flex{
-					align-items: initial;
-					& > .image{
-						background: #cecece;
-						flex-basis: 45%;
-					}
-					& > .data{
-						flex: 1;
-						& > .wrapper{
-							padding: 10px;
+				padding: 10px;
 
-							.badges{
-								margin: -4px;
-								& > div:not(.clr) {
-									padding: 5px;
-									margin: 4px;
-									line-height: 1;
-									background: #acacac;
-									text-transform: uppercase;
-									color: white;
-									float: left;
-									font-size: 0.9em;
-								}
+				& > .holder{
+					background: white;
+	     		border: 1px solid #cecece;
+					& > .flex{
+						align-items: initial;
+						& > .image{
+							background: #cecece;
+							flex-basis: 45%;
+						}
+						& > .data{
+							flex: 1;
+							& > .wrapper{
+								padding: 10px;
 
-								& > .badge-orange{
-									background: $color-orange !important;
-								}
-								& > .badge-green{
-									background: $color-green !important;
-								}
-
-								& > .badge-red{
-									background: $color-red !important;
-								}
-							}
-
-							.data-content{
-								margin: 40px 0;
-     						height: 190px;
-
-								h3 {
-									font-size: 2em;
-									line-height: 1.2;
-									margin: 0 0 8px 0;
-								}
-
-								.desc{
-									line-height: 1.4;
-									font-size: 1.2em;
-								}
-							}
-
-							.footer{
-								font-size: 0.85em;
-								color: #666666;
-								& > .flex{
-									justify-content: space-between;
-     							align-items: center;
-
-									& > div {
-										flex-basis: calc(70% / 3);
-										text-align: center;
-										padding: 0;
-										height: 35px;
-										line-height: 35px;
-									}
-									& > div:not(.button):not(.views) {
-										border-right: 0.5px solid #666666;
+								.badges{
+									margin: -4px;
+									& > div:not(.clr) {
+										padding: 5px;
+										margin: 4px;
+										line-height: 1;
+										background: #acacac;
+										text-transform: uppercase;
+										color: white;
+										float: left;
+										font-size: 0.9em;
 									}
 
-									& > div.button {
-										flex-basis: 30%;
+									& > .badge-orange{
+										background: $color-orange !important;
+									}
+									& > .badge-green{
+										background: $color-green !important;
+									}
 
-										a {
-											display: block;
-											background: #363636;
-											color: white;
-											text-transform: uppercase;
-											text-decoration: none;
-											font-size: 1.55em;
-											line-height: 35px;
+									& > .badge-red{
+										background: $color-red !important;
+									}
+								}
+
+								.data-content{
+									margin: 40px 0;
+	     						height: 190px;
+
+									h3 {
+										font-size: 2em;
+										line-height: 1.2;
+										margin: 0 0 8px 0;
+									}
+
+									.desc{
+										line-height: 1.4;
+										font-size: 1.2em;
+									}
+								}
+
+								.footer{
+									font-size: 0.85em;
+									color: #666666;
+									& > .flex{
+										justify-content: space-between;
+	     							align-items: center;
+
+										& > div {
+											flex-basis: calc(70% / 3);
+											text-align: center;
+											padding: 0;
 											height: 35px;
+											line-height: 35px;
+										}
+										& > div:not(.button):not(.views) {
+											border-right: 0.5px solid #666666;
+										}
+
+										& > div.button {
+											flex-basis: 30%;
+
+											a {
+												display: block;
+												background: #363636;
+												color: white;
+												text-transform: uppercase;
+												text-decoration: none;
+												font-size: 1.55em;
+												line-height: 35px;
+												height: 35px;
+											}
 										}
 									}
-								}
 
-								i {
-									font-size: 18px;
-									margin: 0 5px 0 0;
-									color: #666666;
+									i {
+										font-size: 18px;
+										margin: 0 5px 0 0;
+										color: #666666;
+									}
 								}
 							}
 						}
@@ -7548,8 +7579,8 @@ body.homepage{
 		}
 		& > .more {
 			flex: 1;
-
 			& > .wrapper{
+				padding: 10px;
 				& > .article{
 					.title{
 						padding: 10px 0;
@@ -7672,12 +7703,15 @@ body.homepage{
 }
 
 .home-etlap-miserend{
-	& > .pw > .flex{
-		align-items: initial;
-		margin: 0 -10px;
+	& > .pw > .holder {
+		margin: -10px;
+	}
 
-		& > div {
-			padding: 0 10px;
+	& > .pw > .holder > .flex{
+		align-items: initial;
+
+		& > div > div.wrapper {
+			padding: 10px;
 		}
 
 		& > .miserend{
@@ -7741,9 +7775,9 @@ body.homepage{
 				}
 			}
 
-			& > .holder{
+			& > .wrapper > .holder{
+				 margin: 0 -10px;
 				 & > .flex{
-					 margin: 0 -10px;
 					 align-items: initial;
 					 & > div {
 						 padding: 0 10px;
