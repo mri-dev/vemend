@@ -457,7 +457,7 @@
             </div>
             <div class="szallas-top">
               <div class="wrapper">
-                Top szállás ajánlatok
+                <?php echo $this->render("templates/szallas_lista"); ?>
               </div>
             </div>
           </div>
