@@ -401,60 +401,7 @@
       <div class="szallasok">
         <div class="holder">
           <div class="flex">
-            <div class="szallas-kereso">
-              <div class="wrapper">
-                <form class="" action="/szallasok" method="get">
-                  <div class="head">
-                    <i class="fa fa-briefcase"></i> Szállás keresése
-                  </div>
-                  <div class="fcont">
-                    <div class="wrapper">
-                      <div class="inp">
-                        <div class="wrapper">
-                          <label for="szallas_erkezes">Érkezés</label>
-                          <input type="text" id="szallas_erkezes" name="erkezes" value="">
-                        </div>
-                      </div>
-                      <div class="inp">
-                        <div class="wrapper">
-                          <label for="szallas_tavozas">Távozás</label>
-                          <input type="text" id="szallas_tavozas" name="tavozas" value="">
-                        </div>
-                      </div>
-                      <div class="inp">
-                        <div class="wrapper">
-                          <label for="szallas_ellatas">Ellátás</label>
-                          <select class="" id="szallas_ellatas" name="ellatas">
-                            <option value="">bármely</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="space"></div>
-                  <div class="fcont grey">
-                    <div class="wrapper">
-
-                    </div>
-                  </div>
-                  <div class="space"></div>
-                  <div class="foot">
-                    <div class="flex">
-                      <div class="opt">
-                        <div class="fcont grey">
-                          <div class="wrapper">
-                            <input type="checkbox" name="opt[kisallat]" id="opt_kisallat"> <label for="opt_kisallat">kisállat hozható</label>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="button">
-                        <button type="submit"><i class="fa fa-search"></i> keresés</button>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
+            <?php echo $this->render("templates/szallas_kereso"); ?>
             <div class="szallas-top">
               <div class="wrapper">
                 <?php echo $this->render("templates/szallas_lista"); ?>
@@ -465,10 +412,38 @@
       </div>
     </div>
   </div>
-  <div class="content-wrapper">
+  <div class="content-wrapper webshop">
     <div class="pw">
       <div class="webshop">
-        webshop termékek
+        <div class="head">
+          <div class="ico">
+            <img src="<?=IMG?>icons/cart_grey.svg" alt="">
+          </div>
+          <div class="title">
+            Webshop ajánlatok
+          </div>
+          <div class="desc">
+            Oldalunkon jelenleg 4 589 db termék közül tud választani.
+          </div>
+          <div class="webshopnavbar">
+            <div class="wrapper">
+              <div class="buttons">
+                <div class="fresh current">
+                  <a href="/webshop/termekek/?order=fresh&orderby=ASC"><i class="fa fa-clock-o"></i> Legújabb</a>
+                </div>
+                <div class="popular">
+                  <a href="/webshop/termekek/?order=popular&orderby=ASC"><i class="fa fa-star"></i> Legnépszerűbb</a>
+                </div>
+                <div class="total">
+                  <a href="/webshop/"><i class="fa fa-archive"></i> Összes webshop</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="cont">
+          asd
+        </div>
       </div>
     </div>
   </div>

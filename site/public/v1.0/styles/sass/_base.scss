@@ -7448,12 +7448,42 @@ body.homepage{
 				.fcont{
 					border: 0.5px solid #cecece;
 					background: #ffffff;
+
 					& > .wrapper{
 						padding: 10px;
 					}
 
 					&.grey{
 						background: #f5f5f5;
+
+						& > .wrapper{
+							padding: 10px;
+							display: -webkit-box;
+							display: -ms-flexbox;
+							display: flex;
+							flex-wrap: wrap;
+
+							& > div {
+								& > .wrapper{
+									padding: 0 5px;
+									label{
+										font-weight: bold;
+										font-size: 0.8em;
+										color: #acacac;
+									}
+								}
+							}
+
+							& > .children-ages{
+								flex-basis: 30%;
+							}
+
+							& > .children,
+							& > .adults,
+							& > .rooms{
+								flex-basis: calc(70% / 3);
+							}
+						}
 					}
 
 					label {
@@ -7516,6 +7546,85 @@ body.homepage{
 				flex: 1;
 				& > .wrapper{
 					padding: 10px;
+				}
+			}
+		}
+	}
+}
+
+.content-wrapper.webshop{
+	.webshop{
+		& > .head{
+			display: -webkit-box;
+		  display: -ms-flexbox;
+		  display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			& > .ico{
+				flex-basis: 50px;
+				img{
+					width: 35px;
+					height: 35px;
+				}
+			}
+
+			& > .title{
+				font-weight: bold;
+				font-size: 1.4em;
+    		color: #3e3e3e;
+				flex-basis: 180px;
+			}
+
+			& > .desc{
+				font-size: 1.3em;
+    		color: #8f8f8f;
+				flex: 1;
+			}
+
+			& > .webshopnavbar{
+				flex-basis: 40%;
+
+				& > .wrapper{
+					background: white;
+					border-radius: 25px;
+
+					.buttons{
+						display: -webkit-box;
+					  display: -ms-flexbox;
+					  display: flex;
+						flex-wrap: nowrap;
+						align-items: center;
+						padding: 5px;
+						& > div{
+							flex-basis: calc(100% / 3);
+							text-align: center;
+							border-radius: 25px;
+							-webkit-transition: all .4s;
+  						transition: all .4s;
+
+							&:hover{
+								background: $color-grey;
+							}
+						}
+
+						a {
+							color: #969696;
+    					font-size: 1em;
+							display: block;
+							text-decoration: none;
+							line-height: 34px;
+							padding: 0 10px;
+						}
+
+						& > div.current{
+							background: $color-orange;
+
+							a{
+								color: white;
+							}
+						}
+					}
 				}
 			}
 		}
