@@ -442,7 +442,7 @@
           </div>
         </div>
         <div class="cont">
-          asd
+          <?php echo $this->render("templates/webshop_lista"); ?>
         </div>
       </div>
     </div>
