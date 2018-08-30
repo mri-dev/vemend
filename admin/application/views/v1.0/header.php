@@ -101,15 +101,16 @@
     </script>
 </head>
 <body class="<? if(!$this->adm->logged): ?>blured-bg<? endif; ?>">
+<?php if ($this->adm->logged): ?>
 <div id="top" class="container-fluid">
 	<div class="row">
 		<? if(!$this->adm->logged): ?>
 		<div class="col-md-12 center"><img height="34" src="<?=IMG?>logo_white.svg" alt="<?=TITLE?>"></div>
 		<? else: ?>
     	<div class="col-md-7 left">
-    		<img height="34" class="top-logo" src="<?=IMG?>logo_white.svg" alt="<?=TITLE?>">
+    		<img height="34" class="top-logo" src="<?=IMG?>vemend_cimer_35px.png" alt="<?=TITLE?>">
     		<div class="link">
-    			<a href="<?=HOMEDOMAIN?>" target="_blank">www.<?=str_replace(array('https://','www.'), '', $this->settings['page_url'])?></a>
+    			<a href="<?=HOMEDOMAIN?>" target="_blank"><?=$this->settings['page_title']?> - <?=$this->settings['page_description']?></a>
     		</div>
     	</div>
 
@@ -131,9 +132,13 @@
         <? endif; ?>
     </div>
 </div>
+<?php endif; ?>
 <!-- Login module -->
 <? if(!$this->adm->logged): ?>
 <div id="login" class="container-fluid">
+  <div class="cimer">
+    <img src="<?=IMG?>vemend_cimer.jpg" alt="Véménd">
+  </div>
 	<div class="row">
 	    <div class="bg col-md-4 col-md-offset-4">
 	    	<h3>Bejelentkezés</h3>

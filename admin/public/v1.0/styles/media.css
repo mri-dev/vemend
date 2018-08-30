@@ -46,7 +46,7 @@ body, html {
 	position: relative;
 }
 body.blured-bg {
-  background: #505050;
+  background: #ffffff;
 }
 body.blured > *  {
  	-webkit-filter: blur(3px);
@@ -60,13 +60,16 @@ body.blured > *  {
   border-bottom: 2px solid #cccccc;
 }
 #login {
-  margin: 20% auto 0 auto;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-60%);
+          transform: translateY(-60%);
 }
 a, a:visited {
-	color: #1e8bff;
+	color: #cea63b;
 }
 a:hover {
-	color: #ff9c1e;
+	color: #f1b105;
 	text-decoration: none;
 }
 a.btn {
@@ -112,16 +115,16 @@ div[class*=col-p-5]{
 }
 button, input[type=button], input[type=submit]{
 	color:#ffffff;
-	background: #3295ff;
+	background: #febe2a;
 	border:0;
 	padding: 8px 15px;
   border-radius: 3px;
 }
 button:hover{
-	background:#2174ce;
+	background: #e9a811;
 }
 #top{
-	background-color: #3395ff;
+	background-color: #ffc52c;
 	color:#fff;
 	line-height:50px;
 	padding:0;
@@ -140,7 +143,7 @@ body.blured-bg #top {
 	background-color: #3395ff;
 }
 #top .shower{
-	background: #308bec;
+	background: #ebb526;
 	float:right;
 	position:relative;
 	padding:0 10px;
@@ -173,7 +176,7 @@ body.blured-bg #top {
 .shower.fb-vote a
 { color: white; font-size:12px; }
 .dmenu{
-	background:#308bec;
+	background:#ffc52c;
 	position:absolute;
 	display:none;
 	top: 49px;
@@ -195,7 +198,7 @@ body.blured-bg #top {
 	display:block;
 }
 #top .shower .dmenu li:hover a{
-	background: #1d72cc;
+	background: #e7af1c;
 	text-decoration:none;
 }
 #login .links {
@@ -210,17 +213,24 @@ body.blured-bg #top {
 	text-align: center;
 	height: 14px;
 }
+#login .cimer{
+  text-align: center;
+  padding: 0 0 25px 0;
+}
+#login .cimer img{
+  width: 100px;
+}
 #login h3{
 	margin-bottom:25px;
 	text-align: center;
 	text-transform: uppercase;
-	color: #3295ff;
+	color: #febc22;
 }
 #login .bg{
-	background-color: #ffffff !important;
-	padding:20px 40px;
-  border-radius: 4px;
-  box-shadow: 0 5px 30px -10px black;
+  background-color: #f8f8f8 !important;
+  padding: 20px 40px;
+  border: 1px solid white;
+  box-shadow: 0 0 20px -1px #cecece;
 }
 #login .bg i{
 	width:15px !important;
@@ -255,7 +265,7 @@ body.blured-bg #content .container-fluid{
   margin: 0 -15px !important;
 }
 #content .slideMenu{
-	background:#333333;
+	background: #6f6f6f;
 	width:200px;
 	min-height:100%;
 	padding:0;
@@ -274,15 +284,15 @@ body.blured-bg #content .container-fluid{
 	margin:0 15px;
 }
 #content .slideMenu .menu ul li{
-	border-bottom: 1px solid #404040;
+	border-bottom: 1px solid #7f7f7f;
 }
 #content .slideMenu .menu ul li.div{
-  background: #191919;
+  background: #525252;
   height: 8px;
 }
 #content .slideMenu .menu ul li a{
 	position:relative;
-	color:#A7A7A7;
+	color: #f3f3f3;
 	text-align:right;
 	display:block;
 	font-size:18px;
@@ -341,11 +351,11 @@ body.blured-bg #content .container-fluid{
 }
 #content .slideMenu .menu ul li:hover a,#content .slideMenu .menu ul li.on a{
 	background:#f4f4f4;
-	color: #3295ff;
+	color: #dba516;
 	text-decoration:none;
 }
 #content .slideMenu .menu ul li:hover i, #content .slideMenu .menu ul li.on i{
-	color:#3295ff;
+	color:#dba516;
 }
 #content .ct h1{
 	font-family:'myriadprobold', sans-serif;
