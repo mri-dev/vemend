@@ -35,7 +35,6 @@ class Controller {
         Session::init();
         Helper::setMashineID();
         $this->gets = Helper::GET();
-
         //$this->memory_usage();
 
         // CORE
@@ -49,6 +48,13 @@ class Controller {
         $this->view->gets = $this->gets;
 
         $this->AdminUser = new AdminUser( array( 'db' => $this->db, 'view' => $this->view, 'settings' => $this->view->settings )  );
+        $this->view->adm->logged = $this->AdminUser->isLogged();
+
+        if ( $this->view->adm->logged ) {
+          $this->view->adm = $this->AdminUser;
+          $this->view->adm->logged = $this->AdminUser->isLogged();
+        }
+
         $this->User = new Users(array(
           'db' => $this->db,
           'view' => $this->view,
