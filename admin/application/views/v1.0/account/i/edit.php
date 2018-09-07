@@ -140,7 +140,7 @@
 					<div class="divider" style="margin-bottom: 10px;"></div>
 					<?php foreach ($this->permissions['set'] as $pkey => $pv): ?>
 						<div class="">
-							<input type="checkbox" id="permcb<?=$pkey?>" class="cb" name="data[permissions][]" value="<?=$pkey?>"> <label for="permcb<?=$pkey?>"><?=$pv?></label>
+							<input type="checkbox" <?=(in_array($pkey, $this->data['permissions']))?'checked="checked"':''?> id="permcb<?=$pkey?>" class="cb" name="data[permissions][]" value="<?=$pkey?>"> <label for="permcb<?=$pkey?>"><?=$pv?></label>
 						</div>
 					<?php endforeach; ?>
 				</div>

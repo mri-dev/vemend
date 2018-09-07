@@ -17,8 +17,6 @@ class home extends Controller{
           }
       }
 
-			print_r($this->view->adm->user);
-
 			if($this->gets[1] == 'exit'){
 				$this->AdminUser->logout();
 			}

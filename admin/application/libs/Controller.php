@@ -60,6 +60,7 @@ class Controller {
           'view' => $this->view,
           'admin' => $this->is_admin
         ));
+        $this->out( 'USERS', $this->User);
 
         $this->shop = new Shop(array(
           'db' => $this->db,

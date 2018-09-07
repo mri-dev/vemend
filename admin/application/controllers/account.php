@@ -8,9 +8,6 @@ class account extends Controller
 		parent::__construct();
 		parent::$pageTitle = 'Fiókok';
 
-        $this->view->adm = $this->AdminUser;
-		$this->view->adm->logged = $this->AdminUser->isLogged();
-
 		$products = new Products( array(
 			'db' => $this->db,
 			'user' => $this->User->get()
@@ -52,7 +49,7 @@ class account extends Controller
 		if ($_GET['t'] == 'edit')
 		{
 			$data 	= $this->User->get(array('user' => $_GET['ID'], 'userby' => 'ID'));
-			$this->out('data',$data['data']);
+			$this->out('data', $data['data']);
 			$this->out('permissions', $this->User->loadAvaiablePermissions($data['data']['user_group']));
 		}
 

@@ -63,6 +63,17 @@ class AdminUser
 
 		if ($qry->rowCount() != 0) {
 			$userdata = $qry->fetch(\PDO::FETCH_ASSOC);
+
+			$detailslist = array();
+			$details = $this->db->query($q = "SELECT nev, ertek FROM ".\PortalManager\Users::TABLE_DETAILS_NAME." WHERE fiok_id = ".$userdata['ID'].";");
+
+			if ( $details->rowCount() != 0 ) {
+				foreach ($details->fetchAll(\PDO::FETCH_ASSOC) as $det) {
+					$detailslist[$det['nev']] = $det['ertek'];
+				}
+			}
+			$detailslist['permissions'] = ($detailslist['permissions'] != "") ? json_decode($detailslist['permissions'], \JSON_UNESCAPED_UNICODE) : array();
+			$userdata = array_merge( $userdata, $detailslist );
 			return $userdata;
 		} return false;
 	}

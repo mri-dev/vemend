@@ -11,8 +11,11 @@ class megrendelesek extends Controller
 
 			$this->Admin = new Admin( false, array( 'db' => $this->db, 'view' => $this->view ) );
 
-			$this->view->adm = $this->AdminUser;
-			$this->view->adm->logged = $this->AdminUser->isLogged();
+			if ( $this->view->adm->user['user_group'] != 'admin' )
+			{
+				$perm = $this->User->hasPermission($this->view->adm->user, array('adminuser'), 'webshop', true);
+			}
+
 
 			if($_GET['showarchive'] == '1')
 			{

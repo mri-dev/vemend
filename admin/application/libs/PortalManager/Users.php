@@ -32,14 +32,13 @@ class Users
 		'adminuser' => 'Admin felhasználó'
 	);
 	public $user_permissions = array(
-		'webshop' => 'Webáruház használata',
-		'orders' => 'Megrendelések kezelése'
+		'webshop' => 'Webáruház használata'
 	);
 
 	public $user_group_permissions = array(
 		'user' => array(),
 		'admin' => array(),
-		'adminuser' => array('webshop','orders')
+		'adminuser' => array('webshop')
 	);
 
 	public 	$user 		= false;
@@ -75,7 +74,7 @@ class Users
 		}
 
 		unset($perm);
-		
+
 		return $perms;
 	}
 
@@ -113,16 +112,66 @@ class Users
 		}
 	}
 
+	public function hasPermission( $userarr = array(), $want_user_group = array(), $want_permission, $redirect = false )
+	{
+		$perm = false;
+		if ( !$userarr ) return $perm;
+
+		if (!empty($want_user_group)) {
+			$in_usergroup = (in_array($userarr['user_group'], $want_user_group)) ? true : false;
+		} else {
+			$in_usergroup = true;
+		}
+
+		if (!$in_usergroup) {
+			if ($redirect) {
+				$redirect = ($redirect == '' || $redirect === true) ? '/' : $redirect;
+				\Helper::reload($redirect);
+			} else {
+				return false;
+			}
+		}
+
+		if (is_array($want_permission)) {
+			$perm_want_cnt = count($want_permission);
+			$accept_perm = 0;
+			foreach ((array)$want_permission as $eperm) {
+				if( in_array($eperm, (array)$userarr['permissions']) ) {
+					$accept_perm++;
+				}
+			}
+			$perm = ($perm_want_cnt == $accept_perm) ? true : false;
+		} else {
+			if ( in_array($want_permission, (array)$userarr['permissions']) ) {
+				$perm = true;
+			} else {
+				$perm = false;
+			}
+		}
+
+		if ( $redirect ) {
+			if ($perm) {
+				return $perm;
+			} else {
+				$redirect = ($redirect == '' || $redirect === true) ? '/' : $redirect;
+				echo 'REDUR';
+				\Helper::reload($redirect);
+			}
+		} else {
+			return $perm;
+		}
+	}
+
 	function get( $arg = array() )
 	{
-		$ret 			= array();
-		$kedvezmenyek 	= array();
-		$kedvezmeny 	= 0;
+		$ret = array();
+		$kedvezmenyek	= array();
+		$kedvezmeny	= 0;
 		$torzsvasarloi_kedvezmeny = 0;
 		$referer_allow 	= false;
-		$getby 			= 'email';
+		$getby = 'email';
 
-		$ret[options] 	= $arg;
+		$ret[options] = $arg;
 
 		$user = ( !$arg['user'] ) 	? $this->user : $arg['user'];
 		$getby = ( !$arg['userby'] ) ? $getby 	: $arg['userby'];
@@ -130,8 +179,9 @@ class Users
 		if(!$user) return false;
 
 		$ret[data] 	= ($user) ? $this->getData($user, $getby) : false;
+		$ret[permissions] 	= $ret[data][permissions];
+		$ret[user_group] 	= $ret[data][user_group];
 		$ret[email] = $ret[data][email];
-
 
 		if( !$ret[data] ) {
 			unset($_SESSION['user_email']);
@@ -184,10 +234,11 @@ class Users
 
 		// Korábban rendelt, lezárt termékek össz. értéke
 		$q = "
-		SELECT 				SUM((o.me * o.egysegAr)) as ar,
-		 					(SELECT kedvezmeny FROM orders WHERE ID = o.orderKey)  as kedv
-		FROM 				`order_termekek` as o
-		WHERE 				o.userID = ".$ret[data][ID]." and (SELECT allapot FROM orders WHERE ID = o.orderKey) = ".$this->settings['flagkey_orderstatus_done'];
+		SELECT
+			SUM((o.me * o.egysegAr)) as ar,
+			(SELECT kedvezmeny FROM orders WHERE ID = o.orderKey) as kedv
+		FROM `order_termekek` as o
+		WHERE	o.userID = ".$ret[data][ID]." and (SELECT allapot FROM orders WHERE ID = o.orderKey) = ".$this->settings['flagkey_orderstatus_done'];
 
 		$ordpc = $this->db->query($q)->fetch(\PDO::FETCH_ASSOC);
 
@@ -843,6 +894,9 @@ class Users
 
 		if ( $details->rowCount() != 0 ) {
 			foreach ($details->fetchAll(\PDO::FETCH_ASSOC) as $det) {
+				if ($det['nev'] == 'permissions' && $det['ertek'] != '') {
+					$det['ertek'] = json_decode($det['ertek'], \JSON_UNESCAPED_UNICODE);
+				}
 				$detailslist[$det['nev']] = $det['ertek'];
 			}
 		}
@@ -961,12 +1015,16 @@ class Users
 			unset($data['data']['felhasznalok']['jelszo']);
 		}
 
-
 		$this->db->update(
 			self::TABLE_NAME,
 			$data['data']['felhasznalok'],
 			"ID = ".$uid
 		);
+
+		$permissions = $data['data']['permissions'];
+		$permissions = ( empty($permissions) ) ? false : json_encode( $permissions );
+
+		$this->editAccountDetail( $uid, 'permissions', $permissions );
 
 		foreach ($data['data']['felhasznalo_adatok'] as $key => $value ) {
 			$this->editAccountDetail($uid, $key, $value);
