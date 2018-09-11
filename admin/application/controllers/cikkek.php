@@ -17,42 +17,6 @@ class cikkek extends Controller{
 			$categories->setTable( 'cikk_kategoriak' );
 			$news = new News( $this->view->gets[2],  array( 'db' => $this->db )  );
 
-			if(Post::on('add')){
-				try{
-					$news->add($_POST);
-				}catch(Exception $e){
-					$this->view->err 	= true;
-					$this->view->msg 	= Helper::makeAlertMsg('pError', $e->getMessage());
-				}
-			}
-
-			switch($this->view->gets[1]){
-				case 'szerkeszt':
-					if(Post::on('save')){
-						try{
-							$news->save($_POST);
-							Helper::reload();
-						}catch(Exception $e){
-							$this->view->err 	= true;
-							$this->view->msg 	= Helper::makeAlertMsg('pError', $e->getMessage());
-						}
-					}
-					$this->out( 'news', $news->get( $this->view->gets[2]) );
-				break;
-				case 'torles':
-					if(Post::on('delId')){
-						try{
-							$news->delete($this->view->gets[2]);
-							Helper::reload('/hirek');
-						}catch(Exception $e){
-							$this->view->err 	= true;
-							$this->view->msg 	= Helper::makeAlertMsg('pError', $e->getMessage());
-						}
-					}
-					$this->out( 'news', $news->get( $this->view->gets[2]) );
-				break;
-			}
-
 			// Hír fa betöltés
 			$arg = array(
 				'limit' => 25,
@@ -89,6 +53,54 @@ class cikkek extends Controller{
 			$SEO .= $this->view->addOG('site_name',TITLE);
 
 			$this->view->SEOSERVICE = $SEO;
+		}
+
+		public function creator()
+		{
+
+			$news = new News( $this->view->gets[3],  array( 'db' => $this->db )  );
+
+			if (isset($_GET['rmsg'])) {
+				$xrmsg = explode('::', $_GET['rmsg']);
+				$this->out('msg', \Helper::makeAlertMsg('p'.ucfirst($xrmsg[0]), $xrmsg[1]));
+			}
+
+			if(Post::on('add')){
+				try{
+					$id = $news->add($_POST);
+					Helper::reload('/cikkek/creator/szerkeszt/'.$id.'?rmsg=success::Új cikk sikeresen létrehozva.');
+				}catch(Exception $e){
+					$this->view->err 	= true;
+					$this->view->msg 	= Helper::makeAlertMsg('pError', $e->getMessage());
+				}
+			}
+
+			switch($this->view->gets[2]){
+				case 'szerkeszt':
+					if(Post::on('save')){
+						try{
+							$news->save($_POST);
+							Helper::reload();
+						}catch(Exception $e){
+							$this->view->err 	= true;
+							$this->view->msg 	= Helper::makeAlertMsg('pError', $e->getMessage());
+						}
+					}
+					$this->out( 'news', $news->get( $this->view->gets[3]) );
+				break;
+				case 'torles':
+					if(Post::on('delId')){
+						try{
+							$news->delete($this->view->gets[3]);
+							Helper::reload('/cikkek/');
+						}catch(Exception $e){
+							$this->view->err 	= true;
+							$this->view->msg 	= Helper::makeAlertMsg('pError', $e->getMessage());
+						}
+					}
+					$this->out( 'news', $news->get( $this->view->gets[3]) );
+				break;
+			}
 		}
 
 		public function kategoriak()

@@ -1,3 +1,8 @@
+<div style="float:right;">
+	<a href="/cikkek/" class="btn btn-default"><i class="fa fa-th"></i> cikkek</a>
+	<a href="/cikkek/creator" class="btn btn-primary"><i class="fa fa-plus"></i> új cikk</a>
+
+</div>
 <h1>Cikk kategóriák</h1>
 <? if($this->err): ?>
 	<?=$this->bmsg?>

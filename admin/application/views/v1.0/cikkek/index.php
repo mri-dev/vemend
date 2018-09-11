@@ -1,125 +1,12 @@
 <div style="float:right;">
 	<a href="/cikkek/kategoriak" class="btn btn-default"><i class="fa fa-bars"></i> cikk kategóriák</a>
+	<a href="/cikkek/creator" class="btn btn-primary"><i class="fa fa-plus"></i> új cikk</a>
 </div>
 <h1>Cikkek</h1>
-<?=$this->msg?>
-<? if($this->gets[1] == 'torles'): ?>
-<form action="" method="post">
-<input type="hidden" name="delId" value="<?=$this->gets[2]?>" />
-<div class="row np">
-	<div class="col-md-12">
-    	<div class="con con-del">
-            <h2>Cikk törlése</h2>
-            Biztos, hogy törli a kiválasztott cikket?
-            <div class="row np">
-                <div class="col-md-12 right">
-                    <a href="/<?=$this->gets[0]?>/" class="btn btn-danger"><i class="fa fa-times"></i> NEM</a>
-                    <button class="btn btn-success">IGEN <i class="fa fa-check"></i> </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</form>
-<? endif; ?>
 <? if( true ): ?>
-<? if($this->gets[1] != 'torles'): ?>
-<div class="row">
-	<div class="col-md-12">
-    	<div class="con <?=($this->gets[1] == 'szerkeszt')?'con-edit':''?>">
-        	<form action="" method="post" enctype="multipart/form-data">
-        	<h2><? if($this->gets[1] == 'szerkeszt'): ?>Cikk szerkesztése<? else: ?>Új cikk hozzáadása<? endif; ?></h2>
-            <br>
-            <div class="row">
-                <div class="col-md-7">
-                	<label for="cim">Cím*</label>
-                    <input type="text"class="form-control" name="cim" id="cim" value="<?=($this->news ? $this->news->getTitle() : '')?>">
-                </div>
-								<div class="col-md-2">
-                	<label for="cat_id">Cikk kategória</label>
-									<select class="form-control" id="cat_id" name="cat_id">
-										<option value="" selected="selected">-- kategória kiválasztás --</option>
-										<?php if ( $this->categories ): ?>
-											<?php while( $this->categories->walk() ):
-											$cat = $this->categories->the_cat(); ?>
-											<option value="<?=$cat['ID']?>" <?=(($this->news && $cat['ID'] == $this->news->getCatID()) || $cat[ID] == $_POST['cat_id'] )?'selected="selected"':''?>><?=$cat['neve']?></option>
-											<?php endwhile; ?>
-										<?php endif; ?>
-									</select>
-                </div>
-                <div class="col-md-3" align="right">
-                <br>
-                	<? if($this->gets[1] == 'szerkeszt'): ?>
-                    <input type="hidden" name="id" value="<?=$this->gets[2]?>" />
-                    <a href="/<?=$this->gets[0]?>"><button type="button" class="btn btn-danger btn-3x"><i class="fa fa-arrow-circle-left"></i> bezár</button></a>
-                    <button name="save" class="btn btn-success">Változások mentése <i class="fa fa-check-square"></i></button>
-                    <? else: ?>
-                    <button name="add" class="btn btn-primary">Hozzáadás <i class="fa fa-check-square"></i></button>
-                    <? endif; ?>
-                </div>
-							</div>
-							<br>
-							<div class="row">
-                <div class="col-md-9">
-                    <label for="eleres">Elérési kulcs: <?=\PortalManager\Formater::tooltip('Hagyja üresen, hogy a rendszer automatikusan generáljon elérési kulcsot. <br><br>Kérjük ne használjon ékezeteket, speciális karaktereket és üres szóközöket.<br> Példa a helyes használathoz: ez_az_elso_bejegyzesem');?></label>
-                    <div class="input-group">
-                    	<span class="input-group-addon">
-                        <i class="fa fa-home" title="<?=HOMEDOMAIN?>hirek/"></i>
-                        </span>
-                    	<input type="text" class="form-control" placeholder="valami_szoveg" name="eleres" id="eleres" value="<?=($this->news ? $this->news->getAccessKey() : '')?>">
-                    </div>
-                </div>
-                 <div class="col-md-2">
-                    <label for="belyegkep">Bélyegkép <?=\PortalManager\Formater::tooltip('Ajánlott kép paraméterek:<br>Dimenzió: 1400 x * pixel <br>Fájlméret: max. 1 MB <br><br>A túl nagy fájlméretű képek lassítják a betöltés idejét és a facebook sem tudja időben letölteni, így megosztáskor kép nélkül jelenhet meg a megosztott bejegyzés az idővonalon.');?></label>
-                    <div style="display:block;">
-                        <input type="text" id="belyegkep" name="belyegkep" value="<?=($this->news) ? $this->news->getImage() : ''?>" style="display:none;">
-                        <a title="Kép kiválasztása" href="<?=FILE_BROWSER_IMAGE?>&field_id=belyegkep" data-fancybox-type="iframe" class="btn btn-sm btn-default iframe-btn" type="button"><i class="fa fa-search"></i></a>
-                        <span id="url_img" class="img-selected-thumbnail"><a href="<?=($this->news) ? $this->news->getImage() : ''?>" class="zoom"><img src="<?=($this->news) ? $this->news->getImage() : ''?>" title="Kiválasztott menükép" alt=""></a></span>
-                        <i class="fa fa-times" title="Kép eltávolítása" id="remove_url_img" style="color:red; <?=($this->news && $this->news->getImage() ? '' :'display:none;')?>"></i>
-                    </div>
-                </div>
-                <div class="col-md-1">
-                    <label for="lathato">Látható:</label>
-                    <input type="checkbox" class="form-control" <?=($this->news && $this->news->getVisibility() ? 'checked="checked"' : '')?> id="lathato" name="lathato" />
-                </div>
-						</div>
-						<br>
-						<div class="row">
-							<div class="col-md-1">
-								<label for="fontos">Fontos:</label>
-								<input type="checkbox" class="form-control" <?=($this->news && $this->news->isFontos() ? 'checked="checked"' : '')?> id="fontos" name="fontos" />
-							</div>
-							<div class="col-md-1">
-								<label for="kozerdeku">Közérdekű:</label>
-								<input type="checkbox" class="form-control" <?=($this->news && $this->news->isKozerdeku() ? 'checked="checked"' : '')?> id="kozerdeku" name="kozerdeku" />
-							</div>
-            </div>
-
-            <br />
-            <div class="row">
-                <div class="col-md-12">
-                    <label for="bevezeto">Bevezető szöveg (a listázásban jelenik meg)</label>
-                    <div style="background:#fff;"><textarea name="bevezeto" id="bevezeto" class="form-control"><?=($this->news ? $this->news->getDescription() : '')?></textarea></div>
-                </div>
-            </div>
-
-            <br />
-            <div class="row">
-            	<div class="col-md-12">
-                	<label for="szoveg">Cikk tartalma</label>
-                	<div style="background:#fff;"><textarea name="szoveg" id="szoveg" class="form-control"><?=($this->news ? $this->news->getHtmlContent() : '')?></textarea></div>
-                </div>
-            </div>
-            </form>
-        </div>
-    </div>
-</div>
-<? endif; ?>
 <div class="row">
 	<div class="col-md-12">
     	<div class="con">
-        	<h2>Oldalak</h2>
-            <br />
             <div class="row" style="color:#aaa;">
             	<div class="col-md-6">
                 	<em>Cím</em>
@@ -161,8 +48,8 @@
                 	<? if($news[lathato] == '1'): ?><i style="color:green;" class="fa fa-check"></i><? else: ?><i style="color:red;" class="fa fa-times"></i><? endif; ?>
                 </div>
                 <div class="col-md-1 actions" align="right">
-                    <a href="/<?=$this->gets[0]?>/szerkeszt/<?=$news[ID]?>" title="Szerkesztés"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
-                    <a href="/<?=$this->gets[0]?>/torles/<?=$news[ID]?>" title="Törlés"><i class="fa fa-times"></i></a>
+                    <a href="/<?=$this->gets[0]?>/creator/szerkeszt/<?=$news[ID]?>" title="Szerkesztés"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
+                    <a href="/<?=$this->gets[0]?>/creator/torles/<?=$news[ID]?>" title="Törlés"><i class="fa fa-times"></i></a>
                 </div>
            	</div>
             <? endwhile; else:?>

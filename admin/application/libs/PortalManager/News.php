@@ -55,10 +55,7 @@ class News
 		$eleres = ($data['eleres']) ?: false;
 		$szoveg = ($data['szoveg']) ?: NULL;
 		$bevezeto = ($data['bevezeto']) ?: NULL;
-		$cat_id = ($data['cat_id']) ?: NULL;
 		$lathato= ($data['lathato'] == 'on') ? 1 : 0;
-		$kozerdeku = ($data['kozerdeku'] == 'on') ? 1 : 0;
-		$fontos = ($data['fontos'] == 'on') ? 1 : 0;
 
 		if (!$cim) { throw new \Exception("Kérjük, hogy adja meg az <strong>Cikk címét</strong>!"); }
 
@@ -72,16 +69,19 @@ class News
 			array(
 				'cim' => $cim,
 				'eleres' => $eleres,
-				'cat_id' => $cat_id,
 				'szoveg' => $szoveg,
 				'bevezeto' => $bevezeto,
 				'idopont' => NOW,
 				'letrehozva' => NOW,
-				'lathato' => $lathato,
-				'kozerdeku' => $kozerdeku,
-				'fontos' => $fontos
+				'lathato' => $lathato
 			)
 		);
+
+		$id = $this->db->lastInsertId();
+
+		$this->resaveCategories( $id, $data['cats'] );
+
+		return $id;
 	}
 
 	public function save( $data )
@@ -91,10 +91,7 @@ class News
 		$szoveg = ($data['szoveg']) ?: NULL;
 		$bevezeto = ($data['bevezeto']) ?: NULL;
 		$kep 	= ($data['belyegkep']) ?: NULL;
-		$cat_id = ($data['cat_id']) ?: NULL;
 		$lathato= ($data['lathato']) ? 1 : 0;
-		$kozerdeku = ($data['kozerdeku'] == 'on') ? 1 : 0;
-		$fontos = ($data['fontos'] == 'on') ? 1 : 0;
 
 		if (!$cim) { throw new \Exception("Kérjük, hogy adja meg a <strong>Cikk címét</strong>!"); }
 
@@ -108,17 +105,36 @@ class News
 			array(
 				'cim' => $cim,
 				'eleres' => $eleres,
-				'cat_id' => $cat_id,
 				'belyeg_kep' => $kep,
 				'szoveg' => $szoveg,
 				'bevezeto' => $bevezeto,
 				'idopont' => NOW,
 				'lathato' => $lathato,
-				'kozerdeku' => $kozerdeku,
-				'fontos' => $fontos
 			),
 			sprintf("ID = %d", $this->selected_news_id)
 		);
+
+		$this->resaveCategories( $this->selected_news_id, $data['cats'] );
+	}
+
+	public function resaveCategories( $id, $cats = array() )
+	{
+		// delete previous
+		$this->db->squery("DELETE FROM cikk_xref_cat WHERE cikk_id = :cikkid", array(
+			'cikkid' => $id
+		));
+
+		// reinsert
+		if( !empty($cats) )
+		foreach ((array)$cats as $cid ) {
+			$this->db->insert(
+				'cikk_xref_cat',
+				array(
+					'cikk_id' => $id,
+					'cat_id' => $cid
+				)
+			);
+		}
 	}
 
 	private function checkEleres( $text )
@@ -345,6 +361,44 @@ class News
 	public function getCurrentPage()
 	{
 		return $this->current_page;
+	}
+	public function getCategories()
+	{
+		$q = "SELECT
+			c.cat_id,
+			ct.neve,
+			ct.bgcolor
+		FROM
+		cikk_xref_cat as c
+		LEFT OUTER JOIN cikk_kategoriak as ct ON ct.ID = c.cat_id
+		WHERE 1=1 and c.cikk_id = :cikk
+		ORDER BY ct.sorrend ASC
+		";
+
+		$qry = $this->db->squery( $q, array(
+			'cikk' => $this->getId()
+		));
+
+		if ($qry->rowCount() == 0) {
+			return array();
+		} else {
+			$data = $qry->fetchAll(\PDO::FETCH_ASSOC);
+			$inids = array();
+
+			$bdata = array();
+			foreach ($data as $d) {
+				$d['label'] = '<span class="cat-label" style="background-color:'.$d['bgcolor'].';">'.$d['neve'].'</span>';
+				$inids[] = $d['cat_id'];
+				$bdata[] = $d;
+			}
+			unset($data);
+			unset($qry);
+
+			return array(
+				'ids' => $inids,
+				'list' => $bdata
+			);
+		}
 	}
 	/*-----  End of GETTERS  ------*/
 	public function __destruct()
