@@ -11,22 +11,27 @@ class home extends Controller{
 			$this->out('homepage', true);
 			$this->out('bodyclass', 'homepage');
 
+			// Közérdekű hírek
 			$news = new News( false, array( 'db' => $this->db ) );
-			$temp = new Template( VIEW .'hirek/template/' );
-			$ptemp = new Template( VIEW .'templates/' );
-
+			$hirek = array();
 			$arg = array(
-				'limit' => 30,
-				'page' 	=> 1,
-				'order' => array(
-					'by' => 'rand()'
-				)
+				'limit' => 2,
+				'page' 	=> 1
 			);
-			$this->out( 'news', $news->getTree( $arg ) );
-			$this->out( 'template', $temp );
-			$this->out( 'ptemplate', $ptemp );
-			$this->out( 'factorylist', $this->shop->getFactoryList( 'm.ID, m.neve, m.image', array('onlyimaged' => true)) );
+			$news->getTree( $arg );
 
+			if ( $news->has_news() ) {
+				while ( $news->walk() ) {
+					$hir = $news->the_news();
+					$hirek[] = (new News(false, array( 'db' => $this->db )))->get($hir[ID]);
+				}
+			}
+			$this->out( 'news', $hirek );
+			unset($news);
+			unset($hirek);
+
+
+			//
 			/*
 			// Újdonságok
 			$arg = array(
@@ -85,6 +90,7 @@ class home extends Controller{
 			// RENDER OUTPUT
 				parent::bodyHead();					# HEADER
 				$this->view->render(__CLASS__);		# CONTENT
+				$this->view->news = null;
 				parent::__destruct();				# FOOTER
 		}
 	}

@@ -110,3 +110,24 @@
   </div>
 </form>
 <? endif; ?>
+<script>
+    $(function(){
+        $('#menu_type').change(function(){
+            var stype = $(this).val();
+            $('.type-row').hide();
+            $('.type_'+stype).show();
+            $('.submit-row').show();
+        });
+        $('#remove_url_img').click( function (){
+            $('#url_img').find('img').attr('src','').hide();
+            $('#belyegkep').val('');
+            $(this).hide();
+        });
+    })
+
+    function responsive_filemanager_callback(field_id){
+        var imgurl = $('#'+field_id).val();
+        $('#url_img').find('img').attr('src',imgurl).show();
+        $('#remove_url_img').show();
+    }
+</script>

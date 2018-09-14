@@ -4,45 +4,46 @@
       <div class="top-articles">
         <div class="flex">
           <div class="top">
+            <?php
+              $top_hir_cats = $this->news[0]->getCategories();
+            ?>
             <div class="wrapper">
               <div class="holder">
                 <div class="flex">
-                  <div class="image">
-
+                  <div class="image image-abs-center">
+                    <img src="<?=($this->news[0]->getImage(true))?$this->news[0]->getImage(true):''?>" alt="">
                   </div>
                   <div class="data">
                     <div class="wrapper">
                       <div class="badges">
-                        <div class="badge-orange">
-                          Közérdekű
+                        <?php if ( !empty($top_hir_cats['ids']) ): ?>
+                        <?php foreach ( $top_hir_cats['list'] as $list ): ?>
+                        <div style="background-color:<?=$list['bgcolor']?>;">
+                          <?=$list['neve']?>
                         </div>
-                        <div class="badge-red">
-                          Fontos
-                        </div>
-                        <div class="badge-green">
-                          Új hír
-                        </div>
+                        <?php endforeach; ?>
+                        <?php endif; ?>
                         <div class="clr"></div>
                       </div>
                       <div class="data-content">
-                        <h3>Szentmisék, szertartások az Évközi 12. és 13. héten.</h3>
+                        <h3><?=$this->news[0]->getTitle()?></h3>
                         <div class="desc">
-                          Június 25-től 30-ig hétköznap nem lesznek Istentiszteletek.
+                          <?=$this->news[0]->getDescription()?>
                         </div>
                       </div>
                       <div class="footer">
                         <div class="flex">
                           <div class="date">
-                            2018.08.01.
+                            <?=$this->news[0]->getIdopont('Y.m.d.')?>
                           </div>
                           <div class="comment">
-                            <i class="fa fa-comment-o"></i> 0
+                            <i class="fa fa-comment-o"></i> <?=$this->news[0]->getCommentCount()?>
                           </div>
                           <div class="views">
-                            <i class="fa fa-eye"></i> 123
+                            <i class="fa fa-eye"></i> <?=$this->news[0]->getVisitCount()?>
                           </div>
                           <div class="button">
-                            <a href="#">Tovább</a>
+                            <a href="<?=$this->news[0]->getUrl()?>">Tovább</a>
                           </div>
                         </div>
                       </div>
@@ -69,31 +70,31 @@
               </div>
               <div class="article">
                 <div class="title">
-                  <a href="#">A tarló- és a növényi hulladék égetésének szabályai.</a>
+                  <a href="<?=$this->news[1]->getUrl()?>"><?=$this->news[1]->getTitle()?></a>
                 </div>
                 <div class="image">
-                  <div class="wrapper">
-
+                  <div class="wrapper image-abs-center by-width">
+                    <img src="<?=($this->news[1]->getImage(true))?$this->news[1]->getImage(true):''?>" alt="">
                   </div>
                   <div class="excerpt">
                     <div class="wrapper">
-                      A mezőgazdasági erő- és munkagépek, illetve az aratás tűzvédelmi szabályai A szabályok betartása különösen fontos...
+                      <?=$this->news[1]->getDescription()?>
                     </div>
                   </div>
                 </div>
                 <div class="footer">
                   <div class="flex">
                     <div class="date">
-                      2018.08.01.
+                      <?=$this->news[1]->getIdopont('Y.m.d.')?>
                     </div>
                     <div class="comment">
-                      <i class="fa fa-comment-o"></i> 0
+                      <i class="fa fa-comment-o"></i> <?=$this->news[1]->getCommentCount()?>
                     </div>
                     <div class="views">
-                      <i class="fa fa-eye"></i> 123
+                      <i class="fa fa-eye"></i> <?=$this->news[1]->getVisitCount()?>
                     </div>
                     <div class="button">
-                      <a href="#">Tovább</a>
+                      <a href="<?=$this->news[1]->getUrl()?>">Tovább</a>
                     </div>
                   </div>
                 </div>

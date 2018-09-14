@@ -197,10 +197,10 @@ class News
 
 		// Legfelső színtű Hírak
 		$qry = "
-			SELECT 			SQL_CALC_FOUND_ROWS
-							*
-			FROM 			hirek
-			WHERE 			ID IS NOT NULL ";
+			SELECT SQL_CALC_FOUND_ROWS
+				*
+			FROM hirek
+			WHERE ID IS NOT NULL ";
 
 		if( $arg['except_id'] ) {
 			$qry .= " and ID != ".$arg['except_id'];
@@ -310,9 +310,13 @@ class News
 		return $this->current_get_item;
 	}
 
-	public function getImage()
+	public function getImage( $url = false )
 	{
-		return $this->current_get_item['belyeg_kep'];
+		if ( $url ) {
+			return UPLOADS . str_replace('/src/uploads/','',$this->current_get_item['belyeg_kep']);
+		} else {
+			return $this->current_get_item['belyeg_kep'];
+		}
 	}
 	public function getId()
 	{
@@ -324,7 +328,7 @@ class News
 	}
 	public function getUrl()
 	{
-		return DOMAIN.'hirek/'.$this->current_get_item['eleres'];
+		return DOMAIN.'cikkek/'.$this->current_get_item['eleres'];
 	}
 	public function getAccessKey()
 	{
@@ -341,6 +345,18 @@ class News
 	public function getCatID()
 	{
 		return $this->current_get_item['cat_id'];
+	}
+	public function getCommentCount()
+	{
+		return 0;
+	}
+	public function getVisitCount()
+	{
+		return 0;
+	}
+	public function getIdopont( $format = false )
+	{
+		return ( !$format ) ? $this->current_get_item['idopont'] : date($format, strtotime($this->current_get_item['idopont']));
 	}
 	public function getVisibility()
 	{

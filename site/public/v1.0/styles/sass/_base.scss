@@ -76,6 +76,31 @@ h1{
 	*/
 }
 
+.image-abs-center{
+	position: relative;
+	overflow: hidden;
+	& > img {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		height: 110%;
+		max-height: 110%;
+		width: auto;
+		max-width: initial;
+		-webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+
+	}
+	&.by-width{
+		& > img {
+			width: 110%;
+			max-width: 110%;
+			height: auto;
+			max-height: initial;
+		}
+	}
+}
+
 .address-map-holder{
 	margin: 25px auto 0 auto;
 	iframe{
@@ -508,7 +533,7 @@ body.singlepage{
 				border: 0.5px solid #d9d9d9;
 
 				.img {
-					height: 220px;
+					height: 13vh;
 					position: relative;
 					overflow: hidden;
 					border-bottom: 0.5px solid #d9d9d9;
@@ -529,6 +554,7 @@ body.singlepage{
 					margin: 10px 0;
 
 					h2 {
+						font-size: 1.2em;
 						position: absolute;
 						top: 50%;
 						width: 100%;
@@ -603,7 +629,7 @@ body.singlepage{
 			&:hover{
 				& > .wrapper{
 					background: #c8cbcc;
-					border: 0.5px solid $color-blue;
+					border: 0.5px solid $color-orange;
 
 					.content{
 						&:after{
@@ -616,7 +642,7 @@ body.singlepage{
 					}
 					.more{
 						a{
-							background: $color-blue;
+							background: $color-orange;
 						}
 					}
 				}
@@ -632,6 +658,20 @@ body.singlepage{
     margin: 20px 0 40px 0;
     padding: 0 15px;
 	}
+	& > .pw{
+		display: -webkit-box;
+	  display: -ms-flexbox;
+	  display: flex;
+		flex-wrap: wrap;
+		align-items: flex-start;
+
+		& > .categories{
+			flex-basis: 20%;
+		}
+		& > .art-list{
+			flex: 1;
+		}
+	}
 	.articles {
 		display: -webkit-box;
 	  display: -ms-flexbox;
@@ -640,7 +680,7 @@ body.singlepage{
 		align-items: flex-start;
 
 		& > article{
-			padding: 15px;
+			padding: 5px;
 			flex-basis: calc(100% / 3);
 		}
 	}
@@ -1376,11 +1416,11 @@ body.singlepage{
 }
 
 .pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus{
-	background-color: $color-blue;
-	border-color: darken($color-blue, 10%);
+	background-color: $color-orange;
+	border-color: darken($color-orange, 10%);
 }
 .pagination>li>a, .pagination>li>span{
-	color: $color-blue;
+	color: $color-orange;
 	border: 0.4px solid #dedede;
 	margin: 0 2px;
 }
