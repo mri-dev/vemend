@@ -3,7 +3,7 @@
 		<h1><?=$cim?></h1>
 		<div class="subline">
 			<div class="backurl">
-				<a href="/cikkek"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> vissza a hírekhez</a>
+				<a href="/cikkek"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> vissza a cikkekhez</a>
 			</div>
 			<div class="share">
 				<div class="fb-like" data-href="<?=DOMAIN?>cikkek/<?=$eleres?>" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
@@ -12,7 +12,12 @@
 			<div class="nav">
 				<ul class="cat-nav">
 					<li><a href="/"><i class="fa fa-home"></i></a></li>
-					<li><a href="/cikkek">Hírek</a></li>
+					<li><a href="/cikkek">Cikkek</a></li>
+					<li>
+						<?php foreach ( (array)$categories['list'] as $cat ): ?>
+						<a class="cat" href="/cikkek/<?=\Helper::makeSafeUrl($cat['neve'])?>"><?=$cat['label']?></a>
+						<?php endforeach; ?>
+					</li>
 				</ul>
 			</div>
 		</div>

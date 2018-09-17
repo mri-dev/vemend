@@ -464,7 +464,7 @@ body.singlepage{
 			&.slick-active{
 				& > button{
 					&:after{
-						color: $color-blue;
+						color: $color-orange;
 					}
 				}
 			}
@@ -489,7 +489,7 @@ body.singlepage{
 			height: 25px;
 			line-height: 25px;
 			top: 50%;
-			color: $color-blue;
+			color: $color-orange;
 			left: 50%;
     	text-indent: initial;
 			position: absolute;
@@ -511,7 +511,7 @@ body.singlepage{
 		}
 
 		&:hover{
-			background: $color-blue;
+			background: $color-orange;
 			color: white;
 
 			&:after{
@@ -667,6 +667,41 @@ body.singlepage{
 
 		& > .categories{
 			flex-basis: 20%;
+
+			.list{
+				margin: 10px 0 0 0;
+				a{
+					display: block;
+					padding: 8px 0;
+					font-size: 1.1em;
+					color: #828282;
+					text-decoration: none;
+					&:hover{
+						color: #4c4c4c;
+					}
+				}
+				.dot{
+					position: relative;
+					margin: 0 8px 0 2px;
+					&:before{
+						font-family: 'FontAwesome';
+						content:"\f1db";
+						font-size: 14px;
+					}
+				}
+
+				& > div.active{
+					a{
+						font-weight: bold;
+						color: #222222;
+					}
+					.dot{
+						&:before{
+							content:"\f111";
+						}
+					}
+				}
+			}
 		}
 		& > .art-list{
 			flex: 1;
@@ -1722,6 +1757,15 @@ body.singlepage{
 		a{
 			color: #4a4a4a;
 			font-size: 1.1em;
+		}
+		a.cat{
+			color: white;
+			font-size: 0.8em;
+			text-decoration: none;
+
+			span{
+				padding: 2px 4px;
+			}
 		}
 
 		&:last-child{

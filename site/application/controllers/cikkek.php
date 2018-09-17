@@ -10,18 +10,17 @@ class cikkek extends Controller{
 
 		$this->out( 'bodyclass', 'article' );
 
-
 		$url = DOMAIN.__CLASS__;
 		$image = \PortalManager\Formater::sourceImg($this->view->settings['logo']);
-		$title = 'Hírek';
-		$description = $this->view->settings['page_title'].' friss hírek. Kövesd oldalunkat és tájékozódj az újdonságokról!';
+		$title = 'Bejegyzéseink';
+		$description = $this->view->settings['page_title'].' friss bejegyzései. Kövesd oldalunkat és tájékozódj az újdonságokról!';
 
 		$news = new News( false, array( 'db' => $this->db ) );
 		$temp = new Template( VIEW . __CLASS__.'/template/' );
 		$this->out( 'template', $temp );
 
-		if ( $this->view->gets[1] != '' && !is_numeric($this->view->gets[1]) ) {
-			$this->out( 'news', $news->get( $this->view->gets[1] ) );
+		if ( isset($_GET['cikk']) ) {
+			$this->out( 'news', $news->get( trim($_GET['cikk']) ) );
 			$arg = array(
 				'limit' => 4,
 				'page' 	=> 1,
@@ -36,27 +35,37 @@ class cikkek extends Controller{
 			if ( $this->view->news->getImage() ) {
 				$image = \PortalManager\Formater::sourceImg($this->view->news->getImage());
 			}
-			$title = $this->view->news->getTitle() . ' | Hírek';
+			$title = $this->view->news->getTitle() . ' | Cikkek';
 			$description = substr(strip_tags($this->view->news->getDescription()), 0 , 350);
 
 		} else {
+			$this->out( 'newscats', $news->categoryList());
+			$cat_slug =  trim($_GET['cat']);
+
+			if ($cat_slug == '') {
+				$this->out( 'head_img_title', 'Bejegyzéseink' );
+				$this->out( 'head_img', IMGDOMAIN.$this->view->settings['homepage_coverimg'] );
+			} else {
+				$this->out( 'head_img_title', $this->view->newscats[$cat_slug]['neve'] );
+				$this->out( 'head_img', IMGDOMAIN.$this->view->settings['homepage_coverimg'] );
+			}
+
+
+
 			$arg = array(
-				'limit' => 9,
-				'page' => Helper::currentPageNum()
+				'limit' => 3,
+				'in_cat' => (int)$this->view->newscats[$cat_slug]['ID'],
+				'page' => (isset($_GET['page'])) ? (int)$_GET['page'] : 1,
 			);
 			$this->out( 'list', $news->getTree( $arg ) );
 			$this->out( 'navigator', (new Pagination(array(
 					'class' 	=> 'pagination pagination-sm center',
 					'current' 	=> $news->getCurrentPage(),
 					'max' 		=> $news->getMaxPage(),
-					'root' 		=> '/'.__CLASS__,
+					'root' 		=> '/'.__CLASS__. (isset($_GET['cat']) ? '/'.$_GET['cat']: ''),
 					'item_limit'=> 12
 				)))->render() );
 		}
-
-		$this->out( 'head_img_title', 'Bejegyzéseink' );
-		$this->out( 'head_img', IMGDOMAIN.$this->view->settings['homepage_coverimg'] );
-
 
 		// SEO Információk
 		$SEO = null;

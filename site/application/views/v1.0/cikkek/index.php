@@ -2,6 +2,7 @@
 		<? if( $this->news ):
 			$arg = $this->news->getFullData();
 			$arg['date_format'] = $this->settings['date_format'];
+			$arg['categories'] = $this->news->getCategories();
 		?>
 		<div class="pw">
 			<? echo $this->template->get( 'hir-olvas',  $arg ); ?>
@@ -39,6 +40,16 @@
 			<div class="pw">
 				<div class="categories">
 					<h2>Kategóriák</h2>
+					<div class="list">
+						<div class="cat <?=($_GET['cat'] == '')?'active':''?>">
+							<a href="/cikkek/"><span class="dot" style="color:black;"></span> Összes bejegyzés</a>
+						</div>
+						<?php foreach ( (array)$this->newscats as $nc ): ?>
+						<div class="cat <?=($_GET['cat'] == ($nc['slug']))?'active':''?>">
+							<a href="/cikkek/<?=($nc['slug'])?>"><span class="dot" style="color:<?=$nc['bgcolor']?>;"></span> <?=$nc['neve']?></a>
+						</div>
+						<?php endforeach; ?>
+					</div>
 				</div>
 				<div class="art-list">
 					<div class="articles">

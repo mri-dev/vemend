@@ -195,21 +195,26 @@ class News
 			}
 		}
 
-		// Legfelső színtű Hírak
+		// Legfelső színtű
 		$qry = "
 			SELECT SQL_CALC_FOUND_ROWS
-				*
-			FROM hirek
-			WHERE ID IS NOT NULL ";
+				h.*
+			FROM hirek as h
+			WHERE h.ID IS NOT NULL ";
 
 		if( $arg['except_id'] ) {
-			$qry .= " and ID != ".$arg['except_id'];
+			$qry .= " and h.ID != ".$arg['except_id'];
 		}
+
+		if (isset($arg['in_cat']) && !empty($arg['in_cat']) && $arg['in_cat'] != 0) {
+			$qry .= " and ".$arg['in_cat']." IN (SELECT cat_id FROM cikk_xref_cat WHERE cikk_id = h.ID)";
+		}
+
 
 		if( $arg['order'] ) {
 			$qry .= " ORDER BY ".$arg['order']['by']." ".$arg['order']['how'];
 		} else {
-			$qry .= " ORDER BY letrehozva DESC ";
+			$qry .= " ORDER BY h.letrehozva DESC ";
 		}
 
 
@@ -295,8 +300,6 @@ class News
 		// Kép
 		$text = str_replace( '../../src/uploads/', UPLOADS, $text );
 
-
-
 		return $text;
 	}
 
@@ -328,7 +331,7 @@ class News
 	}
 	public function getUrl()
 	{
-		return DOMAIN.'cikkek/'.$this->current_get_item['eleres'];
+		return DOMAIN.'cikkek/olvas/'.$this->current_get_item['eleres'];
 	}
 	public function getAccessKey()
 	{
@@ -378,7 +381,28 @@ class News
 	{
 		return $this->current_page;
 	}
-	public function getCategories()
+	public function categoryList()
+	{
+		$q = "SELECT * FROM cikk_kategoriak ORDER BY sorrend ASC";
+
+		$qry = $this->db->squery( $q, array());
+
+		if ($qry->rowCount() == 0) {
+			return array();
+		} else {
+			$data = $qry->fetchAll(\PDO::FETCH_ASSOC);
+			$bdata = array();
+			foreach ($data as $d) {
+				$d['label'] = '<span class="cat-label" style="background-color:'.$d['bgcolor'].';">'.$d['neve'].'</span>';
+				$bdata[$d['slug']] = $d;
+			}
+			unset($data);
+			unset($qry);
+
+			return $bdata;
+		}
+	}
+	public function getCategories( $by_cikk = true )
 	{
 		$q = "SELECT
 			c.cat_id,
@@ -387,13 +411,20 @@ class News
 		FROM
 		cikk_xref_cat as c
 		LEFT OUTER JOIN cikk_kategoriak as ct ON ct.ID = c.cat_id
-		WHERE 1=1 and c.cikk_id = :cikk
-		ORDER BY ct.sorrend ASC
-		";
+		WHERE 1=1 and ";
+		if ($by_cikk) {
+				$q .= " c.cikk_id = :cikk";
+		}
 
-		$qry = $this->db->squery( $q, array(
-			'cikk' => $this->getId()
-		));
+		$q .= "	ORDER BY ct.sorrend ASC";
+
+		$param = array();
+
+		if ($by_cikk) {
+			$param['cikk'] = $this->getId();
+		}
+
+		$qry = $this->db->squery( $q, $param);
 
 		if ($qry->rowCount() == 0) {
 			return array();
