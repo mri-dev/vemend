@@ -3,7 +3,10 @@
 		<h1><?=$cim?></h1>
 		<div class="subline">
 			<div class="backurl">
-				<a href="/cikkek"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> vissza a cikkekhez</a>
+				<a href="/cikkek"><i class="fa fa-th" aria-hidden="true"></i> összes cikk</a>
+				<?php if (isset($_GET['cat']) && $_GET['cat'] != '' && $_GET['cat'] != 'olvas'): ?>
+					<a href="/cikkek/<?=$_GET['cat']?>"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> <?=$newscats[$_GET['cat']]['neve']?></a>
+				<?php endif; ?>
 			</div>
 			<div class="share">
 				<div class="fb-like" data-href="<?=DOMAIN?>cikkek/<?=$eleres?>" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>

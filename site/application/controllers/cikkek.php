@@ -18,12 +18,14 @@ class cikkek extends Controller{
 		$news = new News( false, array( 'db' => $this->db ) );
 		$temp = new Template( VIEW . __CLASS__.'/template/' );
 		$this->out( 'template', $temp );
+		$this->out( 'newscats', $news->categoryList());
 
 		if ( isset($_GET['cikk']) ) {
 			$this->out( 'news', $news->get( trim($_GET['cikk']) ) );
 			$arg = array(
 				'limit' => 4,
 				'page' 	=> 1,
+				'in_cat' => (isset($_GET['cat']) && $_GET['cat'] != '' && $_GET['cat'] != 'olvas') ? $this->view->newscats[$_GET['cat']][ID] : false,
 				'order' => array(
 					'by' => 'rand()'
 				),
@@ -39,7 +41,7 @@ class cikkek extends Controller{
 			$description = substr(strip_tags($this->view->news->getDescription()), 0 , 350);
 
 		} else {
-			$this->out( 'newscats', $news->categoryList());
+
 			$cat_slug =  trim($_GET['cat']);
 
 			if ($cat_slug == '') {
@@ -50,10 +52,8 @@ class cikkek extends Controller{
 				$this->out( 'head_img', IMGDOMAIN.$this->view->settings['homepage_coverimg'] );
 			}
 
-
-
 			$arg = array(
-				'limit' => 3,
+				'limit' => 12,
 				'in_cat' => (int)$this->view->newscats[$cat_slug]['ID'],
 				'page' => (isset($_GET['page'])) ? (int)$_GET['page'] : 1,
 			);

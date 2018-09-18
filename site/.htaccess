@@ -18,19 +18,19 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
-RewriteRule ^cikkek(/)?$ index.php?tag=cikkek&list=1 [QSA,L]
+RewriteRule ^cikkek(/)([0-9+])??$ index.php?tag=cikkek&list=1&page=$2 [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
-RewriteRule ^cikkek/([a-zA-Z_-]+)/([a-zA-Z_-]+)(/)?$ index.php?tag=cikkek&reader=1&cikk=$2 [QSA,L]
+RewriteRule ^cikkek/([0-9a-zA-Z_-]+)/([0-9a-zA-Z_-]+)(/)?$ index.php?tag=cikkek&reader=1&cikk=$2&cat=$1 [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
-RewriteRule ^cikkek/([a-zA-Z_-]+)(/)?([0-9+])?(/)?$ index.php?tag=cikkek&list=1&cat=$1&page=$3 [QSA,L]
+RewriteRule ^cikkek/([0-9a-zA-Z_-]+)(/)?([0-9+])?(/)?$ index.php?tag=cikkek&list=1&cat=$1&page=$3 [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

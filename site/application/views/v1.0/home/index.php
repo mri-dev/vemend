@@ -61,10 +61,10 @@
                     Legújabb
                   </div>
                   <div class="nepszeru">
-                    <a href="#"><i class="fa fa-star"></i> Legnépszerűbbek</a>
+                    <a href="/cikkek/?by=popular&ord=ASC"><i class="fa fa-star"></i> Legnépszerűbbek</a>
                   </div>
                   <div class="more">
-                    <a href="#"><i class="fa fa-bars"></i> Összes cikk</a>
+                    <a href="/cikkek/"><i class="fa fa-bars"></i> Összes cikk</a>
                   </div>
                 </div>
               </div>
@@ -154,59 +154,28 @@
                     Miserend
                   </div>
                   <div class="more">
-                    <a href="#"><i class="fa fa-bars"></i> Összes miserend</a>
+                    <a href="/cikkek/miserend"><i class="fa fa-bars"></i> Összes miserend</a>
                   </div>
                 </div>
               </div>
               <div class="content-holder">
+                <?php $misn = 0; foreach ($this->miserend_news as $new): $misn++; if($misn == 1){  $is_top = true; }else{  $is_top = false; } ?>
                 <article class="top">
-                  <?php if ($is_top || true): ?>
-                    <div class="image">
-                      <img src="" alt="">
+                  <?php if ($is_top ): ?>
+                    <div class="image image-abs-center">
+                      <img src="<?=($new->getImage(true)) ? $new->getImage(true) : ''?>" alt="">
                     </div>
                   <?php endif; ?>
                   <div class="title">
-                    <a href="#">Misrended cikk címe, xx. és xx. héten.</a>
+                    <a href="<?=$new->getUrl('miserend')?>"><?=$new->getTitle()?></a>
                   </div>
                   <div class="meta">
                     <div class="date">
-                      2018. június 24-től július 8-ig
+                      <?=$new->getDescription()?>
                     </div>
                   </div>
                 </article>
-
-                <article>
-                  <div class="title">
-                    <a href="#">Misrended cikk címe, xx. és xx. héten.</a>
-                  </div>
-                  <div class="meta">
-                    <div class="date">
-                      2018. június 24-től július 8-ig
-                    </div>
-                  </div>
-                </article>
-
-                <article>
-                  <div class="title">
-                    <a href="#">Misrended cikk címe, xx. és xx. héten.</a>
-                  </div>
-                  <div class="meta">
-                    <div class="date">
-                      2018. június 24-től július 8-ig
-                    </div>
-                  </div>
-                </article>
-
-                <article>
-                  <div class="title">
-                    <a href="#">Misrended cikk címe, xx. és xx. héten.</a>
-                  </div>
-                  <div class="meta">
-                    <div class="date">
-                      2018. június 24-től július 8-ig
-                    </div>
-                  </div>
-                </article>
+                <?php endforeach; ?>
               </div>
             </div>
           </div>

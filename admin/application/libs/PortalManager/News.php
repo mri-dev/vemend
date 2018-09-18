@@ -17,7 +17,7 @@ class News
 	private $current_item = false;
 	private $current_get_item = false;
 	private $tree_steped_item = false;
-	private $tree_items = 0;
+	public $tree_items = 0;
 	private $walk_step = 0;
 	private $selected_news_id = false;
 	private $item_limit_per_page = 50;
@@ -261,6 +261,7 @@ class News
 		if( !$this->tree_steped_item ) return false;
 
 		$this->current_item = $this->tree_steped_item[$this->walk_step];
+		$this->current_get_item = $this->current_item;
 
 		$this->walk_step++;
 
@@ -298,7 +299,7 @@ class News
 	public static function textRewrites( $text )
 	{
 		// Kép
-		$text = str_replace( '../../src/uploads/', UPLOADS, $text );
+		$text = str_replace( '../../../src/uploads/', UPLOADS, $text );
 
 		return $text;
 	}
@@ -329,9 +330,9 @@ class News
 	{
 		return $this->current_get_item['cim'];
 	}
-	public function getUrl()
+	public function getUrl( $cat_prefix = false )
 	{
-		return DOMAIN.'cikkek/olvas/'.$this->current_get_item['eleres'];
+		return DOMAIN.'cikkek/'.( ($cat_prefix) ? $cat_prefix : 'olvas' ).'/'.$this->current_get_item['eleres'];
 	}
 	public function getAccessKey()
 	{

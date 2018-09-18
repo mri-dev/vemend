@@ -11,7 +11,7 @@ class home extends Controller{
 			$this->out('homepage', true);
 			$this->out('bodyclass', 'homepage');
 
-			// Közérdekű hírek
+			// Hírek
 			$news = new News( false, array( 'db' => $this->db ) );
 			$hirek = array();
 			$arg = array(
@@ -29,6 +29,27 @@ class home extends Controller{
 			$this->out( 'news', $hirek );
 			unset($news);
 			unset($hirek);
+
+			// Miserend
+			$news = new News( false, array( 'db' => $this->db ) );
+			$cats = $news->categoryList();
+			$miserend = array();
+			$arg = array(
+				'limit' => 4,
+				'page' 	=> 1,
+				'in_cat' => $cats['miserend']['ID']
+			);
+			$news->getTree( $arg );
+
+			if ( $news->has_news() ) {
+				while ( $news->walk() ) {
+					$hir = $news->the_news();
+					$miserend[] = (new News(false, array( 'db' => $this->db )))->get($hir[ID]);
+				}
+			}
+			$this->out( 'miserend_news', $miserend );
+			unset($news);
+			unset($miserend);
 
 
 			//

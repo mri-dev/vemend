@@ -186,7 +186,11 @@
   </div>
   <?php endif; ?>
   <?php if ( !$this->hideheadimg ): ?>
-  <div class="header-img" style="background-image: url('<?=$this->head_img?>');">
+  <?php
+    $imgheader = @get_headers($this->head_img);
+    $valid_imghead = (strpos($imgheader[0], '200 OK') !== false) ? true : false;
+  ?>
+  <div class="header-img<?=(!$valid_imghead)?' noimage':''?>" style="<?=($valid_imghead)?'background-image: url(\''.$this->head_img.'\');':''?>">
     <div class="pw">
       <div class="htitle">
         <?=$this->head_img_title?>

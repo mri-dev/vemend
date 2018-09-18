@@ -3,6 +3,7 @@
 			$arg = $this->news->getFullData();
 			$arg['date_format'] = $this->settings['date_format'];
 			$arg['categories'] = $this->news->getCategories();
+			$arg['newscats'] = $this->newscats;
 		?>
 		<div class="pw">
 			<? echo $this->template->get( 'hir-olvas',  $arg ); ?>
@@ -18,6 +19,7 @@
 						$step++;
 						$arg = $this->related->the_news();
 						$arg['date_format'] = $this->settings['date_format'];
+						$arg['newscats'] = $this->newscats;
 						echo $this->template->get( 'slide', $arg );
 					}?>
 				</div>
@@ -55,15 +57,27 @@
 					<div class="articles">
 						<?
 						$step = 0;
-						while ( $this->list->walk() ) {
-							$step++;
-							$arg = $this->list->the_news();
-							$arg['date_format'] = $this->settings['date_format'];
+						if ($this->list->tree_items > 0)
+						{
+							while ( $this->list->walk() ) {
+								$step++;
+								$arg = $this->list->the_news();
+								$arg['date_format'] = $this->settings['date_format'];
+								$arg['newscats'] = $this->newscats;
 
-							echo $this->template->get( 'hir', $arg );
-						}?>
+								echo $this->template->get( 'hir', $arg );
+							}
+						} else {
+							?>
+							<div class="no-news">
+								<h3>Nincsenek cikkek.</h3>
+								A keresési feltételek alapján nem találtunk bejegyzéseket.
+							</div>
+							<?
+						}
+						?>
 					</div>
-					<?=$this->navigator?>
+					<?=($this->list->tree_items > 0)?$this->navigator:''?>
 				</div>
 			</div>
 		</div>
