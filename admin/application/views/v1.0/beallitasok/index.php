@@ -381,8 +381,34 @@
                         <input type="text" id="basics_contact_url" name="contact_url" class="form-control" value="<?=$this->settings['contact_url']?>">
                     </div>
                 </div>
-
-                 <br>
+								<br>
+                <div class="divider"></div>
+                <br>
+                <h3>Orvosi rendelő</h3>
+								<div class="row np">
+									<div class="col-md-3">
+										<label for="basics_orvosi_rendelo_orvos_nev">Orvos neve</label>
+										<input type="text" id="basics_orvosi_rendelo_orvos_nev" name="orvosi_rendelo_orvos_nev" class="form-control" value="<?=$this->settings['orvosi_rendelo_orvos_nev']?>">
+										<br>
+										<label for="basics_orvosi_rendelo_cim">Rendelő címe</label>
+										<input type="text" id="basics_orvosi_rendelo_cim" name="orvosi_rendelo_cim" class="form-control" value="<?=$this->settings['orvosi_rendelo_cim']?>">
+										<br>
+										<label for="basics_orvosi_rendelo_telefon">Rendelő telefonszámai</label>
+										<input type="text" id="basics_orvosi_rendelo_telefon" name="orvosi_rendelo_telefon" class="form-control" value="<?=$this->settings['orvosi_rendelo_telefon']?>">
+										<br>
+										<label for="basics_orvosi_rendelo_ugyelet">Ügyelet infók</label>
+										<input type="text" id="basics_orvosi_rendelo_ugyelet" name="orvosi_rendelo_ugyelet" class="form-control" value="<?=$this->settings['orvosi_rendelo_ugyelet']?>">
+									</div>
+									<div class="col-md-9" style="padding-left: 35px;">
+										<h3>Rendelési idő</h3>
+										<?php foreach (array('Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat', 'Vasárnap') as $nap): ?>
+											<label for="basics_orvosi_rendelo_ido<?=$nap?>"><?=$nap?></label>
+											<input type="text" id="basics_orvosi_rendelo_ido<?=$nap?>" name="orvosi_rendelo_nyitva_tartas[<?=$nap?>]" class="form-control" value="<?=$this->settings['orvosi_rendelo_nyitva_tartas'][$nap]?>">
+											<br>
+										<?php endforeach; ?>
+									</div>
+								</div>
+								<br>
                 <div class="divider"></div>
                 <br>
                 <h3>Webáruház</h3>

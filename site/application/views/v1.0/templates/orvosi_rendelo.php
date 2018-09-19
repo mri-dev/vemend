@@ -7,58 +7,28 @@
 <div class="cont">
   <div class="infos">
     <div class="">
-      <i class="fa fa-user"></i> Dr. Szeberényi Zsuzsanna
+      <i class="fa fa-user"></i> <?=$this->settings['orvosi_rendelo_orvos_nev']?>
     </div>
     <div class="">
-      <i class="fa fa-home"></i> 7726 Véménd, Vörösmarty Mihály utca 15.
+      <i class="fa fa-home"></i> <?=$this->settings['orvosi_rendelo_cim']?>
     </div>
     <div class="">
-      <i class="fa fa-phone"></i> 06 69/343-104 Mobil: 06 30/916-7039
+      <i class="fa fa-phone"></i> <?=$this->settings['orvosi_rendelo_telefon']?>
     </div>
     <div class="">
-      <i class="fa fa-clock-o"></i> Mohács ügyelet: 69/511-158 (16.00-08.00 óráig hívható)
+      <i class="fa fa-clock-o"></i> <?=$this->settings['orvosi_rendelo_ugyelet']?>
     </div>
   </div>
   <div class="opens">
-    <div class="flex">
-      <div class="day">
-        Hétfő
+    <?php foreach ($this->settings['orvosi_rendelo_nyitva_tartas'] as $nap => $val): ?>
+      <div class="flex">
+        <div class="day">
+          <?=$nap?>
+        </div>
+        <div class="hours">
+          <?=$val?>
+        </div>
       </div>
-      <div class="hours">
-        08.00 - 12.00
-      </div>
-    </div>
-    <div class="flex">
-      <div class="day">
-        Kedd
-      </div>
-      <div class="hours">
-        08.00 - 12.00
-      </div>
-    </div>
-    <div class="flex">
-      <div class="day">
-        Szerda
-      </div>
-      <div class="hours">
-        08.00 - 12.00
-      </div>
-    </div>
-    <div class="flex">
-      <div class="day">
-        Csütörtök
-      </div>
-      <div class="hours">
-        08.00 - 12.00
-      </div>
-    </div>
-    <div class="flex">
-      <div class="day">
-        Péntek
-      </div>
-      <div class="hours">
-        08.00 - 12.00
-      </div>
-    </div>
+    <?php endforeach; ?>
   </div>
 </div>

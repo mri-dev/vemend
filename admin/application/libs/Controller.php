@@ -48,7 +48,8 @@ class Controller {
         $this->view->gets = $this->gets;
 
         $this->AdminUser = new AdminUser( array( 'db' => $this->db, 'view' => $this->view, 'settings' => $this->view->settings )  );
-        $this->view->adm->logged = $this->AdminUser->isLogged();
+        $this->view->adm = $this->AdminUser;
+        $this->view->adm->logged = ($this->AdminUser) ? $this->AdminUser->isLogged() : false;
 
         if ( $this->view->adm->logged ) {
           $this->view->adm = $this->AdminUser;
@@ -233,7 +234,13 @@ class Controller {
         $dt = $d->fetchAll(PDO::FETCH_ASSOC);
 
         foreach($dt as $d){
-            $v[$d[bKulcs]] = $d[bErtek];
+          $ertek = $d[bErtek];
+
+          if ($ertek != '' && is_object(json_decode($ertek))) {
+            $ertek = json_decode($ertek, true);
+          }
+
+          $v[$d[bKulcs]] = $ertek;
         }
 
         $protocol = ($_SERVER['HTTPS']) ? 'https://' : 'http://';

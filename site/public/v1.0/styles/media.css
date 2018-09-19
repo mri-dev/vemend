@@ -10488,6 +10488,60 @@ body.product-page .nav.nav-fix {
   flex: 1;
 }
 
+/* line 8639, sass/_base.scss */
+.programs-view {
+  margin: 20px 0 0 0;
+}
+/* line 8641, sass/_base.scss */
+.programs-view .content-view-holder {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin: 0 -15px;
+}
+/* line 8649, sass/_base.scss */
+.programs-view .content-view-holder > div {
+  padding: 0 15px;
+}
+/* line 8653, sass/_base.scss */
+.programs-view .content-view-holder > .sidebar {
+  flex-basis: 30%;
+}
+/* line 8657, sass/_base.scss */
+.programs-view .content-view-holder > .view-holder {
+  flex: 1;
+}
+
+/* line 8664, sass/_base.scss */
+.sidebar > .box {
+  background: white;
+  margin: 0 0 20px 0;
+  box-shadow: 2px 2px 20px -10px black;
+}
+/* line 8669, sass/_base.scss */
+.sidebar > .box > .header {
+  background: #898989;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-size: 1.2em;
+  text-transform: uppercase;
+}
+/* line 8679, sass/_base.scss */
+.sidebar > .box > .c > .p {
+  padding: 15px;
+}
+/* line 8685, sass/_base.scss */
+.sidebar > .box.green-header > .header {
+  background: #8eaf35;
+}
+/* line 8690, sass/_base.scss */
+.sidebar > .box.orange-header > .header {
+  background: #f5b801;
+}
+
 /* line 1, sass/_footer.scss */
 footer {
   margin-top: 25px;

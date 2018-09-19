@@ -4,7 +4,7 @@
       Legújabb programok
     </div>
     <div class="more">
-      <a href="#"><i class="fa fa-archive"></i> Összes program</a>
+      <a href="/programok"><i class="fa fa-archive"></i> Összes program</a>
     </div>
   </div>
 </div>

@@ -8635,3 +8635,61 @@ body.product-page {
 		flex: 1;
 	}
 }
+
+.programs-view{
+	margin: 20px 0 0 0;
+	.content-view-holder{
+		display: -webkit-box;
+	  display: -ms-flexbox;
+	  display: flex;
+		flex-wrap: wrap;
+		align-items: flex-start;
+		margin: 0 -15px;
+
+		& > div {
+			padding: 0 15px;
+		}
+
+		& > .sidebar{
+			flex-basis: 30%;
+		}
+
+		& > .view-holder{
+			flex: 1;
+		}
+	}
+}
+
+.sidebar{
+	& > .box {
+		background: white;
+		margin: 0 0 20px 0;
+		box-shadow: 2px 2px 20px -10px black;
+
+		& > .header{
+			background: #898989;
+			color: white;
+			padding: 15px;
+			text-align: center;
+			font-size: 1.2em;
+			text-transform: uppercase;
+		}
+
+		& > .c {
+			& > .p {
+				padding: 15px;
+			}
+		}
+
+		&.green-header{
+			& > .header{
+				background: $color-green;
+			}
+		}
+		&.orange-header{
+			& > .header{
+				background: $color-orange;
+			}
+		}
+	}
+}

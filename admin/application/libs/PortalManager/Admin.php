@@ -1350,6 +1350,9 @@ class Admin
 	public function saveSettings($settings)
 	{
 		foreach ($settings as $k => $v ) {
+			if (is_array($v)) {
+				$v = json_encode($v, \JSON_UNESCAPED_UNICODE);
+			}
 			$this->db->query( sprintf("UPDATE beallitasok SET bErtek = '%s' WHERE bKulcs = '%s'; ", $v, $k));
 		}
 	}
