@@ -19,14 +19,14 @@ class programok extends Controller
 		$news = new Programs( false, array( 'db' => $this->db ) );
 		$temp = new Template( VIEW . __CLASS__.'/template/' );
 		$this->out( 'template', $temp );
-		$this->out( 'newscats', $news->categoryList());
+		$this->out( 'programcats', $news->categoryList());
 
 		if ( isset($_GET['cikk']) ) {
 			$this->out( 'news', $news->get( trim($_GET['cikk']) ) );
 			$arg = array(
 				'limit' => 4,
 				'page' 	=> 1,
-				'in_cat' => (isset($_GET['cat']) && $_GET['cat'] != '' && $_GET['cat'] != 'olvas') ? $this->view->newscats[$_GET['cat']][ID] : false,
+				'in_cat' => (isset($_GET['cat']) && $_GET['cat'] != '' && $_GET['cat'] != 'olvas') ? $this->view->programcats[$_GET['cat']][ID] : false,
 				'order' => array(
 					'by' => 'rand()'
 				),
@@ -49,13 +49,13 @@ class programok extends Controller
 				$this->out( 'head_img_title', 'Programjaink' );
 				$this->out( 'head_img', IMGDOMAIN.$this->view->settings['homepage_coverimg'] );
 			} else {
-				$this->out( 'head_img_title', $this->view->newscats[$cat_slug]['neve'] );
+				$this->out( 'head_img_title', $this->view->programcats[$cat_slug]['neve'] );
 				$this->out( 'head_img', IMGDOMAIN.$this->view->settings['homepage_coverimg'] );
 			}
 
 			$arg = array(
 				'limit' => 12,
-				'in_cat' => (int)$this->view->newscats[$cat_slug]['ID'],
+				'in_cat' => (int)$this->view->programcats[$cat_slug]['ID'],
 				'page' => (isset($_GET['page'])) ? (int)$_GET['page'] : 1,
 			);
 			$this->out( 'list', $news->getTree( $arg ) );

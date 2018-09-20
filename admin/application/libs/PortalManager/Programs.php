@@ -55,6 +55,7 @@ class Programs
 		$szoveg = ($data['szoveg']) ?: NULL;
 		$bevezeto = ($data['bevezeto']) ?: NULL;
 		$lathato= ($data['lathato'] == 'on') ? 1 : 0;
+    $idopont = ($data['idopont']) ?: NULL;
 
 		if (!$cim) { throw new \Exception("Kérjük, hogy adja meg az <strong>Cikk címét</strong>!"); }
 
@@ -70,7 +71,7 @@ class Programs
 				'eleres' => $eleres,
 				'szoveg' => $szoveg,
 				'bevezeto' => $bevezeto,
-				'idopont' => NOW,
+				'idopont' => $idopont,
 				'letrehozva' => NOW,
 				'lathato' => $lathato
 			)
@@ -91,6 +92,7 @@ class Programs
 		$bevezeto = ($data['bevezeto']) ?: NULL;
 		$kep 	= ($data['belyegkep']) ?: NULL;
 		$lathato= ($data['lathato']) ? 1 : 0;
+    $idopont = ($data['idopont']) ?: NULL;
 
 		if (!$cim) { throw new \Exception("Kérjük, hogy adja meg a <strong>Cikk címét</strong>!"); }
 
@@ -107,7 +109,7 @@ class Programs
 				'belyeg_kep' => $kep,
 				'szoveg' => $szoveg,
 				'bevezeto' => $bevezeto,
-				'idopont' => NOW,
+				'idopont' => $idopont,
 				'lathato' => $lathato,
 			),
 			sprintf("ID = %d", $this->selected_news_id)
@@ -183,8 +185,7 @@ class Programs
 	 */
 	public function getTree( $arg = array() )
 	{
-		$tree 		= array();
-
+		$tree	= array();
 
 		if ( $arg['limit'] ) {
 			if( $arg['limit'] > 0 ) {
@@ -209,13 +210,19 @@ class Programs
 			$qry .= " and ".$arg['in_cat']." IN (SELECT cat_id FROM ".self::DBXREF." WHERE cikk_id = h.ID)";
 		}
 
+    if ( isset($arg['date']) ) {
+      $qry .= " and (";
+      if ( isset($arg['date']['min']) && $arg['date']['min'] != '' ) {
+        $qry .= "h.idopont >= '".$arg['date']['min']."'";
+      }
+      $qry .= ")";
+    }
 
 		if( $arg['order'] ) {
 			$qry .= " ORDER BY ".$arg['order']['by']." ".$arg['order']['how'];
 		} else {
-			$qry .= " ORDER BY h.letrehozva DESC ";
+			$qry .= " ORDER BY h.idopont ASC ";
 		}
-
 
 		// LIMIT
 		$current_page = ($arg['page'] ?: 1);
@@ -331,7 +338,7 @@ class Programs
 	}
 	public function getUrl( $cat_prefix = false )
 	{
-		return DOMAIN.'cikkek/'.( ($cat_prefix) ? $cat_prefix : 'olvas' ).'/'.$this->current_get_item['eleres'];
+		return DOMAIN.'programok/'.( ($cat_prefix) ? $cat_prefix : 'olvas' ).'/'.$this->current_get_item['eleres'];
 	}
 	public function getAccessKey()
 	{

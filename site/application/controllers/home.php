@@ -1,5 +1,6 @@
 <?
 use PortalManager\News;
+use PortalManager\Programs;
 use PortalManager\Template;
 use ProductManager\Products;
 
@@ -50,6 +51,28 @@ class home extends Controller{
 			$this->out( 'miserend_news', $miserend );
 			unset($news);
 			unset($miserend);
+
+			// Program
+			$programs = new Programs( false, array( 'db' => $this->db ) );
+			$program = array();
+			$arg = array(
+				'limit' => 1,
+				'page' 	=> 1,
+				'date' => array(
+					'min' => date('Y-m-d 00:00:00'),
+				)
+			);
+			$programs->getTree( $arg );
+
+			if ( $programs->has_news() ) {
+				while ( $programs->walk() ) {
+					$prog = $programs->the_news();
+					$program = (new Programs(false, array( 'db' => $this->db )))->get($prog[ID]);
+				}
+			}
+			$this->out( 'program', $program );
+			unset($programs);
+			unset($program);
 
 
 			//

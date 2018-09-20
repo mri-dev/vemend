@@ -8658,6 +8658,33 @@ body.product-page {
 			flex: 1;
 		}
 	}
+
+	.categories{
+		margin: 0 0 15px 0;
+		.list{
+			.cat {
+				padding: 2px 0;
+				a {
+					text-transform: uppercase;
+					display: block;
+					color: #848484;
+					padding: 10px;
+					text-decoration: none;
+					font-size: 1.1em;
+					border-radius: 2px;
+					border: 0.5px solid transparent;
+				}
+				&:hover, &.active{
+					a{
+						background: white;
+						color: black;
+						font-weight: bold;
+						border: 0.5px solid #d1d1d1;
+					}
+				}
+			}
+		}
+	}
 }
 
 .sidebar{

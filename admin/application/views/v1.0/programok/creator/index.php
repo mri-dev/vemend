@@ -1,8 +1,8 @@
 <div style="float:right;">
-	<a href="/cikkek/kategoriak" class="btn btn-default"><i class="fa fa-bars"></i> cikk kategóriák</a>
-	<a href="/cikkek/" class="btn btn-default"><i class="fa fa-th"></i> cikkek</a>
+	<a href="/programok/kategoriak" class="btn btn-default"><i class="fa fa-bars"></i> program kategóriák</a>
+	<a href="/programok/" class="btn btn-default"><i class="fa fa-th"></i> programok</a>
 </div>
-<h1>Cikkek</h1>
+<h1>programek</h1>
 <?=$this->msg?>
 <? if($this->gets[2] == 'torles'): ?>
 <form action="" method="post">
@@ -10,8 +10,8 @@
 <div class="row np">
 	<div class="col-md-12">
     	<div class="con con-del">
-            <h2>Cikk törlése</h2>
-            Biztos, hogy törli a kiválasztott cikket?
+            <h2>program törlése</h2>
+            Biztos, hogy törli a kiválasztott programot?
             <div class="row np">
                 <div class="col-md-12 right">
                     <a href="/<?=$this->gets[0]?>/" class="btn btn-danger"><i class="fa fa-times"></i> NEM</a>
@@ -44,7 +44,7 @@
       </div>
     	<div class="col-md-9">
         	<div class="con <?=($this->gets[2] == 'szerkeszt')?'con-edit':''?>">
-            <h2><? if($this->gets[2] == 'szerkeszt'): ?>Cikk szerkesztése<? else: ?>Új cikk hozzáadása<? endif; ?></h2>
+            <h2><? if($this->gets[2] == 'szerkeszt'): ?>program szerkesztése<? else: ?>Új program hozzáadása<? endif; ?></h2>
             <div class="row-neg">
               <div class="row">
                   <div class="col-md-6">
@@ -87,7 +87,7 @@
               <br />
               <div class="row">
                 <div class="col-md-12">
-                    <label for="szoveg">Cikk tartalma</label>
+                    <label for="szoveg">Program tartalma</label>
                     <div style="background:#fff;"><textarea name="szoveg" id="szoveg" class="form-control"><?=($this->news ? $this->news->getHtmlContent() : '')?></textarea></div>
                   </div>
               </div>

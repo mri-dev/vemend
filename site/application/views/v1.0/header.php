@@ -206,7 +206,7 @@
           preg_match("/svg-ico-(\w+)/i", $menu['css_class'], $icomatch);
         ?>
         <div class="<?=$menu['css_class']?>">
-          <a href="#">
+          <a href="<?=$menu['link']?>">
             <?php if (in_array('svg-ico', $xcss) && isset($icomatch[1]) && $icomatch[1] != ''): ?>
             <div class="ico">
               <img src="<?=IMG?>icons/<?=$icomatch[1]?>.svg" alt="">

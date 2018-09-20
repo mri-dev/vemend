@@ -38,7 +38,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
-RewriteRule ^programok(/)([0-9+])??$ index.php?tag=programok&list=1&page=$2 [QSA,L]
+RewriteRule ^programok(/)?([0-9+])?$ index.php?tag=programok&list=1&page=$2&list=1 [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

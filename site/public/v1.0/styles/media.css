@@ -1408,7 +1408,7 @@ body.singlepage .website .cover-img {
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
-  box-shadow: inset 0 -200px 200px -80px rgba(0, 0, 0, 0.71);
+  box-shadow: inset 0 -200px 200px -80px rgba(0, 0, 0, 0);
 }
 /* line 130, sass/_base.scss */
 body.singlepage .website .page.page-width {
@@ -2242,7 +2242,7 @@ body.singlepage .website .page.covered-page .side-menu {
 .webshop-product-top .items .item .image .short-desc,
 .related-products .items .item .image .short-desc {
   z-index: 2;
-  background: rgba(240, 240, 240, 0.81);
+  background: rgba(240, 240, 240, 0);
   padding: 5px;
   font-size: 0.8em;
   text-align: left;
@@ -3021,7 +3021,7 @@ body.singlepage .website .page.covered-page .side-menu {
   z-index: 50;
   padding: 0.2px;
   border: 0.5px solid #efefef;
-  box-shadow: 8px 8px 12px -5px rgba(0, 0, 0, 0.11);
+  box-shadow: 8px 8px 12px -5px rgba(0, 0, 0, 0);
 }
 /* line 1608, sass/_base.scss */
 .cat-menu > .title {
@@ -5480,7 +5480,7 @@ md-toast {
 /* line 400, scss/_base.scss */
 /* line 3954, sass/_base.scss */
 .dialogBox.overlayed {
-  background: rgba(74, 74, 74, 0.9);
+  background: rgba(74, 74, 74, 0);
   pointer-events: auto;
 }
 
@@ -10513,14 +10513,40 @@ body.product-page .nav.nav-fix {
 .programs-view .content-view-holder > .view-holder {
   flex: 1;
 }
+/* line 8662, sass/_base.scss */
+.programs-view .categories {
+  margin: 0 0 15px 0;
+}
+/* line 8665, sass/_base.scss */
+.programs-view .categories .list .cat {
+  padding: 2px 0;
+}
+/* line 8667, sass/_base.scss */
+.programs-view .categories .list .cat a {
+  text-transform: uppercase;
+  display: block;
+  color: #848484;
+  padding: 10px;
+  text-decoration: none;
+  font-size: 1.1em;
+  border-radius: 2px;
+  border: 0.5px solid transparent;
+}
+/* line 8678, sass/_base.scss */
+.programs-view .categories .list .cat:hover a, .programs-view .categories .list .cat.active a {
+  background: white;
+  color: black;
+  font-weight: bold;
+  border: 0.5px solid #d1d1d1;
+}
 
-/* line 8664, sass/_base.scss */
+/* line 8691, sass/_base.scss */
 .sidebar > .box {
   background: white;
   margin: 0 0 20px 0;
   box-shadow: 2px 2px 20px -10px black;
 }
-/* line 8669, sass/_base.scss */
+/* line 8696, sass/_base.scss */
 .sidebar > .box > .header {
   background: #898989;
   color: white;
@@ -10529,15 +10555,15 @@ body.product-page .nav.nav-fix {
   font-size: 1.2em;
   text-transform: uppercase;
 }
-/* line 8679, sass/_base.scss */
+/* line 8706, sass/_base.scss */
 .sidebar > .box > .c > .p {
   padding: 15px;
 }
-/* line 8685, sass/_base.scss */
+/* line 8712, sass/_base.scss */
 .sidebar > .box.green-header > .header {
   background: #8eaf35;
 }
-/* line 8690, sass/_base.scss */
+/* line 8717, sass/_base.scss */
 .sidebar > .box.orange-header > .header {
   background: #f5b801;
 }

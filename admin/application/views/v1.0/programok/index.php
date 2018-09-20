@@ -65,7 +65,7 @@
            	</div>
             <? endwhile; else:?>
             	<div class="noItem">
-                	Nincs létrehozott hír!
+                	Nincs létrehozott program!
                 </div>
             <? endif; ?>
         </div>

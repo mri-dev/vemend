@@ -68,7 +68,7 @@ class programok extends Controller{
 			if(Post::on('add')){
 				try{
 					$id = $news->add($_POST);
-					Helper::reload('/cikkek/creator/szerkeszt/'.$id.'?rmsg=success::Új cikk sikeresen létrehozva.');
+					Helper::reload('/'.__CLASS__.'/creator/szerkeszt/'.$id.'?rmsg=success::Új program sikeresen létrehozva.');
 				}catch(Exception $e){
 					$this->view->err 	= true;
 					$this->view->msg 	= Helper::makeAlertMsg('pError', $e->getMessage());
