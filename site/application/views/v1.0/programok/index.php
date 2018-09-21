@@ -71,7 +71,9 @@
         <?php elseif(isset($_GET['reader'])): ?>
           <div class="program-page">
             <div class="wrapper">
-
+              <?php echo $this->template->get( 'adatlap', array(
+                'program' => $this->news
+              ) ); ?>
             </div>
           </div>
         <?php endif; ?>

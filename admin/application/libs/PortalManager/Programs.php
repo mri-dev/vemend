@@ -56,6 +56,7 @@ class Programs
 		$bevezeto = ($data['bevezeto']) ?: NULL;
 		$lathato= ($data['lathato'] == 'on') ? 1 : 0;
     $idopont = ($data['idopont']) ?: NULL;
+    $helyszin = ($data['helyszin']) ?: NULL;
 
 		if (!$cim) { throw new \Exception("Kérjük, hogy adja meg az <strong>Cikk címét</strong>!"); }
 
@@ -73,7 +74,8 @@ class Programs
 				'bevezeto' => $bevezeto,
 				'idopont' => $idopont,
 				'letrehozva' => NOW,
-				'lathato' => $lathato
+				'lathato' => $lathato,
+        'helyszin' => $helyszin,
 			)
 		);
 
@@ -93,6 +95,7 @@ class Programs
 		$kep 	= ($data['belyegkep']) ?: NULL;
 		$lathato= ($data['lathato']) ? 1 : 0;
     $idopont = ($data['idopont']) ?: NULL;
+    $helyszin = ($data['helyszin']) ?: NULL;
 
 		if (!$cim) { throw new \Exception("Kérjük, hogy adja meg a <strong>Cikk címét</strong>!"); }
 
@@ -111,6 +114,7 @@ class Programs
 				'bevezeto' => $bevezeto,
 				'idopont' => $idopont,
 				'lathato' => $lathato,
+        'helyszin' => $helyszin,
 			),
 			sprintf("ID = %d", $this->selected_news_id)
 		);
@@ -346,7 +350,15 @@ class Programs
 	}
 	public function getHtmlContent()
 	{
-		return $this->current_get_item['szoveg'];
+    $c = $this->current_get_item['szoveg'];
+
+    $c = str_replace('../../../src/uploads/', UPLOADS, $c);
+
+		return $c;
+	}
+  public function getHelyszin()
+	{
+		return $this->current_get_item['helyszin'];
 	}
 	public function getDescription()
 	{

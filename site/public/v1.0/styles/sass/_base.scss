@@ -8637,7 +8637,7 @@ body.product-page {
 }
 
 .programs-view{
-	margin: 20px 0 0 0;
+	margin: 20px 0;
 	.content-view-holder{
 		display: -webkit-box;
 	  display: -ms-flexbox;
@@ -8656,6 +8656,28 @@ body.product-page {
 
 		& > .view-holder{
 			flex: 1;
+		}
+
+		.program-page{
+			.date-on{
+				margin:15px 0 30px 0;
+				font-size: 1.2em;
+				color: black;
+
+				span.date{
+					background: $color-orange;
+					color: white;
+					padding: 4px 6px;
+				}
+			}
+			.content{
+				line-height: 1.4;
+				font-size: 1.23em;
+
+				p {
+					margin: 5px 0;
+				}
+			}
 		}
 	}
 
@@ -8680,6 +8702,94 @@ body.product-page {
 						color: black;
 						font-weight: bold;
 						border: 0.5px solid #d1d1d1;
+					}
+				}
+			}
+		}
+	}
+}
+
+.program-list{
+	& > .wrapper{
+		.articles{
+			display: -webkit-box;
+		  display: -ms-flexbox;
+		  display: flex;
+			flex-wrap: wrap;
+			margin: -10px;
+
+			& > .program{
+				flex-basis: calc(100% / 3);
+				padding: 10px;
+
+				.wrapper{
+					background: white;
+				}
+
+				.datain{
+					position: relative;
+					padding: 25px 0 0 0;
+				}
+
+				.image{
+					height: 13vw;
+				}
+
+				.title{
+					h3{
+						font-size: 1em;
+						margin: 0;
+					}
+					a {
+						text-align: center;
+						display: block;
+						padding: 5px 10px;
+						color: black;
+					}
+				}
+
+				.pos {
+					text-align: center;
+					color: #a0a0a0;
+					font-size: 0.85em;
+					padding: 5px 10px 10px 5px;
+				}
+
+				.ondate{
+					position: absolute;
+					left: 0;
+					top: -18px;
+					width: 100%;
+					.in {
+						width: 90%;
+				    margin: 0 auto;
+				    background: $color-orange;
+				    color: white;
+				    text-align: center;
+				    font-size: 1.25em;
+				    padding: 10px;
+				    text-decoration: none;
+				    font-weight: bold;
+					}
+				}
+
+				.details {
+					margin-top: 10px;
+					a {
+						color: white;
+						text-decoration: none;
+						display: block;
+						font-size: 1em;
+						text-transform: uppercase;
+						background: $color-green;
+						text-align: center;
+						padding: 15px;
+						-webkit-transition: all .4s;
+						transition: all .4s;
+
+						&:hover{
+							background: $color-orange;
+						}
 					}
 				}
 			}

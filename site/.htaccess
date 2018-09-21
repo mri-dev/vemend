@@ -25,13 +25,13 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
-RewriteRule ^cikkek/([0-9a-zA-Z_-]+)/([0-9a-zA-Z_-]+)(/)?$ index.php?tag=cikkek&reader=1&cikk=$2&cat=$1 [QSA,L]
+RewriteRule ^cikkek/([0-9a-zA-Z_-]+)(/)?([0-9+])?(/)?$ index.php?tag=cikkek&list=1&cat=$1&page=$3 [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
-RewriteRule ^cikkek/([0-9a-zA-Z_-]+)(/)?([0-9+])?(/)?$ index.php?tag=cikkek&list=1&cat=$1&page=$3 [QSA,L]
+RewriteRule ^cikkek/([0-9a-zA-Z_-]+)/([0-9a-zA-Z_-]+)(/)?$ index.php?tag=cikkek&reader=1&cikk=$2&cat=$1 [QSA,L]
 
 # Programok
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -44,13 +44,14 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
-RewriteRule ^programok/([0-9a-zA-Z_-]+)/([0-9a-zA-Z_-]+)(/)?$ index.php?tag=programok&reader=1&cikk=$2&cat=$1 [QSA,L]
+RewriteRule ^programok/([0-9a-zA-Z_-]+)(/)?([0-9+])?(/)?$ index.php?tag=programok&list=1&cat=$1&page=$3 [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
-RewriteRule ^programok/([0-9a-zA-Z_-]+)(/)?([0-9+])?(/)?$ index.php?tag=programok&list=1&cat=$1&page=$3 [QSA,L]
+RewriteRule ^programok/([0-9a-zA-Z_-]+)/([0-9a-zA-Z_-]+)(/)?$ index.php?tag=programok&reader=1&cikk=$2&cat=$1 [QSA,L]
+
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

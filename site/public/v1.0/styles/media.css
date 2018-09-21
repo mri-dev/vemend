@@ -10490,7 +10490,7 @@ body.product-page .nav.nav-fix {
 
 /* line 8639, sass/_base.scss */
 .programs-view {
-  margin: 20px 0 0 0;
+  margin: 20px 0;
 }
 /* line 8641, sass/_base.scss */
 .programs-view .content-view-holder {
@@ -10514,14 +10514,35 @@ body.product-page .nav.nav-fix {
   flex: 1;
 }
 /* line 8662, sass/_base.scss */
+.programs-view .content-view-holder .program-page .date-on {
+  margin: 15px 0 30px 0;
+  font-size: 1.2em;
+  color: black;
+}
+/* line 8667, sass/_base.scss */
+.programs-view .content-view-holder .program-page .date-on span.date {
+  background: #f5b801;
+  color: white;
+  padding: 4px 6px;
+}
+/* line 8673, sass/_base.scss */
+.programs-view .content-view-holder .program-page .content {
+  line-height: 1.4;
+  font-size: 1.23em;
+}
+/* line 8677, sass/_base.scss */
+.programs-view .content-view-holder .program-page .content p {
+  margin: 5px 0;
+}
+/* line 8684, sass/_base.scss */
 .programs-view .categories {
   margin: 0 0 15px 0;
 }
-/* line 8665, sass/_base.scss */
+/* line 8687, sass/_base.scss */
 .programs-view .categories .list .cat {
   padding: 2px 0;
 }
-/* line 8667, sass/_base.scss */
+/* line 8689, sass/_base.scss */
 .programs-view .categories .list .cat a {
   text-transform: uppercase;
   display: block;
@@ -10532,7 +10553,7 @@ body.product-page .nav.nav-fix {
   border-radius: 2px;
   border: 0.5px solid transparent;
 }
-/* line 8678, sass/_base.scss */
+/* line 8700, sass/_base.scss */
 .programs-view .categories .list .cat:hover a, .programs-view .categories .list .cat.active a {
   background: white;
   color: black;
@@ -10540,13 +10561,99 @@ body.product-page .nav.nav-fix {
   border: 0.5px solid #d1d1d1;
 }
 
-/* line 8691, sass/_base.scss */
+/* line 8714, sass/_base.scss */
+.program-list > .wrapper .articles {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  margin: -10px;
+}
+/* line 8721, sass/_base.scss */
+.program-list > .wrapper .articles > .program {
+  flex-basis: calc(100% / 3);
+  padding: 10px;
+}
+/* line 8725, sass/_base.scss */
+.program-list > .wrapper .articles > .program .wrapper {
+  background: white;
+}
+/* line 8729, sass/_base.scss */
+.program-list > .wrapper .articles > .program .datain {
+  position: relative;
+  padding: 25px 0 0 0;
+}
+/* line 8734, sass/_base.scss */
+.program-list > .wrapper .articles > .program .image {
+  height: 13vw;
+}
+/* line 8739, sass/_base.scss */
+.program-list > .wrapper .articles > .program .title h3 {
+  font-size: 1em;
+  margin: 0;
+}
+/* line 8743, sass/_base.scss */
+.program-list > .wrapper .articles > .program .title a {
+  text-align: center;
+  display: block;
+  padding: 5px 10px;
+  color: black;
+}
+/* line 8751, sass/_base.scss */
+.program-list > .wrapper .articles > .program .pos {
+  text-align: center;
+  color: #a0a0a0;
+  font-size: 0.85em;
+  padding: 5px 10px 10px 5px;
+}
+/* line 8758, sass/_base.scss */
+.program-list > .wrapper .articles > .program .ondate {
+  position: absolute;
+  left: 0;
+  top: -18px;
+  width: 100%;
+}
+/* line 8763, sass/_base.scss */
+.program-list > .wrapper .articles > .program .ondate .in {
+  width: 90%;
+  margin: 0 auto;
+  background: #f5b801;
+  color: white;
+  text-align: center;
+  font-size: 1.25em;
+  padding: 10px;
+  text-decoration: none;
+  font-weight: bold;
+}
+/* line 8776, sass/_base.scss */
+.program-list > .wrapper .articles > .program .details {
+  margin-top: 10px;
+}
+/* line 8778, sass/_base.scss */
+.program-list > .wrapper .articles > .program .details a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  font-size: 1em;
+  text-transform: uppercase;
+  background: #8eaf35;
+  text-align: center;
+  padding: 15px;
+  -webkit-transition: all .4s;
+  transition: all .4s;
+}
+/* line 8790, sass/_base.scss */
+.program-list > .wrapper .articles > .program .details a:hover {
+  background: #f5b801;
+}
+
+/* line 8801, sass/_base.scss */
 .sidebar > .box {
   background: white;
   margin: 0 0 20px 0;
   box-shadow: 2px 2px 20px -10px black;
 }
-/* line 8696, sass/_base.scss */
+/* line 8806, sass/_base.scss */
 .sidebar > .box > .header {
   background: #898989;
   color: white;
@@ -10555,15 +10662,15 @@ body.product-page .nav.nav-fix {
   font-size: 1.2em;
   text-transform: uppercase;
 }
-/* line 8706, sass/_base.scss */
+/* line 8816, sass/_base.scss */
 .sidebar > .box > .c > .p {
   padding: 15px;
 }
-/* line 8712, sass/_base.scss */
+/* line 8822, sass/_base.scss */
 .sidebar > .box.green-header > .header {
   background: #8eaf35;
 }
-/* line 8717, sass/_base.scss */
+/* line 8827, sass/_base.scss */
 .sidebar > .box.orange-header > .header {
   background: #f5b801;
 }
