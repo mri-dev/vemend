@@ -6,6 +6,10 @@ $(function(){
 
 	var transports_c 			= $('.transports');
 
+	$('.datepicker').datepicker({
+		dateFormat: 'yy-mm-dd'
+	});
+
 	if(transports_c.length ){
 		var transports_c_from_top 	= $('.transports').offset().top;
 	}

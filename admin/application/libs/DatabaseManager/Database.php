@@ -12,7 +12,7 @@ class Database
 	public $db = null;
 	// adatbázis hoszt
 	private $db_host 	= DB_HOST;
-	// adatbázis 
+	// adatbázis
 	private $db_name 	= DB_NAME;
 	// adatbázis felhasználó
 	private $db_user 	= DB_USER;
@@ -21,11 +21,11 @@ class Database
 
 	public $settings 	= array();
 
-	public function __construct(){ 
+	public function __construct(){
 		try{
 			$this->db = new \PDO('mysql:host=' . $this->db_host . ';dbname=' . $this->db_name, $this->db_user , $this->db_pw );
 			//echo '-DBOPEN-';
-			$this->query("set names utf8");	
+			$this->query("set names utf8");
 		}catch(\PDOException $e){
 			die($e->getMessage());
 		}
@@ -38,7 +38,7 @@ class Database
 		$this->settings['domain'] = 'http://www.' . rtrim(str_replace(array('http://','www.'),array('',''),$this->settings['page_url']), '/').'/';
 	}
 
-	
+
 	public function squery( $qry, array $params = array() )
 	{
 		$exc = $this->db->prepare( $qry );
@@ -55,7 +55,7 @@ class Database
 	private function detectVarType( $value )
 	{
 		$type = \PDO::PARAM_STR;
-	
+
 		return $type;
 	}
 
@@ -73,10 +73,10 @@ class Database
 	public function update ($table, $arg, $whr = ''){
 		$q = "UPDATE $table SET ";
 		$sm = '';
-		
+
 		foreach($arg as $ak => $av){
 			$val = (is_null($av)) ? 'NULL' : "'".$av."'";
-			
+
 			$sm .= '`'.$ak.'` = '.$val.', ';
 		}
 		$sm = rtrim($sm,', ');
@@ -97,8 +97,8 @@ class Database
 	 * @param array $data Beszúrandó adatok, a $head rendje szerint
 	 * @param array $arg Paraméterek:
 	 * 						- boolean debug Tesztelés végett, ha true, akkor a query nem fut le, de a return kimegy
-	 * 						- int steplimit (50) Beállítható, hogy hány adat után indítson új query INSERT-et.  
-	 * 
+	 * 						- int steplimit (50) Beállítható, hogy hány adat után indítson új query INSERT-et.
+	 *
 	 * @return string A Query szövege
 	 */
 	public function multi_insert( $table, $head = false, $data = false, $arg = array() )
@@ -108,7 +108,7 @@ class Database
 		$debug_str = null;
 		$header	= null;
 		$value 	= null;
-		$debug 	= ( !$arg[debug] ) ? false : true; 
+		$debug 	= ( !$arg[debug] ) ? false : true;
 
 		if( $table == '' ) return false;
 		if( !$head || !is_array( $head ) ) return false;
@@ -134,7 +134,7 @@ class Database
 
 			$v = '(';
 				foreach ( $dv as $vd ) {
-					
+
 					// IF NULL
 					if( is_null( $vd ) ){
 						$v .= 'NULL';
@@ -162,10 +162,10 @@ class Database
 			$step++;
 			$total_step++;
 		}
-	
+
 		$wk_step = 0;
 		while ( $step_breaks >= 0 ) {
-			$query = ' INSERT INTO '.$table.'(' . implode( ', ', $header ) . ') VALUES '. implode( ", ", $step_rows[$wk_step] ).";" ;
+			$query = ' INSERT INTO '.$table.'(' . implode( ', ', $header ) . ') VALUES '. implode( ", ", $step_rows[$wk_step] ) ;
 
 			$dupkeys = false;
 			if( is_array($arg['duplicate_keys']) && count($arg['duplicate_keys']) > 0 ) {
@@ -179,7 +179,10 @@ class Database
 				$dupkeys = rtrim($dupkeys, ', ');
 				$query .= $dupkeys;
 			}
-			
+
+			$query = rtrim($query,";");
+			$query .= ";";
+
 			if( !$debug ){
 				$this->query( $query );
 			} else {
@@ -189,7 +192,7 @@ class Database
 			$step_breaks--;
 			$wk_step++;
 		}
-		
+
 		return $debug_str;
 	}
 
@@ -204,15 +207,15 @@ class Database
 			$fields[] = $fd;
 			$values[] = $v;
 		}
-		
-		
+
+
 		$q = $this->db->prepare($iq = "INSERT INTO $table(".implode($fields,', ').") VALUES(:".implode($fields,', :').")");
 
 		$binds = array();
 		foreach($values as $vk => $v){
 			$binds[':'.$fields[$vk]] = (is_null($v)) ? null : stripslashes($v);
 		}
-						
+
 		// Execute
 		try{
 			$q->execute($binds);
@@ -221,7 +224,7 @@ class Database
 			throw new \Exception($e->getMessage());
 		}
 	}
-	
+
 	public function q($query, $arg = array()){
 		$query = trim($query);
 		$back 		= array();
@@ -236,8 +239,8 @@ class Database
 		$data 		= array();
 		//////////////////////
 		$query = preg_replace('/^SELECT/i', 'SELECT SQL_CALC_FOUND_ROWS ', $query);
-		
-		
+
+
 		// LIMIT
 		if($arg[limit]){
 			$query = rtrim($query,";");
@@ -245,38 +248,38 @@ class Database
 			$l_min = 0;
 			$l_min = $pages[current] * $limit - $limit;
 			$query .= " LIMIT $l_min, $limit";
-			$query .= ";"; 	
+			$query .= ";";
 		}
-        		
+
 		$q = $this->query($query);
-		
-		
+
+
 		if(!$q){
 			error_log($query);
 			//$back[$return_str][info][query][error] = $q->errorInfo();
 		}
-		
+
 		if($q->rowCount() == 1 && !$arg[multi]){
-			$data = $q->fetch(\PDO::FETCH_ASSOC);	
+			$data = $q->fetch(\PDO::FETCH_ASSOC);
 		}else if($q->rowCount() > 1 || $arg[multi]){
-			$data = $q->fetchAll(\PDO::FETCH_ASSOC);	
+			$data = $q->fetchAll(\PDO::FETCH_ASSOC);
 		}
-		
-		
+
+
 		$total_num 	=  $this->query("SELECT FOUND_ROWS();")->fetchColumn();
 		$return_num = $q->rowCount();
-		
+
 		///
 			$pages[max] 	= ($total_num == 0) ? 0 : ceil($total_num / $limit);
 			$pages[limit] 	= ($arg[limit]) ? $limit : false;
-		
+
 		$back[$return_str][info][input][arg] 	= $arg;
 		$back[$return_str][info][query][str] 	= $query;
 		$back[$return_str][info][total_num] 	= (int)$total_num;
 		$back[$return_str][info][return_num] 	= (int)$return_num;
 		$back[$return_str][info][pages] 		= $pages;
-		
-				
+
+
 		$back[$return_str][data] 	= $data;
 		$back[data] 				= $data;
 		return $back;

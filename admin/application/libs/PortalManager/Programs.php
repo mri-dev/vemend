@@ -8,6 +8,8 @@ class Programs
   const DBTABLE = 'programok';
   const DBCAT= 'program_kategoriak';
   const DBXREF = 'program_xref_cat';
+  const DBVIEW = 'program_views';
+  const DBVIEWHISTORY = 'program_view_history';
 
 	private $db = null;
 	public $tree = false;
@@ -202,7 +204,8 @@ class Programs
 		// Legfelső színtű
 		$qry = "
 			SELECT SQL_CALC_FOUND_ROWS
-				h.*
+				h.*,
+        (SELECT count(uid) FROM ".self::DBVIEW." WHERE prog_id = h.ID) as uvisit
 			FROM ".self::DBTABLE." as h
 			WHERE h.ID IS NOT NULL ";
 
@@ -217,7 +220,14 @@ class Programs
     if ( isset($arg['date']) ) {
       $qry .= " and (";
       if ( isset($arg['date']['min']) && $arg['date']['min'] != '' ) {
+        $has_from = true;
         $qry .= "h.idopont >= '".$arg['date']['min']."'";
+      }
+      if ( isset($arg['date']['max']) && $arg['date']['max'] != '' ) {
+        if ($has_from) {
+          $qry .= " and ";
+        }
+        $qry .= "h.idopont <= '".$arg['date']['max']."'";
       }
       $qry .= ")";
     }
@@ -227,6 +237,7 @@ class Programs
 		} else {
 			$qry .= " ORDER BY h.idopont ASC ";
 		}
+
 
 		// LIMIT
 		$current_page = ($arg['page'] ?: 1);
@@ -314,6 +325,61 @@ class Programs
 		return $text;
 	}
 
+  public function log_view( $id = 0 )
+  {
+    if ( $id === 0 || !$id ) {
+      return false;
+    }
+
+    $date = date('Y-m-d');
+    $uid = \Helper::getMachineID();
+
+    $check = $this->db->squery("SELECT click FROM ".self::DBVIEW." WHERE uid = :uid and prog_id = :progid and ondate = :ondate", array(
+      'uid' => $uid,
+      'progid' => $id,
+      'ondate' => $date
+    ));
+
+    if ( $check->rowCount() == 0 ) {
+      $this->db->insert(
+        self::DBVIEW,
+        array(
+          'uid' => $uid,
+          'prog_id' => $id,
+          'ondate' => $date
+        )
+      );
+    } else {
+      $click = $check->fetchColumn();
+      $this->db->update(
+        self::DBVIEW,
+        array(
+          'click' => $click + 1
+        ),
+        sprintf("uid = '%s' and prog_id = %d and ondate = '%s'", $uid, $id, $date)
+      );
+    }
+
+    // History log
+    $hhkey = md5($uid.'_'.$id);
+    $this->db->multi_insert(
+      self::DBVIEWHISTORY,
+      array('hashkey', 'uid', 'prod_id', 'watchtime'),
+      array(
+        array(
+          $hhkey,
+          $uid,
+          $id,
+          date('Y-m-d H:i:s')
+        )
+      ),
+      array(
+        'duplicate_keys' => array('hashkey', 'watchtime')
+      )
+    );
+    $this->db->query("DELETE FROM ".self::DBVIEWHISTORY." WHERE datediff(now(), watchtime) > 30");
+  }
+
 
 	/*===============================
 	=            GETTERS            =
@@ -374,7 +440,7 @@ class Programs
 	}
 	public function getVisitCount()
 	{
-		return 0;
+		return (int)$this->current_get_item['uvisit'];
 	}
 	public function getIdopont( $format = false )
 	{

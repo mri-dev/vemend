@@ -21,8 +21,12 @@ class programok extends Controller
 		$this->out( 'template', $temp );
 		$this->out( 'programcats', $news->categoryList());
 
-		if ( isset($_GET['cikk']) ) {
+		if ( isset($_GET['cikk']) )
+		{
+			// Cikk oldal
 			$this->out( 'news', $news->get( trim($_GET['cikk']) ) );
+			$news->log_view($this->view->news->getId());
+
 			$arg = array(
 				'limit' => 4,
 				'page' 	=> 1,
@@ -42,8 +46,18 @@ class programok extends Controller
 			$description = substr(strip_tags($this->view->news->getDescription()), 0 , 350);
 
 		} else {
-
+			// Lista oldal
 			$cat_slug =  trim($_GET['cat']);
+
+			if (isset($_GET['c']) && !empty($_GET['c'])) {
+				$g = $_GET;
+				unset($g['tag']);
+				unset($g['list']);
+				unset($g['page']);
+				unset($g['c']);
+				$nquery = http_build_query($g);
+				\Helper::reload('/programok/'.$_GET['c'].'/?'.$nquery);
+			}
 
 			if ($cat_slug == '') {
 				$this->out( 'head_img_title', 'Programjaink' );
@@ -58,6 +72,15 @@ class programok extends Controller
 				'in_cat' => (int)$this->view->programcats[$cat_slug]['ID'],
 				'page' => (isset($_GET['page'])) ? (int)$_GET['page'] : 1,
 			);
+
+			if ( isset($_GET['from']) && !empty($_GET['from']) ) {
+				$arg['date']['min'] = $_GET['from'];
+			}
+
+			if ( isset($_GET['to']) && !empty($_GET['to']) ) {
+				$arg['date']['max'] = $_GET['to'];
+			}
+
 			$this->out( 'list', $news->getTree( $arg ) );
 			$this->out( 'navigator', (new Pagination(array(
 					'class' 	=> 'pagination pagination-sm center',

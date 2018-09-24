@@ -7,7 +7,28 @@
             Program kereső
           </div>
           <div class="c">
-            ...
+            <form class="" action="/programok/" method="get">
+              <div class="inp">
+                <label for="from"><i class="fa fa-calendar"></i> Kezdő időpont</label>
+                <input type="text" id="from" autocomplete="off" class="datepicker" name="from" value="<?=(isset($_GET['from']))?$_GET['from']:date('Y-m-d')?>">
+              </div>
+              <div class="inp">
+                <label for="to"><i class="fa fa-calendar"></i> Befejező időpont</label>
+                <input type="text" id="to" autocomplete="off" class="datepicker" name="to" value="<?=$_GET['to']?>">
+              </div>
+              <div class="inp">
+                <label for="cat"><i class="fa fa-th"></i> Esemény kategória</label>
+                <select class="" name="c">
+                  <option value="" selected="selected">Mindegy</option>
+                  <?php foreach ( (array)$this->programcats as $nc ): ?>
+    			        <option value="<?=$nc['slug']?>" <?=($_GET['cat'] == $nc['slug'])?'selected="selected"':''?>><?=$nc['neve']?></option>
+      						<?php endforeach; ?>
+                </select>
+              </div>
+              <div class="inp">
+                <button type="submit">Keresés <i class="fa fa-search"></i></button>
+              </div>
+            </form>
           </div>
         </div>
 
@@ -77,7 +98,6 @@
             </div>
           </div>
         <?php endif; ?>
-        <?php print_r($_GET); ?>
       </div>
     </div>
   </div>

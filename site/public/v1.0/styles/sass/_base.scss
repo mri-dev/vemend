@@ -1223,17 +1223,29 @@ body.singlepage{
 }
 
 .ui-widget-header{
-	background:  $color-red;
+	background:  $color-orange;
 }
 .ui-widget-content{
 	border: 1px solid #e4e3e3;
 }
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
-	background: $color-red;
+	background: #f3f3f3;
 	border: 2px solid #ffffff;
-  border-radius: 10px;
+	border-radius: 3px;
+	text-align: center;
+
+	&.ui-state-active{
+		background: $color-orange;
+		color: white;
+	}
+}
+.ui-datepicker .ui-datepicker-title{
+	color: white;
 }
 
+.datepicker{
+	cursor: pointer;
+}
 .filter-sidebar{
 	.side-group {
 		border: 0.4px solid #d2d2d2;
@@ -8636,6 +8648,34 @@ body.product-page {
 	}
 }
 
+.sidebar{
+	.inp{
+		padding: 10px 15px;
+		label {
+			display: block;
+			padding: 0 0 15px 0;
+		}
+
+		input, select{
+			width: 100%;
+			padding: 10px;
+			font-size: 1.2em;
+			border: 1px solid #e8e8e8;
+		}
+		button {
+			display: block;
+			width: 100%;
+			padding: 15px;
+			text-transform: uppercase;
+			cursor: pointer;
+			border: none;
+			background: #accc53;
+			color: white;
+			font-size: 1.2em;
+		}
+	}
+}
+
 .programs-view{
 	margin: 20px 0;
 	.content-view-holder{
@@ -8793,6 +8833,15 @@ body.product-page {
 					}
 				}
 			}
+
+			.no-news{
+				line-height: 1.4;
+				font-size: 1.3em;
+				text-align: center;
+				padding: 15px;
+				flex-basis: 100%;
+			}
+
 		}
 	}
 }
