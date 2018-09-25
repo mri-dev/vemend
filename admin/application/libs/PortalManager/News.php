@@ -10,6 +10,10 @@ use PortalManager\Formater;
 */
 class News
 {
+
+  const DBVIEW = 'cikk_views';
+  const DBVIEWHISTORY = 'cikk_view_history';
+
 	private $db = null;
 	public $tree = false;
 	private $max_page = 1;
@@ -34,12 +38,15 @@ class News
 	public function get( $news_id_or_slug )
 	{
 		$data = array();
-		$qry = "SELECT 	*	FROM hirek ";
+		$qry = "SELECT
+			h.*,
+		(SELECT count(uid) FROM ".self::DBVIEW." WHERE prog_id = h.ID) as uvisit
+		FROM hirek as h ";
 
 		if (is_numeric($news_id_or_slug)) {
-			$qry .= " WHERE ID = ".$news_id_or_slug;
+			$qry .= " WHERE h.ID = ".$news_id_or_slug;
 		}else {
-			$qry .= " WHERE eleres = '".$news_id_or_slug."'";
+			$qry .= " WHERE h.eleres = '".$news_id_or_slug."'";
 		}
 
 		$qry = $this->db->query($qry);
@@ -198,7 +205,8 @@ class News
 		// Legfelső színtű
 		$qry = "
 			SELECT SQL_CALC_FOUND_ROWS
-				h.*
+				h.*,
+				(SELECT count(uid) FROM ".self::DBVIEW." WHERE prog_id = h.ID) as uvisit
 			FROM hirek as h
 			WHERE h.ID IS NOT NULL ";
 
@@ -206,17 +214,24 @@ class News
 			$qry .= " and h.ID != ".$arg['except_id'];
 		}
 
+		if( isset($arg['in_id']) && !empty($arg['in_id']) ) {
+      $qry .= " and h.ID IN(".implode(",", (array)$arg['in_id']).")";
+    }
+
 		if (isset($arg['in_cat']) && !empty($arg['in_cat']) && $arg['in_cat'] != 0) {
 			$qry .= " and ".$arg['in_cat']." IN (SELECT cat_id FROM cikk_xref_cat WHERE cikk_id = h.ID)";
 		}
 
 
 		if( $arg['order'] ) {
-			$qry .= " ORDER BY ".$arg['order']['by']." ".$arg['order']['how'];
+      if ($arg['order'] == 'in_id') {
+        $qry .= " ORDER BY FIELD(h.ID, ".implode(",", $arg['in_id']).")";
+      } else {
+        $qry .= " ORDER BY ".$arg['order']['by']." ".$arg['order']['how'];
+      }
 		} else {
-			$qry .= " ORDER BY h.letrehozva DESC ";
+			$qry .= " ORDER BY h.idopont ASC ";
 		}
-
 
 		// LIMIT
 		$current_page = ($arg['page'] ?: 1);
@@ -304,6 +319,96 @@ class News
 		return $text;
 	}
 
+	public function historyList( $limit = 5 )
+  {
+    $ids = array();
+    $uid = \Helper::getMachineID();
+
+    if ( empty($uid) ) {
+      return false;
+    }
+
+    $getids = $this->db->squery("SELECT prod_id FROM ".self::DBVIEWHISTORY." WHERE uid = :uid ORDER BY watchtime DESC LIMIT 0,".$limit, array(
+      'uid' => $uid
+    ));
+
+    if ( $getids->rowCount() != 0 )
+    {
+      $gidsdata = $getids->fetchAll(\PDO::FETCH_ASSOC);
+      foreach ($gidsdata as $id) {
+        $ids[] = (int)$id['prod_id'];
+      }
+    }
+
+    if ( !empty($ids) )
+    {
+      $this->getTree(array(
+        'in_id' => $ids,
+        'order' => 'in_id'
+      ));
+      return $this;
+    }
+  }
+
+  public function log_view( $id = 0 )
+  {
+    if ( $id === 0 || !$id ) {
+      return false;
+    }
+
+    $date = date('Y-m-d');
+    $uid = \Helper::getMachineID();
+
+    if ( empty($uid) ) {
+      return false;
+    }
+
+    $check = $this->db->squery("SELECT click FROM ".self::DBVIEW." WHERE uid = :uid and prog_id = :progid and ondate = :ondate", array(
+      'uid' => $uid,
+      'progid' => $id,
+      'ondate' => $date
+    ));
+
+    if ( $check->rowCount() == 0 ) {
+      $this->db->insert(
+        self::DBVIEW,
+        array(
+          'uid' => $uid,
+          'prog_id' => $id,
+          'ondate' => $date
+        )
+      );
+    } else {
+      $click = $check->fetchColumn();
+      $this->db->update(
+        self::DBVIEW,
+        array(
+          'click' => $click + 1
+        ),
+        sprintf("uid = '%s' and prog_id = %d and ondate = '%s'", $uid, $id, $date)
+      );
+    }
+
+    // History log
+    $hhkey = md5($uid.'_'.$id);
+    $this->db->multi_insert(
+      self::DBVIEWHISTORY,
+      array('hashkey', 'uid', 'prod_id', 'watchtime'),
+      array(
+        array(
+          $hhkey,
+          $uid,
+          $id,
+          date('Y-m-d H:i:s')
+        )
+      ),
+      array(
+        'duplicate_keys' => array('hashkey', 'watchtime')
+      )
+    );
+    $this->db->query("DELETE FROM ".self::DBVIEWHISTORY." WHERE datediff(now(), watchtime) > 30");
+  }
+
 
 	/*===============================
 	=            GETTERS            =
@@ -356,7 +461,7 @@ class News
 	}
 	public function getVisitCount()
 	{
-		return 0;
+		return (int)$this->current_get_item['uvisit'];
 	}
 	public function getIdopont( $format = false )
 	{

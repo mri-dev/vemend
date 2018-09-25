@@ -22,6 +22,8 @@ class cikkek extends Controller{
 
 		if ( isset($_GET['cikk']) ) {
 			$this->out( 'news', $news->get( trim($_GET['cikk']) ) );
+			$news->log_view($this->view->news->getId());
+			
 			$arg = array(
 				'limit' => 4,
 				'page' 	=> 1,
@@ -66,6 +68,12 @@ class cikkek extends Controller{
 					'item_limit'=> 12
 				)))->render() );
 		}
+
+		// History
+		$histnews = new News( false, array( 'db' => $this->db ) );
+		$history_list = $histnews->historyList();
+		$this->out( 'history', $history_list );
+		unset($histnews);
 
 		// SEO Információk
 		$SEO = null;

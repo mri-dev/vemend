@@ -91,6 +91,14 @@ class programok extends Controller
 				)))->render() );
 		}
 
+		unset($news);
+
+		// History
+		$histnews = new Programs( false, array( 'db' => $this->db ) );
+		$history_list = $histnews->historyList();
+		$this->out( 'history', $history_list );
+		unset($histnews);
+
 		// SEO Információk
 		$SEO = null;
 		// Site info

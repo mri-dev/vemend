@@ -521,7 +521,7 @@ body.singlepage{
 	}
 
 	.articles {
-		margin: 0 -15px;
+		margin: 0 -5px;
 		article{
 			padding: 0 15px;
 
@@ -716,6 +716,7 @@ body.singlepage{
 		}
 		& > .art-list{
 			flex: 1;
+			padding: 0 0 0 15px;
 		}
 	}
 	.articles {
@@ -1246,6 +1247,48 @@ body.singlepage{
 .datepicker{
 	cursor: pointer;
 }
+
+.history-list{
+	& > article{
+		border-bottom: 0.5px solid #e4e4e4;
+		& > .wrapper{
+			padding: 10px;
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: flex;
+			flex-wrap: wrap;
+
+			& > .image{
+				flex-basis: 60px;
+				height: 50px;
+			}
+
+			& > .data{
+				flex: 1;
+				padding: 0 0 0 15px;
+				.title a{
+					font-size: 1.1em;
+					font-weight: bold;
+					margin: 0 0 10px 0;
+					display: block;
+				}
+
+				.pos, .date{
+					font-size: 0.8em;
+					line-height: 1;
+					margin: 5px 0;
+					color: #8c8c8c;
+					i{
+						width: 10px;
+						text-align: center;
+						margin: 0 2px 0 0;
+					}
+				}
+			}
+		}
+	}
+}
+
 .filter-sidebar{
 	.side-group {
 		border: 0.4px solid #d2d2d2;
@@ -8113,6 +8156,7 @@ body.homepage{
 								.data-content{
 									margin: 40px 0;
 	     						height: 190px;
+									overflow: hidden;
 
 									h3 {
 										font-size: 2em;
@@ -8699,7 +8743,7 @@ body.product-page {
 		}
 
 		.program-page{
-			.date-on{
+			.details{
 				margin:15px 0 30px 0;
 				font-size: 1.2em;
 				color: black;
@@ -8708,6 +8752,11 @@ body.product-page {
 					background: $color-orange;
 					color: white;
 					padding: 4px 6px;
+				}
+				span.position{
+					font-weight: bold;
+					padding-left: 15px;
+					color: #81b83a;
 				}
 			}
 			.content{

@@ -49,7 +49,21 @@
             Korábban megtekintett
           </div>
           <div class="c">
-            ...
+            <div class="history-list program-list">
+            <?php
+            $step = 0;
+            if ($this->history->tree_items > 0)
+            {
+              while ( $this->history->walk() ) {
+                $step++;
+                $arg = $this->history->the_news();
+                $arg['programcats'] = $this->programcats;
+                $temp = $this->template->get( 'history_item', $arg );
+                echo $temp;
+              }
+            }
+            ?>
+            </div>
           </div>
         </div>
       </div>

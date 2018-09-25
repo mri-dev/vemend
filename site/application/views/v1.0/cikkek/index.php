@@ -40,7 +40,7 @@
 		<? else: ?>
 		<div class="news-list">
 			<div class="pw">
-				<div class="categories">
+				<div class="categories sidebar">
 					<h2>Kategóriák</h2>
 					<div class="list">
 						<div class="cat <?=($_GET['cat'] == '')?'active':''?>">
@@ -51,6 +51,29 @@
 							<a href="/cikkek/<?=($nc['slug'])?>"><span class="dot" style="color:<?=$nc['bgcolor']?>;"></span> <?=$nc['neve']?></a>
 						</div>
 						<?php endforeach; ?>
+					</div>
+
+					<div class="box">
+						<div class="header">
+							Megtekintett cikkek
+						</div>
+						<div class="c">
+							<div class="history-list article-list">
+								<?php
+		            $step = 0;
+		            if ($this->history->tree_items > 0)
+		            {
+		              while ( $this->history->walk() ) {
+		                $step++;
+		                $arg = $this->history->the_news();
+		                $arg['programcats'] = $this->programcats;
+		                $temp = $this->template->get( 'history_item', $arg );
+		                echo $temp;
+		              }
+		            }
+		            ?>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="art-list">

@@ -192,6 +192,11 @@ class Programs
 	public function getTree( $arg = array() )
 	{
 		$tree	= array();
+    $this->tree = array();
+    $this->tree_steped_item = array();
+    $this->tree_items = 0;
+    $this->walk_step = 0;
+    $this->current_item = false;
 
 		if ( $arg['limit'] ) {
 			if( $arg['limit'] > 0 ) {
@@ -213,6 +218,10 @@ class Programs
 			$qry .= " and h.ID != ".$arg['except_id'];
 		}
 
+    if( isset($arg['in_id']) && !empty($arg['in_id']) ) {
+      $qry .= " and h.ID IN(".implode(",", (array)$arg['in_id']).")";
+    }
+
 		if (isset($arg['in_cat']) && !empty($arg['in_cat']) && $arg['in_cat'] != 0) {
 			$qry .= " and ".$arg['in_cat']." IN (SELECT cat_id FROM ".self::DBXREF." WHERE cikk_id = h.ID)";
 		}
@@ -233,11 +242,14 @@ class Programs
     }
 
 		if( $arg['order'] ) {
-			$qry .= " ORDER BY ".$arg['order']['by']." ".$arg['order']['how'];
+      if ($arg['order'] == 'in_id') {
+        $qry .= " ORDER BY FIELD(h.ID, ".implode(",", $arg['in_id']).")";
+      } else {
+        $qry .= " ORDER BY ".$arg['order']['by']." ".$arg['order']['how'];
+      }
 		} else {
 			$qry .= " ORDER BY h.idopont ASC ";
 		}
-
 
 		// LIMIT
 		$current_page = ($arg['page'] ?: 1);
@@ -325,6 +337,37 @@ class Programs
 		return $text;
 	}
 
+  public function historyList( $limit = 5 )
+  {
+    $ids = array();
+    $uid = \Helper::getMachineID();
+
+    if ( empty($uid) ) {
+      return false;
+    }
+
+    $getids = $this->db->squery("SELECT prod_id FROM ".self::DBVIEWHISTORY." WHERE uid = :uid ORDER BY watchtime DESC LIMIT 0,5", array(
+      'uid' => $uid
+    ));
+
+    if ( $getids->rowCount() != 0 )
+    {
+      $gidsdata = $getids->fetchAll(\PDO::FETCH_ASSOC);
+      foreach ($gidsdata as $id) {
+        $ids[] = (int)$id['prod_id'];
+      }
+    }
+
+    if ( !empty($ids) )
+    {
+      $this->getTree(array(
+        'in_id' => $ids,
+        'order' => 'in_id'
+      ));
+      return $this;
+    }
+  }
+
   public function log_view( $id = 0 )
   {
     if ( $id === 0 || !$id ) {
@@ -333,6 +376,10 @@ class Programs
 
     $date = date('Y-m-d');
     $uid = \Helper::getMachineID();
+
+    if ( empty($uid) ) {
+      return false;
+    }
 
     $check = $this->db->squery("SELECT click FROM ".self::DBVIEW." WHERE uid = :uid and prog_id = :progid and ondate = :ondate", array(
       'uid' => $uid,
