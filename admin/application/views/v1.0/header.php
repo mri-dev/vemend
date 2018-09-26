@@ -195,7 +195,9 @@
               <?php if ( !empty($this->modules) ): ?>
               <li class="div"></li>
               <?php foreach ($this->modules as $module): ?>
-              <li class="<?=($this->gets[0] == $module['menu_slug'])?'on':''?>"><a href="/<?=$module['menu_slug']?>" title="<?=$module['menu_title']?>"><span class="ni"><?=$module['ID']?></span><i class="fa fa-<?=$module['faico']?>"></i> <?=$module['menu_title']?></a></li>
+                <?php if (empty($module['jogkor']) || in_array($this->adm->user['user_group'], explode(',',$module['jogkor']))): ?>
+                  <li class="<?=($this->gets[0] == $module['menu_slug'])?'on':''?>"><a href="/<?=$module['menu_slug']?>" title="<?=$module['menu_title']?>"><span class="ni"><?=$module['ID']?></span><i class="fa fa-<?=$module['faico']?>"></i> <?=$module['menu_title']?></a></li>
+                <?php endif; ?>
               <?php endforeach; ?>
               <?php endif; ?>
               <!-- End of MODULS-->

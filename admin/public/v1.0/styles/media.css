@@ -3283,3 +3283,38 @@ md-toast.mode-success .md-toast-content{
 .con-row-list *{
   line-height: 1.1;
 }
+
+.inp-selector{
+  position: relative;
+}
+.inp-selector > .wrapper{
+  position: absolute;
+  border: 2px solid #a7a7a7;
+  background: white;
+  overflow: hidden;
+  max-height: 400px;
+  left: 0;
+  right: 0;
+  top: 2px;
+  z-index: 1;
+  border-radius: 4px;
+  box-shadow: 0 5px 15px -6px black;
+}
+.inp-selector > .wrapper .etel{
+  padding: 5px 8px;
+  border-bottom: 0.5px solid #e3e3e3;
+  cursor: pointer;
+}
+.inp-selector > .wrapper .etel:hover{
+  background: #f1f1f1;
+  color: black;
+}
+.etel-creator .sel-etel-item{
+  font-size: 0.9em;
+  color: #4d974d;
+  margin: 5px 0;
+}
+.etel-creator .sel-etel-item i{
+  color: red;
+  margin: 0 4px 0 0;
+}

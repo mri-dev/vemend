@@ -2,6 +2,7 @@
 use PortalManager\News;
 use PortalManager\Programs;
 use PortalManager\Template;
+use PortalManager\EtlapAPI;
 use ProductManager\Products;
 
 class home extends Controller{
@@ -73,6 +74,10 @@ class home extends Controller{
 			$this->out( 'program', $program );
 			unset($programs);
 			unset($program);
+
+			// Étlap
+			$etlap = new EtlapAPI( array( 'db' => $this->db ) );
+			$this->out( 'etlap', $etlap );
 
 
 			//

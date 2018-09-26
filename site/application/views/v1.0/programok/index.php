@@ -35,11 +35,11 @@
         <div class="categories">
 					<div class="list">
 						<div class="cat <?=($_GET['cat'] == '')?'active':''?>">
-							<a href="/programok/"><span class="dot" style="color:black;"></span> Összes program</a>
+							<a href="/programok/"><i class="fa fa-bars"></i> Összes program</a>
 						</div>
 						<?php foreach ( (array)$this->programcats as $nc ): ?>
 						<div class="cat <?=($_GET['cat'] == ($nc['slug']))?'active':''?>">
-							<a href="/programok/<?=($nc['slug'])?>"><?=$nc['neve']?></a>
+							<a href="/programok/<?=($nc['slug'])?>"><i class="fa fa-tag"></i> <?=$nc['neve']?></a>
 						</div>
 						<?php endforeach; ?>
 					</div>
