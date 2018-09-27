@@ -44,6 +44,16 @@ class EtlapAPI implements InstallModules
     } else return array();
   }
 
+  public function addMenu( $menu = array() )
+  {
+    $this->db->insert(
+      self::DBTABLE,
+      $menu
+    );
+
+    return $this->db->lastInsertId();
+  }
+
   public function aktualisMenu()
   {
     $data = array();

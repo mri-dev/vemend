@@ -81,7 +81,12 @@
           </div>
         </div>
         <br>
-        <div class="row">
+        <div class="row" ng-show="saveEtlap">
+          <div class="col-md-12 right">
+            Napi menü rögzítése folyamatban...
+          </div>
+        </div>
+        <div class="row" ng-show="!saveEtlap">
           <div class="col-md-12 right">
             <button type="button" class="btn btn-success" ng-click="menuSave()">Napi menü rögzítése</button>
           </div>

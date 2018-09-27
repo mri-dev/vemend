@@ -2,6 +2,7 @@ var etlap = angular.module('Etlap', ['ngMaterial']);
 
 etlap.controller("Creator", ['$scope', '$http', '$mdToast', function($scope, $http, $mdToast)
 {
+  $scope.saveEtlap = false;
   $scope.create = {
     daydate: new Date(),
     etel_leves: {
@@ -60,6 +61,44 @@ etlap.controller("Creator", ['$scope', '$http', '$mdToast', function($scope, $ht
 			}
     });
 	}
+
+  $scope.menuSave = function(){
+    $scope.saveEtlap = true;
+
+    $scope.create.daydate = $scope.create.daydate.toLocaleDateString('hu-HU');
+
+    $http({
+      method: 'POST',
+      url: '/ajax/get',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: $.param({
+        type: "Etlap",
+        key: 'AddMenu',
+        menu: $scope.create
+      })
+    }).success(function( r ){
+      $scope.saveEtlap = false;
+      $scope.create = {
+        daydate: new Date(),
+        etel_leves: {
+          text: '',
+          id: null
+        },
+        etel_fo: {
+          text: '',
+          id: null
+        },
+        etel_va: {
+          text: '',
+          id: null
+        },
+        etel_vb: {
+          text: '',
+          id: null
+        }
+      };
+    });
+  }
 
 	$scope.toast = function( text, mode, delay ){
 		mode = (typeof mode === 'undefined') ? 'simple' : mode;
