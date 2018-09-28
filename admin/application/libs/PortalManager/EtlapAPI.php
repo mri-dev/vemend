@@ -31,6 +31,7 @@ class EtlapAPI implements InstallModules
     FROM ".self::DBETELEK." as e
     WHERE 1=1 ORDER BY e.neve ASC";
 
+
     $data = $this->db->query($q);
 
     if ($data->rowCount() != 0) {
@@ -42,6 +43,41 @@ class EtlapAPI implements InstallModules
       }
       return $list;
     } else return array();
+  }
+
+  public function checkMenuDateUsage( $date )
+  {
+    $q = "SELECT
+      e.ID
+    FROM ".self::DBTABLE." as e
+    WHERE 1=1 and e.daydate = :date";
+
+    $data = $this->db->squery($q, array(
+      'date' => $date
+    ));
+
+    $id = $data->fetchColumn();
+
+    return (int)$id;
+  }
+
+  public function usedDates()
+  {
+    $dates = array();
+    $q = "SELECT daydate FROM ".self::DBTABLE." WHERE daydate >= now() GROUP BY daydate ORDER BY daydate ASC";
+    $data = $this->db->query($q);
+
+    if ($data->rowCount() == 0) {
+      return array();
+    } else {
+      $data = $data->fetchAll(\PDO::FETCH_ASSOC);
+
+      foreach ((array)$data as $d) {
+        $dates[] =  str_replace('-','. ',$d['daydate']).'.';
+      }
+
+      return $dates;
+    }
   }
 
   public function addMenu( $menu = array() )
@@ -67,6 +103,51 @@ class EtlapAPI implements InstallModules
     return $data;
   }
 
+  public function menuSet()
+  {
+    $set = array();
+
+    $q = "SELECT daydate FROM ".self::DBTABLE." WHERE daydate >= now() GROUP BY daydate ORDER BY daydate ASC";
+    $data = $this->db->query($q);
+
+    if ($data->rowCount() == 0) return $set;
+    $data = $data->fetchAll(\PDO::FETCH_ASSOC);
+
+    foreach ( $data as $d ) {
+      $weeknum = $this->yearWeekend($d['daydate']);
+
+      if (!isset($set['weeks'][$weeknum]['dateranges'])) {
+        $datestartend = $this->getStartAndEndDate($weeknum, date('Y', strtotime($d['daydate'])));
+        $set['weeks'][$weeknum]['dateranges'] = array(
+          'start' => $datestartend['start'],
+          'end' => $datestartend['end'],
+          'range' => $datestartend['start'] . ' - ' . $datestartend['end']
+        );
+      }
+      $weekdayname = (new \DateTime($d['daydate']))->format('D');
+      $set['weeks'][$weeknum]['days'][$d['daydate']] = array(
+        'day' => $d['daydate'],
+        'weekday' => $this->replaceWeekdayName($weekdayname)
+      );
+    }
+
+
+    return $set;
+  }
+
+  public function replaceWeekdayName( $weekdayname )
+  {
+    $replace = array(
+      'Mon' => 'Hétfő',
+      'Tue' => 'Kedd',
+      'Wed' => 'Szerda',
+      'Thu' => 'Csütörtök',
+      'Fri' => 'Péntek'
+    );
+
+    return ($replace[$weekdayname]) ? $replace[$weekdayname] : $weekdayname;
+  }
+
   public function aktualisNap( $format = 'Y-m-d' )
   {
     return date($format, time());
@@ -74,6 +155,16 @@ class EtlapAPI implements InstallModules
 
   private function isWeekend( $date ) {
     return (date('N', strtotime($date)) >= 6);
+  }
+
+  private function getStartAndEndDate($week, $year)
+  {
+    $dto = new \DateTime();
+    $dto->setISODate($year, $week);
+    $ret['start'] = $dto->format('Y-m-d');
+    $dto->modify('+6 days');
+    $ret['end'] = $dto->format('Y-m-d');
+    return $ret;
   }
 
   private function yearWeekend( $pdate = false )

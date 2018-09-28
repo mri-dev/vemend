@@ -430,11 +430,12 @@ class ajax extends Controller{
 
 					switch ( $key )
 					{
-						case 'Etelek':
-							$re['data'] = $etlap->EtelLista();
+						case 'Load':
+							$re['data']['etelek'] = $etlap->EtelLista();
+							$re['data']['useddates'] = $etlap->usedDates();
+							$re['data']['set'] = $etlap->menuSet();
 						break;
 						case 'AddMenu':
-
 							$ondate  = new \DateTime(str_replace('. ','-',$_POST['menu']['daydate']));
 							$ondate = $ondate->format('Y-m-d');
 
@@ -447,6 +448,14 @@ class ajax extends Controller{
 							));
 
 							$re['data'] = (int)$insid;
+						break;
+						case 'CheckMenuDateUsage':
+							$ondate  = new \DateTime(str_replace('. ','-',$_POST['day']));
+							$ondate = $ondate->format('Y-m-d');
+
+							$v = $etlap->checkMenuDateUsage( $ondate );
+
+							$re['data'] = $v;
 						break;
 					}
 

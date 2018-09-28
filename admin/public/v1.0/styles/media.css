@@ -3318,3 +3318,43 @@ md-toast.mode-success .md-toast-content{
   color: red;
   margin: 0 4px 0 0;
 }
+
+.etel-creator .week{
+  margin: 0 0 20px 0;
+}
+
+.etel-creator .week h2{
+  margin: 0 0 20px 0;
+  font-size: 2em;
+}
+.etel-creator .week h2 .daterange{
+  font-size: 0.6em;
+  color: #a5a5a5;
+}
+.etel-creator .week .days{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+.etel-creator .week .days .day{
+  flex-basis: calc(100% / 5);
+}
+.etel-creator .week .days .day > .wrapper{
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+}
+.etel-creator .week .days .day > .wrapper .onday{
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  background: #ffc52c;
+}
+.etel-creator .week .days .day > .wrapper .onday .date{
+  font-size: 1.2em;
+  padding: 5px;
+}
+.etel-creator .week .days .day > .wrapper .onday .weekday{
+  background: #656565;
+}

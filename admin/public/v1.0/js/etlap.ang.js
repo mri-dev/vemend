@@ -1,8 +1,23 @@
 var etlap = angular.module('Etlap', ['ngMaterial']);
 
+etlap.config(function($mdDateLocaleProvider){
+  $mdDateLocaleProvider.firstDayOfWeek = 1;
+  $mdDateLocaleProvider.months = ['Január', 'Február', 'Március', 'Április', 'Május', 'Június', 'Július', 'Augusztus', 'Szeptember', 'Október', 'November', 'December'];
+  $mdDateLocaleProvider.shortMonths = ['Jan', 'Feb', 'Már', 'Ápr', 'Máj', 'Jún', 'Júl', 'Aug', 'Szep', 'Okt', 'Nov', 'Dec'];
+  $mdDateLocaleProvider.days = ['Vasárnap', 'Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat'];
+  $mdDateLocaleProvider.shortDays = ['V', 'H', 'K', 'Sze', 'Cs', 'P', 'Szo'];
+
+  $mdDateLocaleProvider.formatDate = function(date) {
+     var m = moment(date);
+     return m.isValid() ? m.format('L') : '';
+   };
+});
+
 etlap.controller("Creator", ['$scope', '$http', '$mdToast', function($scope, $http, $mdToast)
 {
   $scope.saveEtlap = false;
+  $scope.menuDateChecking = false;
+  $scope.menuDateUsed = false;
   $scope.create = {
     daydate: new Date(),
     etel_leves: {
@@ -23,10 +38,33 @@ etlap.controller("Creator", ['$scope', '$http', '$mdToast', function($scope, $ht
     }
   };
   $scope.etelek = [];
+  $scope.usedDate = [];
+  $scope.menu = [];
 
 	$scope.init = function(){
     $scope.loadResources();
 	}
+
+  $scope.checkDisbledDate = function( date ) {
+    var val = true;
+    var now = new Date();
+    var date = date.toLocaleDateString('hu-HU');
+
+    if (new Date(date) < now ) {
+      // Előző napok kikapcsolása
+      val = false;
+    } else {
+      if ($scope.usedDate && $scope.usedDate.length != 0) {
+        if ($scope.usedDate.indexOf(date) !== -1) {
+          val = false;
+        } else {
+          val = true;
+        }
+      }
+    }
+
+    return val;
+  }
 
   $scope.pickEtel = function( where, o ){
     console.log(o);
@@ -41,6 +79,28 @@ etlap.controller("Creator", ['$scope', '$http', '$mdToast', function($scope, $ht
     };
   }
 
+  $scope.menuDateChange = function() {
+    $scope.create.daydate = $scope.create.daydate.toLocaleDateString('hu-HU');
+    $scope.menuDateChecking = true;
+    $http({
+      method: 'POST',
+      url: '/ajax/get',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: $.param({
+        type: "Etlap",
+        key: 'CheckMenuDateUsage',
+        day: $scope.create.daydate
+      })
+    }).success(function( r ){
+      $scope.menuDateChecking = false;
+      if (r.data != 0) {
+        $scope.menuDateUsed = true;
+      } else {
+        $scope.menuDateUsed = false;
+      }
+    });
+  }
+
 	$scope.loadResources = function( callback )
 	{
 		$http({
@@ -49,13 +109,23 @@ etlap.controller("Creator", ['$scope', '$http', '$mdToast', function($scope, $ht
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       data: $.param({
         type: "Etlap",
-        key: 'Etelek'
+        key: 'Load'
       })
     }).success(function( r ){
-      console.log(r);
+        console.log(r);
       if (r.data.length != 0) {
-        $scope.etelek = r.data;
+        if (r.data.etelek && r.data.etelek.length != 0) {
+          $scope.etelek = r.data.etelek;
+        }
+        if (r.data.useddates && r.data.useddates.length != 0) {
+          $scope.usedDate = r.data.useddates;
+        }
+        if (r.data.set && r.data.set.length != 0) {
+          $scope.menu = r.data.set;
+        }
       }
+
+        console.log($scope.menu);
 			if (typeof callback !== 'undefined') {
 				callback(r);
 			}
@@ -65,7 +135,7 @@ etlap.controller("Creator", ['$scope', '$http', '$mdToast', function($scope, $ht
   $scope.menuSave = function(){
     $scope.saveEtlap = true;
 
-    $scope.create.daydate = $scope.create.daydate.toLocaleDateString('hu-HU');
+    console.log($scope.create.daydate);
 
     $http({
       method: 'POST',
@@ -78,6 +148,7 @@ etlap.controller("Creator", ['$scope', '$http', '$mdToast', function($scope, $ht
       })
     }).success(function( r ){
       $scope.saveEtlap = false;
+      $scope.loadResources();
       $scope.create = {
         daydate: new Date(),
         etel_leves: {

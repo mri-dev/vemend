@@ -9,7 +9,13 @@
           <div class="col-md-12">
             <label for="daydate">Nap kiválasztása</label>
             <br>
-            <md-datepicker ng-model="create.daydate" id="daydate" md-placeholder="Kiválasztás"></md-datepicker>
+            <md-datepicker md-date-filter="checkDisbledDate" ng-change="menuDateChange()" ng-model="create.daydate" id="daydate" md-placeholder="Kiválasztás"></md-datepicker>
+            <div class="label label-warning" ng-show="menuDateChecking">
+              Menü időpont használatának ellenőrzése...
+            </div>
+            <div class="label label-danger" ng-show="!menuDateChecking && menuDateUsed">
+              Erre az időpontra már lett menü regisztrálva!
+            </div>
           </div>
         </div>
         <br>
@@ -86,7 +92,7 @@
             Napi menü rögzítése folyamatban...
           </div>
         </div>
-        <div class="row" ng-show="!saveEtlap">
+        <div class="row" ng-show="!saveEtlap && !menuDateUsed">
           <div class="col-md-12 right">
             <button type="button" class="btn btn-success" ng-click="menuSave()">Napi menü rögzítése</button>
           </div>
@@ -96,7 +102,25 @@
   </div>
   <div class="col-md-8">
     <div class="con">
-      {{etelek}}
+      <div class="week" ng-repeat="(week, info) in menu.weeks">
+        <h2><strong>{{week}}. hét</strong> <span class="daterange">({{info.dateranges.range}})</span> </h2>
+        <div class="days">
+          <div class="day" ng-repeat="(daydate, day) in info.days">
+            <div class="wrapper">
+              <div class="onday">
+                <div class="date">
+                  {{daydate}}
+                </div>
+                <div class="weekday">
+                  {{day.weekday}}
+                </div>
+              </div>
+              <div class="c">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

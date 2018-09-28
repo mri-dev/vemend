@@ -14,7 +14,7 @@
 <link rel="stylesheet" type="text/css" href="<?=JS?>fancybox/jquery.fancybox.css?v=2.1.4" media="screen" />
 <link rel="stylesheet" type="text/css" href="<?=JS?>fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" />
 <!-- Angular Material style sheet -->
-<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.6/angular-material.min.css">
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.10/angular-material.min.css">
 
 <!-- JS's -->
 <?=$this->addJS('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js',true)?>
@@ -23,12 +23,16 @@
 <?=$this->addJS('jquery.wysiwyg',false)?>
 <?=$this->addJS('master',false,false)?>
 
+
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/hu.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-moment/1.3.0/angular-moment.min.js"></script>
 <!-- Angular Material Library -->
-<script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.6/angular-material.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.10/angular-material.min.js"></script>
 
 <?=$this->addJS('app',false,false)?>
 <?=$this->addJS('etlap.ang',false,false)?>
