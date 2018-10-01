@@ -116,6 +116,7 @@
                 </div>
               </div>
               <div class="c">
+                {{day.menu}}
               </div>
             </div>
           </div>

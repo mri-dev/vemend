@@ -10,6 +10,7 @@ class EtlapAPI implements InstallModules
   const MODULTITLE = 'Étlap';
 
   private $db = null;
+  protected $kajakat = array('etel_fo', 'etel_leves', 'etel_va', 'etel_vb');
   public $settings = array();
 
   function __construct( $arg = array() )
@@ -90,6 +91,63 @@ class EtlapAPI implements InstallModules
     return $this->db->lastInsertId();
   }
 
+  public function getMenu( $date = false )
+  {
+    $date = (empty($date)) ? date('Y-m-d') : $date;
+
+    $arg = array();
+    $arg['date'] = $date;
+    $etel_qry = "";
+    $etel_join_qry = "";
+
+    $kf = 0;
+    foreach ($this->kajakat as $kaja ) {
+      $kf++;
+      $etel_qry .= "
+      , e".$kf.".neve as ".$kaja."_neve
+      , e".$kf.".kep as ".$kaja."_kep
+      , e".$kf.".kategoria as ".$kaja."_kategoria
+      , e".$kf.".kaloria as ".$kaja."_kaloria
+      , e".$kf.".feherje as ".$kaja."_feherje
+      , e".$kf.".ch as ".$kaja."_ch
+      , e".$kf.".zsir as ".$kaja."_zsir
+      , e".$kf.".cukor as ".$kaja."_cukor
+      , e".$kf.".so as ".$kaja."_so
+      , e".$kf.".allergenek as ".$kaja."_allergenek";
+      $etel_join_qry .= " LEFT OUTER JOIN ".self::DBETELEK." as e".$kf." ON e".$kf.".ID = e.".$kaja;
+    }
+
+    $q = "SELECT
+    e.daydate ";
+    $q .= $etel_qry;
+    $q .= " FROM ".self::DBTABLE." as e ";
+    $q .= $etel_join_qry;
+    $q .=" WHERE 1=1
+    and e.daydate = :date";
+
+    $back = array();
+    $data = $this->db->squery($q, $arg);
+    $data = $data->fetch(\PDO::FETCH_ASSOC);
+
+    foreach ($this->kajakat as $kaja )
+    {
+      $back[$kaja] = ($data[$kaja.'_neve']) ? array(
+        'neve' => $data[$kaja.'_neve'],
+        'kep' => $data[$kaja.'_kep'],
+        'kategoria' => $data[$kaja.'_kategoria'],
+        'kaloria' => $data[$kaja.'_kaloria'],
+        'feherje' => $data[$kaja.'_feherje'],
+        'ch' => $data[$kaja.'_ch'],
+        'zsir' => $data[$kaja.'_zsir'],
+        'cukor' => $data[$kaja.'_cukor'],
+        'so' => $data[$kaja.'_so'],
+        'allergenek' => $data[$kaja.'_allergenek'],
+      ) : false;
+    }
+
+    return $back;
+  }
+
   public function aktualisMenu()
   {
     $data = array();
@@ -127,7 +185,8 @@ class EtlapAPI implements InstallModules
       $weekdayname = (new \DateTime($d['daydate']))->format('D');
       $set['weeks'][$weeknum]['days'][$d['daydate']] = array(
         'day' => $d['daydate'],
-        'weekday' => $this->replaceWeekdayName($weekdayname)
+        'weekday' => $this->replaceWeekdayName($weekdayname),
+        'menu' => $this->getMenu($d['daydate'])
       );
     }
 
