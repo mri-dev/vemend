@@ -3358,3 +3358,18 @@ md-toast.mode-success .md-toast-content{
 .etel-creator .week .days .day > .wrapper .onday .weekday{
   background: #656565;
 }
+.etel-creator .week .days .day > .wrapper .c > div{
+  text-align: center;
+  padding: 5px;
+  border-bottom: 1px solid #f1f1f1;
+}
+.etel-creator .week .days .day > .wrapper .c > div .lab{
+  font-weight: 300;
+  font-size: 0.8em;
+  color: #a1a1a1;
+  text-transform: uppercase;
+}
+.etel-creator .week .days .day > .wrapper .c > div .v{
+  font-weight: bold;
+  color: black;
+}

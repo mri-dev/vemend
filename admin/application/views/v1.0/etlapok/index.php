@@ -116,7 +116,38 @@
                 </div>
               </div>
               <div class="c">
-                {{day.menu}}
+                <div class="leves" ng-show="day.menu.etel_leves">
+                  <div class="lab">
+                    Leves
+                  </div>
+                  <div class="v">
+                    {{day.menu.etel_leves.neve}}
+                  </div>
+                </div>
+                <div class="foetel" ng-show="day.menu.etel_fo">
+                  <div class="lab">
+                    Főétel
+                  </div>
+                  <div class="v">
+                    {{day.menu.etel_fo.neve}}
+                  </div>
+                </div>
+                <div class="kieg1"  ng-show="day.menu.etel_va">
+                  <div class="lab">
+                    Kiegészítő 1.
+                  </div>
+                  <div class="v">
+                    {{day.menu.etel_va.neve}}
+                  </div>
+                </div>
+                <div class="kieg2"ng-show="day.menu.etel_vb">
+                  <div class="lab">
+                    Kiegészítő 2.
+                  </div>
+                  <div class="v">
+                    {{day.menu.etel_vb.neve}}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

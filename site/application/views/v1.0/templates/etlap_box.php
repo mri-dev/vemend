@@ -1,5 +1,10 @@
 <?php
   $aktualis_etlap = $this->etlap->aktualisMenu();
+  $kieg = array();
+  $kieg[] = $aktualis_etlap['menu']['etel_va'];
+  $kieg[] = $aktualis_etlap['menu']['etel_vb'];
+  $foetel = $aktualis_etlap['menu']['etel_fo'];
+  $leves = $aktualis_etlap['menu']['etel_leves'];
 ?>
 <div class="etlap-visual">
   <div class="wrapper">
@@ -16,25 +21,29 @@
               </div>
             </div>
           </div>
-          <div class="leves">
+          <div class="leves<?=(!$leves)?' disabled':''?><?=(!$leves[kep])?' no-image':''?>">
             <div class="image">
-
+              <div class="wrapper">
+                <img src="<?=($leves[kep])?:IMG.'no-meal.png'?>" alt="<?php echo $leves[neve]; ?>">
+              </div>
             </div>
             <div class="text">
               <div class="air-text">
-                Brokkolikrémleves
+                <?php echo $leves[neve]; ?>
               </div>
             </div>
           </div>
         </div>
         <div class="side-right">
-          <div class="foetel">
+          <div class="foetel<?=(!$foetel)?' disabled':''?><?=(!$foetel[kep])?' no-image':''?>">
             <div class="image">
-
+              <div class="wrapper">
+                <img src="<?=($foetel[kep])?:IMG.'no-meal.png'?>" alt="<?php echo $foetel[neve]; ?>">
+              </div>
             </div>
             <div class="text">
               <div class="air-text">
-                Tarhonyás sertéshús
+                <?php echo $foetel[neve]; ?>
               </div>
             </div>
           </div>
@@ -44,25 +53,29 @@
     <div class="line-two">
       <div class="flex">
         <div class="side-left">
-          <div class="kieg1">
+          <div class="kieg1<?=(!$kieg[1])?' disabled':''?><?=(!$kieg[1][kep])?' no-image':''?>">
             <div class="image">
-
+              <div class="wrapper">
+                <img src="<?=($kieg[1][kep])?:IMG.'no-meal.png'?>" alt="<?php echo $kieg[1][neve]; ?>">
+              </div>
             </div>
             <div class="text">
               <div class="air-text">
-                Csemege uborka
+                <?php echo $kieg[1][neve]; ?>
               </div>
             </div>
           </div>
         </div>
         <div class="side-right">
-          <div class="kieg2">
+          <div class="kieg2<?=(!$kieg[0])?' disabled':''?><?=(!$kieg[0][kep])?' no-image':''?>">
             <div class="image">
-
+              <div class="wrapper">
+                <img src="<?=($kieg[0][kep])?:IMG.'no-meal.png'?>" alt="<?php echo $kieg[0][neve]; ?>">
+              </div>
             </div>
             <div class="text">
               <div class="air-text" id="rothorwidthfix">
-                Alma
+                <?php echo $kieg[0][neve]; ?>
               </div>
             </div>
           </div>

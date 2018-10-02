@@ -104,6 +104,7 @@ class EtlapAPI implements InstallModules
     foreach ($this->kajakat as $kaja ) {
       $kf++;
       $etel_qry .= "
+      , e".$kf.".ID as ".$kaja."_ID
       , e".$kf.".neve as ".$kaja."_neve
       , e".$kf.".kep as ".$kaja."_kep
       , e".$kf.".kategoria as ".$kaja."_kategoria
@@ -132,15 +133,16 @@ class EtlapAPI implements InstallModules
     foreach ($this->kajakat as $kaja )
     {
       $back[$kaja] = ($data[$kaja.'_neve']) ? array(
+        'ID' => (int)$data[$kaja.'_ID'],
         'neve' => $data[$kaja.'_neve'],
-        'kep' => $data[$kaja.'_kep'],
+        'kep' => (!empty($data[$kaja.'_kep'])) ? UPLOADS.str_replace('/src/uploads/','',$data[$kaja.'_kep']) : false,
         'kategoria' => $data[$kaja.'_kategoria'],
-        'kaloria' => $data[$kaja.'_kaloria'],
-        'feherje' => $data[$kaja.'_feherje'],
-        'ch' => $data[$kaja.'_ch'],
-        'zsir' => $data[$kaja.'_zsir'],
-        'cukor' => $data[$kaja.'_cukor'],
-        'so' => $data[$kaja.'_so'],
+        'kaloria' => (float)$data[$kaja.'_kaloria'],
+        'feherje' => (float)$data[$kaja.'_feherje'],
+        'ch' => (float)$data[$kaja.'_ch'],
+        'zsir' => (float)$data[$kaja.'_zsir'],
+        'cukor' => (float)$data[$kaja.'_cukor'],
+        'so' => (float)$data[$kaja.'_so'],
         'allergenek' => $data[$kaja.'_allergenek'],
       ) : false;
     }
@@ -157,6 +159,8 @@ class EtlapAPI implements InstallModules
     $data['kovetkezo_hetfo'] = $this->nextMondayDate();
     $data['nap'] = ($data['hetvege_van']) ? $data['kovetkezo_hetfo'] : $data['ma'];
     $data['hetvege'] = $this->yearWeekend($data['nap']);
+
+    $data['menu'] = $this->getMenu( $data['nap'] );
 
     return $data;
   }

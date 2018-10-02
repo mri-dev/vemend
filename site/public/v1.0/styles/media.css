@@ -1408,7 +1408,7 @@ body.singlepage .website .cover-img {
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
-  box-shadow: inset 0 -200px 200px -80px rgba(0, 0, 0, 0);
+  box-shadow: inset 0 -200px 200px -80px rgba(0, 0, 0, 0.71);
 }
 /* line 130, sass/_base.scss */
 body.singlepage .website .page.page-width {
@@ -2243,7 +2243,7 @@ body.singlepage .website .page.covered-page .side-menu {
 .webshop-product-top .items .item .image .short-desc,
 .related-products .items .item .image .short-desc {
   z-index: 2;
-  background: rgba(240, 240, 240, 0);
+  background: rgba(240, 240, 240, 0.81);
   padding: 5px;
   font-size: 0.8em;
   text-align: left;
@@ -3081,7 +3081,7 @@ body.singlepage .website .page.covered-page .side-menu {
   z-index: 50;
   padding: 0.2px;
   border: 0.5px solid #efefef;
-  box-shadow: 8px 8px 12px -5px rgba(0, 0, 0, 0);
+  box-shadow: 8px 8px 12px -5px rgba(0, 0, 0, 0.11);
 }
 /* line 1663, sass/_base.scss */
 .cat-menu > .title {
@@ -5540,7 +5540,7 @@ md-toast {
 /* line 400, scss/_base.scss */
 /* line 4009, sass/_base.scss */
 .dialogBox.overlayed {
-  background: rgba(74, 74, 74, 0);
+  background: rgba(74, 74, 74, 0.9);
   pointer-events: auto;
 }
 
@@ -10193,101 +10193,13 @@ body.homepage .szallasok > .holder .szallas-top > .wrapper {
 }
 
 /* line 8345, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder {
-  margin: -10px;
-}
-/* line 8349, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex {
-  align-items: initial;
-}
-/* line 8352, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > div > div.wrapper {
-  padding: 10px;
-}
-/* line 8356, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .miserend {
-  flex-basis: 25%;
-}
-/* line 8360, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .miserend .header .title {
-  flex-basis: 50%;
-}
-/* line 8363, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .miserend .header .more {
-  flex-basis: 50%;
-}
-/* line 8368, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .miserend .content-holder {
-  background: white;
-  border: 1px solid #dbdbdb;
-}
-/* line 8372, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .miserend .content-holder article {
-  border-bottom: 0.5px solid #dbdbdb;
-  padding: 0 0 5px 0;
-}
-/* line 8376, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .miserend .content-holder article .title {
-  font-size: 1.25em;
-  line-height: 1.2;
-  padding: 5px 15px;
-}
-/* line 8380, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .miserend .content-holder article .title a {
-  color: #424242;
-  display: block;
-}
-/* line 8386, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .miserend .content-holder article .meta {
-  padding: 5px 15px;
-  font-size: 0.8em;
-  margin-bottom: 4px;
-  color: #dca501;
-}
-/* line 8393, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .miserend .content-holder article:last-child {
-  border-bottom: none;
-}
-/* line 8397, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .miserend .content-holder article .image {
-  height: 180px;
-  margin: 0 0 5px 0;
-  background: #ececec;
-  position: relative;
-  overflow: hidden;
-}
-/* line 8408, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .etlap {
-  flex: 1;
-}
-/* line 8412, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .etlap .header .title {
-  flex-basis: 100%;
-}
-/* line 8417, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder {
-  margin: 0 -10px;
-}
-/* line 8419, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex {
-  align-items: initial;
-}
-/* line 8421, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > div {
-  padding: 0 10px;
-}
-/* line 8424, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block {
-  flex-basis: 360px;
-}
-/* line 8426, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper {
+.naptar-block > .wrapper {
   border: 1px solid #dbdbdb;
   background: white;
   height: 100%;
 }
-/* line 8431, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .sel-dates {
+/* line 8350, sass/_base.scss */
+.naptar-block > .wrapper .sel-dates {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -10295,17 +10207,17 @@ body.homepage .szallasok > .holder .szallas-top > .wrapper {
   align-items: center;
   padding: 10px;
 }
-/* line 8439, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .sel-dates > .div {
+/* line 8358, sass/_base.scss */
+.naptar-block > .wrapper .sel-dates > .div {
   flex-basis: 40px;
   text-align: center;
 }
-/* line 8445, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .sel-dates > .start, .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .sel-dates > .end {
+/* line 8364, sass/_base.scss */
+.naptar-block > .wrapper .sel-dates > .start, .naptar-block > .wrapper .sel-dates > .end {
   flex-basis: calc((100% - 40px) / 2 );
 }
-/* line 8448, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .sel-dates > .start input[type=text], .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .sel-dates > .end input[type=text] {
+/* line 8367, sass/_base.scss */
+.naptar-block > .wrapper .sel-dates > .start input[type=text], .naptar-block > .wrapper .sel-dates > .end input[type=text] {
   font-weight: bold;
   text-align: center;
   color: black;
@@ -10315,79 +10227,164 @@ body.homepage .szallasok > .holder .szallas-top > .wrapper {
   display: block;
   border-bottom: 4px solid #f5b801;
 }
-/* line 8458, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .sel-dates > .start input[type=text]:focus, .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .sel-dates > .start input[type=text]:active, .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .sel-dates > .end input[type=text]:focus, .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .sel-dates > .end input[type=text]:active {
+/* line 8377, sass/_base.scss */
+.naptar-block > .wrapper .sel-dates > .start input[type=text]:focus, .naptar-block > .wrapper .sel-dates > .start input[type=text]:active, .naptar-block > .wrapper .sel-dates > .end input[type=text]:focus, .naptar-block > .wrapper .sel-dates > .end input[type=text]:active {
   border-bottom: 4px solid #f5b801;
   outline: none;
 }
-/* line 8463, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .sel-dates > .start input[type=text]:disabled, .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .sel-dates > .end input[type=text]:disabled {
+/* line 8382, sass/_base.scss */
+.naptar-block > .wrapper .sel-dates > .start input[type=text]:disabled, .naptar-block > .wrapper .sel-dates > .end input[type=text]:disabled {
   color: #222222;
   background: none;
 }
-/* line 8471, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .md-whiteframe-1dp, .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .md-whiteframe-z1 {
+/* line 8390, sass/_base.scss */
+.naptar-block > .wrapper .md-whiteframe-1dp, .naptar-block > .wrapper .md-whiteframe-z1 {
   box-shadow: none !important;
 }
-/* line 8474, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .md-date-range-picker__month-year {
+/* line 8393, sass/_base.scss */
+.naptar-block > .wrapper .md-date-range-picker__month-year {
   background: none;
   border-bottom: 0.8px solid #efefef;
 }
-/* line 8479, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .layout-margin,
-.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .layout-margin > * {
+/* line 8398, sass/_base.scss */
+.naptar-block > .wrapper .layout-margin,
+.naptar-block > .wrapper .layout-margin > * {
   margin: 0 !important;
 }
-/* line 8482, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .md-date-range-picker__calendar-wrapper {
+/* line 8401, sass/_base.scss */
+.naptar-block > .wrapper .md-date-range-picker__calendar-wrapper {
   width: 100%;
   max-width: 100%;
 }
-/* line 8487, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .md-date-range-picker__calendar,
-.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .md-date-range-picker__week {
+/* line 8406, sass/_base.scss */
+.naptar-block > .wrapper .md-date-range-picker__calendar,
+.naptar-block > .wrapper .md-date-range-picker__week {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
 }
-/* line 8494, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .md-date-range-picker__calendar > span.md-date-range-picker__calendar__grid,
-.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .md-date-range-picker__week > span.md-date-range-picker__calendar__grid {
+/* line 8413, sass/_base.scss */
+.naptar-block > .wrapper .md-date-range-picker__calendar > span.md-date-range-picker__calendar__grid,
+.naptar-block > .wrapper .md-date-range-picker__week > span.md-date-range-picker__calendar__grid {
   flex-basis: calc(100% / 7);
 }
-/* line 8499, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .md-date-range-picker__week {
+/* line 8418, sass/_base.scss */
+.naptar-block > .wrapper .md-date-range-picker__week {
   background: none;
   border-bottom: 0.8px solid #e2e2e2;
 }
-/* line 8503, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .md-date-range-picker__week .md-date-range-picker__calendar__grid {
+/* line 8422, sass/_base.scss */
+.naptar-block > .wrapper .md-date-range-picker__week .md-date-range-picker__calendar__grid {
   font-weight: 300;
   color: #696969 !important;
 }
-/* line 8509, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .md-date-range-picker__calendar__selected {
+/* line 8428, sass/_base.scss */
+.naptar-block > .wrapper .md-date-range-picker__calendar__selected {
   background: #fec92b;
 }
-/* line 8512, sass/_base.scss */
-.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block > .wrapper .md-date-range-picker__calendar .md-date-range-picker__calendar__grid:hover:not(.md-date-range-picker__calendar__selected):not(.md-date-range-picker__calendar__disabled) {
+/* line 8431, sass/_base.scss */
+.naptar-block > .wrapper .md-date-range-picker__calendar .md-date-range-picker__calendar__grid:hover:not(.md-date-range-picker__calendar__selected):not(.md-date-range-picker__calendar__disabled) {
   background: #ffe390;
 }
-/* line 8518, sass/_base.scss */
+
+/* line 8438, sass/_base.scss */
+.home-etlap-miserend > .pw > .holder {
+  margin: -10px;
+}
+/* line 8442, sass/_base.scss */
+.home-etlap-miserend > .pw > .holder > .flex {
+  align-items: initial;
+}
+/* line 8445, sass/_base.scss */
+.home-etlap-miserend > .pw > .holder > .flex > div > div.wrapper {
+  padding: 10px;
+}
+/* line 8449, sass/_base.scss */
+.home-etlap-miserend > .pw > .holder > .flex > .miserend {
+  flex-basis: 25%;
+}
+/* line 8453, sass/_base.scss */
+.home-etlap-miserend > .pw > .holder > .flex > .miserend .header .title {
+  flex-basis: 50%;
+}
+/* line 8456, sass/_base.scss */
+.home-etlap-miserend > .pw > .holder > .flex > .miserend .header .more {
+  flex-basis: 50%;
+}
+/* line 8461, sass/_base.scss */
+.home-etlap-miserend > .pw > .holder > .flex > .miserend .content-holder {
+  background: white;
+  border: 1px solid #dbdbdb;
+}
+/* line 8465, sass/_base.scss */
+.home-etlap-miserend > .pw > .holder > .flex > .miserend .content-holder article {
+  border-bottom: 0.5px solid #dbdbdb;
+  padding: 0 0 5px 0;
+}
+/* line 8469, sass/_base.scss */
+.home-etlap-miserend > .pw > .holder > .flex > .miserend .content-holder article .title {
+  font-size: 1.25em;
+  line-height: 1.2;
+  padding: 5px 15px;
+}
+/* line 8473, sass/_base.scss */
+.home-etlap-miserend > .pw > .holder > .flex > .miserend .content-holder article .title a {
+  color: #424242;
+  display: block;
+}
+/* line 8479, sass/_base.scss */
+.home-etlap-miserend > .pw > .holder > .flex > .miserend .content-holder article .meta {
+  padding: 5px 15px;
+  font-size: 0.8em;
+  margin-bottom: 4px;
+  color: #dca501;
+}
+/* line 8486, sass/_base.scss */
+.home-etlap-miserend > .pw > .holder > .flex > .miserend .content-holder article:last-child {
+  border-bottom: none;
+}
+/* line 8490, sass/_base.scss */
+.home-etlap-miserend > .pw > .holder > .flex > .miserend .content-holder article .image {
+  height: 180px;
+  margin: 0 0 5px 0;
+  background: #ececec;
+  position: relative;
+  overflow: hidden;
+}
+/* line 8501, sass/_base.scss */
+.home-etlap-miserend > .pw > .holder > .flex > .etlap {
+  flex: 1;
+}
+/* line 8504, sass/_base.scss */
+.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder {
+  margin: 0 -10px;
+}
+/* line 8506, sass/_base.scss */
+.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex {
+  align-items: initial;
+}
+/* line 8508, sass/_base.scss */
+.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > div {
+  padding: 0 10px;
+}
+/* line 8511, sass/_base.scss */
+.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block {
+  flex-basis: 360px;
+}
+/* line 8515, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual {
   flex: 1;
 }
-/* line 8522, sass/_base.scss */
+/* line 8519, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .date-on,
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .text {
   height: 70px;
   position: relative;
   font-weight: 300;
 }
-/* line 8527, sass/_base.scss */
+/* line 8524, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .date-on .air-text,
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .text .air-text {
   position: absolute;
@@ -10399,14 +10396,14 @@ body.homepage .szallasok > .holder .szallas-top > .wrapper {
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
-/* line 8538, sass/_base.scss */
+/* line 8535, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .text {
   color: white;
   background: #8eaf35;
   font-size: 1.2em;
   margin-top: 5px;
 }
-/* line 8544, sass/_base.scss */
+/* line 8541, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .date-on {
   text-align: center;
   color: white;
@@ -10414,46 +10411,63 @@ body.homepage .szallasok > .holder .szallas-top > .wrapper {
   font-size: 1.3em;
   margin-bottom: 5px;
 }
-/* line 8551, sass/_base.scss */
+/* line 8548, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .date-on .week {
   text-transform: uppercase;
   font-size: 1.55em;
   margin: 0 0 5px 0;
   font-weight: 400;
 }
-/* line 8558, sass/_base.scss */
+/* line 8555, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .image {
   height: 120px;
-  background: #cecece;
+  background: #ffffff;
   position: relative;
   overflow: hidden;
 }
-/* line 8564, sass/_base.scss */
+/* line 8560, sass/_base.scss */
+.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .image > .wrapper {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+/* line 8565, sass/_base.scss */
+.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .image > .wrapper img {
+  height: auto;
+  width: 110%;
+  max-width: 110%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+/* line 8577, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .side-left {
   flex-basis: 40%;
 }
-/* line 8567, sass/_base.scss */
+/* line 8580, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .side-right {
   flex-basis: 60%;
   padding-left: 5px;
 }
-/* line 8571, sass/_base.scss */
+/* line 8584, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .line-one {
   margin-bottom: 5px;
 }
-/* line 8575, sass/_base.scss */
+/* line 8588, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .line-one .side-left .text {
   background: #f5b801;
 }
-/* line 8581, sass/_base.scss */
+/* line 8594, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .line-one .side-right .image {
   height: 195px;
 }
-/* line 8587, sass/_base.scss */
+/* line 8600, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .line-two > .flex {
   align-items: initial;
 }
-/* line 8592, sass/_base.scss */
+/* line 8605, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .kieg2 {
   height: 100%;
   display: -webkit-box;
@@ -10461,25 +10475,156 @@ body.homepage .szallasok > .holder .szallas-top > .wrapper {
   display: flex;
   flex-wrap: nowrap;
 }
-/* line 8599, sass/_base.scss */
+/* line 8612, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .kieg2 > .image {
   flex: 1;
   height: 100%;
   margin-right: 5px;
 }
-/* line 8604, sass/_base.scss */
+/* line 8617, sass/_base.scss */
+.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .kieg2 > .image img {
+  max-width: 120% !important;
+  width: 120% !important;
+}
+/* line 8622, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .kieg2 > .text {
   height: 100%;
   flex-basis: 70px;
   margin: 0;
 }
-/* line 8609, sass/_base.scss */
+/* line 8627, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .kieg2 > .text .air-text {
   -webkit-transform: translate(-50%, -50%) rotate(-90deg);
   transform: translate(-50%, -50%) rotate(-90deg);
 }
+/* line 8638, sass/_base.scss */
+.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual .no-image .image img {
+  width: 80% !important;
+  max-width: 80% !important;
+}
+/* line 8645, sass/_base.scss */
+.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual .disabled {
+  opacity: 0.6;
+  filter: alpha(opacity=60);
+  border: 0.5px dashed #a2a2a2;
+  padding: 0.5px;
+}
+/* line 8651, sass/_base.scss */
+.home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual .disabled .text {
+  background: #dbdbdb !important;
+}
 
-/* line 8624, sass/_base.scss */
+/* line 8662, sass/_base.scss */
+.etlap-page {
+  background-image: url("//www.cp.vemend.web-pro.hu/src/images/etlap-bg-overlay.jpg");
+  background-repeat: repeat-y;
+  background-position: center;
+  background-size: cover;
+}
+/* line 8668, sass/_base.scss */
+.etlap-page .page-wrapper {
+  padding: 50px 0 40px 0;
+}
+/* line 8672, sass/_base.scss */
+.etlap-page .menu-line {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+/* line 8676, sass/_base.scss */
+.etlap-page .menu-line > .naptar-block {
+  flex-basis: 320px;
+}
+/* line 8679, sass/_base.scss */
+.etlap-page .menu-line > .current-menu {
+  flex: 1;
+  padding: 0 0 0 15px;
+}
+/* line 8686, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .top, .etlap-page .menu-line > .current-menu > .top > .pretitle, .etlap-page .menu-line > .current-menu > .top > .eteltablazat, .etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek > .tabla {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+/* line 8692, sass/_base.scss */
+.etlap-page .menu-line > .current-menu .fin {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+/* line 8703, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .top > .pretitle {
+  flex-basis: 50%;
+  color: white;
+  font-size: 1.4em;
+}
+/* line 8707, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .top > .pretitle > .m {
+  position: relative;
+  flex-basis: 50%;
+  background: #8eaf35;
+  font-size: 1.6em;
+}
+/* line 8713, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .top > .pretitle > .v {
+  position: relative;
+  flex-basis: 50%;
+  background: #7e9b2f;
+}
+/* line 8719, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .top > .eteltablazat {
+  flex-basis: 50%;
+  background: white;
+  font-size: 0.8em;
+  border: 0.5px solid #b1b1b1;
+}
+/* line 8725, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .top > .eteltablazat > .head {
+  flex-basis: 100px;
+  background: #f5f5f5;
+  border-right: 0.5px solid #dbdbdb;
+}
+/* line 8731, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek {
+  flex: 1;
+}
+/* line 8733, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek > .tabla {
+  padding: 5px;
+}
+/* line 8736, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek > .tabla table {
+  width: 100%;
+}
+/* line 8740, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek > .tabla table td {
+  padding: 5px;
+}
+/* line 8743, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek > .tabla table td.h {
+  font-weight: bold;
+}
+/* line 8746, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek > .tabla table td.v {
+  font-weight: 300;
+  text-align: right;
+}
+/* line 8752, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek > .allergenek {
+  padding: 10px;
+  background: #f8f8f8;
+  border-top: 0.5px solid #dbdbdb;
+}
+/* line 8758, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek > .tabla > div {
+  flex-basis: 50%;
+}
+
+/* line 8770, sass/_base.scss */
 .szalag .highlight-view {
   background: white;
   display: -webkit-box;
@@ -10488,12 +10633,12 @@ body.homepage .szallasok > .holder .szallas-top > .wrapper {
   flex-wrap: nowrap;
   align-items: center;
 }
-/* line 8632, sass/_base.scss */
+/* line 8778, sass/_base.scss */
 .szalag .highlight-view > .p {
   flex-basis: 40px;
   background: #8eaf35;
 }
-/* line 8636, sass/_base.scss */
+/* line 8782, sass/_base.scss */
 .szalag .highlight-view > .p a {
   display: block;
   color: white;
@@ -10501,71 +10646,71 @@ body.homepage .szallasok > .holder .szallas-top > .wrapper {
   text-align: center;
   line-height: 40px;
 }
-/* line 8645, sass/_base.scss */
+/* line 8791, sass/_base.scss */
 .szalag .highlight-view .items {
   flex: 1;
 }
-/* line 8647, sass/_base.scss */
+/* line 8793, sass/_base.scss */
 .szalag .highlight-view .items .hl-cont {
   padding: 0 15px;
   line-height: 40px;
 }
-/* line 8652, sass/_base.scss */
+/* line 8798, sass/_base.scss */
 .szalag .highlight-view .items ul li {
   display: none;
   font-size: 1.1em;
   text-align: center;
 }
-/* line 8656, sass/_base.scss */
+/* line 8802, sass/_base.scss */
 .szalag .highlight-view .items ul li.active {
   display: block;
 }
 
-/* line 8667, sass/_base.scss */
+/* line 8813, sass/_base.scss */
 body.homepage footer,
 body.article footer {
   margin-top: 0;
 }
 
-/* line 8673, sass/_base.scss */
+/* line 8819, sass/_base.scss */
 body.article .website {
   width: 100%;
 }
 
-/* line 8679, sass/_base.scss */
+/* line 8825, sass/_base.scss */
 body.product-page .website {
   width: 100%;
 }
-/* line 8683, sass/_base.scss */
+/* line 8829, sass/_base.scss */
 body.product-page footer {
   margin-top: 0;
 }
-/* line 8686, sass/_base.scss */
+/* line 8832, sass/_base.scss */
 body.product-page header .bottom > .pw > .flex {
   padding-left: 0;
 }
-/* line 8690, sass/_base.scss */
+/* line 8836, sass/_base.scss */
 body.product-page .nav.nav-fix {
   flex: 1;
 }
 
-/* line 8696, sass/_base.scss */
+/* line 8842, sass/_base.scss */
 .sidebar .inp {
   padding: 10px 15px;
 }
-/* line 8698, sass/_base.scss */
+/* line 8844, sass/_base.scss */
 .sidebar .inp label {
   display: block;
   padding: 0 0 15px 0;
 }
-/* line 8703, sass/_base.scss */
+/* line 8849, sass/_base.scss */
 .sidebar .inp input, .sidebar .inp select {
   width: 100%;
   padding: 10px;
   font-size: 1.2em;
   border: 1px solid #e8e8e8;
 }
-/* line 8709, sass/_base.scss */
+/* line 8855, sass/_base.scss */
 .sidebar .inp button {
   display: block;
   width: 100%;
@@ -10578,11 +10723,11 @@ body.product-page .nav.nav-fix {
   font-size: 1.2em;
 }
 
-/* line 8723, sass/_base.scss */
+/* line 8869, sass/_base.scss */
 .programs-view {
   margin: 20px 0;
 }
-/* line 8725, sass/_base.scss */
+/* line 8871, sass/_base.scss */
 .programs-view .content-view-holder {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -10591,54 +10736,54 @@ body.product-page .nav.nav-fix {
   align-items: flex-start;
   margin: 0 -15px;
 }
-/* line 8733, sass/_base.scss */
+/* line 8879, sass/_base.scss */
 .programs-view .content-view-holder > div {
   padding: 0 15px;
 }
-/* line 8737, sass/_base.scss */
+/* line 8883, sass/_base.scss */
 .programs-view .content-view-holder > .sidebar {
   flex-basis: 30%;
 }
-/* line 8741, sass/_base.scss */
+/* line 8887, sass/_base.scss */
 .programs-view .content-view-holder > .view-holder {
   flex: 1;
 }
-/* line 8746, sass/_base.scss */
+/* line 8892, sass/_base.scss */
 .programs-view .content-view-holder .program-page .details {
   margin: 15px 0 30px 0;
   font-size: 1.2em;
   color: black;
 }
-/* line 8751, sass/_base.scss */
+/* line 8897, sass/_base.scss */
 .programs-view .content-view-holder .program-page .details span.date {
   background: #f5b801;
   color: white;
   padding: 4px 6px;
 }
-/* line 8756, sass/_base.scss */
+/* line 8902, sass/_base.scss */
 .programs-view .content-view-holder .program-page .details span.position {
   font-weight: bold;
   padding-left: 15px;
   color: #81b83a;
 }
-/* line 8762, sass/_base.scss */
+/* line 8908, sass/_base.scss */
 .programs-view .content-view-holder .program-page .content {
   line-height: 1.4;
   font-size: 1.23em;
 }
-/* line 8766, sass/_base.scss */
+/* line 8912, sass/_base.scss */
 .programs-view .content-view-holder .program-page .content p {
   margin: 5px 0;
 }
-/* line 8773, sass/_base.scss */
+/* line 8919, sass/_base.scss */
 .programs-view .categories {
   margin: 0 0 15px 0;
 }
-/* line 8776, sass/_base.scss */
+/* line 8922, sass/_base.scss */
 .programs-view .categories .list .cat {
   padding: 2px 0;
 }
-/* line 8778, sass/_base.scss */
+/* line 8924, sass/_base.scss */
 .programs-view .categories .list .cat a {
   text-transform: uppercase;
   display: block;
@@ -10649,7 +10794,7 @@ body.product-page .nav.nav-fix {
   border-radius: 2px;
   border: 0.5px solid transparent;
 }
-/* line 8789, sass/_base.scss */
+/* line 8935, sass/_base.scss */
 .programs-view .categories .list .cat:hover a, .programs-view .categories .list .cat.active a {
   background: white;
   color: black;
@@ -10657,7 +10802,7 @@ body.product-page .nav.nav-fix {
   border: 0.5px solid #d1d1d1;
 }
 
-/* line 8803, sass/_base.scss */
+/* line 8949, sass/_base.scss */
 .program-list > .wrapper .articles {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -10665,51 +10810,51 @@ body.product-page .nav.nav-fix {
   flex-wrap: wrap;
   margin: -10px;
 }
-/* line 8810, sass/_base.scss */
+/* line 8956, sass/_base.scss */
 .program-list > .wrapper .articles > .program {
   flex-basis: calc(100% / 3);
   padding: 10px;
 }
-/* line 8814, sass/_base.scss */
+/* line 8960, sass/_base.scss */
 .program-list > .wrapper .articles > .program .wrapper {
   background: white;
 }
-/* line 8818, sass/_base.scss */
+/* line 8964, sass/_base.scss */
 .program-list > .wrapper .articles > .program .datain {
   position: relative;
   padding: 25px 0 0 0;
 }
-/* line 8823, sass/_base.scss */
+/* line 8969, sass/_base.scss */
 .program-list > .wrapper .articles > .program .image {
   height: 13vw;
 }
-/* line 8828, sass/_base.scss */
+/* line 8974, sass/_base.scss */
 .program-list > .wrapper .articles > .program .title h3 {
   font-size: 1em;
   margin: 0;
 }
-/* line 8832, sass/_base.scss */
+/* line 8978, sass/_base.scss */
 .program-list > .wrapper .articles > .program .title a {
   text-align: center;
   display: block;
   padding: 5px 10px;
   color: black;
 }
-/* line 8840, sass/_base.scss */
+/* line 8986, sass/_base.scss */
 .program-list > .wrapper .articles > .program .pos {
   text-align: center;
   color: #a0a0a0;
   font-size: 0.85em;
   padding: 5px 10px 10px 5px;
 }
-/* line 8847, sass/_base.scss */
+/* line 8993, sass/_base.scss */
 .program-list > .wrapper .articles > .program .ondate {
   position: absolute;
   left: 0;
   top: -18px;
   width: 100%;
 }
-/* line 8852, sass/_base.scss */
+/* line 8998, sass/_base.scss */
 .program-list > .wrapper .articles > .program .ondate .in {
   width: 90%;
   margin: 0 auto;
@@ -10721,11 +10866,11 @@ body.product-page .nav.nav-fix {
   text-decoration: none;
   font-weight: bold;
 }
-/* line 8865, sass/_base.scss */
+/* line 9011, sass/_base.scss */
 .program-list > .wrapper .articles > .program .details {
   margin-top: 10px;
 }
-/* line 8867, sass/_base.scss */
+/* line 9013, sass/_base.scss */
 .program-list > .wrapper .articles > .program .details a {
   color: white;
   text-decoration: none;
@@ -10738,11 +10883,11 @@ body.product-page .nav.nav-fix {
   -webkit-transition: all .4s;
   transition: all .4s;
 }
-/* line 8879, sass/_base.scss */
+/* line 9025, sass/_base.scss */
 .program-list > .wrapper .articles > .program .details a:hover {
   background: #f5b801;
 }
-/* line 8886, sass/_base.scss */
+/* line 9032, sass/_base.scss */
 .program-list > .wrapper .articles .no-news {
   line-height: 1.4;
   font-size: 1.3em;
@@ -10751,13 +10896,13 @@ body.product-page .nav.nav-fix {
   flex-basis: 100%;
 }
 
-/* line 8899, sass/_base.scss */
+/* line 9045, sass/_base.scss */
 .sidebar > .box {
   background: white;
   margin: 0 0 20px 0;
   box-shadow: 2px 2px 20px -10px black;
 }
-/* line 8904, sass/_base.scss */
+/* line 9050, sass/_base.scss */
 .sidebar > .box > .header {
   background: #898989;
   color: white;
@@ -10766,15 +10911,15 @@ body.product-page .nav.nav-fix {
   font-size: 1.2em;
   text-transform: uppercase;
 }
-/* line 8914, sass/_base.scss */
+/* line 9060, sass/_base.scss */
 .sidebar > .box > .c > .p {
   padding: 15px;
 }
-/* line 8920, sass/_base.scss */
+/* line 9066, sass/_base.scss */
 .sidebar > .box.green-header > .header {
   background: #8eaf35;
 }
-/* line 8925, sass/_base.scss */
+/* line 9071, sass/_base.scss */
 .sidebar > .box.orange-header > .header {
   background: #f5b801;
 }
