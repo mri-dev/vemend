@@ -8663,7 +8663,7 @@ body.homepage{
 	background-image: url('#{$imgroot}etlap-bg-overlay.jpg');
 	background-repeat: repeat-y;
   background-position: center;
-  background-size: cover;
+  background-size: 100%;
 
 	.page-wrapper{
 		padding: 50px 0 40px 0;
@@ -8726,6 +8726,11 @@ body.homepage{
 						flex-basis: 100px;
 						background: #f5f5f5;
 						border-right: 0.5px solid #dbdbdb;
+						position: relative;
+
+						img {
+							width: 50%;
+						}
 					}
 
 					& > .ertekek {
@@ -8751,7 +8756,6 @@ body.homepage{
 						}
 						& > .allergenek{
 							padding: 10px;
-							background: #f8f8f8;
 							border-top: 0.5px solid #dbdbdb;
 						}
 
@@ -8762,6 +8766,301 @@ body.homepage{
 				}
 			}
 
+			& > .menu {
+				display: -webkit-box;
+			  display: -ms-flexbox;
+			  display: flex;
+				margin: 15px 0 0 0;
+
+				& > div {
+					flex-basis: calc(100% / 4);
+					background: white;
+
+					.image{
+						height: 14vh;
+						.wrapper{
+							height: 100%;
+							overflow: hidden;
+							position: relative;
+						}
+					}
+
+					.text{
+						color: white;
+						position: relative;
+						height: 75px;
+						font-size: 1.1em;
+
+						.air-text{
+							position: absolute;
+							width: 100%;
+							text-align: center;
+							top: 50%;
+							left: 50%;
+							-webkit-transform:translate(-50%,-50%);
+							 transform:translate(-50%,-50%);
+							 line-height: 1.1;
+						}
+					}
+
+					&.disabled{
+						cursor:not-allowed;
+						opacity: 0.6;
+						filter: alpha(opacity=60);
+						border: 0.5px dashed #a2a2a2;
+						padding: 0.5px;
+					}
+				}
+
+				& > div:nth-child(1){
+					.text{
+						background:#424242;
+					}
+				}
+
+				& > div:nth-child(2){
+					.text{
+						background: lighten(#424242, 10%);
+					}
+				}
+				& > div:nth-child(3){
+					.text{
+						background: lighten(#424242, 20%);
+					}
+				}
+				& > div:nth-child(4){
+					.text{
+						background: lighten(#424242, 30%);
+					}
+				}
+
+				.image{
+					position: relative;
+
+					img {
+						position: absolute;
+						max-height: 110%;
+						height: 110%;
+						width: auto;
+						max-width: initial;
+						top: 50%;
+						left: 50%;
+						-webkit-transform:translate(-50%,-50%);
+						 transform:translate(-50%,-50%);
+					}
+				}
+			}
+
+			& > .bottom {
+				display: -webkit-box;
+			  display: -ms-flexbox;
+			  display: flex;
+				margin: 15px -5px 0 -5px;
+
+
+				& > div {
+					flex-basis: 50%;
+					padding: 0 5px;
+					height: 60px;
+					& > .wrapper{
+						border-width: 1px;
+						border-style: solid;
+						border-color: grey;
+						display: -webkit-box;
+					  display: -ms-flexbox;
+					  display: flex;
+						height: 100%;
+						& > div {
+							flex-basis: 50%;
+							padding: 10px;
+							position: relative;
+						}
+					}
+
+					.text{
+						i {
+							font-size: 23px;
+    					vertical-align: middle;
+							margin: 0 5px 0 0;
+						}
+					}
+				}
+
+				& > .deadline{
+					& > .wrapper{
+						border-color: #e2261b;
+					}
+					.text{
+						background: #ffd6d8;
+						color: red;
+
+						i {
+							float: left;
+							margin: 0 0 0 15px;
+						}
+					}
+
+					.val{
+						background: #e2261b;
+						color: white;
+						font-size: 1.8em;
+					}
+				}
+
+				& > .contact{
+					& > .wrapper{
+						border-color: #d4a311;
+					}
+					.text{
+						background: #f6f6d9;
+						color: #d4a311;
+					}
+
+					.val{
+						background: #d4a311;
+						color: white;
+						font-size: 1.8em;
+					}
+				}
+			}
+
+		}
+	}
+
+	.week-menus{
+		h2{
+			font-weight: bold;
+			font-size: 1.5em;
+			margin: 15px 0 10px 0;
+		}
+
+		.menu-set{
+			margin: 0 0 25px 0;
+			.header{
+				font-size: 1.5em;
+				text-transform: uppercase;
+				margin: 0 0 15px 0;
+				.daterange{
+					font-size: 0.6em;
+					margin: 0 0 0 15px;
+				}
+			}
+
+			.set{
+				& > .wrapper{
+					display: -webkit-box;
+				  display: -ms-flexbox;
+				  display: flex;
+					& > .nap {
+						flex-basis: calc(100% / 5);
+						& > .wrapper{
+							border: 0.5px solid #d5d5d5;
+							background: white;
+  						padding: 0.5px;
+
+							& > .head{
+								display: -webkit-box;
+							  display: -ms-flexbox;
+							  display: flex;
+								flex-wrap: nowrap;
+								border-bottom: 0.5px solid #d5d5d5;
+								& > div {
+									flex-basis: 50%;
+									padding: 10px;
+									&.day{
+										border-right: 0.5px solid #d5d5d5;
+									}
+									&.weekday{
+										background: #fafafa;
+										font-weight: bold;
+									}
+								}
+							}
+
+							& > .image{
+								border-bottom: 0.5px solid #d5d5d5;
+								height: 14vh;
+								& > .wrapper{
+									height: 100%;
+									overflow: hidden;
+									position: relative;
+
+									img {
+										position: absolute;
+										max-height: 110%;
+										height: 110%;
+										width: auto;
+										max-width: initial;
+										top: 50%;
+										left: 50%;
+										-webkit-transform:translate(-50%,-50%);
+										 transform:translate(-50%,-50%);
+									}
+								}
+							}
+							& > .menu {
+								height: 100px;
+								padding: 10px;
+								position: relative;
+								background: #f8f8f8;
+								border-bottom: 0.5px solid #d5d5d5;
+								& > .air-text{
+									position: absolute;
+									width: 100%;
+									text-align: center;
+									top: 50%;
+									left: 50%;
+									-webkit-transform:translate(-50%,-50%);
+									 transform:translate(-50%,-50%);
+									& > div {
+										margin: 5px 0;
+										line-height: 1.1;
+										font-size: 1.1em;
+										text-align: center;
+									}
+								}
+							}
+
+							& > .ertekek{
+								& > .tabla{
+									display: -webkit-box;
+									display: -ms-flexbox;
+									display: flex;
+									flex-wrap: nowrap;
+									& > div {
+										flex-basis: 50%;
+										padding: 5px;
+										font-size: 0.8em;
+										table{
+											width: 100%;
+
+											td{
+												padding: 1px 5px;
+											}
+
+											.v{
+												text-align: right;
+												color: #8c8c8c;
+												font-weight: 300;
+											}
+										}
+									}
+									& > div:first-child {
+										border-right: 0.5px solid #d5d5d5;
+									}
+								}
+							}
+
+							& > .allergenek{
+								border-top: 0.5px solid #d5d5d5;
+								background: #fafafa;
+								font-size: 0.8em;
+								padding: 10px;
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }

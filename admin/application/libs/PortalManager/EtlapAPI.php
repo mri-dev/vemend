@@ -130,6 +130,8 @@ class EtlapAPI implements InstallModules
     $data = $this->db->squery($q, $arg);
     $data = $data->fetch(\PDO::FETCH_ASSOC);
 
+    $ertekek = array();
+    $allergenek = array();
     foreach ($this->kajakat as $kaja )
     {
       $back[$kaja] = ($data[$kaja.'_neve']) ? array(
@@ -145,7 +147,28 @@ class EtlapAPI implements InstallModules
         'so' => (float)$data[$kaja.'_so'],
         'allergenek' => $data[$kaja.'_allergenek'],
       ) : false;
+      $allerg = explode(",", $data[$kaja.'_allergenek']);
+      foreach ((array)$allerg as $al) {
+        $al = trim($al);
+        if (!in_array($al, $allergenek)) {
+          if($al != '') {
+            $allergenek[] = $al;
+          }
+        }
+      }
+
+      $ertekek['kaloria'] += (float)$data[$kaja.'_kaloria'];
+      $ertekek['feherje'] += (float)$data[$kaja.'_feherje'];
+      $ertekek['ch'] += (float)$data[$kaja.'_ch'];
+      $ertekek['zsir'] += (float)$data[$kaja.'_zsir'];
+      $ertekek['cukor'] += (float)$data[$kaja.'_cukor'];
+      $ertekek['so'] += (float)$data[$kaja.'_so'];
     }
+    $ertekek['allergenek'] = $allergenek;
+    $back['ertekek'] = $ertekek;
+
+    unset($allergenek);
+    unset($ertekek);
 
     return $back;
   }
@@ -158,6 +181,11 @@ class EtlapAPI implements InstallModules
     $data['hetvege_van'] = $this->isWeekend( $data['nap'] );
     $data['kovetkezo_hetfo'] = $this->nextMondayDate();
     $data['nap'] = ($data['hetvege_van']) ? $data['kovetkezo_hetfo'] : $data['ma'];
+
+    $weekdayname = (new \DateTime($data['nap']))->format('D');
+    $weekdayname = $this->replaceWeekdayName($weekdayname);
+    $data['nap_nev'] = $weekdayname;
+
     $data['hetvege'] = $this->yearWeekend($data['nap']);
 
     $data['menu'] = $this->getMenu( $data['nap'] );
@@ -165,12 +193,26 @@ class EtlapAPI implements InstallModules
     return $data;
   }
 
+  public function aktualisHet()
+  {
+    $het = array();
+
+    $het[0] = date('Y-m-d', strtotime('monday this week'));
+    $het[1] = date('Y-m-d', strtotime('friday this week'));
+
+    return $het;
+  }
+
   public function menuSet()
   {
     $set = array();
 
-    $q = "SELECT daydate FROM ".self::DBTABLE." WHERE daydate >= now() GROUP BY daydate ORDER BY daydate ASC";
-    $data = $this->db->query($q);
+    $ezahet = $this->aktualisHet();
+
+    $q = "SELECT daydate FROM ".self::DBTABLE." WHERE daydate >= :monday GROUP BY daydate ORDER BY daydate ASC";
+    $data = $this->db->squery($q, array(
+      'monday' => $ezahet[0]
+    ));
 
     if ($data->rowCount() == 0) return $set;
     $data = $data->fetchAll(\PDO::FETCH_ASSOC);
@@ -183,7 +225,7 @@ class EtlapAPI implements InstallModules
         $set['weeks'][$weeknum]['dateranges'] = array(
           'start' => $datestartend['start'],
           'end' => $datestartend['end'],
-          'range' => $datestartend['start'] . ' - ' . $datestartend['end']
+          'range' => date('Y.m.d.', strtotime($datestartend['start'])) . ' - ' . date('Y.m.d.', strtotime($datestartend['end']))
         );
       }
       $weekdayname = (new \DateTime($d['daydate']))->format('D');

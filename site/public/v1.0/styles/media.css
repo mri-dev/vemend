@@ -10519,7 +10519,7 @@ body.homepage .szallasok > .holder .szallas-top > .wrapper {
   background-image: url("//www.cp.vemend.web-pro.hu/src/images/etlap-bg-overlay.jpg");
   background-repeat: repeat-y;
   background-position: center;
-  background-size: cover;
+  background-size: 100%;
 }
 /* line 8668, sass/_base.scss */
 .etlap-page .page-wrapper {
@@ -10587,44 +10587,343 @@ body.homepage .szallasok > .holder .szallas-top > .wrapper {
   flex-basis: 100px;
   background: #f5f5f5;
   border-right: 0.5px solid #dbdbdb;
+  position: relative;
 }
 /* line 8731, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .top > .eteltablazat > .head img {
+  width: 50%;
+}
+/* line 8736, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek {
   flex: 1;
 }
-/* line 8733, sass/_base.scss */
+/* line 8738, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek > .tabla {
   padding: 5px;
 }
-/* line 8736, sass/_base.scss */
+/* line 8741, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek > .tabla table {
   width: 100%;
 }
-/* line 8740, sass/_base.scss */
+/* line 8745, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek > .tabla table td {
   padding: 5px;
 }
-/* line 8743, sass/_base.scss */
+/* line 8748, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek > .tabla table td.h {
   font-weight: bold;
 }
-/* line 8746, sass/_base.scss */
+/* line 8751, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek > .tabla table td.v {
   font-weight: 300;
   text-align: right;
 }
-/* line 8752, sass/_base.scss */
+/* line 8757, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek > .allergenek {
   padding: 10px;
-  background: #f8f8f8;
   border-top: 0.5px solid #dbdbdb;
 }
-/* line 8758, sass/_base.scss */
+/* line 8762, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek > .tabla > div {
   flex-basis: 50%;
 }
+/* line 8769, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .menu {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 15px 0 0 0;
+}
+/* line 8775, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .menu > div {
+  flex-basis: calc(100% / 4);
+  background: white;
+}
+/* line 8779, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .menu > div .image {
+  height: 14vh;
+}
+/* line 8781, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .menu > div .image .wrapper {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+/* line 8788, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .menu > div .text {
+  color: white;
+  position: relative;
+  height: 75px;
+  font-size: 1.1em;
+}
+/* line 8794, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .menu > div .text .air-text {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  line-height: 1.1;
+}
+/* line 8806, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .menu > div.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  filter: alpha(opacity=60);
+  border: 0.5px dashed #a2a2a2;
+  padding: 0.5px;
+}
+/* line 8816, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .menu > div:nth-child(1) .text {
+  background: #424242;
+}
+/* line 8822, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .menu > div:nth-child(2) .text {
+  background: #5c5c5c;
+}
+/* line 8827, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .menu > div:nth-child(3) .text {
+  background: #757575;
+}
+/* line 8832, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .menu > div:nth-child(4) .text {
+  background: #8f8f8f;
+}
+/* line 8837, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .menu .image {
+  position: relative;
+}
+/* line 8840, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .menu .image img {
+  position: absolute;
+  max-height: 110%;
+  height: 110%;
+  width: auto;
+  max-width: initial;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+/* line 8854, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .bottom {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 15px -5px 0 -5px;
+}
+/* line 8861, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .bottom > div {
+  flex-basis: 50%;
+  padding: 0 5px;
+  height: 60px;
+}
+/* line 8865, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .bottom > div > .wrapper {
+  border-width: 1px;
+  border-style: solid;
+  border-color: grey;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+}
+/* line 8873, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .bottom > div > .wrapper > div {
+  flex-basis: 50%;
+  padding: 10px;
+  position: relative;
+}
+/* line 8881, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .bottom > div .text i {
+  font-size: 23px;
+  vertical-align: middle;
+  margin: 0 5px 0 0;
+}
+/* line 8890, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .bottom > .deadline > .wrapper {
+  border-color: #e2261b;
+}
+/* line 8893, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .bottom > .deadline .text {
+  background: #ffd6d8;
+  color: red;
+}
+/* line 8897, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .bottom > .deadline .text i {
+  float: left;
+  margin: 0 0 0 15px;
+}
+/* line 8903, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .bottom > .deadline .val {
+  background: #e2261b;
+  color: white;
+  font-size: 1.8em;
+}
+/* line 8911, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .bottom > .contact > .wrapper {
+  border-color: #d4a311;
+}
+/* line 8914, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .bottom > .contact .text {
+  background: #f6f6d9;
+  color: #d4a311;
+}
+/* line 8919, sass/_base.scss */
+.etlap-page .menu-line > .current-menu > .bottom > .contact .val {
+  background: #d4a311;
+  color: white;
+  font-size: 1.8em;
+}
+/* line 8931, sass/_base.scss */
+.etlap-page .week-menus h2 {
+  font-weight: bold;
+  font-size: 1.5em;
+  margin: 15px 0 10px 0;
+}
+/* line 8937, sass/_base.scss */
+.etlap-page .week-menus .menu-set {
+  margin: 0 0 25px 0;
+}
+/* line 8939, sass/_base.scss */
+.etlap-page .week-menus .menu-set .header {
+  font-size: 1.5em;
+  text-transform: uppercase;
+  margin: 0 0 15px 0;
+}
+/* line 8943, sass/_base.scss */
+.etlap-page .week-menus .menu-set .header .daterange {
+  font-size: 0.6em;
+  margin: 0 0 0 15px;
+}
+/* line 8950, sass/_base.scss */
+.etlap-page .week-menus .menu-set .set > .wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+/* line 8954, sass/_base.scss */
+.etlap-page .week-menus .menu-set .set > .wrapper > .nap {
+  flex-basis: calc(100% / 5);
+}
+/* line 8956, sass/_base.scss */
+.etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper {
+  border: 0.5px solid #d5d5d5;
+  background: white;
+  padding: 0.5px;
+}
+/* line 8961, sass/_base.scss */
+.etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .head {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: nowrap;
+  border-bottom: 0.5px solid #d5d5d5;
+}
+/* line 8967, sass/_base.scss */
+.etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .head > div {
+  flex-basis: 50%;
+  padding: 10px;
+}
+/* line 8970, sass/_base.scss */
+.etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .head > div.day {
+  border-right: 0.5px solid #d5d5d5;
+}
+/* line 8973, sass/_base.scss */
+.etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .head > div.weekday {
+  background: #fafafa;
+  font-weight: bold;
+}
+/* line 8980, sass/_base.scss */
+.etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .image {
+  border-bottom: 0.5px solid #d5d5d5;
+  height: 14vh;
+}
+/* line 8983, sass/_base.scss */
+.etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .image > .wrapper {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+/* line 8988, sass/_base.scss */
+.etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .image > .wrapper img {
+  position: absolute;
+  max-height: 110%;
+  height: 110%;
+  width: auto;
+  max-width: initial;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+/* line 9001, sass/_base.scss */
+.etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .menu {
+  height: 100px;
+  padding: 10px;
+  position: relative;
+  background: #f8f8f8;
+  border-bottom: 0.5px solid #d5d5d5;
+}
+/* line 9007, sass/_base.scss */
+.etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .menu > .air-text {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+/* line 9015, sass/_base.scss */
+.etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .menu > .air-text > div {
+  margin: 5px 0;
+  line-height: 1.1;
+  font-size: 1.1em;
+  text-align: center;
+}
+/* line 9025, sass/_base.scss */
+.etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .ertekek > .tabla {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: nowrap;
+}
+/* line 9030, sass/_base.scss */
+.etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .ertekek > .tabla > div {
+  flex-basis: 50%;
+  padding: 5px;
+  font-size: 0.8em;
+}
+/* line 9034, sass/_base.scss */
+.etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .ertekek > .tabla > div table {
+  width: 100%;
+}
+/* line 9037, sass/_base.scss */
+.etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .ertekek > .tabla > div table td {
+  padding: 1px 5px;
+}
+/* line 9041, sass/_base.scss */
+.etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .ertekek > .tabla > div table .v {
+  text-align: right;
+  color: #8c8c8c;
+  font-weight: 300;
+}
+/* line 9048, sass/_base.scss */
+.etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .ertekek > .tabla > div:first-child {
+  border-right: 0.5px solid #d5d5d5;
+}
+/* line 9054, sass/_base.scss */
+.etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .allergenek {
+  border-top: 0.5px solid #d5d5d5;
+  background: #fafafa;
+  font-size: 0.8em;
+  padding: 10px;
+}
 
-/* line 8770, sass/_base.scss */
+/* line 9069, sass/_base.scss */
 .szalag .highlight-view {
   background: white;
   display: -webkit-box;
@@ -10633,12 +10932,12 @@ body.homepage .szallasok > .holder .szallas-top > .wrapper {
   flex-wrap: nowrap;
   align-items: center;
 }
-/* line 8778, sass/_base.scss */
+/* line 9077, sass/_base.scss */
 .szalag .highlight-view > .p {
   flex-basis: 40px;
   background: #8eaf35;
 }
-/* line 8782, sass/_base.scss */
+/* line 9081, sass/_base.scss */
 .szalag .highlight-view > .p a {
   display: block;
   color: white;
@@ -10646,71 +10945,71 @@ body.homepage .szallasok > .holder .szallas-top > .wrapper {
   text-align: center;
   line-height: 40px;
 }
-/* line 8791, sass/_base.scss */
+/* line 9090, sass/_base.scss */
 .szalag .highlight-view .items {
   flex: 1;
 }
-/* line 8793, sass/_base.scss */
+/* line 9092, sass/_base.scss */
 .szalag .highlight-view .items .hl-cont {
   padding: 0 15px;
   line-height: 40px;
 }
-/* line 8798, sass/_base.scss */
+/* line 9097, sass/_base.scss */
 .szalag .highlight-view .items ul li {
   display: none;
   font-size: 1.1em;
   text-align: center;
 }
-/* line 8802, sass/_base.scss */
+/* line 9101, sass/_base.scss */
 .szalag .highlight-view .items ul li.active {
   display: block;
 }
 
-/* line 8813, sass/_base.scss */
+/* line 9112, sass/_base.scss */
 body.homepage footer,
 body.article footer {
   margin-top: 0;
 }
 
-/* line 8819, sass/_base.scss */
+/* line 9118, sass/_base.scss */
 body.article .website {
   width: 100%;
 }
 
-/* line 8825, sass/_base.scss */
+/* line 9124, sass/_base.scss */
 body.product-page .website {
   width: 100%;
 }
-/* line 8829, sass/_base.scss */
+/* line 9128, sass/_base.scss */
 body.product-page footer {
   margin-top: 0;
 }
-/* line 8832, sass/_base.scss */
+/* line 9131, sass/_base.scss */
 body.product-page header .bottom > .pw > .flex {
   padding-left: 0;
 }
-/* line 8836, sass/_base.scss */
+/* line 9135, sass/_base.scss */
 body.product-page .nav.nav-fix {
   flex: 1;
 }
 
-/* line 8842, sass/_base.scss */
+/* line 9141, sass/_base.scss */
 .sidebar .inp {
   padding: 10px 15px;
 }
-/* line 8844, sass/_base.scss */
+/* line 9143, sass/_base.scss */
 .sidebar .inp label {
   display: block;
   padding: 0 0 15px 0;
 }
-/* line 8849, sass/_base.scss */
+/* line 9148, sass/_base.scss */
 .sidebar .inp input, .sidebar .inp select {
   width: 100%;
   padding: 10px;
   font-size: 1.2em;
   border: 1px solid #e8e8e8;
 }
-/* line 8855, sass/_base.scss */
+/* line 9154, sass/_base.scss */
 .sidebar .inp button {
   display: block;
   width: 100%;
@@ -10723,11 +11022,11 @@ body.product-page .nav.nav-fix {
   font-size: 1.2em;
 }
 
-/* line 8869, sass/_base.scss */
+/* line 9168, sass/_base.scss */
 .programs-view {
   margin: 20px 0;
 }
-/* line 8871, sass/_base.scss */
+/* line 9170, sass/_base.scss */
 .programs-view .content-view-holder {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -10736,54 +11035,54 @@ body.product-page .nav.nav-fix {
   align-items: flex-start;
   margin: 0 -15px;
 }
-/* line 8879, sass/_base.scss */
+/* line 9178, sass/_base.scss */
 .programs-view .content-view-holder > div {
   padding: 0 15px;
 }
-/* line 8883, sass/_base.scss */
+/* line 9182, sass/_base.scss */
 .programs-view .content-view-holder > .sidebar {
   flex-basis: 30%;
 }
-/* line 8887, sass/_base.scss */
+/* line 9186, sass/_base.scss */
 .programs-view .content-view-holder > .view-holder {
   flex: 1;
 }
-/* line 8892, sass/_base.scss */
+/* line 9191, sass/_base.scss */
 .programs-view .content-view-holder .program-page .details {
   margin: 15px 0 30px 0;
   font-size: 1.2em;
   color: black;
 }
-/* line 8897, sass/_base.scss */
+/* line 9196, sass/_base.scss */
 .programs-view .content-view-holder .program-page .details span.date {
   background: #f5b801;
   color: white;
   padding: 4px 6px;
 }
-/* line 8902, sass/_base.scss */
+/* line 9201, sass/_base.scss */
 .programs-view .content-view-holder .program-page .details span.position {
   font-weight: bold;
   padding-left: 15px;
   color: #81b83a;
 }
-/* line 8908, sass/_base.scss */
+/* line 9207, sass/_base.scss */
 .programs-view .content-view-holder .program-page .content {
   line-height: 1.4;
   font-size: 1.23em;
 }
-/* line 8912, sass/_base.scss */
+/* line 9211, sass/_base.scss */
 .programs-view .content-view-holder .program-page .content p {
   margin: 5px 0;
 }
-/* line 8919, sass/_base.scss */
+/* line 9218, sass/_base.scss */
 .programs-view .categories {
   margin: 0 0 15px 0;
 }
-/* line 8922, sass/_base.scss */
+/* line 9221, sass/_base.scss */
 .programs-view .categories .list .cat {
   padding: 2px 0;
 }
-/* line 8924, sass/_base.scss */
+/* line 9223, sass/_base.scss */
 .programs-view .categories .list .cat a {
   text-transform: uppercase;
   display: block;
@@ -10794,7 +11093,7 @@ body.product-page .nav.nav-fix {
   border-radius: 2px;
   border: 0.5px solid transparent;
 }
-/* line 8935, sass/_base.scss */
+/* line 9234, sass/_base.scss */
 .programs-view .categories .list .cat:hover a, .programs-view .categories .list .cat.active a {
   background: white;
   color: black;
@@ -10802,7 +11101,7 @@ body.product-page .nav.nav-fix {
   border: 0.5px solid #d1d1d1;
 }
 
-/* line 8949, sass/_base.scss */
+/* line 9248, sass/_base.scss */
 .program-list > .wrapper .articles {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -10810,51 +11109,51 @@ body.product-page .nav.nav-fix {
   flex-wrap: wrap;
   margin: -10px;
 }
-/* line 8956, sass/_base.scss */
+/* line 9255, sass/_base.scss */
 .program-list > .wrapper .articles > .program {
   flex-basis: calc(100% / 3);
   padding: 10px;
 }
-/* line 8960, sass/_base.scss */
+/* line 9259, sass/_base.scss */
 .program-list > .wrapper .articles > .program .wrapper {
   background: white;
 }
-/* line 8964, sass/_base.scss */
+/* line 9263, sass/_base.scss */
 .program-list > .wrapper .articles > .program .datain {
   position: relative;
   padding: 25px 0 0 0;
 }
-/* line 8969, sass/_base.scss */
+/* line 9268, sass/_base.scss */
 .program-list > .wrapper .articles > .program .image {
   height: 13vw;
 }
-/* line 8974, sass/_base.scss */
+/* line 9273, sass/_base.scss */
 .program-list > .wrapper .articles > .program .title h3 {
   font-size: 1em;
   margin: 0;
 }
-/* line 8978, sass/_base.scss */
+/* line 9277, sass/_base.scss */
 .program-list > .wrapper .articles > .program .title a {
   text-align: center;
   display: block;
   padding: 5px 10px;
   color: black;
 }
-/* line 8986, sass/_base.scss */
+/* line 9285, sass/_base.scss */
 .program-list > .wrapper .articles > .program .pos {
   text-align: center;
   color: #a0a0a0;
   font-size: 0.85em;
   padding: 5px 10px 10px 5px;
 }
-/* line 8993, sass/_base.scss */
+/* line 9292, sass/_base.scss */
 .program-list > .wrapper .articles > .program .ondate {
   position: absolute;
   left: 0;
   top: -18px;
   width: 100%;
 }
-/* line 8998, sass/_base.scss */
+/* line 9297, sass/_base.scss */
 .program-list > .wrapper .articles > .program .ondate .in {
   width: 90%;
   margin: 0 auto;
@@ -10866,11 +11165,11 @@ body.product-page .nav.nav-fix {
   text-decoration: none;
   font-weight: bold;
 }
-/* line 9011, sass/_base.scss */
+/* line 9310, sass/_base.scss */
 .program-list > .wrapper .articles > .program .details {
   margin-top: 10px;
 }
-/* line 9013, sass/_base.scss */
+/* line 9312, sass/_base.scss */
 .program-list > .wrapper .articles > .program .details a {
   color: white;
   text-decoration: none;
@@ -10883,11 +11182,11 @@ body.product-page .nav.nav-fix {
   -webkit-transition: all .4s;
   transition: all .4s;
 }
-/* line 9025, sass/_base.scss */
+/* line 9324, sass/_base.scss */
 .program-list > .wrapper .articles > .program .details a:hover {
   background: #f5b801;
 }
-/* line 9032, sass/_base.scss */
+/* line 9331, sass/_base.scss */
 .program-list > .wrapper .articles .no-news {
   line-height: 1.4;
   font-size: 1.3em;
@@ -10896,13 +11195,13 @@ body.product-page .nav.nav-fix {
   flex-basis: 100%;
 }
 
-/* line 9045, sass/_base.scss */
+/* line 9344, sass/_base.scss */
 .sidebar > .box {
   background: white;
   margin: 0 0 20px 0;
   box-shadow: 2px 2px 20px -10px black;
 }
-/* line 9050, sass/_base.scss */
+/* line 9349, sass/_base.scss */
 .sidebar > .box > .header {
   background: #898989;
   color: white;
@@ -10911,15 +11210,15 @@ body.product-page .nav.nav-fix {
   font-size: 1.2em;
   text-transform: uppercase;
 }
-/* line 9060, sass/_base.scss */
+/* line 9359, sass/_base.scss */
 .sidebar > .box > .c > .p {
   padding: 15px;
 }
-/* line 9066, sass/_base.scss */
+/* line 9365, sass/_base.scss */
 .sidebar > .box.green-header > .header {
   background: #8eaf35;
 }
-/* line 9071, sass/_base.scss */
+/* line 9370, sass/_base.scss */
 .sidebar > .box.orange-header > .header {
   background: #f5b801;
 }

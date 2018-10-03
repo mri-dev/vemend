@@ -1,3 +1,13 @@
+<?php
+  $menu = $this->menu;
+  $set = $this->set;
+
+  $kieg = array();
+  $kieg[] = $menu['menu']['etel_va'];
+  $kieg[] = $menu['menu']['etel_vb'];
+  $foetel = $menu['menu']['etel_fo'];
+  $leves = $menu['menu']['etel_leves'];
+?>
 <div class="etlap-page">
   <div class="pw">
     <div class="page-wrapper">
@@ -11,18 +21,20 @@
               <div class="m">
                 <div class="fin">
                   <i class="fa fa-calendar"></i> MENÜ
-                </div>                
+                </div>
               </div>
               <div class="v">
                 <div class="fin">
-                  <div class="date">2018.06.09.</div>
-                  <div class="day">CSÜTÖRTÖK</div>
+                  <div class="date"><?php echo date('Y.m.d.', strtotime($menu['nap'])); ?></div>
+                  <div class="day"><?=$menu['nap_nev']?></div>
                 </div>
               </div>
             </div>
             <div class="eteltablazat">
               <div class="head">
-                <i class="fa fa-cutlery"></i>
+                <div class="fin">
+                  <img src="<?=IMG?>evoeszkoz_grey.svg" alt="Evőeszköz">
+                </div>
               </div>
               <div class="ertekek">
                 <div class="tabla">
@@ -30,15 +42,15 @@
                     <table>
                       <tr>
                         <td class="h">Kcal</td>
-                        <td class="v">0</td>
+                        <td class="v"><?=$menu['menu']['ertekek']['kaloria']?></td>
                       </tr>
                       <tr>
                         <td class="h">Fehérje (g)</td>
-                        <td class="v">0</td>
+                        <td class="v"><?=$menu['menu']['ertekek']['feherje']?></td>
                       </tr>
                       <tr>
                         <td class="h">Rost (g)</td>
-                        <td class="v">0</td>
+                        <td class="v"><?=$menu['menu']['ertekek']['ch']?></td>
                       </tr>
                     </table>
                   </div>
@@ -46,62 +58,137 @@
                     <table>
                       <tr>
                         <td class="h">Zsír (g)</td>
-                        <td class="v">0</td>
+                        <td class="v"><?=$menu['menu']['ertekek']['zsir']?></td>
                       </tr>
                       <tr>
                         <td class="h">Cukor (g)</td>
-                        <td class="v">0</td>
+                        <td class="v"><?=$menu['menu']['ertekek']['cukor']?></td>
                       </tr>
                       <tr>
                         <td class="h">Só (g)</td>
-                        <td class="v">0</td>
+                        <td class="v"><?=$menu['menu']['ertekek']['so']?></td>
                       </tr>
                     </table>
                   </div>
                 </div>
                 <div class="allergenek">
                   <strong>Allergének:</strong>
-
+                  <?php if (empty($menu['menu']['ertekek']['allergenek'])): ?>
+                    Nem tartalmaz allergéneket.
+                  <?php else: ?>
+                    <?php echo implode(", ", $menu['menu']['ertekek']['allergenek']); ?>
+                  <?php endif; ?>
                 </div>
               </div>
             </div>
           </div>
           <div class="menu">
-            <div class="leves">
-
+            <div class="leves<?=(!$leves)?' disabled':''?><?=(!$leves[kep])?' no-image':''?>">
+              <div class="image">
+                <div class="wrapper">
+                  <img src="<?=($leves[kep])?:IMG.'no-meal.png'?>" alt="<?php echo $leves[neve]; ?>">
+                </div>
+              </div>
+              <div class="text">
+                <div class="air-text">
+                  <?php echo $leves[neve]; ?>
+                </div>
+              </div>
             </div>
-            <div class="footel">
-
+            <div class="footel<?=(!$foetel)?' disabled':''?><?=(!$foetel[kep])?' no-image':''?>">
+              <div class="image">
+                <div class="wrapper">
+                  <img src="<?=($foetel[kep])?:IMG.'no-meal.png'?>" alt="<?php echo $foetel[neve]; ?>">
+                </div>
+              </div>
+              <div class="text">
+                <div class="air-text">
+                  <?php echo $foetel[neve]; ?>
+                </div>
+              </div>
             </div>
-            <div class="kieg1">
-
+            <div class="kieg1<?=(!$kieg[0])?' disabled':''?><?=(!$kieg[0][kep])?' no-image':''?>">
+              <div class="image">
+                <div class="wrapper">
+                  <img src="<?=($kieg[0][kep])?:IMG.'no-meal.png'?>" alt="<?php echo $kieg[0][neve]; ?>">
+                </div>
+              </div>
+              <div class="text">
+                <div class="air-text">
+                  <?php echo $kieg[0][neve]; ?>
+                </div>
+              </div>
             </div>
-            <div class="kieg2">
-
+            <div class="kieg2<?=(!$kieg[1])?' disabled':''?><?=(!$kieg[1][kep])?' no-image':''?>">
+              <div class="image">
+                <div class="wrapper">
+                  <img src="<?=($kieg[1][kep])?:IMG.'no-meal.png'?>" alt="<?php echo $kieg[1][neve]; ?>">
+                </div>
+              </div>
+              <div class="text">
+                <div class="air-text">
+                  <?php echo $kieg[1][neve]; ?>
+                </div>
+              </div>
             </div>
           </div>
           <div class="bottom">
             <div class="deadline">
-              <div class="text">
-                <i class="fa fa-clock-o"></i> A következő heti menü befizetésének időpontja:
-              </div>
-              <div class="val">
-                2018.06.11.
+              <div class="wrapper">
+                <div class="text">
+                  <div class="fin">
+                    <i class="fa fa-clock-o"></i> A következő heti menü befizetésének időpontja:
+                  </div>
+                </div>
+                <div class="val">
+                  <div class="fin">
+                    2018.06.11.
+                  </div>
+                </div>
               </div>
             </div>
             <div class="contact">
-              <div class="text">
-                <i class="fa fa-phone"></i> Érdeklődés telefonon
-              </div>
-              <div class="val">
-                06 30 123 1234
+              <div class="wrapper">
+                <div class="text">
+                  <div class="fin">
+                    <i class="fa fa-phone"></i> Érdeklődés telefonon
+                  </div>
+                </div>
+                <div class="val">
+                  <div class="fin">
+                    06 30 123 1234
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="week-menus">
-        heti menük
+        <h2>Aktuális hét</h2>
+        <div class="menu-set">
+          <div class="header">
+            <h3><?=$menu['hetvege']?>. hét <span class="daterange"><?=$set['weeks'][$menu['hetvege']]['dateranges']['range']?></span> </h3>
+          </div>
+          <div class="set">
+            <?php echo $this->template->get('etlap_het', array(
+              'etlap' => $set['weeks'][$menu['hetvege']]['days']
+            )); ?>
+          </div>
+        </div>
+        <h2>További hetek</h2>
+        <?php foreach ((array)$set['weeks'] as $week => $weekdata): if($week == $menu['hetvege']) continue; ?>
+        <div class="menu-set">
+          <div class="header">
+            <h3><?=$week?>. hét <span class="daterange"><?=$weekdata['dateranges']['range']?></span> </h3>
+          </div>
+          <div class="set">
+            <?php echo $this->template->get('etlap_het', array(
+              'etlap' => $weekdata['days']
+            )); ?>
+          </div>
+        </div>
+        <?php endforeach; ?>
       </div>
     </div>
   </div>

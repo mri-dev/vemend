@@ -1,10 +1,19 @@
 <?
 use PortalManager\EtlapAPI;
+use PortalManager\Template;
 
 class etlap extends Controller{
 		function __construct(){
 			parent::__construct();
-			parent::$pageTitle = '';
+			parent::$pageTitle = 'Étlapunk';
+
+			$temp = new Template( VIEW .'/templates/' );
+			$this->out( 'template', $temp );
+
+			// Étlap
+			$etlap = new EtlapAPI( array( 'db' => $this->db ) );
+			$this->out( 'menu', $etlap->aktualisMenu() );
+			$this->out( 'set', $etlap->menuSet() );
 
 			$this->out('homepage', true);
 			$this->out('bodyclass', 'homepage');
