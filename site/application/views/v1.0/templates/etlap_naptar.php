@@ -24,9 +24,11 @@
         is-disabled-date="isDisabledDate($date)"
         date-end="calendarModel.dateEnd">
       </md-date-range-picker>
+      <div class="etlap-nav-btn" ng-show="calendarModel.dateStart != calendarModel.dateEnd">
+        <a href="/etlap/?from={{dateFormating(calendarModel.dateStart)}}&to={{dateFormating(calendarModel.dateEnd)}}#menuset">Étlapok megtekintése <i class="fa fa-arrow-circle-right"></i> </a>
+      </div>
     <?php else: ?>
       <md-calendar ng-model="birthday"></md-calendar>
     <?php endif; ?>
-
   </div>
 </div>

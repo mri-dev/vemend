@@ -12,8 +12,11 @@ class etlap extends Controller{
 
 			// Étlap
 			$etlap = new EtlapAPI( array( 'db' => $this->db ) );
+			$from = (isset($_GET['from']) && !empty($_GET['from'])) ? $_GET['from'] : false;
+			$to = (isset($_GET['to']) && !empty($_GET['to'])) ? $_GET['to'] : false;
 			$this->out( 'menu', $etlap->aktualisMenu() );
-			$this->out( 'set', $etlap->menuSet() );
+			$this->out( 'set', $etlap->menuSet( $from, $to) );
+			$this->out( 'mondayfriday', $etlap->aktualisHet());
 
 			$this->out('homepage', true);
 			$this->out('bodyclass', 'homepage');

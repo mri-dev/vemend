@@ -1,7 +1,7 @@
 <div class="wrapper">
   <?php if ($etlap): ?>
   <?php foreach ($etlap as $day => $e): ?>
-  <div class="nap">
+  <div class="nap<?=(date('Y-m-d') == $day)?' aktualis':''?>">
     <div class="wrapper">
       <div class="head">
         <div class="day">

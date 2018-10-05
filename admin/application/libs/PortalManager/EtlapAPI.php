@@ -203,16 +203,28 @@ class EtlapAPI implements InstallModules
     return $het;
   }
 
-  public function menuSet()
+  public function menuSet( $from = false, $to = false )
   {
     $set = array();
+    $arg = array();
 
     $ezahet = $this->aktualisHet();
 
-    $q = "SELECT daydate FROM ".self::DBTABLE." WHERE daydate >= :monday GROUP BY daydate ORDER BY daydate ASC";
-    $data = $this->db->squery($q, array(
-      'monday' => $ezahet[0]
-    ));
+
+    $q = "SELECT daydate FROM ".self::DBTABLE." WHERE 1=1 ";
+
+    $q .= " and (daydate >= :monday and daydate <= :friday)";
+    $arg['monday'] = $ezahet[0];
+    $arg['friday'] = $ezahet[1];
+
+    if ($from && $to) {
+      $q .= " or (daydate >= :from and daydate <= :to)";
+      $arg['from'] = $from;
+      $arg['to'] = $to;
+    }
+
+    $q.= "GROUP BY daydate ORDER BY daydate ASC";
+    $data = $this->db->squery($q, $arg);
 
     if ($data->rowCount() == 0) return $set;
     $data = $data->fetchAll(\PDO::FETCH_ASSOC);
@@ -235,7 +247,6 @@ class EtlapAPI implements InstallModules
         'menu' => $this->getMenu($d['daydate'])
       );
     }
-
 
     return $set;
   }

@@ -142,7 +142,7 @@
                 </div>
                 <div class="val">
                   <div class="fin">
-                    2018.06.11.
+                    <?php echo date('Y.m.d.', strtotime($this->mondayfriday[1])); ?>
                   </div>
                 </div>
               </div>
@@ -176,19 +176,28 @@
             )); ?>
           </div>
         </div>
-        <h2>További hetek</h2>
-        <?php foreach ((array)$set['weeks'] as $week => $weekdata): if($week == $menu['hetvege']) continue; ?>
-        <div class="menu-set">
-          <div class="header">
-            <h3><?=$week?>. hét <span class="daterange"><?=$weekdata['dateranges']['range']?></span> </h3>
+        <?php if (isset($_GET['from']) && isset($_GET['to'])): ?>
+          <a name="/menuset"></a>
+          <h2 class="datefilterweek">Kiválasztott időpontok szerinti étlapok <span class="daterange"><?=date('Y.m.d.', strtotime($_GET['from']))?> - <?=(isset($_GET['to']) && !empty($_GET['to']))?date('Y.m.d.', strtotime($_GET['to'])):''?></span></h2>
+          <?php $weeks = $set['weeks']; unset($weeks[$menu['hetvege']]); ?>
+          <?php if (empty($weeks)): ?>
+            <div class="no-etlap-selection">
+              A kiválasztott időpontra nincs elérhető étlap. Kérjük, hogy nézzen vissza később vagy adjon meg közelebbi dátumot.
+            </div>
+          <?php endif; ?>
+          <?php foreach ((array)$weeks as $week => $weekdata): ?>
+          <div class="menu-set">
+            <div class="header">
+              <h3><?=$week?>. hét <span class="daterange"><?=$weekdata['dateranges']['range']?></span></h3>
+            </div>
+            <div class="set">
+              <?php echo $this->template->get('etlap_het', array(
+                'etlap' => $weekdata['days']
+              )); ?>
+            </div>
           </div>
-          <div class="set">
-            <?php echo $this->template->get('etlap_het', array(
-              'etlap' => $weekdata['days']
-            )); ?>
-          </div>
-        </div>
-        <?php endforeach; ?>
+          <?php endforeach; ?>
+        <?php endif; ?>
       </div>
     </div>
   </div>

@@ -1,9 +1,10 @@
-var app = angular.module('vemend', ['ngMaterial', 'ngMessages', 'ngCookies', 'ngMaterialDateRangePicker']);
+var app = angular.module('vemend', ['ngMaterial', 'ngMessages', 'ngCookies', 'ngMaterialDateRangePicker', 'ngRoute']);
 
-app.controller('App', ['$scope', '$sce', '$http', '$mdToast', '$mdDialog', '$location','$cookies', '$cookieStore', '$httpParamSerializerJQLike', '$mdDateRangePicker', function($scope, $sce, $http, $mdToast, $mdDialog, $location, $cookies, $cookieStore, $httpParamSerializerJQLike, $mdDateRangePicker)
+app.controller('App', ['$scope', '$sce', '$http', '$mdToast', '$mdDialog', '$location','$cookies', '$routeParams', '$cookieStore', '$httpParamSerializerJQLike', '$mdDateRangePicker', function($scope, $sce, $http, $mdToast, $mdDialog, $location, $cookies, $routeParams, $cookieStore, $httpParamSerializerJQLike, $mdDateRangePicker)
 {
   var date = new Date();
 
+  $scope.urlGET = {};
   $scope.vehicle_num = 0;
   $scope.vehicles = [];
   $scope.vehicles_selected = [];
@@ -21,7 +22,7 @@ app.controller('App', ['$scope', '$sce', '$http', '$mdToast', '$mdDialog', '$loc
 
   $scope.customDateEnable = false;
   $scope.calendarModel = {
-    selectedTemplate: 'Ma',
+    selectedTemplate: 'Aktuális hét',
     selectedTemplateName: null,
     dateStart: null,
     dateEnd: null
@@ -56,6 +57,15 @@ app.controller('App', ['$scope', '$sce', '$http', '$mdToast', '$mdDialog', '$loc
     'November': 'November',
     'December': 'December'
   };
+
+  $scope.dateFormating = function( date ) {
+
+    var d = new Date(date);
+    var mm = d.getMonth() + 1;
+    var dd = d.getDate();
+    var yy = d.getFullYear();
+    return yy + '-' + mm + '-' + dd;
+  }
 
   $scope.isDisabledDate = function(date)
   {
@@ -242,7 +252,31 @@ app.controller('App', ['$scope', '$sce', '$http', '$mdToast', '$mdDialog', '$loc
     }
   }
 
-  $scope.init = function( ordernow ){
+  $scope.decodeURIString = function( queryString ) {
+    var query = {};
+     var pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
+     for (var i = 0; i < pairs.length; i++) {
+         var pair = pairs[i].split('=');
+         query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+     }
+     return query;
+  }
+
+  $scope.init = function( ordernow, httpgetstr )
+  {
+    // URL get serialized paraméter dekódolása
+    $scope.urlGET = $scope.decodeURIString(httpgetstr);
+
+    // Étlap esetén a from és to időpontok alapján való dátum kiválasztás
+    if ( $scope.urlGET && $scope.urlGET.tag == 'etlap/' ) {
+      if ($scope.urlGET.from != '' && $scope.urlGET.from != '') {
+        $scope.calendarModel.dateStart = new Date($scope.urlGET.from);
+        $scope.calendarModel.dateEnd = new Date($scope.urlGET.to);
+        $scope.calendarModel.selectedTemplate = null;
+      }
+    }
+    
+    /*
     $scope.syncVehicles(function(n, vehicles){
       $scope.vehicle_num = n;
       $scope.vehicles_selected = vehicles;
@@ -261,7 +295,7 @@ app.controller('App', ['$scope', '$sce', '$http', '$mdToast', '$mdDialog', '$loc
           $scope.order_accepted = true;
         }
       });
-    }
+    }*/
   }
 
   $scope.loadSettings = function( key, callback ){
