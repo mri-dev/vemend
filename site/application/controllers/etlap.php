@@ -41,6 +41,7 @@ class etlap extends Controller{
 			$this->view->SEOSERVICE = $SEO;
 		}
 
+
 		function __destruct(){
 			// RENDER OUTPUT
 				parent::bodyHead();					# HEADER

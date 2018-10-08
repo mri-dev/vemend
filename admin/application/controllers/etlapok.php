@@ -29,6 +29,11 @@ class etlapok extends Controller{
 			$this->view->SEOSERVICE = $SEO;
 		}
 
+		function etel()
+		{
+			// code...
+		}
+
 		function __destruct(){
 			// RENDER OUTPUT
 				parent::bodyHead();					# HEADER

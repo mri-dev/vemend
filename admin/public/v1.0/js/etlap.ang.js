@@ -13,6 +13,151 @@ etlap.config(function($mdDateLocaleProvider){
    };
 });
 
+etlap.controller("Etel", ['$scope', '$http', function($scope, $http)
+{
+  $scope.syncetelek = false;
+  $scope.etelek = [];
+  $scope.etelkats = [];
+  $scope.src_etelnev = '';
+  $scope.creator = {
+    id: 0,
+    neve: '',
+    kategoria: '',
+    kep: '',
+    kaloria: 0,
+    feherje: 0,
+    rost: 0,
+    zsir: 0,
+    cukor: 0,
+    so: 0,
+    allergenek: ''
+  };
+  $scope.init = function( editid ){
+    $scope.loadResources();
+
+    if (editid) {
+      $scope.pickEtel(editid);
+    }
+	}
+
+  $scope.changeCreatorName = function() {
+    $scope.src_etelnev = $scope.creator.neve;
+  }
+
+  $scope.resetEditor = function() {
+    $scope.creator = {
+      id: 0,
+      neve: '',
+      kategoria: '',
+      kep: '',
+      kaloria: 0,
+      feherje: 0,
+      rost: 0,
+      zsir: 0,
+      cukor: 0,
+      so: 0,
+      allergenek: ''
+    };
+    $scope.src_etelnev = '';
+  }
+
+  $scope.saveEtel = function() {
+    $scope.creator.kep = $('#kep').val();
+
+    $http({
+      method: 'POST',
+      url: '/ajax/get',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: $.param({
+        type: "Etlap",
+        key: 'EtelCreate',
+        id: $scope.creator.id,
+        data: $scope.creator
+      })
+    }).success(function( r ){
+      if (r.error == 0) {
+        $scope.loadResources();
+        $scope.creator = {
+          id: 0,
+          neve: '',
+          kategoria: '',
+          kep: '',
+          kaloria: 0,
+          feherje: 0,
+          rost: 0,
+          zsir: 0,
+          cukor: 0,
+          so: 0,
+          allergenek: ''
+        };
+      }
+    });
+  }
+
+  $scope.pickEtel = function( id )
+  {
+    $http({
+      method: 'POST',
+      url: '/ajax/get',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: $.param({
+        type: "Etlap",
+        key: 'EtelAdat',
+        id: id
+      })
+    }).success(function( r ){
+      if (r.data) {
+        $scope.creator = r.data;
+        $scope.src_etelnev = r.data.neve;
+      } else {
+        $scope.src_etelnev = '';
+        $scope.creator = {
+          id: 0,
+          neve: '',
+          kategoria: '',
+          kep: '',
+          kaloria: 0,
+          feherje: 0,
+          rost: 0,
+          zsir: 0,
+          cukor: 0,
+          so: 0,
+          allergenek: ''
+        };
+      }
+    });
+  }
+
+  $scope.loadResources = function( callback )
+  {
+    $scope.syncetelek = true;
+    $http({
+      method: 'POST',
+      url: '/ajax/get',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: $.param({
+        type: "Etlap",
+        key: 'Etelek'
+      })
+    }).success(function( r ){
+      $scope.syncetelek = false;
+      if (r.data.length != 0) {
+        $scope.etelek = r.data;
+
+        angular.forEach(r.data, function(e,i)
+        {
+          if ( $scope.etelkats.indexOf(e.kategoria) === -1 ) {
+            $scope.etelkats.push(e.kategoria);
+          }
+        });
+      }
+      if (typeof callback !== 'undefined') {
+        callback(r);
+      }
+    });
+  }
+}]);
+
 etlap.controller("Creator", ['$scope', '$http', '$mdToast', function($scope, $http, $mdToast)
 {
   $scope.saveEtlap = false;

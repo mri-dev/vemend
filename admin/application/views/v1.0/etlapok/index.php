@@ -1,3 +1,6 @@
+<div style="float:right;">
+	<a href="/etlapok/etel" class="btn btn-info"><i class="fa fa-cutlery"></i> Ételek</a>
+</div>
 <h1>Étlap</h1>
 
 <div class="row etel-creator" ng-app="Etlap" ng-controller="Creator" ng-init="init()">
@@ -121,7 +124,7 @@
                     Leves
                   </div>
                   <div class="v">
-                    {{day.menu.etel_leves.neve}}
+										<a href="/etlapok/etel/?eid={{day.menu.etel_leves.ID}}" target="_blank">{{day.menu.etel_leves.neve}}</a>
                   </div>
                 </div>
                 <div class="foetel" ng-show="day.menu.etel_fo">
@@ -129,7 +132,7 @@
                     Főétel
                   </div>
                   <div class="v">
-                    {{day.menu.etel_fo.neve}}
+                    <a href="/etlapok/etel/?eid={{day.menu.etel_fo.ID}}" target="_blank">{{day.menu.etel_fo.neve}}</a>
                   </div>
                 </div>
                 <div class="kieg1"  ng-show="day.menu.etel_va">
@@ -137,7 +140,7 @@
                     Kiegészítő 1.
                   </div>
                   <div class="v">
-                    {{day.menu.etel_va.neve}}
+                    <a href="/etlapok/etel/?eid={{day.menu.etel_va.ID}}" target="_blank">{{day.menu.etel_va.neve}}</a>
                   </div>
                 </div>
                 <div class="kieg2"ng-show="day.menu.etel_vb">
@@ -145,7 +148,7 @@
                     Kiegészítő 2.
                   </div>
                   <div class="v">
-                    {{day.menu.etel_vb.neve}}
+                    <a href="/etlapok/etel/?eid={{day.menu.etel_vb.ID}}" target="_blank">{{day.menu.etel_vb.neve}}</a>
                   </div>
                 </div>
               </div>

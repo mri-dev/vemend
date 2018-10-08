@@ -3369,7 +3369,46 @@ md-toast.mode-success .md-toast-content{
   color: #a1a1a1;
   text-transform: uppercase;
 }
-.etel-creator .week .days .day > .wrapper .c > div .v{
+.etel-creator .week .days .day > .wrapper .c > div .v,
+.etel-creator .week .days .day > .wrapper .c > div .v a{
   font-weight: bold;
-  color: black;
+  color: #ee7575;
+}
+.etel-creator .etel-list .title{
+  font-size: 1.4em;
+  color: #ff8080;
+}
+.etel-creator .etel-list .image img {
+  max-width: 100%;
+  width: 100%;
+}
+.etel-creator .etel-list .ertekek{
+  margin: 5px 0;
+}
+.etel-creator .etel-list .ertekek span{
+  margin: 0 10px 0 0;
+}
+.etel-creator .etel-list .ertekek,
+.etel-creator .etel-list .allergen{
+  font-size: 0.8em;
+}
+.etel-creator .etel-list .header{
+  margin: 0 0 15px 0;
+}
+.etel-creator .etel-list .header table {
+  width: 100%;
+}
+.etel-creator .etel-list .header table td {
+  padding: 0 5px;
+  vertical-align: middle;
+}
+
+.etel-creator .etel-list .actions i {
+  cursor: pointer;
+}
+.etel-creator .etel-list table tr.picked td:first-child {
+  border-left: 10px solid #58b358;
+}
+.etel-creator .etel-list table tr.picked .title {
+  color: #58b358;
 }

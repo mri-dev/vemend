@@ -203,7 +203,7 @@ class EtlapAPI implements InstallModules
     return $het;
   }
 
-  public function menuSet( $from = false, $to = false )
+  public function menuSet( $from = false, $to = false, $admin = false )
   {
     $set = array();
     $arg = array();
@@ -213,9 +213,14 @@ class EtlapAPI implements InstallModules
 
     $q = "SELECT daydate FROM ".self::DBTABLE." WHERE 1=1 ";
 
-    $q .= " and (daydate >= :monday and daydate <= :friday)";
-    $arg['monday'] = $ezahet[0];
-    $arg['friday'] = $ezahet[1];
+    if (!$admin) {
+      $q .= " and (daydate >= :monday and daydate <= :friday)";
+      $arg['monday'] = $ezahet[0];
+      $arg['friday'] = $ezahet[1];
+    } else {
+      $q .= " and (daydate >= :monday)";
+      $arg['monday'] = $ezahet[0];
+    }
 
     if ($from && $to) {
       $q .= " or (daydate >= :from and daydate <= :to)";
@@ -224,6 +229,7 @@ class EtlapAPI implements InstallModules
     }
 
     $q.= "GROUP BY daydate ORDER BY daydate ASC";
+    //echo $q;
     $data = $this->db->squery($q, $arg);
 
     if ($data->rowCount() == 0) return $set;
@@ -249,6 +255,96 @@ class EtlapAPI implements InstallModules
     }
 
     return $set;
+  }
+
+  public function getEtel( $id )
+  {
+    $arg = array();
+    $q = "SELECT
+      e.*,
+      e.ch as rost
+    FROM ".self::DBETELEK." as e
+    WHERE 1=1 and e.ID = :id";
+    $arg['id'] = $id;
+
+    $data = $this->db->squery($q, $arg);
+
+    if ($data->rowCount() == 0) {
+      return false;
+    } else {
+      $data = $data->fetch(\PDO::FETCH_ASSOC);
+      $data['feherje'] = (float)$data['feherje'];
+      $data['kaloria'] = (float)$data['kaloria'];
+      $data['rost'] = (float)$data['rost'];
+      $data['so'] = (float)$data['so'];
+      $data['cukor'] = (float)$data['cukor'];
+      $data['zsir'] = (float)$data['zsir'];
+      $data['rost'] = (float)$data['rost'];
+      $data['id'] = (int)$data['ID'];
+      unset($data['ch']);
+      unset($data['ID']);
+      return $data;
+    }
+  }
+
+  public function addEtel($editid = 0, $data = array() )
+  {
+    unset($data['id']);
+    if (empty($data['neve'])) {
+      throw new \Exception("Étel megnevezése kötelező! Kérjük, hogy pótolja.");
+    }
+
+    if (empty($data['kategoria'])) {
+      throw new \Exception("Étel kategóriájának kiválasztása kötelező! Kérjük, hogy pótolja.");
+    }
+
+    $data['allergenek'] = ($data['allergenek'])?:NULL;
+    $data['kep'] = ($data['kep'])?:NULL;
+    $data['ch'] = ($data['rost'])?:0;
+    unset($data['rost']);
+
+    if ($editid == 0)
+    {
+      // Hozzáadás
+      $this->db->insert(
+        self::DBETELEK,
+        $data
+      );
+    } else {
+      // Szerkesztés
+      $this->db->update(
+        self::DBETELEK,
+        $data,
+        sprintf('ID = %d', $editid)
+      );
+    }
+
+    return $data;
+  }
+
+  public function etelek()
+  {
+    $back = array();
+    $arg = array();
+
+    $q = "SELECT
+      e.*
+    FROM ".self::DBETELEK." as e
+    WHERE 1=1 ";
+
+    $q .= " ORDER BY e.neve ASC ";
+
+    $data = $this->db->squery($q, $arg);
+
+    if ( $data->rowCount() != 0 ) {
+      $data = $data->fetchAll(\PDO::FETCH_ASSOC);
+      foreach ((array)$data as $d) {
+        $d['kep'] = (!empty($d['kep'])) ? $d['kep'] : IMG.'no-meal.png';
+        $back[] = $d;
+      }
+    }
+
+    return $back;
   }
 
   public function replaceWeekdayName( $weekdayname )

@@ -433,7 +433,21 @@ class ajax extends Controller{
 						case 'Load':
 							$re['data']['etelek'] = $etlap->EtelLista();
 							$re['data']['useddates'] = $etlap->usedDates();
-							$re['data']['set'] = $etlap->menuSet();
+							$re['data']['set'] = $etlap->menuSet(false, false, true);
+						break;
+						case 'Etelek':
+							$re['data'] = $etlap->etelek();
+						break;
+						case 'EtelAdat':
+							$re['data'] = $etlap->getEtel((int)$id);
+						break;
+						case 'EtelCreate':
+							try {
+								$re['data'] = $etlap->addEtel((int)$id, $data);
+							} catch (\Exception $e) {
+								$data['error'] = 1;
+								$data['msg'] = $e->getMessage();
+							}
 						break;
 						case 'AddMenu':
 							$ondate  = new \DateTime(str_replace('. ','-',$_POST['menu']['daydate']));
