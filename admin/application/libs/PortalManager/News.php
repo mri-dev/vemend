@@ -230,7 +230,7 @@ class News
         $qry .= " ORDER BY ".$arg['order']['by']." ".$arg['order']['how'];
       }
 		} else {
-			$qry .= " ORDER BY h.idopont ASC ";
+			$qry .= " ORDER BY h.idopont DESC ";
 		}
 
 		// LIMIT

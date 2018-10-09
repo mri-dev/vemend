@@ -7582,119 +7582,6 @@ body.homepage{
 	.szallasok{
 		& > .holder{
 			margin: -10px;
-			.szallas-kereso{
-				flex-basis: 30%;
-
-				& > .wrapper{
-					padding: 10px;
-				}
-
-				.head{
-					background: $color-green;
-					color: white;
-					text-align: center;
-					font-size: 1.8em;
-					padding: 15px 5px;
-					text-transform: uppercase;
-					margin: 0 00 10px 0;
-				}
-
-				.fcont{
-					border: 0.5px solid #cecece;
-					background: #ffffff;
-
-					& > .wrapper{
-						padding: 10px;
-					}
-
-					&.grey{
-						background: #f5f5f5;
-
-						& > .wrapper{
-							padding: 10px;
-							display: -webkit-box;
-							display: -ms-flexbox;
-							display: flex;
-							flex-wrap: wrap;
-
-							& > div {
-								& > .wrapper{
-									padding: 0 5px;
-									label{
-										font-weight: bold;
-										font-size: 0.8em;
-										color: #acacac;
-									}
-								}
-							}
-
-							& > .children-ages{
-								flex-basis: 30%;
-							}
-
-							& > .children,
-							& > .adults,
-							& > .rooms{
-								flex-basis: calc(70% / 3);
-							}
-						}
-					}
-
-					label {
-						font-weight: 300;
-						display: block;
-						width: 100%;
-						margin: 0 0 5px 0;
-					}
-
-					.inp{
-						margin: 0 0 10px 0;
-
-						input, select{
-							width: 100%;
-							display: block;
-							border: 0.8px solid #d8d8d8;
-							padding: 5px;
-						}
-					}
-				}
-				.space{
-					height: 10px;
-					display: block;
-				}
-
-				.foot {
-					input + label {
-						margin: 0;
-
-						&:before{
-							margin-top: 2px;
-						}
-					}
-
-					.opt{
-						flex: 1;
-					}
-					.button{
-						padding: 0 0 0 10px;
-						flex-basis: 140px;
-
-						button {
-							border-radius: 3px;
-							background: $color-sec;
-							line-height: 45px;
-							display: block;
-							width: 100%;
-							padding: 0 10px;
-							color: white;
-							text-align: center;
-							font-size: 1.2em;
-							text-transform: uppercase;
-							border: none;
-						}
-					}
-				}
-			}
 
 			.szallas-top{
 				flex: 1;
@@ -7702,6 +7589,142 @@ body.homepage{
 					padding: 10px;
 				}
 			}
+		}
+	}
+}
+
+.szallas-kereso-block{
+	flex-basis: 30%;
+
+	& > .wrapper{
+		padding: 10px;
+	}
+
+	.head{
+		background: $color-green;
+		color: white;
+		text-align: center;
+		font-size: 1.8em;
+		padding: 15px 5px;
+		text-transform: uppercase;
+		margin: 0 00 10px 0;
+	}
+
+	.fcont{
+		border: 0.5px solid #cecece;
+		background: #ffffff;
+
+		& > .wrapper{
+			padding: 10px;
+		}
+
+		&.grey{
+			background: #f5f5f5;
+
+			& > .wrapper{
+				padding: 10px;
+				display: -webkit-box;
+				display: -ms-flexbox;
+				display: flex;
+				flex-wrap: wrap;
+
+				& > div {
+					& > .wrapper{
+						padding: 0 5px;
+						label{
+							font-weight: bold;
+							font-size: 0.8em;
+							color: #acacac;
+						}
+					}
+				}
+
+				& > .children-ages{
+					flex-basis: 30%;
+				}
+
+				& > .children,
+				& > .adults,
+				& > .rooms{
+					flex-basis: calc(70% / 3);
+				}
+			}
+		}
+
+		label {
+			font-weight: 300;
+			display: block;
+			width: 100%;
+			margin: 0 0 5px 0;
+		}
+
+		.inp{
+			margin: 0 0 10px 0;
+
+			input, select{
+				width: 100%;
+				display: block;
+				border: 0.8px solid #d8d8d8;
+				padding: 5px;
+			}
+		}
+	}
+	.space{
+		height: 10px;
+		display: block;
+	}
+
+	.foot {
+		input + label {
+			margin: 0;
+
+			&:before{
+				margin-top: 2px;
+			}
+		}
+
+		.opt{
+			flex: 1;
+		}
+		.button{
+			padding: 0 0 0 10px;
+			flex-basis: 140px;
+
+			button {
+				border-radius: 3px;
+				background: $color-sec;
+				line-height: 45px;
+				display: block;
+				width: 100%;
+				padding: 0 10px;
+				color: white;
+				text-align: center;
+				font-size: 1.2em;
+				text-transform: uppercase;
+				border: none;
+			}
+		}
+	}
+}
+
+body.szallasok{
+	.szallas-lista,
+	.szallas-adatlap{
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		flex-wrap: wrap;
+		margin: 0 -10px;
+
+		& > .szallas-kereso-block{
+			flex-basis: 380px;
+		}
+
+		& > .lista,
+		& > .adatlap{
+			flex: 1;
+
+			padding: 10px;
 		}
 	}
 }

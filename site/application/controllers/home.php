@@ -17,7 +17,11 @@ class home extends Controller{
 			$hirek = array();
 			$arg = array(
 				'limit' => 2,
-				'page' 	=> 1
+				'page' 	=> 1,
+				'order' => array(
+					'by' => 'letrehozva',
+					'how' => 'DESC'
+				)
 			);
 			$news->getTree( $arg );
 
@@ -38,7 +42,11 @@ class home extends Controller{
 			$arg = array(
 				'limit' => 4,
 				'page' 	=> 1,
-				'in_cat' => $cats['miserend']['ID']
+				'in_cat' => $cats['miserend']['ID'],				
+				'order' => array(
+					'by' => 'letrehozva',
+					'how' => 'DESC'
+				)
 			);
 			$news->getTree( $arg );
 

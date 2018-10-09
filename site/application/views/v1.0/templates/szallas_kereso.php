@@ -1,4 +1,4 @@
-<div class="szallas-kereso">
+<div class="szallas-kereso-block">
   <div class="wrapper">
     <form class="" action="/szallasok" method="get">
       <div class="head">
