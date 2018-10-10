@@ -1,5 +1,6 @@
 <?php
 use PortalManager\Template;
+use SzallasManager\SzallasList;
 
 class szallasok extends Controller{
 		function __construct(){
@@ -9,6 +10,8 @@ class szallasok extends Controller{
 
 			$temp = new Template( VIEW . __CLASS__.'/template/' );
 			$this->out( 'template', $temp );
+
+			$szallaslist = new SzallasList( array( 'db' => $this->db ) );
 
 			$this->out( 'head_img_title', 'Szállások' );
 			$this->out( 'head_img', IMGDOMAIN.$this->view->settings['homepage_coverimg'] );

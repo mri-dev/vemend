@@ -23,7 +23,6 @@
 <?=$this->addJS('jquery.wysiwyg',false)?>
 <?=$this->addJS('master',false,false)?>
 
-
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
@@ -36,6 +35,7 @@
 
 <?=$this->addJS('app',false,false)?>
 <?=$this->addJS('etlap.ang',false,false)?>
+<?=$this->addJS('szallasok.ang',false,false)?>
 <script type="text/javascript" src="<?=JS?>tinymce/tinymce.min.js"></script>
 <script type="text/javascript" src="<?=JS?>fancybox/jquery.fancybox.js?v=2.1.4"></script>
 <script type="text/javascript" src="<?=JS?>fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>

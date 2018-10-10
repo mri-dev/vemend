@@ -1,16 +1,13 @@
 <?php
 namespace SzallasManager;
 
-
-class SzallasList extends SzallasFramework
+class SzallasFramework
 {
   private $db = null;
 	public $settings = array();
 
   function __construct( $arg = array() )
   {
-    parent::__construct( $arg );
-
     $this->db = $arg[db];
 		$this->settings = $arg['db']->settings;
 
