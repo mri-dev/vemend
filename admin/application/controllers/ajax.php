@@ -3,6 +3,7 @@ use PortalManager\Template;
 use PortalManager\Traffic;
 use PortalManager\EtlapAPI;
 use ProductManager\Products;
+use SzallasManager\SzallasList;
 use Applications\Lookbooks;
 
 class ajax extends Controller{
@@ -417,6 +418,31 @@ class ajax extends Controller{
 				/**
 				* ANGULAR ACTIONS
 				**/
+				case 'Szallasok':
+					$key = $_POST['key'];
+					$re = array(
+						'error' => 0,
+						'msg' => null,
+						'data' 	=> array()
+					);
+					$re['pass'] = $_POST;
+
+
+					$szallaslist = new SzallasList( array('db' => $this->db) );
+
+					switch ( $key )
+					{
+						case 'List':
+							$arg = array();
+							$re['data'] = $szallaslist->getList( $arg );
+						break;
+						case 'SaveCreate':
+						break;
+					}
+
+					echo json_encode( $re );
+				break;
+
 				case 'Etlap':
 					$key = $_POST['key'];
 					$re = array(

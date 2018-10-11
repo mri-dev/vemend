@@ -3412,3 +3412,26 @@ md-toast.mode-success .md-toast-content{
 .etel-creator .etel-list table tr.picked .title {
   color: #58b358;
 }
+.szallas-modul .szallas-list td.details{
+  font-size: 1.1em;
+}
+.szallas-modul .szallas-list td.details .name{
+  color: #e8aa04;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.szallas-modul .szallas-list td.details .address{
+  color:#acacac;
+}
+.szallas-modul .szallas-list tr.selected td.details{
+  border-left: 5px solid #98bc72;
+}
+.szallas-modul .szallas-list tr.selected td.details .name{
+  color: #98bc72;
+}
+.szallas-modul .szallas-list tr td.details .contacts{
+  font-size: 0.85em;
+}
+.szallas-modul .szallas-list tr td.details .contacts span{
+  margin-right: 10px;
+}

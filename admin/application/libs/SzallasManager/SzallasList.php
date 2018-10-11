@@ -4,22 +4,42 @@ namespace SzallasManager;
 
 class SzallasList extends SzallasFramework
 {
-  private $db = null;
-	public $settings = array();
-
   function __construct( $arg = array() )
   {
     parent::__construct( $arg );
 
-    $this->db = $arg[db];
-		$this->settings = $arg['db']->settings;
-
 		return $this;
   }
+
+  public function getList( $arg = array() )
+  {
+    $back = array();
+    $darg = array();
+
+    $q = "SELECT
+      sz.*
+    FROM ".parent::DBSZALLASOK." as sz
+    WHERE 1=1 ";
+
+    $qry = $this->db->squery( $q, $darg );
+
+    if ($qry->rowCount() == 0) {
+      return $back;
+    }
+
+    $qry = $qry->fetchAll(\PDO::FETCH_ASSOC);
+
+    foreach ((array)$qry as $d ) {
+      $d['author_data'] = $this->getAuthor($d['author']);
+      $back['list'][] = $d;
+    }
+
+    return $back;
+  }
+
   public function __destruct()
 	{
-		$this->db = null;
-	  $this->settings = array();
+		parent::__destruct();
 	}
 }
 ?>

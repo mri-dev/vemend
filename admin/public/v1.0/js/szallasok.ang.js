@@ -1,4 +1,4 @@
-var szallasok = angular.module('Szallasok', ['ngMaterial']);
+var szallasok = angular.module('Szallasok', ['ngMaterial','ui.tinymce']);
 
 szallasok.config(function($mdDateLocaleProvider){
   $mdDateLocaleProvider.firstDayOfWeek = 1;
@@ -15,61 +15,42 @@ szallasok.config(function($mdDateLocaleProvider){
 
 szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', function($scope, $http, $mdToast)
 {
-  $scope.saveEtlap = false;
-  $scope.menuDateChecking = false;
-  $scope.menuDateUsed = false;
+  $scope.saveSzallas = false;
+  $scope.creating = false;
+  $scope.editing = false;
+  $scope.author = 0;
   $scope.create = {
-    daydate: new Date(),
-    etel_leves: {
-      text: '',
-      id: null
-    },
-    etel_fo: {
-      text: '',
-      id: null
-    },
-    etel_va: {
-      text: '',
-      id: null
-    },
-    etel_vb: {
-      text: '',
-      id: null
-    }
+    id: 0
   };
-  $scope.etelek = [];
-  $scope.usedDate = [];
-  $scope.menu = [];
+  $scope.szallasok = [];
 
-	$scope.init = function(){
-    //$scope.loadResources();
+  $scope.tinymceOptions = {};
+
+	$scope.init = function( author ){
+    if (typeof author !== 'undefined') {
+      $scope.author = author;
+    }
+    $scope.loadSzallasok();
 	}
 
-  $scope.checkDisbledDate = function( date ) {
-    var val = true;
-    var now = new Date();
-    var date = date.toLocaleDateString('hu-HU');
-
-    if (new Date(date) < now ) {
-      // Előző napok kikapcsolása
-      val = false;
-    } else {
-      if ($scope.usedDate && $scope.usedDate.length != 0) {
-        if ($scope.usedDate.indexOf(date) !== -1) {
-          val = false;
-        } else {
-          val = true;
-        }
-      }
-    }
-
-    return val;
+  $scope.resetSzallas = function() {
+    $scope.creating = false;
+    $scope.editing = false;
+    $scope.create = {};
   }
 
-  $scope.pickEtel = function( where, o ){
-    console.log(o);
-    $scope.create[where].text = o.neve;
-    $scope.create[where].id = parseInt(o.ID);
+  $scope.creatingSwitch = function() {
+    $scope.creating = true;
+    $scope.editing = false;
+    $scope.create.id = 0;
+  }
+
+  $scope.pickSzallas = function( szallas ){
+    $scope.create = szallas;
+    $scope.create.text = szallas.title;
+    $scope.create.id = parseInt(szallas.ID);
+    $scope.creating = true;
+    $scope.editing = true;
   }
 
   $scope.removePickedEtel = function( where ){
@@ -101,73 +82,44 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', function($scope,
     });
   }
 
-	$scope.loadResources = function( callback )
+	$scope.loadSzallasok = function( callback )
 	{
+    $scope.szallasok = [];
 		$http({
       method: 'POST',
       url: '/ajax/get',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       data: $.param({
-        type: "Etlap",
-        key: 'Load'
+        type: "Szallasok",
+        key: 'List',
+        author: $scope.author
       })
     }).success(function( r ){
-        console.log(r);
-      if (r.data.length != 0) {
-        if (r.data.etelek && r.data.etelek.length != 0) {
-          $scope.etelek = r.data.etelek;
-        }
-        if (r.data.useddates && r.data.useddates.length != 0) {
-          $scope.usedDate = r.data.useddates;
-        }
-        if (r.data.set && r.data.set.length != 0) {
-          $scope.menu = r.data.set;
-        }
+      if (r.data && r.data.list.length != 0) {
+        $scope.szallasok = r.data.list;
       }
-
-        console.log($scope.menu);
 			if (typeof callback !== 'undefined') {
 				callback(r);
 			}
     });
 	}
 
-  $scope.menuSave = function(){
-    $scope.saveEtlap = true;
-
-    console.log($scope.create.daydate);
-
+  $scope.saveSzallas = function(){
+    $scope.saveSzallas = true;
     $http({
       method: 'POST',
       url: '/ajax/get',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       data: $.param({
-        type: "Etlap",
-        key: 'AddMenu',
-        menu: $scope.create
+        type: "Szallasok",
+        key: 'SaveCreate',
+        szallas: $scope.create
       })
     }).success(function( r ){
-      $scope.saveEtlap = false;
-      $scope.loadResources();
-      $scope.create = {
-        daydate: new Date(),
-        etel_leves: {
-          text: '',
-          id: null
-        },
-        etel_fo: {
-          text: '',
-          id: null
-        },
-        etel_va: {
-          text: '',
-          id: null
-        },
-        etel_vb: {
-          text: '',
-          id: null
-        }
-      };
+      $scope.saveSzallas = false;
+      //$scope.loadSzallasok();
+      console.log(r);
+      //$scope.create = {};
     });
   }
 
