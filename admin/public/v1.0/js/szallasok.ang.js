@@ -13,9 +13,86 @@ szallasok.config(function($mdDateLocaleProvider){
    };
 });
 
-szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', function($scope, $http, $mdToast)
+szallasok.service('fileUploadService', function($http, $q){
+  this.uploadFileToUrl = function (file, uploadUrl, callback) {
+      var fileFormData = new FormData();
+      fileFormData.append('file', file);
+      var deffered = $q.defer();
+
+      $http({
+        method: 'POST',
+        url: uploadUrl,
+        params: {
+          type: 'SzallasProfilUpload'
+        },
+        data: fileFormData,
+        headers: {
+           'Content-Type': undefined
+        },
+      }).then(function successCallback(response) {
+        console.log(response);
+        callback(response.data);
+      }, function errorCallback(response) {
+        console.log(response);
+        callback(response.data);
+      });
+  }
+});
+
+szallasok.filter('html', ['$sce', function($sce){
+    return function(text) {
+        return $sce.trustAsHtml(text);
+    };
+}]);
+
+szallasok.directive('fileModel', ['$parse', function ($parse) {
+  return {
+    link: function(scope, element, attributes) {
+      element.bind("change", function(changeEvent) {
+        scope.fileinput = changeEvent.target.files[0];
+
+        var ext = scope.fileinput.name.split('.').pop().toLowerCase();
+        var correct_ext = scope.allowProfilType.indexOf(ext) > -1;
+
+        scope.selectedprofilimg.type = ext;
+        scope.selectedprofilimg.size = scope.fileinput.size / 1024;
+
+        if(correct_ext) {
+          var reader = new FileReader();
+          reader.onload = function(loadEvent) {
+            scope.$apply(function() {
+              scope.profilselected = true;
+              scope.profilpreview = loadEvent.target.result;
+            });
+          }
+          reader.readAsDataURL(scope.fileinput);
+          scope.cansavenow = true;
+        } else {
+          scope.cansavenow = false;
+        }
+
+        if(scope.selectedprofilimg.size > 2024) {
+          scope.cansavenow = false;
+        } else {
+          if(correct_ext){
+            scope.cansavenow = true;
+          }
+        }
+      });
+    }
+  }
+}]);
+
+szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', 'fileUploadService', function($scope, $http, $mdToast, $timeout, fileUploadService)
 {
-  $scope.saveSzallas = false;
+
+  $scope.allowProfilType = ['jpg', 'jpeg', 'png'];
+  $scope.selectedprofilimg = {
+    size: 0,
+    type: null
+  };
+
+  $scope.savingszallas = false;
   $scope.creating = false;
   $scope.editing = false;
   $scope.author = 0;
@@ -23,6 +100,10 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', function($scope,
     id: 0
   };
   $scope.szallasok = [];
+  $scope.baseMsg = {
+    'type': 'success',
+    'msg': ''
+  };
 
   $scope.tinymceOptions = {};
 
@@ -58,6 +139,14 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', function($scope,
       text: '',
       id: null
     };
+  }
+
+  $scope.uploadSzallasImage = function(callback){
+    var file = $scope.fileinput;
+    var uploadUrl = "/ajax/data/", //Url 1of webservice/api/server
+    promise = fileUploadService.uploadFileToUrl(file, uploadUrl, function(re){
+      callback(re);
+    });
   }
 
   $scope.menuDateChange = function() {
@@ -104,8 +193,14 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', function($scope,
     });
 	}
 
-  $scope.saveSzallas = function(){
-    $scope.saveSzallas = true;
+  $scope.saveSzallas = function()
+  {
+    $scope.savingszallas = true;
+    $scope.uploadSzallasImage(function(re){
+      console.log('Image Upload');
+      console.log(re);
+    });
+
     $http({
       method: 'POST',
       url: '/ajax/get',
@@ -116,10 +211,24 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', function($scope,
         szallas: $scope.create
       })
     }).success(function( r ){
-      $scope.saveSzallas = false;
-      //$scope.loadSzallasok();
+
+      $scope.savingszallas = false;
+      $scope.baseMsg.msg = r.msg;
+
       console.log(r);
-      //$scope.create = {};
+
+      if (r.error == 0) {
+        $scope.loadSzallasok();
+        $scope.create = {};
+        $scope.creating = false;
+        $scope.editing = false;
+        $scope.baseMsg.type = 'success';
+      } else {
+        $scope.baseMsg.type = 'danger';
+      }
+      $timeout(function(){
+        $scope.baseMsg.msg = '';
+      }, 5000);
     });
   }
 

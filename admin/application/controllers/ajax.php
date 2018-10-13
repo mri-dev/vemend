@@ -15,6 +15,35 @@ class ajax extends Controller{
 			$this->traffic = new Traffic(  array( 'db' => $this->db )  );
 		}
 
+		function data()
+		{
+			$params = $_REQUEST;
+			$re = array();
+
+			switch ( $params['type'] ) {
+				case 'SzallasProfilUpload':
+					if (isset($_FILES['file']) && $_FILES['file']['error'] == 0)
+					{
+						// uploads image in the folder images
+						$temp = explode(".", $_FILES["file"]["name"]);
+						$newfilename = substr(md5(time()), 0, 10) . '.' . end($temp);
+						move_uploaded_file($_FILES['file']['tmp_name'], 'store/images/profils/' . $newfilename);
+
+						// give callback to your angular code with the image src name
+						$re['filename'] = $newfilename;
+						$re['uploaded_path'] = '/store/images/profils/' . $newfilename;
+						$re['error'] = false;
+					} else {
+						$re['error'] = false;
+					}
+
+					$re['FILE'] = $_FILES['file'];
+				break;
+			}
+
+			echo json_encode( $re );
+		}
+
 		function post(){
 			extract($_POST);
 
@@ -437,6 +466,13 @@ class ajax extends Controller{
 							$re['data'] = $szallaslist->getList( $arg );
 						break;
 						case 'SaveCreate':
+							try {
+								$re['data'] = $szallaslist->saveSzallas( $szallas );
+								$re['msg'] = 'Sikeresen mentette a(z) <strong>'.$szallas['title'].'</strong> szállás adatait.';
+							} catch (\Exception $e) {
+								$re['error'] = 1;
+								$re['msg'] = $e->getMessage();
+							}
 						break;
 					}
 
