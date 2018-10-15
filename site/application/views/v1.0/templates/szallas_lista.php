@@ -13,7 +13,7 @@
           </div>
           <div class="title">
             <div class="in">
-              <h3><a href="#"><?=$szallas['title']?></a></h3>
+              <h3><a href="<?=$szallas['url']?>"><?=$szallas['title']?></a></h3>
             </div>
           </div>
         </div>

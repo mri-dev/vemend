@@ -56,7 +56,7 @@ class SzallasFramework
     $q = "SELECT t.* FROM ".self::DBTERMS." as t WHERE 1=1 and t.group = :group ORDER BY t.sort ASC";
     $data = $this->db->squery( $q, array(
       'group' => $group
-    ))
+    ));
 
     if ($data->rowCount() == 0) {
       return false;
