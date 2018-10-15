@@ -27,11 +27,24 @@ class ajax extends Controller{
 						// uploads image in the folder images
 						$temp = explode(".", $_FILES["file"]["name"]);
 						$newfilename = substr(md5(time()), 0, 10) . '.' . end($temp);
-						move_uploaded_file($_FILES['file']['tmp_name'], 'store/images/profils/' . $newfilename);
+						$szid = (int)$params['id'];
+						$szallas_path = 'store/images/szallas/'.$szid.'/';
+
+						if (!file_exists($szallas_path)) {
+							if(!mkdir( $szallas_path, 0755, true)){
+								echo json_encode( array(
+									'error' => 1,
+									'msg' => 'Mappa létrehozás sikertelen.'
+								) );
+								exit;
+							}
+						}
+
+						move_uploaded_file($_FILES['file']['tmp_name'], $szallas_path. $newfilename);
 
 						// give callback to your angular code with the image src name
 						$re['filename'] = $newfilename;
-						$re['uploaded_path'] = '/store/images/profils/' . $newfilename;
+						$re['uploaded_path'] = $szallas_path . $newfilename;
 						$re['error'] = false;
 					} else {
 						$re['error'] = false;
@@ -473,6 +486,9 @@ class ajax extends Controller{
 								$re['error'] = 1;
 								$re['msg'] = $e->getMessage();
 							}
+						break;
+						case 'UpdateProfilkepURI':
+							$szallaslist->updateProfilPath( $id, $path );
 						break;
 					}
 

@@ -14,7 +14,7 @@ szallasok.config(function($mdDateLocaleProvider){
 });
 
 szallasok.service('fileUploadService', function($http, $q){
-  this.uploadFileToUrl = function (file, uploadUrl, callback) {
+  this.uploadFileToUrl = function (szallas_id, file, uploadUrl, callback) {
       var fileFormData = new FormData();
       fileFormData.append('file', file);
       var deffered = $q.defer();
@@ -23,17 +23,16 @@ szallasok.service('fileUploadService', function($http, $q){
         method: 'POST',
         url: uploadUrl,
         params: {
-          type: 'SzallasProfilUpload'
+          type: 'SzallasProfilUpload',
+          id: szallas_id
         },
         data: fileFormData,
         headers: {
            'Content-Type': undefined
         },
       }).then(function successCallback(response) {
-        console.log(response);
         callback(response.data);
       }, function errorCallback(response) {
-        console.log(response);
         callback(response.data);
       });
   }
@@ -54,6 +53,7 @@ szallasok.directive('fileModel', ['$parse', function ($parse) {
         var ext = scope.fileinput.name.split('.').pop().toLowerCase();
         var correct_ext = scope.allowProfilType.indexOf(ext) > -1;
 
+        scope.selectedprofilimg.name = scope.fileinput.name;
         scope.selectedprofilimg.type = ext;
         scope.selectedprofilimg.size = scope.fileinput.size / 1024;
 
@@ -67,14 +67,17 @@ szallasok.directive('fileModel', ['$parse', function ($parse) {
           }
           reader.readAsDataURL(scope.fileinput);
           scope.cansavenow = true;
+          scope.selectedprofilimg.typecorrect = true;
         } else {
-          scope.cansavenow = false;
+          scope.selectedprofilimg.typecorrect = false;
         }
 
         if(scope.selectedprofilimg.size > 2024) {
+          scope.selectedprofilimg.sizecorrect = false;
           scope.cansavenow = false;
         } else {
           if(correct_ext){
+            scope.selectedprofilimg.sizecorrect = true;
             scope.cansavenow = true;
           }
         }
@@ -89,12 +92,17 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', 'fil
   $scope.allowProfilType = ['jpg', 'jpeg', 'png'];
   $scope.selectedprofilimg = {
     size: 0,
-    type: null
+    sizecorrect: true,
+    type: null,
+    typecorrect: true,
+    name: ''
   };
 
   $scope.savingszallas = false;
   $scope.creating = false;
   $scope.editing = false;
+  $scope.cansavenow = true;
+  $scope.uploadingimages = false;
   $scope.author = 0;
   $scope.create = {
     id: 0
@@ -141,10 +149,10 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', 'fil
     };
   }
 
-  $scope.uploadSzallasImage = function(callback){
+  $scope.uploadSzallasImage = function(szallas_id, callback){
     var file = $scope.fileinput;
     var uploadUrl = "/ajax/data/", //Url 1of webservice/api/server
-    promise = fileUploadService.uploadFileToUrl(file, uploadUrl, function(re){
+    promise = fileUploadService.uploadFileToUrl(szallas_id, file, uploadUrl, function(re){
       callback(re);
     });
   }
@@ -193,13 +201,24 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', 'fil
     });
 	}
 
+  $scope.refreshSzallasProfilkepURI = function(id, path) {
+    $http({
+      method: 'POST',
+      url: '/ajax/get',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: $.param({
+        type: "Szallasok",
+        key: 'UpdateProfilkepURI',
+        id: id,
+        path: path
+      })
+    }).success(function( r ){
+    });
+  }
+
   $scope.saveSzallas = function()
   {
     $scope.savingszallas = true;
-    $scope.uploadSzallasImage(function(re){
-      console.log('Image Upload');
-      console.log(re);
-    });
 
     $http({
       method: 'POST',
@@ -210,25 +229,48 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', 'fil
         key: 'SaveCreate',
         szallas: $scope.create
       })
-    }).success(function( r ){
-
-      $scope.savingszallas = false;
-      $scope.baseMsg.msg = r.msg;
-
-      console.log(r);
-
+    }).success(function( r )
+    {
       if (r.error == 0) {
+        // Képek feltöltése
+        /* */
+        $scope.uploadingimages = true;
+        $scope.uploadSzallasImage(r.data, function(re)
+        {
+          console.log(re);
+          if (re.FILE) {
+            $scope.refreshSzallasProfilkepURI(r.data, re.uploaded_path);
+          }          
+          $scope.savingszallas = false;
+          $scope.loadSzallasok();
+          $scope.uploadingimages = false;
+          $scope.create = {};
+          $scope.creating = false;
+          $scope.editing = false;
+          $scope.baseMsg.type = 'success';
+          $scope.baseMsg.msg = r.msg;
+          $timeout(function(){
+            $scope.baseMsg.msg = '';
+          }, 5000);
+        });
+        /* */
+        /* * /
         $scope.loadSzallasok();
         $scope.create = {};
         $scope.creating = false;
         $scope.editing = false;
         $scope.baseMsg.type = 'success';
+        /* */
       } else {
+        $scope.savingszallas = false;
+        $scope.uploadingimages = true;
         $scope.baseMsg.type = 'danger';
+        $scope.baseMsg.msg = r.msg;
+        $timeout(function(){
+          $scope.baseMsg.msg = '';
+        }, 5000);
       }
-      $timeout(function(){
-        $scope.baseMsg.msg = '';
-      }, 5000);
+
     });
   }
 

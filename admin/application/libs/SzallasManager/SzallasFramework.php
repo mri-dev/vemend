@@ -7,9 +7,11 @@ class SzallasFramework
   const DBKEPEK = 'Szallas_Kepek';
   const DBPARAMETEREK = 'Szallas_Paremeterek';
   const DBPARAMXREF = 'Szallas_xref_szallas_parameter';
+  const DBTERMS = 'Szallas_Terms';
 
   protected $db = null;
 	protected $settings = array();
+  public $terms = ['ellatas'];
 
   function __construct( $arg = array() )
   {
@@ -47,6 +49,103 @@ class SzallasFramework
 		$data = array_merge($data, $detailslist);
 
 		return $data;
+  }
+
+  public function getTermValues( $group )
+  {
+    $q = "SELECT t.* FROM ".self::DBTERMS." as t WHERE 1=1 and t.group = :group ORDER BY t.sort ASC";
+    $data = $this->db->squery( $q, array(
+      'group' => $group
+    ))
+
+    if ($data->rowCount() == 0) {
+      return false;
+    }
+    $data = $data->fetchAll(\PDO::FETCH_ASSOC);
+
+    return $data;
+  }
+
+  public function szallasURL( $data )
+  {
+    return '/szallas/'.$data['ID'].'/'.\Helper::makeSafeUrl($data['title'],'');
+  }
+
+  public function saveSzallas( $szallas )
+  {
+    if ((int)$szallas['ID'] != 0)
+    {
+      // MENTÉS
+
+      $update = array(
+        'title' => $szallas['title'],
+        'leiras' => $szallas['leiras'],
+        'cim' => $szallas['cim'],
+        'contact_email' => $szallas['contact_email'],
+        'contact_phone' => $szallas['contact_phone'],
+        'bejelentkezes' => $szallas['bejelentkezes'],
+        'kijelentkezes' => $szallas['kijelentkezes'],
+        'lemondas' => $szallas['lemondas'],
+        'elorefizetes' => $szallas['elorefizetes'],
+        'gyerek_potagy' => $szallas['gyerek_potagy'],
+        'fizetes' => $szallas['fizetes'],
+        'ifa' => (float)$szallas['ifa'],
+        'kisallat_dij' => (float)$szallas['kisallat_dijkisallat_dij'],
+        'kisallat' => ( ($szallas['kisallat'] == 'true') ? 1 : 0 ),
+        'aktiv' => ( ($szallas['aktiv'] == 'true') ? 1 : 0 ),
+      );
+
+      $this->db->update(
+        self::DBSZALLASOK,
+        $update,
+        sprintf("ID = %d", (int)$szallas['ID'] )
+      );
+
+      return (int)$szallas['ID'];
+    }
+     else
+    {
+      // LÉTREHOZÁS
+
+      $insert = array(
+        'title' => $szallas['title'],
+        'leiras' => $szallas['leiras'],
+        'cim' => $szallas['cim'],
+        'contact_email' => $szallas['contact_email'],
+        'contact_phone' => $szallas['contact_phone'],
+        'bejelentkezes' => $szallas['bejelentkezes'],
+        'kijelentkezes' => $szallas['kijelentkezes'],
+        'lemondas' => $szallas['lemondas'],
+        'elorefizetes' => $szallas['elorefizetes'],
+        'gyerek_potagy' => $szallas['gyerek_potagy'],
+        'fizetes' => $szallas['fizetes'],
+        'ifa' => (float)$szallas['ifa'],
+        'kisallat_dij' => (float)$szallas['kisallat_dijkisallat_dij'],
+        'kisallat' => ( ($szallas['kisallat'] == 'true') ? 1 : 0 ),
+      );
+
+      $this->db->insert(
+        parent::DBSZALLASOK,
+        $update
+      );
+
+      return (int) $this->db->lastInsertId();
+    }
+  }
+
+  public function updateProfilPath( $szallas_id, $path )
+  {
+    if (empty($szallas_id)) {
+      return false;
+    }
+
+    $this->db->update(
+      self::DBSZALLASOK,
+      array(
+        'profilkep' => $path
+      ),
+      sprintf("ID = %d", $szallas_id)
+    );
   }
 
   public function __destruct()

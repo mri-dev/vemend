@@ -3,6 +3,7 @@ use PortalManager\News;
 use PortalManager\Programs;
 use PortalManager\EtlapAPI;
 use ProductManager\Products;
+use SzallasManager\SzallasList;
 
 class home extends Controller{
 		function __construct(){
@@ -42,7 +43,7 @@ class home extends Controller{
 			$arg = array(
 				'limit' => 4,
 				'page' 	=> 1,
-				'in_cat' => $cats['miserend']['ID'],				
+				'in_cat' => $cats['miserend']['ID'],
 				'order' => array(
 					'by' => 'letrehozva',
 					'how' => 'DESC'
@@ -85,6 +86,11 @@ class home extends Controller{
 			// Étlap
 			$etlap = new EtlapAPI( array( 'db' => $this->db ) );
 			$this->out( 'etlap', $etlap );
+
+			// Szállások
+			$szallaslista = new SzallasList( array( 'db' => $this->db ) );
+			$szallasok = $szallaslista->getList();
+			$this->out('szallasok', $szallasok);
 
 			//
 			/*

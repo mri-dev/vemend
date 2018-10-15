@@ -542,9 +542,11 @@ i.edit:hover{
 }
 .actions i[class*=pencil] {
 	color: #81b46b;
+  cursor: pointer;
 }
 .actions i[class*=times] {
 	color: #a33f57;
+  cursor: pointer;
 }
 .con .arresrow {
 	display:none;
@@ -3284,6 +3286,49 @@ md-toast.mode-success .md-toast-content{
   line-height: 1.1;
 }
 
+input[type=file].lab-selector{
+  display: none;
+}
+input[type=file].lab-selector + label{
+  display: block;
+  padding: 10px;
+  border: 0.5px solid #cccccc;
+  border-radius: 5px;
+  font-weight: normal;
+  color: #8c8c8c;
+  cursor: pointer;
+}
+input[type=file].lab-selector + label:hover{
+  background: #f7f7f7;
+}
+input[type=file].lab-selector + label .allows{
+  font-size: 0.9em;
+}
+input[type=file].lab-selector + label .selected-image-data{
+  margin: 10px 0 0 0;
+  font-size: 0.8em;
+}
+input[type=file].lab-selector + label .selected-image-data strong{
+  color: #50ae50;
+}
+input[type=file].lab-selector + label .selected-image-data strong.uncorrect{
+  color: #ec5858;
+}
+input[type=file].lab-selector + label strong {
+  font-weight: bold;
+  color: black;
+  margin: 0 0 10px 0;
+  font-size: 1.1em;
+}
+input[type=file].lab-selector + label .img {
+  float: left;
+  margin: 0 15px 0 0;
+}
+input[type=file].lab-selector + label img {
+  max-height: 120px;
+  border-radius: 5px;
+}
+
 .inp-selector{
   position: relative;
 }
@@ -3412,6 +3457,25 @@ md-toast.mode-success .md-toast-content{
 .etel-creator .etel-list table tr.picked .title {
   color: #58b358;
 }
+.szallas-modul .szallas-list td .image{
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.szallas-modul .szallas-list td .image img{
+  max-height:100%;
+  height: 100%;
+  width: auto;
+  max-width: initial;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+}
 .szallas-modul .szallas-list td.details{
   font-size: 1.1em;
 }
@@ -3434,4 +3498,23 @@ md-toast.mode-success .md-toast-content{
 }
 .szallas-modul .szallas-list tr td.details .contacts span{
   margin-right: 10px;
+}
+.szallas-modul .uploaded-profilkep{
+  border-radius: 5px;
+  border: 0.5px solid #aeaeae;
+  overflow: hidden;
+  float: left;
+}
+.szallas-modul .uploaded-profilkep h4{
+  background: #e0e0e0;
+  padding: 10px;
+  margin: 0;
+  text-align: center;
+  color: #7b7b7b;
+  font-size: 0.8em;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+ }
+.szallas-modul .uploaded-profilkep img{
+  max-width: 100%;
 }

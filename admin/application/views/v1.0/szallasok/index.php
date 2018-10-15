@@ -17,15 +17,56 @@
 					<div class="alert alert-warning" ng-show="savingszallas">
 						Szállás adatainak mentése <i class="fa fa-spin fa-spinner"></i>
 					</div>
+					<div class="alert alert-warning" ng-show="uploadingimages">
+						<i class="fa fa-photo"></i> Szállás képének feltöltése folyamatban <i class="fa fa-spin fa-spinner"></i>
+					</div>
 					<div class="row-neg" ng-hide="savingszallas">
 						<div class="row">
 							<div class="col-md-12">
-								<input type="file" id="profil" file-model="profil">
-								{{profilpreview}}
-								<img ng-src="{{profilpreview}}" alt="">
-
+								<label>Profilkép</label>
+								<div class="clr"></div>
+								<div class="uploaded-profilkep" ng-show="create.kep">
+									<h4>Aktuális profilkép:</h4>
+									<img ng-src="{{create.profilkep}}" alt="">
+								</div>
+								<div class="uploader" ng-hide="create.kep">
+									<input type="file" class="lab-selector" id="profil" file-model="profil">
+									<label for="profil">
+										<div class="img" ng-show="profilpreview">
+											<img ng-src="{{profilpreview}}" alt="{{selectedprofilimg.name}}" class="preview">
+										</div>
+										<strong>Profilkép feltöltéséhez kattintson ide.</strong>
+										<div class="allows">Engedélyezett méret: max. 2 MB. Fájlformátumok: jpg, jpeg, png.</div>
+										<div class="selected-image-data" ng-show="selectedprofilimg.size">
+											<h4>Kiválaszott kép adatai:</h4>
+											Fájlformátum: <strong ng-class="(!selectedprofilimg.typecorrect)?'uncorrect':''">{{selectedprofilimg.type}}</strong><br>
+											Fájlméret: <strong ng-class="(!selectedprofilimg.sizecorrect)?'uncorrect':''">{{selectedprofilimg.size|number}} KB</strong>
+										</div>
+										<div class="clr"></div>
+									</label>
+									<div class="" ng-show="profilpreview && !selectedprofilimg.typecorrect">
+										<div class="alert alert-danger">
+											A kép formátuma nem megfelelő! Csak az engedélyezett fájlformátumú képek tölthetőek fel!
+										</div>
+									</div>
+									<div class="" ng-show="profilpreview && !selectedprofilimg.sizecorrect">
+										<div class="alert alert-danger">
+											A kép fájmérete nem megfelelő! Túl nagy fájlt szeretne feltölteni.
+										</div>
+									</div>
+								</div>
+								<div class="clr"></div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-md-10">
 								<label for="title">Szállás elnevezése *</label>
 								<input type="text" id="title" ng-model="create.title" class="form-control">
+							</div>
+							<div class="col-md-2">
+								<label for="aktiv">Aktív szállás</label>
+								<input type="checkbox" id="aktiv" ng-model="create.aktiv" class="form-control">
 							</div>
 						</div>
 						<br>
@@ -111,9 +152,14 @@
 						<br>
 						<div class="row">
 							<div class="col-md-12 right">
+								<div ng-show="!cansavenow">
+									<div class="alert alert-danger">
+										A szállás jelenleg nem menthető. Az adatlap kitöltése során valahol hiba áll fent, vagy nem megfelelően lett kitöltve!
+									</div>
+								</div>
 								<button type="button" class="btn btn-default" ng-click="resetSzallas()"> Mégse </button>
-		            <button type="button" ng-show="create.id==0 && (create.title && create.cim)" class="btn btn-primary" ng-click="saveSzallas()"> Szállás hozzáadása <i class="fa fa-plus-circle"></i> </button>
-		            <button type="button" ng-show="create.id!=0 && (create.title && create.cim)" class="btn btn-success" ng-click="saveSzallas()"> Szállás módosítása <i class="fa fa-save"></i> </button>
+		            <button type="button" ng-show="cansavenow &&create.id==0 && (create.title && create.cim)" class="btn btn-primary" ng-click="saveSzallas()"> Szállás hozzáadása <i class="fa fa-plus-circle"></i> </button>
+		            <button type="button" ng-show="cansavenow && create.id!=0 && (create.title && create.cim)" class="btn btn-success" ng-click="saveSzallas()"> Szállás módosítása <i class="fa fa-save"></i> </button>
 		          </div>
 						</div>
 					</div>
@@ -124,7 +170,7 @@
 		      <table class="table szallas-list">
 		        <thead>
 		          <tr>
-		            <th ng-show="!creating" width="120" class="center">Kép</th>
+		            <th ng-show="!creating" width="80" class="center">Kép</th>
 		            <th>Szállás</th>
 		            <th ng-show="!creating"  width="80" class="center">Aktív</th>
 		            <th ng-show="!creating||(creating && editing)" width="80" class="center"></th>
@@ -132,7 +178,11 @@
 		        </thead>
 						<tbody>
 							<tr ng-repeat="szallas in szallasok" ng-class="(create.id==szallas.ID)?'selected':''">
-								<td ng-show="!creating" ></td>
+								<td ng-show="!creating" >
+									<div class="image">
+										<img ng-src="{{szallas.profilkep}}" alt="{{szallas.title}}">
+									</div>
+								</td>
 								<td class="details">
 									<div class="name">
 										{{szallas.title}}

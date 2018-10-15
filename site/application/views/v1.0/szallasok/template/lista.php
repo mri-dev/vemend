@@ -1,5 +1,5 @@
-<div class="lista">  
+<div class="lista">
   <div class="wrapper">
-    LIS
+    <?php echo $this->render("templates/szallas_lista"); ?>
   </div>
 </div>

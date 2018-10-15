@@ -7720,7 +7720,7 @@ body.szallasok{
 			flex-basis: 380px;
 		}
 
-		& > .lista,
+		& > .szallas-list,
 		& > .adatlap{
 			flex: 1;
 
@@ -7953,7 +7953,7 @@ body.szallasok{
 				border: 0.5px solid #d2d0d0;
 
 				.image{
-					height: 13vw;
+					height: 14vw;
 					background: #cecece;
 					position: relative;
 					margin: 0 0 25px 0;
@@ -7965,6 +7965,7 @@ body.szallasok{
 					}
 
 					.discount{
+						z-index: 1;
 						position: absolute;
 						right: 5px;
 						top: 5px;
