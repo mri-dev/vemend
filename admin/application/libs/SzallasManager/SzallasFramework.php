@@ -8,6 +8,7 @@ class SzallasFramework
   const DBPARAMETEREK = 'Szallas_Paremeterek';
   const DBPARAMXREF = 'Szallas_xref_szallas_parameter';
   const DBTERMS = 'Szallas_Terms';
+  const DBSZALLASXREFELLATAS = 'Szallas_xref_Ellatas';
 
   protected $db = null;
 	protected $settings = array();
@@ -51,9 +52,44 @@ class SzallasFramework
 		return $data;
   }
 
+  public function rebuildSzallasEllatas( $szallasid, $ids = array() )
+  {
+    if ( empty($ids) ) {
+      return false;
+    }
+
+    // Előzőek törlése
+    $this->db->squery("DELETE FROM ".self::DBSZALLASXREFELLATAS." WHERE szallas_id = :szid", array('szid' => $szallasid));
+
+    foreach ( (array)$ids as $id ) {
+      $this->db->insert(
+        self::DBSZALLASXREFELLATAS,
+        array(
+          'szallas_id' => $szallasid,
+          'ellatas_id' => $id
+        )
+      );
+    }
+  }
+
+  public function getSzallasEllatasIDS( $id )
+  {
+    if(empty($id)) return array();
+
+    $ids = array();
+    $data = $this->db->squery("SELECT ellatas_id FROM ".self::DBSZALLASXREFELLATAS." WHERE szallas_id = :szid", array('szid' => $id));
+    $data = $data->fetchAll(\PDO::FETCH_ASSOC);
+
+    foreach ( (array)$data as $key => $d ) {
+      $ids[] = (int)$d['ellatas_id'];
+    }
+
+    return $ids;
+  }
+
   public function getTermValues( $group )
   {
-    $q = "SELECT t.* FROM ".self::DBTERMS." as t WHERE 1=1 and t.group = :group ORDER BY t.sort ASC";
+    $q = "SELECT t.ID, t.name FROM ".self::DBTERMS." as t WHERE 1=1 and t.groupkey = :group ORDER BY t.sort ASC";
     $data = $this->db->squery( $q, array(
       'group' => $group
     ));
@@ -61,7 +97,13 @@ class SzallasFramework
     if ($data->rowCount() == 0) {
       return false;
     }
+
     $data = $data->fetchAll(\PDO::FETCH_ASSOC);
+
+    $data = array_map(function($t){
+      $t['ID'] = (int)$t['ID'];
+      return $t;
+    }, $data);
 
     return $data;
   }
@@ -94,6 +136,10 @@ class SzallasFramework
         'kisallat' => ( ($szallas['kisallat'] == 'true') ? 1 : 0 ),
         'aktiv' => ( ($szallas['aktiv'] == 'true') ? 1 : 0 ),
       );
+
+      if ( !empty($szallas['ellatasok']) ) {
+        $this->rebuildSzallasEllatas( $szallas['ID'], (array)$szallas['ellatasok'] );
+      }
 
       $this->db->update(
         self::DBSZALLASOK,

@@ -41,6 +41,7 @@ class SzallasList extends SzallasFramework
       $d['kisallat'] = ($d['kisallat'] == 1) ? true : false;
       $d['aktiv'] = ($d['aktiv'] == 1) ? true : false;
       $d['url'] = $this->szallasURL($d);
+      $d['ellatasok'] = $this->getSzallasEllatasIDS($d['ID']);
       $back['list'][] = $d;
     }
 

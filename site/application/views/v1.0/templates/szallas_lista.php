@@ -1,7 +1,6 @@
 <div class="szallas-list grid-x2">
   <div class="wrapper">
-    <?php  ?>
-    <?php print_r($szallasok); ?>
+    
     <?php if ( $this->szallasok || true ): ?>
     <?php foreach ( (array)$this->szallasok['list'] as $szallas ): ?>
     <div class="szallas">

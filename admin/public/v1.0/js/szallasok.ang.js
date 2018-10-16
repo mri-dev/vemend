@@ -97,6 +97,25 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', 'fil
     typecorrect: true,
     name: ''
   };
+  $scope.tabs = [
+    {
+      name: 'general',
+      title: 'Általános'
+    },
+    {
+      name: 'rooms',
+      title: 'Szobák'
+    },
+    {
+      name: 'pictures',
+      title: 'Képek'
+    },
+    {
+      name: 'services',
+      title: 'Szolgáltatások'
+    }
+  ];
+  $scope.editing_page = 'general';
 
   $scope.savingszallas = false;
   $scope.creating = false;
@@ -105,13 +124,16 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', 'fil
   $scope.uploadingimages = false;
   $scope.author = 0;
   $scope.create = {
-    id: 0
+    id: 0,
+    ellatasok: [],
+    rooms: []
   };
   $scope.szallasok = [];
   $scope.baseMsg = {
     'type': 'success',
     'msg': ''
   };
+  $scope.terms = {};
 
   $scope.tinymceOptions = {};
 
@@ -119,7 +141,9 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', 'fil
     if (typeof author !== 'undefined') {
       $scope.author = author;
     }
-    $scope.loadSzallasok();
+    $scope.loadTerms(function() {
+      $scope.loadSzallasok();
+    });
 	}
 
   $scope.resetSzallas = function() {
@@ -140,6 +164,10 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', 'fil
     $scope.create.id = parseInt(szallas.ID);
     $scope.creating = true;
     $scope.editing = true;
+  }
+
+  $scope.switchTab = function( tab ) {
+    $scope.editing_page = tab;
   }
 
   $scope.removePickedEtel = function( where ){
@@ -176,6 +204,31 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', 'fil
       } else {
         $scope.menuDateUsed = false;
       }
+    });
+  }
+
+  $scope.loadTerms = function( callback )
+  {
+    $http({
+      method: 'POST',
+      url: '/ajax/get',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: $.param({
+        type: "Szallasok",
+        key: 'Settings',
+        terms: ['ellatas']
+      })
+    }).success(function( r ){
+      if (r.data) {
+        angular.forEach(r.data,function(e,i){
+          if (typeof $scope.terms[i] === 'undefined') {
+            $scope.terms[i] = e;
+          }
+        });
+      }
+			if (typeof callback !== 'undefined') {
+				callback();
+			}
     });
   }
 
@@ -219,6 +272,7 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', 'fil
   $scope.saveSzallas = function()
   {
     $scope.savingszallas = true;
+    console.log($scope.create);
 
     $http({
       method: 'POST',
@@ -240,7 +294,7 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', 'fil
           console.log(re);
           if (re.FILE) {
             $scope.refreshSzallasProfilkepURI(r.data, re.uploaded_path);
-          }          
+          }
           $scope.savingszallas = false;
           $scope.loadSzallasok();
           $scope.uploadingimages = false;

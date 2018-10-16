@@ -474,6 +474,12 @@ class ajax extends Controller{
 
 					switch ( $key )
 					{
+						case 'Settings':
+							//$re['data']
+							foreach ((array)$terms as $t) {
+								$re['data'][$t] = $szallaslist->getTermValues($t);
+							}
+						break;
 						case 'List':
 							$arg = array();
 							$re['data'] = $szallaslist->getList( $arg );
