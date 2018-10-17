@@ -4,6 +4,7 @@ use PortalManager\Traffic;
 use PortalManager\EtlapAPI;
 use ProductManager\Products;
 use SzallasManager\SzallasList;
+use SzallasManager\SzallasSzobak;
 use Applications\Lookbooks;
 
 class ajax extends Controller{
@@ -474,6 +475,14 @@ class ajax extends Controller{
 
 					switch ( $key )
 					{
+						case 'LoadSzallasData':
+							try {
+								$re['data'] = $szallaslist->loadSzallas( $id );
+							} catch (\Exception $e) {
+								$re['error'] = 1;
+								$re['msg'] = $e->getMessage();
+							}
+						break;
 						case 'Settings':
 							//$re['data']
 							foreach ((array)$terms as $t) {
@@ -483,6 +492,34 @@ class ajax extends Controller{
 						case 'List':
 							$arg = array();
 							$re['data'] = $szallaslist->getList( $arg );
+						break;
+						case 'SaveRooms':
+							$szobak = new SzallasSzobak( $szallas, array('db' => $this->db) );
+
+							try {
+								$re['data'] = $szobak->saveSzobak( $rooms );
+								if ( $re['data']['error'] ) {
+									$re['error'] = 1;
+									if (!empty($re['data']['correct'])) {
+										foreach ($re['data']['correct'] as $key => $m) {
+											foreach ($m as $msg) {
+												$re['msg'] .= '#'.$key.": ".$msg."<br>";
+											}
+
+										}
+									}
+								} else {
+									$re['msg'] = 'Sikeresen mentette a szobák adatait.';
+									if (!empty($re['data']['inserted_ids'])) {
+										$re['msg'] .= count($re['data']['inserted_ids'])." db új szoba hozzáadva.";
+									}
+								}
+							} catch (\Exception $e) {
+								$re['error'] = 1;
+								$re['msg'] = $e->getMessage();
+							}
+
+							unset($szobak);
 						break;
 						case 'SaveCreate':
 							try {
@@ -497,6 +534,8 @@ class ajax extends Controller{
 							$szallaslist->updateProfilPath( $id, $path );
 						break;
 					}
+
+					unset($szallaslist);
 
 					echo json_encode( $re );
 				break;

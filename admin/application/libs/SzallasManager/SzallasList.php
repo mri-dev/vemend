@@ -1,6 +1,8 @@
 <?php
 namespace SzallasManager;
 
+use SzallasManager\SzallasSzobak;
+
 
 class SzallasList extends SzallasFramework
 {
@@ -14,11 +16,19 @@ class SzallasList extends SzallasFramework
   {
     $back = array();
     $darg = array();
+    $arg['loadfulldata'] = false;
 
     $q = "SELECT
       sz.*
     FROM ".parent::DBSZALLASOK." as sz
     WHERE 1=1 ";
+
+    // Adott szállás lekérése
+    if (isset($arg['getid']) && !empty($arg['getid'])) {
+      $arg['loadfulldata'] = true;
+      $q .= " and sz.ID = :id ";
+      $darg['id'] = (int)$arg['getid'];
+    }
 
     if (!isset($arg['order'])) {
       $q .= " ORDER BY sz.kiemelt DESC, sz.title ASC ";
@@ -42,8 +52,30 @@ class SzallasList extends SzallasFramework
       $d['aktiv'] = ($d['aktiv'] == 1) ? true : false;
       $d['url'] = $this->szallasURL($d);
       $d['ellatasok'] = $this->getSzallasEllatasIDS($d['ID']);
+
+      // Összes vonatkozó adat betöltése
+      if (isset($arg['loadfulldata']) && !empty($arg['loadfulldata'])) {
+        $d['rooms'] = (new SzallasSzobak((int)$d['ID'], $this->arg))->getRooms();
+      }
+
       $back['list'][] = $d;
     }
+
+    return $back;
+  }
+
+  public function loadSzallas( $id )
+  {
+    $back = array();
+
+    $list = $this->getList(array('getid' => $id));
+    $fulldata = $list['list'][0];
+
+    $back['szallas_id'] = (int)$fulldata['ID'];
+    $back['datas'] = array();
+    $back['datas']['rooms'] = $fulldata['rooms'];
+    $back['datas']['pictures'] = $fulldata['pictures'];
+    $back['datas']['services'] = $fulldata['services'];
 
     return $back;
   }

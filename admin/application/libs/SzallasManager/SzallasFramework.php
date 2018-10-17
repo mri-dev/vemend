@@ -9,13 +9,17 @@ class SzallasFramework
   const DBPARAMXREF = 'Szallas_xref_szallas_parameter';
   const DBTERMS = 'Szallas_Terms';
   const DBSZALLASXREFELLATAS = 'Szallas_xref_Ellatas';
+  const DBSZOBAK = 'Szallasok_Szobak';
+  const DBSZOBAAR = 'Szallasok_Szoba_ar';
 
+  protected $arg = null;
   protected $db = null;
 	protected $settings = array();
   public $terms = ['ellatas'];
 
   function __construct( $arg = array() )
   {
+    $this->arg = $arg;
     $this->db = $arg[db];
 		$this->settings = $arg['db']->settings;
 
@@ -197,6 +201,7 @@ class SzallasFramework
   public function __destruct()
 	{
 		$this->db = null;
+    $this->arg = null;
 	  $this->settings = array();
 	}
 }

@@ -3519,6 +3519,87 @@ input[type=file].lab-selector + label img {
   max-width: 100%;
 }
 
+.szallas-modul .rooms .room{
+  margin: 0 0 10px 0;
+  border: 0.5px solid #dcdcdc;
+  background: #f7f7f7;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: #444444;
+}
+.szallas-modul .rooms .room.isnew{
+  border: 4px solid #99d499;
+}
+.szallas-modul .rooms .room > .editor-row > .wrapper input{
+  width: 100%;
+  border: 0.4px solid #f1f1f1;
+  padding: 5px;
+  font-size: 0.8em;
+}
+.szallas-modul .rooms .room > .wrapper,
+.szallas-modul .rooms .room > .editor-row > .wrapper{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 5px;
+}
+.szallas-modul .rooms .room > .wrapper > div,
+.szallas-modul .rooms .room > .editor-row > .wrapper > div{
+  padding: 5px;
+}
+.szallas-modul .rooms .room > .wrapper .data,
+.szallas-modul .rooms .room > .editor-row > .wrapper .data{
+  flex: 1;
+}
+.szallas-modul .rooms .room > .wrapper .data .title,
+.szallas-modul .rooms .room > .editor-row > .wrapper .data .title{
+  font-weight: bold;
+  color: black;
+  font-size: 1.1em;
+}
+.szallas-modul .rooms .room > .wrapper .data .desc,
+.szallas-modul .rooms .room > .editor-row > .wrapper .data .desc{
+  color: #8c8c8c;
+  font-size: 0.9em;
+}
+.szallas-modul .rooms .room > .wrapper .adult-cap,
+.szallas-modul .rooms .room > .wrapper .child-cap,
+.szallas-modul .rooms .room > .editor-row > .wrapper .adult-cap,
+.szallas-modul .rooms .room > .editor-row > .wrapper .child-cap{
+  flex-basis: 20%;
+  text-align: center;
+}
+.szallas-modul .rooms .room > .wrapper .status,
+.szallas-modul .rooms .room > .editor-row > .wrapper .status{
+  flex-basis: 10%;
+  text-align: center;
+  color: #444444;
+}
+.szallas-modul .rooms .room > .wrapper .status i[class*=fa-check]{
+  color: green;
+}
+.szallas-modul .rooms .room > .wrapper .status i[class*=fa-ban]{
+  color: red;
+}
+
+.szallas-modul .rooms .room > .editor-row{
+  border-top: 0.5px solid #c1c1c1;
+  background: #f0f0f0;
+}
+.szallas-modul .rooms .room .head{
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 0.7em;
+  letter-spacing: 1px;
+  padding: 10px;
+  color: black;
+  background: #e0e0e0;
+}
+
+
+
 .tab-header ul {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -3542,4 +3623,7 @@ input[type=file].lab-selector + label img {
   z-index: 1;
   border: 0.5px solid #cecece;
   border-bottom: none;
+}
+.tab-block .rnav{
+  float: right;
 }

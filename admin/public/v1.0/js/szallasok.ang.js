@@ -86,7 +86,7 @@ szallasok.directive('fileModel', ['$parse', function ($parse) {
   }
 }]);
 
-szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', 'fileUploadService', function($scope, $http, $mdToast, $timeout, fileUploadService)
+szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$parse', 'fileUploadService', function($scope, $http, $mdToast, $timeout, $parse, fileUploadService)
 {
 
   $scope.allowProfilType = ['jpg', 'jpeg', 'png'];
@@ -121,14 +121,17 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', 'fil
   $scope.creating = false;
   $scope.editing = false;
   $scope.cansavenow = true;
+  $scope.roomsaving = false;
   $scope.uploadingimages = false;
   $scope.author = 0;
+  $scope.roomediting = false;
   $scope.create = {
     id: 0,
     ellatasok: [],
     rooms: []
   };
   $scope.szallasok = [];
+  $scope.szallas_datas = {};
   $scope.baseMsg = {
     'type': 'success',
     'msg': ''
@@ -164,6 +167,75 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', 'fil
     $scope.create.id = parseInt(szallas.ID);
     $scope.creating = true;
     $scope.editing = true;
+
+    if ($scope.editing) {
+      $scope.loadSzallasDatas($scope.create.id);
+    }
+  }
+
+  $scope.toggleVar = function(o,v) {
+    var m = $parse(o);
+    m.assign($scope, v);
+  }
+
+  $scope.loadSzallasDatas = function( id ) {
+    $http({
+      method: 'POST',
+      url: '/ajax/get',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: $.param({
+        type: "Szallasok",
+        key: 'LoadSzallasData',
+        id: id
+      })
+    }).success(function( r ){
+      if (r.data && r.data.datas) {
+        angular.forEach(r.data.datas, function(e,i){
+          if (typeof $scope.create[i] === 'undefined') {
+            $scope.create[i] = e;
+          } else {
+            $scope.create[i] = e;
+          }
+        });
+      }
+    });
+  }
+
+  $scope.addRooms = function() {
+    $scope.create.rooms.push({
+
+    });
+  }
+
+  $scope.saveRooms = function(id, rooms) {
+    $scope.roomsaving = true;
+    $http({
+      method: 'POST',
+      url: '/ajax/get',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: $.param({
+        type: "Szallasok",
+        key: 'SaveRooms',
+        szallas: id,
+        rooms: rooms
+      })
+    }).success(function( r ){
+      $scope.roomsaving = false;
+
+      if (r.error) {
+        $scope.baseMsg.type = 'danger';
+        $scope.baseMsg.msg = r.msg;
+      } else {
+        $scope.baseMsg.type = 'success';
+        $scope.baseMsg.msg = r.msg;
+        $timeout(function(){
+          $scope.baseMsg.msg = '';
+          $scope.loadSzallasDatas( id );
+        }, 5000);
+      }
+
+      console.log(r);
+    });
   }
 
   $scope.switchTab = function( tab ) {

@@ -11,7 +11,7 @@
 	<div class="row-neg">
 		<div class="row szallas-modul">
 		  <div class="col-md-7" ng-show="creating">
-		    <div class="con" ng-class="(create.id!=0)?'con-edit':''">					
+		    <div class="con" ng-class="(create.id!=0)?'con-edit':''">
 					<h3 ng-show="(create.id==0)">Új szállás rögzítése</h3>
 					<h3 ng-hide="(create.id==0)">"{{create.title}}" szállás szerkesztése</h3>
 					<div class="tab-header" ng-show="(create.id!=0)">
@@ -177,6 +177,85 @@
 			          </div>
 							</div>
 						</div>
+					</div>
+
+					<div class="tab-block" ng-show="(editing_page=='rooms')">
+						<div class="rnav">
+							<span ng-show="!roomediting" style="color: #8ab160; cursor: pointer;" ng-click="toggleVar('roomediting', true)">szerkesztő mód bekapcsolása</span>
+							<span ng-hide="!roomediting" style="color: #e69a9a; cursor: pointer;" ng-click="toggleVar('roomediting', false)">szerkesztő mód kikapcsolása</span>
+						</div>
+						<h3>Szobák</h3>
+						<div class="clr"></div>
+						<div class="rooms" ng-show="create.rooms">
+							<div class="room" ng-repeat="room in create.rooms" ng-class="(!room.ID)?'isnew':''">
+								<div class="wrapper">
+									<div class="data">
+										<div class="title">{{room.name}}</div>
+										<div class="desc">{{room.leiras}}</div>
+									</div>
+									<div class="adult-cap">
+										max. {{room.felnott_db}} felnőtt
+									</div>
+									<div class="child-cap">
+										<span ng-show="(room.gyermek_db>0)">max.</span> {{room.gyermek_db}} gyermek
+									</div>
+									<div class="status">
+										<span ng-show="room.elerheto" title="Jelenleg aktív szoba."><i class="fa fa-check"></i></span>
+										<span ng-show="!room.elerheto" title="Jelenleg inaktív szoba."><i class="fa fa-ban"></i></span>
+									</div>
+								</div>
+								<div class="editor-row" ng-show="!room.ID || roomediting">
+									<div class="head">
+										Szoba adatainak szerkesztése
+									</div>
+									<div class="wrapper">
+										<div class="data">
+											<div class="title"><input type="text" ng-model="room.name" placeholder="Szoba elnevezése"></div>
+											<div class="desc"><input type="text" ng-model="room.leiras" placeholder="Szoba rövid leírása"></div>
+										</div>
+										<div class="adult-cap">
+											<input type="number" ng-model="room.felnott_db" min="0" step="1">
+											Felnőtt férőhely
+										</div>
+										<div class="child-cap">
+											<input type="number" ng-model="room.gyermek_db" min="0" step="1">
+											Gyermek férőhely
+										</div>
+										<div class="status">
+											Elérhető? <br>
+											<input type="checkbox" ng-model="room.elerheto">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="" ng-show="roomsaving">
+							<div class="alert alert-warning">
+								Szobák konfigurációjának mentése folyamatban <i class="fa fa-spin fa-spinner"></i>
+							</div>
+						</div>
+						<div class="row-neg" ng-hide="roomsaving">
+							<div class="row">
+								<div class="col-md-6 left">
+									<button type="button" class="btn btn-default" ng-click="addRooms()"><i class="fa fa-plus"></i> új szoba</button>
+								</div>
+								<div class="col-md-6 right">
+									<button type="button" class="btn btn-success" ng-click="saveRooms(create.ID, create.rooms)">Szobák mentése <i class="fa fa-save"></i> </button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="tab-block" ng-show="(editing_page=='pictures')">
+						<h3>Képek</h3>
+						{{create.pictures}}
+					</div>
+
+					<div class="tab-block" ng-show="(editing_page=='services')">
+						<h3>Szolgáltatások</h3>
+
+						{{create.services}}
 					</div>
 
 		    </div>
