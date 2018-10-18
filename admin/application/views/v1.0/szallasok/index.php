@@ -181,8 +181,8 @@
 
 					<div class="tab-block" ng-show="(editing_page=='rooms')">
 						<div class="rnav">
-							<span ng-show="!roomediting" style="color: #8ab160; cursor: pointer;" ng-click="toggleVar('roomediting', true)">szerkesztő mód bekapcsolása</span>
-							<span ng-hide="!roomediting" style="color: #e69a9a; cursor: pointer;" ng-click="toggleVar('roomediting', false)">szerkesztő mód kikapcsolása</span>
+							<span ng-show="!roomediting" style="color: #8ab160; cursor: pointer;" ng-click="toggleVar('roomediting', true)">szerkesztő mód bekapcsolása <i class="fa fa-pencil"></i></span>
+							<span ng-hide="!roomediting" style="color: #e69a9a; cursor: pointer;" ng-click="toggleVar('roomediting', false)">szerkesztő mód kikapcsolása <i class="fa fa-ban"></i></span>
 						</div>
 						<h3>Szobák</h3>
 						<div class="clr"></div>
@@ -278,7 +278,7 @@
 									<button type="button" class="btn btn-default" ng-click="addRooms()"><i class="fa fa-plus"></i> új szoba</button>
 								</div>
 								<div class="col-md-6 right">
-									<button type="button" class="btn btn-success" ng-click="saveRooms(create.ID, create.rooms)">Szobák mentése <i class="fa fa-save"></i> </button>
+									<button type="button" class="btn btn-success" ng-click="saveRooms(create.ID, create.rooms)">Szobák adatainak mentése <i class="fa fa-save"></i> </button>
 								</div>
 							</div>
 						</div>
@@ -298,7 +298,17 @@
 		    </div>
 		  </div>
 		  <div class="" ng-class="(creating)?'col-md-5':'col-md-12'">
-		    <div class="con">
+		    <div class="">
+					<div class="table-filter">
+						<div class="row-neg">
+							<div class="row">
+								<div class="col-md-9"></div>
+								<div class="col-md-3 right">
+									<input type="text" ng-model="filter.name" class="form-control" placeholder="Gyors keresés...">
+								</div>
+							</div>
+						</div>
+					</div>
 		      <table class="table szallas-list">
 		        <thead>
 		          <tr>
@@ -309,7 +319,7 @@
 		          </tr>
 		        </thead>
 						<tbody>
-							<tr ng-repeat="szallas in szallasok" ng-class="(create.id==szallas.ID)?'selected':''">
+							<tr ng-repeat="szallas in szallasok | filter:{title: filter.name}" ng-class="(create.id==szallas.ID)?'selected':''">
 								<td ng-show="!creating" >
 									<div class="image">
 										<img ng-src="{{szallas.profilkep}}" alt="{{szallas.title}}">

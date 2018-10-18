@@ -626,9 +626,17 @@ i.edit:hover{
 .katparam.param a:hover{
 	color:#d33;
 }
+.table-filter{
+  padding: 5px;
+  border-radius: 4px 4px 0 0;
+  border: 0.5px solid #d8d8d8;
+  border-bottom: none;
+  background: #f7f7f7;
+}
 .table{
 	background:#ffffff;
 	font-size:12px;
+  border: 0.5px solid #d8d8d8;
 }
 .table th{
 	background:#f2f2f2;
