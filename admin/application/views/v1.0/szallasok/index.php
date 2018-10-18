@@ -186,6 +186,9 @@
 						</div>
 						<h3>Szobák</h3>
 						<div class="clr"></div>
+						<div ng-show="(create.rooms.length==0)">
+							Jelenleg nincs létrehozott szoba.
+						</div>
 						<div class="rooms" ng-show="create.rooms">
 							<div class="room" ng-repeat="room in create.rooms" ng-class="(!room.ID)?'isnew':''">
 								<div class="wrapper">
@@ -224,6 +227,40 @@
 										<div class="status">
 											Elérhető? <br>
 											<input type="checkbox" ng-model="room.elerheto">
+										</div>
+									</div>
+								</div>
+								<div class="prices">
+									<div class="head">
+										Szoba árképzési díjak ellátások szerint
+									</div>
+									<div class="ellatas-price" ng-repeat="el in create.ellatasok">
+										<div class="wrapper">
+											<div class="ellatas">
+												{{findTermByID('ellatas', el, 'name')}}
+											</div>
+											<div class="prices">
+												<div class="price-set">
+													<div class="adult">
+														Felnőtt ár:
+														<div class="price" ng-class="(room.arak[el].adult)?'setted':''">
+															{{room.arak[el].adult}} <span ng-show="(room.arak[el].adult)">Ft / fő</span> <span ng-hide="(room.arak[el].adult)">N/A</span>
+														</div>
+														<div class="edit-field" ng-show="!room.ID || roomediting">
+															<input type="number" ng-model="room.arak[el].adult">
+														</div>
+													</div>
+													<div class="child">
+														Gyermek ár:
+														<div class="price" ng-class="(room.arak[el].children)?'setted':''">
+															{{room.arak[el].children}} <span ng-show="(room.arak[el].children)">Ft / fő</span> <span ng-hide="(room.arak[el].children)">N/A</span>
+														</div>
+														<div class="edit-field" ng-show="!room.ID || roomediting">
+															<input type="number" ng-model="room.arak[el].children">
+														</div>
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>

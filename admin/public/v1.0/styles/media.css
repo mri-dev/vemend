@@ -3518,21 +3518,72 @@ input[type=file].lab-selector + label img {
 .szallas-modul .uploaded-profilkep img{
   max-width: 100%;
 }
-
 .szallas-modul .rooms .room{
   margin: 0 0 10px 0;
   border: 0.5px solid #dcdcdc;
-  background: #f7f7f7;
+  background: #f1f1f1;
   border-radius: 4px;
   font-size: 0.9em;
   color: #444444;
 }
+.szallas-modul .rooms .room .ellatas-price > .wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 15px;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+}
+.szallas-modul .rooms .room .ellatas-price{
+  border-bottom: 0.5px solid #c7c7c7;
+  background: #f7f7f7;
+  font-size: 0.9em;
+}
+.szallas-modul .rooms .room .ellatas-price:last-child{
+  border-bottom: none;
+}
+.szallas-modul .rooms .room .ellatas-price > .wrapper > .ellatas{
+  flex-basis: 60%;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #1da9d2;
+  text-align: right;
+  padding: 0 15px 0 0;
+}
+.szallas-modul .rooms .room .ellatas-price > .wrapper > .prices{
+  flex-basis: 40%;
+}
+.szallas-modul .rooms .room .ellatas-price > .wrapper > .prices > .price-set {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+.szallas-modul .rooms .room .ellatas-price > .wrapper > .prices > .price-set > div {
+  flex-basis: 50%;
+  text-align: center;
+}
+.szallas-modul .rooms .room .ellatas-price > .wrapper > .prices > .price-set .price {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #bababa;
+}
+.szallas-modul .rooms .room .ellatas-price > .wrapper > .prices > .price-set .price.setted {
+  color: #2fb327;
+  font-size: 1.2em;
+}
+.szallas-modul .rooms .room .ellatas-price > .wrapper > .prices > .price-set .edit-field input[type=number]{
+  text-align: center;
+  padding: 5px;
+}
+
 .szallas-modul .rooms .room.isnew{
   border: 4px solid #99d499;
 }
 .szallas-modul .rooms .room > .editor-row > .wrapper input{
   width: 100%;
-  border: 0.4px solid #f1f1f1;
+  border: 0.4px solid #cecece;
   padding: 5px;
   font-size: 0.8em;
 }
@@ -3556,7 +3607,7 @@ input[type=file].lab-selector + label img {
 .szallas-modul .rooms .room > .wrapper .data .title,
 .szallas-modul .rooms .room > .editor-row > .wrapper .data .title{
   font-weight: bold;
-  color: black;
+  color: #e35950;
   font-size: 1.1em;
 }
 .szallas-modul .rooms .room > .wrapper .data .desc,

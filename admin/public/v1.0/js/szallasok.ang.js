@@ -190,6 +190,7 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$pa
       })
     }).success(function( r ){
       if (r.data && r.data.datas) {
+        console.log(r.data.datas);
         angular.forEach(r.data.datas, function(e,i){
           if (typeof $scope.create[i] === 'undefined') {
             $scope.create[i] = e;
@@ -202,9 +203,7 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$pa
   }
 
   $scope.addRooms = function() {
-    $scope.create.rooms.push({
-
-    });
+    $scope.create.rooms.push({});
   }
 
   $scope.saveRooms = function(id, rooms) {
@@ -277,6 +276,22 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$pa
         $scope.menuDateUsed = false;
       }
     });
+  }
+
+  $scope.findTermByID = function( key, id, field ) {
+    var list = $scope.terms[key];
+
+    if (typeof list !== 'undefined') {
+      for(var i = list.length -1; i >= 0; i--){
+        var set = list[i];
+        if (set.ID == id) {
+
+          return (typeof field === 'undefined') ? set : set[field];
+        }
+      }
+    }
+
+    return false;
   }
 
   $scope.loadTerms = function( callback )
