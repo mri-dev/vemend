@@ -2,7 +2,7 @@
 namespace SzallasManager;
 
 use SzallasManager\SzallasSzobak;
-
+use SzallasManager\SzallasSzolgaltatasok;
 
 class SzallasList extends SzallasFramework
 {
@@ -56,6 +56,7 @@ class SzallasList extends SzallasFramework
       // Összes vonatkozó adat betöltése
       if (isset($arg['loadfulldata']) && !empty($arg['loadfulldata'])) {
         $d['rooms'] = (new SzallasSzobak((int)$d['ID'], $this->arg))->getRooms();
+        $d['services'] = (new SzallasSzolgaltatasok((int)$d['ID'], $this->arg))->getServices();
       }
 
       $back['list'][] = $d;

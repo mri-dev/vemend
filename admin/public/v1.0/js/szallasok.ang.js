@@ -122,6 +122,7 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$pa
   $scope.editing = false;
   $scope.cansavenow = true;
   $scope.roomsaving = false;
+  $scope.servicessaving = false;
   $scope.uploadingimages = false;
   $scope.author = 0;
   $scope.roomediting = false;
@@ -132,6 +133,8 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$pa
   };
   $scope.szallasok = [];
   $scope.szallas_datas = {};
+  $scope.servicecreator = [];
+  $scope.serviceCategories = [];
   $scope.baseMsg = {
     'type': 'success',
     'msg': ''
@@ -173,6 +176,18 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$pa
     }
   }
 
+  $scope.serviceQuerySearch = function(query)
+  {
+    var results = query ? $scope.serviceCategories.filter( $scope.serviceQueryFilterFor(query) ) : $scope.serviceCategories;
+    return results;
+  }
+
+  $scope.serviceQueryFilterFor = function(query) {
+    return function filterFn(serv) {
+      return (serv.indexOf(query) === 0);
+    };
+  }
+
   $scope.toggleVar = function(o,v) {
     var m = $parse(o);
     m.assign($scope, v);
@@ -197,6 +212,14 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$pa
           } else {
             $scope.create[i] = e;
           }
+
+          if (i == 'services') {
+            $scope.serviceCategories = [];
+            angular.forEach(e, function(c,i){
+              $scope.serviceCategories.push(i);
+            });
+          }
+
         });
       }
     });
@@ -204,6 +227,44 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$pa
 
   $scope.addRooms = function() {
     $scope.create.rooms.push({});
+  }
+  $scope.addService = function() {
+    $scope.servicecreator.push({
+      kategoria: '',
+      title: ''
+    });
+  }
+
+  $scope.saveService = function(id, services) {
+    $scope.servicessaving = true;
+    $http({
+      method: 'POST',
+      url: '/ajax/get',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: $.param({
+        type: "Szallasok",
+        key: 'SaveRoomServices',
+        szallas: id,
+        services: services,
+        update: $scope.create.services
+      })
+    }).success(function( r ){
+      $scope.servicessaving = false;
+      $scope.serviceediting = false;
+
+      if (r.error) {
+        $scope.baseMsg.type = 'danger';
+        $scope.baseMsg.msg = r.msg;
+      } else {
+        $scope.servicecreator = [];
+        $scope.baseMsg.type = 'success';
+        $scope.baseMsg.msg = r.msg;
+        $timeout(function(){
+          $scope.baseMsg.msg = '';
+          $scope.loadSzallasDatas( id );
+        }, 5000);
+      }
+    });
   }
 
   $scope.saveRooms = function(id, rooms) {

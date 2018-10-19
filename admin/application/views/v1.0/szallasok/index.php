@@ -290,9 +290,70 @@
 					</div>
 
 					<div class="tab-block" ng-show="(editing_page=='services')">
+						<div class="rnav">
+							<span ng-show="!serviceediting" style="color: #8ab160; cursor: pointer;" ng-click="toggleVar('serviceediting', true)">szerkesztő mód bekapcsolása <i class="fa fa-pencil"></i></span>
+							<span ng-hide="!serviceediting" style="color: #e69a9a; cursor: pointer;" ng-click="toggleVar('serviceediting', false)">szerkesztő mód kikapcsolása <i class="fa fa-ban"></i></span>
+						</div>
 						<h3>Szolgáltatások</h3>
-
-						{{create.services}}
+						<div class="services">
+							<div class="service-group" ng-repeat="(group, services) in create.services">
+								<h4>{{group}}</h4>
+								<div class="service-list-group">
+									<div class="" ng-repeat="service in services | filter:{szallas_id: create.ID}">
+										<div class="value" ng-hide="serviceediting">
+											{{service.title}} {{service.szallas_id}}
+										</div>
+										<div class="edit-field" ng-show="serviceediting">
+											<input type="text" ng-model="service.title">
+											<input class="ico-label-cb" id="delserv{{service.ID}}" type="checkbox" ng-model="service.delete"> <label title="Érték törtlése" for="delserv{{service.ID}}"><i class="fa fa-trash"></i></label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="service-adder" ng-repeat="newservice in servicecreator">
+							<div class="title">+ új szolgáltatás rögzítése</div>
+							<div class="wrapper">
+								<div class="row-neg">
+									<div class="row">
+										<div class="col-md-6">
+											<label for="">Kategória</label>
+											<md-autocomplete
+							          md-items="item in serviceQuerySearch(serviceKategoriaSearch)"
+												md-selected-item="newservice.kategoria"
+												md-search-text-change="newservice.kategoria=serviceKategoriaSearch"
+							          md-item-text="item"
+												md-search-text="serviceKategoriaSearch"
+							          md-min-length="0"
+	          						placeholder="Szolgáltatás kategóriája">
+												<md-item-template>
+								          <span md-highlight-text="serviceKategoriaSearch" md-highlight-flags="^i">{{item}}</span>
+								        </md-item-template>
+										</div>
+										<div class="col-md-6">
+											<label for="">Elnevezés</label>
+											<input type="text" ng-model="newservice.title">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="" ng-show="servicessaving">
+							<div class="alert alert-warning">
+								Szolgáltatások mentése folyamatban <i class="fa fa-spin fa-spinner"></i>
+							</div>
+						</div>
+						<div class="row-neg" ng-hide="servicessaving">
+							<div class="row">
+								<div class="col-md-6 left">
+									<button type="button" class="btn btn-default" ng-click="addService()"><i class="fa fa-plus"></i> új szolgáltatás</button>
+								</div>
+								<div class="col-md-6 right">
+									<button type="button" class="btn btn-success" ng-click="saveService(create.ID, servicecreator)">Szolgáltatások adatainak mentése <i class="fa fa-save"></i> </button>
+								</div>
+							</div>
+						</div>
 					</div>
 
 		    </div>

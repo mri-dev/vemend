@@ -3656,9 +3656,91 @@ input[type=file].lab-selector + label img {
   color: black;
   background: #e0e0e0;
 }
+.szallas-modul .services{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  width: 100%;
+}
+.szallas-modul .services .service-group{
+  flex-basis: calc(100% / 3);
+  padding: 10px;
+  margin: 0 0 15px 0;
+}
+.szallas-modul .services .service-group h4{
+  background: #87c343;
+  padding: 5px;
+  color: white;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 0.9em;
+}
+.szallas-modul .service-adder{
+  margin: 0 0 10px 0;
+  border: 4px solid #99d499;
+  background: #f1f1f1;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: #444444;
+}
+.szallas-modul .service-adder input[type=text]{
+  font-size: 14px;
+  box-sizing: border-box;
+  border: none;
+  box-shadow: none;
+  outline: none;
+  background: white;
+  width: 100%;
+  padding: 0 15px;
+  line-height: 40px;
+  height: 40px;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+}
+.szallas-modul .service-adder .wrapper{
+  padding: 15px;
+}
+.szallas-modul .service-adder .title{
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 0.7em;
+  letter-spacing: 1px;
+  padding: 10px;
+  color: black;
+  background: #e0e0e0;
+}
+.szallas-modul .services .edit-field{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+.szallas-modul .services .edit-field input[type=text]{
+  padding: 2px 4px;
+  font-size: 0.8em;
+  flex: 1;
+}
 
-
-
+.szallas-modul .services .edit-field label{
+  flex-basis: 25px;
+  text-align: center;
+}
+.ico-label-cb{
+  display: none;
+}
+.ico-label-cb + label{
+  color: #acacac;
+  padding: 0 0 0 5px;
+  cursor: pointer;
+  -webkit-transition: all .5s;
+  transition: all .5s;
+}
+.ico-label-cb + label:hover,
+.ico-label-cb:checked + label{
+  color: #fa6b6b;
+}
 .tab-header ul {
   display: -webkit-box;
   display: -ms-flexbox;

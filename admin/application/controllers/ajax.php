@@ -5,6 +5,7 @@ use PortalManager\EtlapAPI;
 use ProductManager\Products;
 use SzallasManager\SzallasList;
 use SzallasManager\SzallasSzobak;
+use SzallasManager\SzallasSzolgaltatasok;
 use Applications\Lookbooks;
 
 class ajax extends Controller{
@@ -492,6 +493,17 @@ class ajax extends Controller{
 						case 'List':
 							$arg = array();
 							$re['data'] = $szallaslist->getList( $arg );
+						break;
+						case 'SaveRoomServices':
+							$szolgaltatasok = new SzallasSzolgaltatasok( $szallas, array('db' => $this->db) );
+							try {
+								$re['data']['add'] = $szolgaltatasok->addServices( $szallas, $services );
+								$re['data']['update'] = $szolgaltatasok->updateServices( $szallas, $update );
+								$re['msg'] = 'Sikeresen mentette a szolgáltatások adatait.';
+							} catch (\Exception $e) {
+								$re['error'] = 1;
+								$re['msg'] = $e->getMessage();
+							}
 						break;
 						case 'SaveRooms':
 							$szobak = new SzallasSzobak( $szallas, array('db' => $this->db) );

@@ -5,7 +5,7 @@ class SzallasFramework
 {
   const DBSZALLASOK = 'Szallasok';
   const DBKEPEK = 'Szallas_Kepek';
-  const DBPARAMETEREK = 'Szallas_Paremeterek';
+  const DBPARAMETEREK = 'Szallas_Parameterek';
   const DBPARAMXREF = 'Szallas_xref_szallas_parameter';
   const DBTERMS = 'Szallas_Terms';
   const DBSZALLASXREFELLATAS = 'Szallas_xref_Ellatas';
