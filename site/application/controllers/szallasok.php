@@ -16,8 +16,21 @@ class szallasok extends Controller{
 			$szallasok = $szallaslista->getList();
 			$this->out('szallasok', $szallasok);
 
-			$this->out( 'head_img_title', 'Szállások' );
-			$this->out( 'head_img', IMGDOMAIN.$this->view->settings['homepage_coverimg'] );
+			if ( $_GET['adatlap'] == 1 )
+			{
+				// Adatlap
+				$id = (int)$_GET['ID'];
+				$szallas = $szallaslista->loadSzallas( $id, true );
+				$kiemelt_services = $szallaslista->collectKiemeltServices($szallas['datas']['services'], 'kiemelt', 1);
+				$this->out('szallas', $szallas);
+				$this->out('kiemelt_services', $kiemelt_services);
+			}
+			else
+			{
+				// Lista
+				$this->out( 'head_img_title', 'Szállások' );
+				$this->out( 'head_img', IMGDOMAIN.$this->view->settings['homepage_coverimg'] );
+			}
 
 			// SEO Információk
 			$SEO = null;

@@ -183,6 +183,21 @@ class SzallasFramework
     }
   }
 
+  public function collectKiemeltServices( $services = array(), $by = 'kiemelt', $what = '' )
+  {
+    $set = array();
+
+    foreach ( (array)$services as $sg => $ss ) {
+      foreach ((array)$ss as $s) {
+        if ($s[$by] == $what ) {
+          $set[] = $s;
+        }
+      }
+    }
+
+    return $set;
+  }
+
   public function updateProfilPath( $szallas_id, $path )
   {
     if (empty($szallas_id)) {

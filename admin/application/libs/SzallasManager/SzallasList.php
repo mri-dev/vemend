@@ -65,7 +65,7 @@ class SzallasList extends SzallasFramework
     return $back;
   }
 
-  public function loadSzallas( $id )
+  public function loadSzallas( $id, $load_full = false )
   {
     $back = array();
 
@@ -74,6 +74,9 @@ class SzallasList extends SzallasFramework
 
     $back['szallas_id'] = (int)$fulldata['ID'];
     $back['datas'] = array();
+    if ($load_full) {
+      $back['datas'] = $fulldata;
+    }
     $back['datas']['rooms'] = $fulldata['rooms'];
     $back['datas']['pictures'] = $fulldata['pictures'];
     $back['datas']['services'] = $fulldata['services'];
