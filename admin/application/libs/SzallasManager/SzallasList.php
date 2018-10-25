@@ -52,6 +52,8 @@ class SzallasList extends SzallasFramework
       $d['aktiv'] = ($d['aktiv'] == 1) ? true : false;
       $d['url'] = $this->szallasURL($d);
       $d['ellatasok'] = $this->getSzallasEllatasIDS($d['ID']);
+      $d['bejelentkezes_data'] = $this->calcNyitvaTartasData($d['bejelentkezes']);
+      $d['kijelentkezes_data'] = $this->calcNyitvaTartasData($d['kijelentkezes']);
 
       // Összes vonatkozó adat betöltése
       if (isset($arg['loadfulldata']) && !empty($arg['loadfulldata'])) {

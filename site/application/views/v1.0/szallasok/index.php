@@ -1,6 +1,6 @@
 <?php if (isset($_GET['adatlap'])): ?>
   <div class="szallas-adatlap">
-    <?php echo $this->render("templates/szallas_kereso"); ?>
+    <?php echo $this->render("szallasok/template/szallas_configurator"); ?>
     <?php echo $this->render("szallasok/template/adatlap"); ?>
   </div>
 <?php else: ?>

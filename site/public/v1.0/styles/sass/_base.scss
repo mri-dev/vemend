@@ -7608,6 +7608,13 @@ body.homepage{
 		padding: 15px 5px;
 		text-transform: uppercase;
 		margin: 0 00 10px 0;
+
+		.ico{
+			height: 16px;
+	    float: left;
+	    vertical-align: middle;
+	    margin: 0 10px 0 0;
+		}
 	}
 
 	.fcont{
@@ -7707,6 +7714,48 @@ body.homepage{
 	}
 }
 
+.timeviewer{
+	& > .wrapper{
+		background: #efefef;
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		flex-wrap: nowrap;
+		height: 25px;
+		align-items: baseline;
+
+		& > div{
+			flex-basis: calc(100%/24);
+			position: relative;
+			height: 25px;
+			margin: 0;
+
+			.dstart-text,
+			.dend-text{
+				display: none;
+				position: absolute;
+				bottom: -15px;
+			}
+
+			&.hl{
+				background: $color-green;
+			}
+			&.dstart{
+				.dstart-text{
+					display: block;
+					left: -13px;
+				}
+			}
+			&.dend{
+				.dend-text{
+					display: block;
+					right: -13px;
+				}
+			}
+		}
+	}
+}
+
 body.szallasok{
 	.szallas-lista,
 	.szallas-adatlap{
@@ -7723,11 +7772,141 @@ body.szallasok{
 		& > .szallas-list,
 		& > .adatlap-view{
 			flex: 1;
-
 			padding: 10px;
 		}
 	}
+
+	.szallas-calculation{
+		background: white;
+		margin: 25px 0 10px 0;
+		border: 1px solid #f6b801;
+		position: relative;
+
+		&:before{
+			content: "";
+			background: url("#{$imgroot}config-result-arrow-top.png") no-repeat center;
+			height: 20px;
+			top: -19px;
+			left: 50%;
+			width: 44px;
+			position: absolute;
+			-webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+		}
+
+		.foot{
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: flex;
+			flex-wrap: nowrap;
+
+			.spacer{
+				flex-basis: 10%;
+			}
+
+			.alert-foglalas,
+			.foglal{
+				flex-basis: 45%;
+				padding: 10px;
+			}
+
+			.alert-foglalas{
+				background: #ffd6d8;
+				color: #e62b34;
+				font-size: 0.8em;
+
+				i{
+					font-size: 21px;
+					margin: 0 5px 0 0;
+					float: left;
+				}
+			}
+
+			.foglal{
+				cursor: pointer;
+				background: $color-orange;
+				color: white;
+				text-transform: uppercase;
+				text-align: center;
+
+				&:hover{
+					background: darken($color-orange, 10%);
+				}
+			}
+		}
+	}
+
+	.connect-msg{
+		border: 0.5px solid $color-green;
+		padding: 10px;
+		text-align: center;
+		color: black;
+		margin: 10px 0;
+	}
+
+	.map{
+		margin: 10px 0;
+		background: white;
+		border: 0.5px solid #cecece;
+		min-height: 250px;
+
+		.head{
+			margin: 0;
+			font-size: 1.2em;
+			background: white;
+			padding: 15px;
+			text-transform: none;
+			color: #7b7875;
+			text-align: left;
+			font-weight: 300;
+		}
+
+		.map-canvas{
+			overflow: hidden;
+			height: 200px;
+			iframe{
+				width: 100%;
+				height: 100%;
+			}
+		}
+	}
+
+	.szallas-infok{
+		background: white;
+		border: 0.5px solid #cecece;
+		.head{
+			font-size: 1.2em;
+			font-weight: 300;
+			text-align: left;
+			padding: 10px 15px;
+			text-transform: none;
+		}
+
+		.block{
+			font-weight: 300;
+			font-size: 0.9em;
+			color: #636363;
+			padding: 10px 15px;
+
+			h3{
+				font-weight: 300;
+				margin: 0 0 5px 0;
+				color: #000000;
+				.ico{
+					height: 16px;
+			    float: left;
+			    vertical-align: middle;
+			    margin: 0 8px 0 0;
+				}
+			}
+
+			.text{
+				line-height: 1.3;
+			}
+		}
+	}
 }
+
 
 .adatlap-view{
 	.header{
@@ -7738,22 +7917,49 @@ body.szallasok{
 		}
 		.titles{
 			& > .wrapper{
+				display: -webkit-box;
+				display: -ms-flexbox;
+				display: flex;
+				flex-wrap: wrap;
+				align-items: flex-start;
 				.title{
+					flex: 1;
 					h1{
 						text-transform: none;
 						font-weight: normal;
 				    font-size: 2.3em;
 				    color: #424242;
 					}
-				}
-				.address{
-					margin: 5px 0 0 0;
-					font-size: 1.1em;
-					color: #424242;
-					font-weight: 300;
 
-					i{
-						color: #999999;
+					.address{
+						margin: 5px 0 0 0;
+						font-size: 1.1em;
+						color: #424242;
+						font-weight: 300;
+
+						i{
+							color: #999999;
+						}
+					}
+				}
+
+				.badgetext{
+					flex-basis: 40%;
+
+					.kisallat{
+						background: white;
+						border: 0.5px solid #d4a311;
+						text-align: center;
+						padding: 10px;
+						text-transform: uppercase;
+						color: #d4a311;
+						font-size: 1.15em;
+
+						.ico{
+							height: 16px;
+					    vertical-align: bottom;
+					    margin: 0 4px 0 0;
+						}
 					}
 				}
 			}
@@ -7786,6 +7992,13 @@ body.szallasok{
 					margin: 0 0 5px 0;
 				}
 			}
+
+			.desc{
+				h1, h2, h3{
+					margin: 5px 0 12px 0;
+				}
+			}
+
 			.top-services{
 				margin: 10px 0 15px 0;
 				position: relative;
@@ -9333,6 +9546,20 @@ body.szallasok{
 				}
 			}
 		}
+	}
+}
+
+.air-text-in{
+	position: relative;
+	& > .atext{
+		position: absolute;
+		width: 100%;
+		text-align: center;
+		top: 50%;
+		left: 50%;
+		-webkit-transform:translate(-50%,-50%);
+		 transform:translate(-50%,-50%);
+		 line-height: 1.1;
 	}
 }
 

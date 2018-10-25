@@ -183,6 +183,41 @@ class SzallasFramework
     }
   }
 
+  public function calcNyitvaTartasData( $opens )
+  {
+    $data = array();
+    if (strpos($opens, '-') !== false) {
+      $xopens = explode("-", $opens);
+      $opens = $xopens;
+      if (isset($xopens[0])) {
+        $from = explode(":", $xopens[0]);
+        $data['from'] = array(
+          'ora' => $from[0],
+          'perc' => $from[1]
+        );
+      }
+      if (isset($xopens[1])) {
+        $to = explode(":", $xopens[1]);
+        $data['to'] = array(
+          'ora' => $to[0],
+          'perc' => $to[1]
+        );
+      }
+    } else {
+      $from = explode(":", $opens);
+      $data['from'] = array(
+        'ora' => $from[0],
+        'perc' => $from[1]
+      );
+      $data['to'] = array(
+        'ora' => 24,
+        'perc' => '00'
+      );
+    }
+
+    return $data;
+  }
+
   public function collectKiemeltServices( $services = array(), $by = 'kiemelt', $what = '' )
   {
     $set = array();

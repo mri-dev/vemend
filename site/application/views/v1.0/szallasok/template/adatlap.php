@@ -11,6 +11,13 @@
             <i class="fa fa-map-marker"></i> <?=$this->szallas['datas']['cim']?>
           </div>
         </div>
+        <div class="badgetext">
+          <?php if ($this->szallas['datas'][kisallat]): ?>
+          <div class="kisallat">
+            <img class="ico" src="<?=IMG?>icons/ico-mancs.svg" alt="Állatbarát szálláshely"> Állatbarát szálláshely!
+          </div>
+          <?php endif; ?>
+        </div>
       </div>
     </div>
   </div>
