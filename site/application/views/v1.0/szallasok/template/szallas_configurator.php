@@ -1,4 +1,4 @@
-<div class="szallas-kereso-block configurator">
+<div class="szallas-kereso-block configurator" ng-controller="SzallasCalculator" ng-init="init(<?=$this->szallas['datas']['ID']?>)">
   <div class="wrapper">
     <div class="head">
       <i class="fa fa-briefcase"></i> Szállás ajánlatkérő
@@ -20,8 +20,8 @@
         <div class="inp">
           <div class="wrapper">
             <label for="szallas_ellatas">Ellátás</label>
-            <select class="" id="szallas_ellatas" name="ellatas">
-              <option value="">bármely</option>
+            <select ng-change="picked_rooms={}" id="szallas_ellatas" ng-model="config.ellatas" ng-options="ellatas.ID as ellatas.name for ellatas in terms.ellatas">
+              <option value="">Mindegy</option>
             </select>
           </div>
         </div>
@@ -30,27 +30,11 @@
     <div class="space"></div>
     <div class="fcont grey">
       <div class="wrapper">
-        <div class="room">
-          <div class="wrapper">
-            <label for="szallas_rooms">Szoba</label>
-            <div class="inp">
-              <select name="rooms" id="szallas_rooms">
-                <?php for ($i=1; $i <= 10 ; $i++) { ?>
-                  <option value="<?=$i?>"><?=$i?></option>
-                <?php } ?>
-              </select>
-            </div>
-          </div>
-        </div>
         <div class="adults">
           <div class="wrapper">
             <label for="szallas_adults">Felnőtt</label>
             <div class="inp">
-              <select name="adults" id="szallas_adults">
-                <?php for ($i=1; $i <= 50 ; $i++) { ?>
-                  <option value="<?=$i?>"><?=$i?></option>
-                <?php } ?>
-              </select>
+              <select id="szallas_adults" ng-model="config.adults" ng-options="n for n in [] | range:1:10"></select>
             </div>
           </div>
         </div>
@@ -58,11 +42,7 @@
           <div class="wrapper">
             <label for="szallas_children">Gyermek</label>
             <div class="inp">
-              <select name="children" id="szallas_children">
-                <?php for ($i=1; $i <= 50 ; $i++) { ?>
-                  <option value="<?=$i?>"><?=$i?></option>
-                <?php } ?>
-              </select>
+              <select id="szallas_children" ng-model="config.children" ng-options="n for n in [] | range:0:10"></select>
             </div>
           </div>
         </div>
@@ -91,12 +71,61 @@
           </div>
         </div>
         <div class="button">
-          <button type="submit"><i class="fa fa-search"></i> keresés</button>
+          <button type="submit" ng-click="refresh()">frissítés <i class="fa fa-refresh" ng-class="(loading)?'fa-spin':''"></i></button>
         </div>
       </div>
     </div>
 
-    <div class="szallas-calculation">
+    <div class="szallas-ajanlatok" ng-show="(rooms.length!=0)">
+      <div class="ajanlat-head">
+        Válassza ki a megfelelő ajánlatokat
+      </div>
+      <div class="room" ng-repeat="room in rooms">
+        <div class="roomhead">
+          <div class="name">
+            {{room.name}}
+          </div>
+          <div class="desc">
+            {{room.leiras}}
+          </div>
+          <div class="cap">
+            max. <span>{{room.felnott_db}} felnőtt</span><span ng-show="room.gyermek_db>0">, {{room.gyermek_db}} gyermek</span>
+          </div>
+        </div>
+        <div class="price-configs">
+          <div class="price-config" ng-repeat="pc in room.prices" ng-class="(config.ellatas!=0&&pc.ellatas_id!=config.ellatas)?'disabled':( (picked_rooms.priceconfig && pc.ID == picked_rooms.priceconfig.ID) ? 'picked' : '' )" ng-click="(config.ellatas!=0&&pc.ellatas_id!=config.ellatas)?'':pickConfig(room, pc)">
+            <div class="wrapper">
+              <div class="ellatas">
+                {{pc.ellatas_name}}
+              </div>
+              <div class="adult-price">
+                {{pc.felnott_ar}}
+                <div class="lab">
+                  Ft / felnőtt / nap
+                </div>
+
+              </div>
+              <div class="child-price">
+                <div class="" ng-show="room.gyermek_db>0">
+                  {{pc.gyerek_ar}}
+                  <div class="lab">
+                    Ft / gyermek / nap
+                  </div>
+                </div>
+                <div class="" ng-hide="room.gyermek_db>0">
+                  --
+                </div>
+              </div>
+              <div class="total-price-calc">
+                {{(((pc.felnott_ar * config.adults)*config.nights) + ((pc.gyerek_ar * config.children)*config.nights))}} Ft
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="szallas-calculation" ng-show="(rooms.length!=0 && picked_rooms.room)">
       <div class="config-stat">
         <i class="fa fa-calendar"></i>
       </div>
@@ -104,20 +133,20 @@
       <div class="calc-info">
         <div class="prices">
           <div class="price">
-            0 Ft
+            {{config.room_prices}} Ft
           </div>
           <div class="addon-price">
-            + idegenforgalmi adó: <strong>450 Ft</strong>
+            + idegenforgalmi adó: <strong>{{config.ifa_price}} Ft</strong>
           </div>
           <div class="addon-price">
-            + kisállat díj: <strong>0 Ft</strong>
+            + kisállat díj: <strong>{{config.kisallat_dij}} Ft</strong>
           </div>
         </div>
         <div class="spacer"></div>
         <div class="total-price">
-          Összesen fizetendő:
+          Előzetesen kalkulált díj:
           <div class="tprice">
-            0 Ft
+            {{config.total_price}} Ft
           </div>
         </div>
       </div>
@@ -129,7 +158,7 @@
         <div class="foglal air-text-in">
           <div class="atext">
             Ajánlatkérés
-          </div>          
+          </div>
         </div>
       </div>
     </div>

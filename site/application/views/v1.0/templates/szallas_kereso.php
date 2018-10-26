@@ -31,18 +31,6 @@
       <div class="space"></div>
       <div class="fcont grey">
         <div class="wrapper">
-          <div class="room">
-            <div class="wrapper">
-              <label for="szallas_rooms">Szoba</label>
-              <div class="inp">
-                <select name="rooms" id="szallas_rooms">
-                  <?php for ($i=1; $i <= 10 ; $i++) { ?>
-                    <option value="<?=$i?>"><?=$i?></option>
-                  <?php } ?>
-                </select>
-              </div>
-            </div>
-          </div>
           <div class="adults">
             <div class="wrapper">
               <label for="szallas_adults">Felnőtt</label>

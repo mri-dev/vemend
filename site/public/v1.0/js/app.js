@@ -275,7 +275,7 @@ app.controller('App', ['$scope', '$sce', '$http', '$mdToast', '$mdDialog', '$loc
         $scope.calendarModel.selectedTemplate = null;
       }
     }
-    
+
     /*
     $scope.syncVehicles(function(n, vehicles){
       $scope.vehicle_num = n;
@@ -993,7 +993,146 @@ app.controller('Tudastar',['$scope', '$http', '$mdToast', '$element', '$location
   }
 }]);
 
+
+/**
+* Szállás konfigurátor
+**/
+app.controller('SzallasCalculator', ['$scope', '$http', function( $scope, $http )
+{
+  $scope.szallasid = 0;
+  $scope.szallas_adat = {};
+  $scope.loading = false;
+  $scope.terms = [];
+  $scope.config = {
+    'datefrom': '',
+    'dateto': '',
+    'nights': 1,
+    'ellatas': 0,
+    'adults': 2,
+    'children': 0,
+    'children_age': [],
+    'room_prices': 0,
+    'ifa_price': 0,
+    'kisallat_dij': 0,
+    'total_price': 0,
+    'order_contacts': {
+      'name': '',
+      'email': '',
+      'phone': '',
+      'comment': ''
+    }
+  };
+  $scope.picked_rooms = {};
+  $scope.rooms = [];
+
+  $scope.init = function( id ) {
+    $scope.szallasid = id;
+    $scope.loadTerms(function() {
+
+    });
+  }
+
+  $scope.loadTerms = function( callback )
+  {
+    $http({
+      method: 'POST',
+      url: '/ajax/post',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: $.param({
+        type: "Szallasok",
+        key: 'Settings',
+        terms: ['ellatas']
+      })
+    }).success(function( r ){
+      if (r.data) {
+        angular.forEach(r.data,function(e,i){
+          if (typeof $scope.terms[i] === 'undefined') {
+            $scope.terms[i] = e;
+          }
+        });
+      }
+			if (typeof callback !== 'undefined') {
+				callback();
+			}
+    });
+  }
+
+  $scope.refresh = function( callback )
+  {
+    if ( !$scope.loading ) {
+      $scope.loading = true;
+      $scope.picked_rooms = {};
+      $http({
+        method: 'POST',
+        url: '/ajax/post',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        data: $.param({
+          type: "Szallasok",
+          key: 'getConfig',
+          szallasid: $scope.szallasid,
+          config: $scope.config
+        })
+      }).success(function(r){
+        $scope.loading = false;
+        console.log(r);
+        if (r.error == 0) {
+          $scope.rooms = r.data.rooms;
+          $scope.szallas_adat = r.data.szallas;
+        }
+      });
+    }
+  }
+
+  $scope.pickConfig = function( room, priceconfig ) {
+    $scope.picked_rooms.room = room;
+    $scope.picked_rooms.priceconfig = priceconfig;
+
+    console.log( $scope.picked_rooms );
+
+    $scope.calcAjanlat();
+  }
+
+  $scope.calcAjanlat = function()
+  {
+    var pc = $scope.picked_rooms.priceconfig;
+    var adults = $scope.config.adults;
+    var children = $scope.config.children;
+    var nights = 1;
+    var roomprices = 0;
+    var total_prices = 0;
+    var ifaprices = 0;
+
+    if (adults > 0) {
+      roomprices += nights * (adults * parseFloat(pc.felnott_ar));
+      ifaprices += nights * (adults * parseFloat($scope.szallas_adat.datas.ifa));
+    }
+
+    if (children > 0) {
+      roomprices += nights * (children * parseFloat(pc.gyerek_ar));
+      ifaprices += nights * (children * parseFloat($scope.szallas_adat.datas.ifa));
+    }
+
+    total_prices += roomprices;
+    total_prices += ifaprices;
+
+    $scope.config.ifa_price = ifaprices;
+    $scope.config.total_price = total_prices;
+    $scope.config.room_prices = roomprices;
+  }
+
+}]);
+
 app.filter('unsafe', function($sce){ return $sce.trustAsHtml; });
+app.filter('range', function() {
+  return function(input, min, max) {
+    min = parseInt(min); //Make string input int
+    max = parseInt(max);
+    for (var i=min; i<=max; i++)
+      input.push(i);
+    return input;
+  };
+})
+
 
 /**
 * Popop app

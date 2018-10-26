@@ -183,6 +183,88 @@ class SzallasFramework
     }
   }
 
+  public function getRoomsConfig( $szallasid, $config = array() )
+  {
+    $back = array();
+    $qparam = array();
+
+    $q = "SELECT
+      r.ID,
+      r.name,
+      r.leiras,
+      r.felnott_db,
+      r.gyermek_db
+    FROM ".self::DBSZOBAK." as r
+    WHERE 1=1 and r.szallas_id = :szallas";
+    $qparam['szallas'] = $szallasid;
+
+    $q .= " and r.felnott_db >= :adultdb";
+    $qparam['adultdb'] = (int)$config['adults'];
+
+    if (isset($config['children']) && $config['children'] != 0) {
+      $q .= " and r.gyermek_db >= :gyermekdb";
+      $qparam['gyermekdb'] = (int)$config['children'];
+    }
+
+    $q .= " ORDER BY r.felnott_db ASC, r.gyermek_db ASC";
+
+    $data = $this->db->squery( $q, $qparam );
+
+    if ($data->rowCount() == 0) {
+      return $back;
+    }
+
+    $data = $data->fetchAll(\PDO::FETCH_ASSOC);
+
+    foreach ($data as $d) {
+      $d['ID'] = (int)$d['ID'];
+      $d['felnott_db'] = (int)$d['felnott_db'];
+      $d['gyermek_db'] = (int)$d['gyermek_db'];
+      $d['prices'] = $this->getRoomPrices($d['ID']);
+      $back[] = $d;
+    }
+
+    return $back;
+  }
+
+  public function getRoomPrices( $room_id )
+  {
+    $back = array();
+    $qparam = array();
+
+    if (!$room_id) {
+      return false;
+    }
+
+    $q = "SELECT
+      r.ID, r.ellatas_id, r.felnott_ar, r.gyerek_ar,
+      t.name as ellatas_name
+    FROM ".self::DBSZOBAAR." as r
+    LEFT OUTER JOIN ".self::DBTERMS." as t ON t.ID = r.ellatas_id
+    WHERE 1=1 and r.szoba_id = :roomid
+    ORDER BY t.sort ASC ";
+
+    $qparam['roomid'] = $room_id;
+
+    $data = $this->db->squery( $q, $qparam );
+
+    if( $data->rowCount() == 0 ) {
+      return $back;
+    }
+
+    $data = $data->fetchAll(\PDO::FETCH_ASSOC);
+
+    foreach ($data as $d) {
+      $d['ID'] = (int)$d['ID'];
+      $d['felnott_ar'] = (float)$d['felnott_ar'];
+      $d['gyerek_ar'] = (float)$d['gyerek_ar'];
+      $back[] = $d;
+    }
+
+
+    return $back;
+  }
+
   public function calcNyitvaTartasData( $opens )
   {
     $data = array();

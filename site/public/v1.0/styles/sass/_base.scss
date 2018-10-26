@@ -7653,7 +7653,7 @@ body.homepage{
 				& > .children,
 				& > .adults,
 				& > .rooms{
-					flex-basis: calc(70% / 3);
+					flex-basis: calc(70% / 2);
 				}
 			}
 		}
@@ -7709,6 +7709,16 @@ body.homepage{
 				font-size: 1.2em;
 				text-transform: uppercase;
 				border: none;
+			}
+		}
+	}
+
+	&.configurator{
+		.foot{
+			.button{
+				button{
+					background: $color-orange;
+				}
 			}
 		}
 	}
@@ -7776,6 +7786,118 @@ body.szallasok{
 		}
 	}
 
+	.szallas-ajanlatok{
+		background: white;
+		border: 0.5px solid #cecece;
+		margin: 10px 0 0 0;
+
+		.ajanlat-head{
+			padding: 10px;
+			background: $color-orange;
+			text-align: center;
+			font-size: 0.9em;
+			font-weight: 300;
+			color: white;
+			text-transform: uppercase;
+		}
+		.room {
+			.roomhead{
+				background: #f1f1f1;
+				padding: 10px;
+				color: black;
+				border: 0.5px solid #d2d2d2;
+		    border-right: 0;
+		    border-left: 0;
+
+				.name{
+					font-weight: bold;
+					color: black;
+					margin: 0 0 5px 0;
+				}
+				.desc{
+					color: #444444;
+					line-height: 1.2;
+					font-weight: 300;
+					font-size: 0.8em;
+				}
+
+				.cap{
+					margin: 5px 0 0 0;
+					color: #f07171;
+					font-size: 0.9em;
+				}
+			}
+			.price-configs{
+				.price-config{
+					border-bottom: 0.5px solid #f1f1f1;
+					padding: 5px;
+					& > .wrapper{
+						display: -webkit-box;
+						display: -ms-flexbox;
+						display: flex;
+						flex-wrap: nowrap;
+
+						& > div {
+							padding: 5px;
+						}
+
+						& > .adult-price,
+						& > .child-price,
+						& > .total-price-calc{
+							flex-basis: 25%;
+							text-align: center;
+							font-size: 0.9em;
+
+							.lab{
+								font-weight: 300;
+								font-size: 0.7em;
+								margin: 4px 0 0 0;
+							}
+						}
+						& > .total-price-calc{
+							font-weight: bold;
+							color: $color-green;
+						}
+						& > .ellatas{
+							text-align: right;
+							flex: 1;
+							font-weight: bold;
+							color: black;
+						}
+
+					}
+					&.disabled{
+						cursor: not-allowed;
+						background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAMElEQVQYV2P89OnTfwYkcOvWLQZGZEGQgJqaGkIQJgDSBFaJLAAWPHPmzH+QFmQAADz+Hr2uuMpfAAAAAElFTkSuQmCC);
+						opacity: 0.5;
+						filter:alpha(opacity=50);
+					}
+					&:not(.disabled){
+						cursor: pointer;
+
+						&:hover{
+							background: $color-orange;
+							color: white !important;
+							.ellatas,
+							.total-price-calc{
+								color: white !important;
+							}
+						}
+					}
+					&.picked{
+						background: $color-green;
+						color: white !important;
+
+						.ellatas,
+						.total-price-calc{
+							color: white !important;
+						}
+					}
+				}
+			}
+		}
+	}
+
 	.szallas-calculation{
 		background: white;
 		margin: 25px 0 10px 0;
@@ -7794,6 +7916,56 @@ body.szallasok{
           transform: translateX(-50%);
 		}
 
+		.divider{
+			background: $color-orange;
+			margin: 5px;
+		}
+
+		.calc-info{
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: flex;
+			flex-wrap: nowrap;
+			margin: 10px 0;
+			align-items: flex-start;
+
+			.spacer{
+				flex-basis: 8%;
+			}
+
+			.prices,
+			.total-price{
+				flex-basis: 51%;
+				padding: 10px;
+			}
+
+			.prices{
+				font-size: 0.8em;
+				line-height: 1.3;
+				padding: 0 10px;
+
+				.price {
+					font-weight: bold;
+					color: $color-orange;
+					font-size: 1.8em;
+					font-weight: bold;
+					margin: 0 0 5px 0;
+				}
+			}
+
+			.total-price{
+				background: $color-green;
+				color: white;
+				text-align: center;
+
+				.tprice{
+					font-size: 1.8em;
+					font-weight: bold;
+					margin: 10px 0 0 0;
+				}
+			}
+		}
+
 		.foot{
 			display: -webkit-box;
 			display: -ms-flexbox;
@@ -7801,12 +7973,12 @@ body.szallasok{
 			flex-wrap: nowrap;
 
 			.spacer{
-				flex-basis: 10%;
+				flex-basis: 8%;
 			}
 
 			.alert-foglalas,
 			.foglal{
-				flex-basis: 45%;
+				flex-basis: 51%;
 				padding: 10px;
 			}
 
