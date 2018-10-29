@@ -221,6 +221,13 @@ class SzallasFramework
       $d['felnott_db'] = (int)$d['felnott_db'];
       $d['gyermek_db'] = (int)$d['gyermek_db'];
       $d['prices'] = $this->getRoomPrices($d['ID']);
+      $ellatas_ids = array();
+      if ($d['prices']) {
+        foreach ( (array)$d['prices'] as $pr ) {
+          $ellatas_ids[] = $pr['ellatas_id'];
+        }
+      }
+      $d['ellatas_ids'] = $ellatas_ids;
       $back[] = $d;
     }
 
@@ -256,6 +263,7 @@ class SzallasFramework
 
     foreach ($data as $d) {
       $d['ID'] = (int)$d['ID'];
+      $d['ellatas_id'] = (int)$d['ellatas_id'];
       $d['felnott_ar'] = (float)$d['felnott_ar'];
       $d['gyerek_ar'] = (float)$d['gyerek_ar'];
       $back[] = $d;

@@ -78,9 +78,10 @@
 
     <div class="szallas-ajanlatok" ng-show="(rooms.length!=0)">
       <div class="ajanlat-head">
-        Válassza ki a megfelelő ajánlatokat
+        Válassza ki a megfelelő ajánlatot
+        {{config.ellatas}}
       </div>
-      <div class="room" ng-repeat="room in rooms">
+      <div class="room" ng-repeat="room in rooms" ng-show="(room.prices.length!=0 && (config.ellatas==0||(config.ellatas!=0 && room.ellatas_ids.indexOf(config.ellatas) !== -1)))">
         <div class="roomhead">
           <div class="name">
             {{room.name}}
