@@ -1,5 +1,18 @@
 var app = angular.module('vemend', ['ngMaterial', 'ngMessages', 'ngCookies', 'ngMaterialDateRangePicker', 'ngRoute']);
 
+app.config(function($mdDateLocaleProvider){
+  $mdDateLocaleProvider.firstDayOfWeek = 1;
+  $mdDateLocaleProvider.months = ['Január', 'Február', 'Március', 'Április', 'Május', 'Június', 'Július', 'Augusztus', 'Szeptember', 'Október', 'November', 'December'];
+  $mdDateLocaleProvider.shortMonths = ['Jan', 'Feb', 'Már', 'Ápr', 'Máj', 'Jún', 'Júl', 'Aug', 'Szep', 'Okt', 'Nov', 'Dec'];
+  $mdDateLocaleProvider.days = ['Vasárnap', 'Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat'];
+  $mdDateLocaleProvider.shortDays = ['V', 'H', 'K', 'Sze', 'Cs', 'P', 'Szo'];
+
+  $mdDateLocaleProvider.formatDate = function(date) {
+     var m = moment(date);
+     return m.isValid() ? m.format('L') : '';
+   };
+});
+
 app.controller('App', ['$scope', '$sce', '$http', '$mdToast', '$mdDialog', '$location','$cookies', '$routeParams', '$cookieStore', '$httpParamSerializerJQLike', '$mdDateRangePicker', function($scope, $sce, $http, $mdToast, $mdDialog, $location, $cookies, $routeParams, $cookieStore, $httpParamSerializerJQLike, $mdDateRangePicker)
 {
   var date = new Date();
@@ -999,22 +1012,30 @@ app.controller('Tudastar',['$scope', '$http', '$mdToast', '$element', '$location
 **/
 app.controller('SzallasCalculator', ['$scope', '$http', function( $scope, $http )
 {
+  //var m = new moment();
+  //console.log(m);
   $scope.szallasid = 0;
   $scope.szallas_adat = {};
   $scope.loading = false;
+  $scope.loaded = false;
   $scope.terms = [];
+  var startdate = new Date();
+  var enddate = new Date();
+  enddate.setDate(enddate.getDate() + 2 );
   $scope.config = {
-    'datefrom': '',
-    'dateto': '',
+    'datefrom': startdate,
+    'dateto': enddate,
     'nights': 1,
-    'ellatas': 0,
+    'ellatas': '',
     'adults': 2,
     'children': 0,
     'children_age': [],
     'room_prices': 0,
     'ifa_price': 0,
     'kisallat_dij': 0,
+    'kisallatot_hoz': false,
     'total_price': 0,
+    'startorder': false,
     'order_contacts': {
       'name': '',
       'email': '',
@@ -1030,6 +1051,40 @@ app.controller('SzallasCalculator', ['$scope', '$http', function( $scope, $http 
     $scope.loadTerms(function() {
 
     });
+  }
+
+  $scope.dateFormating = function( date ) {
+    var d = (typeof date === 'undefined') ? new Date() : new Date(date);
+    var mm = d.getMonth() + 1;
+    var dd = d.getDate();
+    var yy = d.getFullYear();
+    return yy + '. ' + mm + '. ' + dd+'.';
+  }
+
+  $scope.getDateDayDiff = function( d1, d2 )
+  {
+    var date1 = new Date(d1);
+    var date2 = new Date(d2);
+    var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+    return diffDays;
+  }
+
+  $scope.dateChanged = function( pos ) {
+    var diff = $scope.getDateDayDiff($scope.config.datefrom, $scope.config.dateto);
+    var df = new Date($scope.config.datefrom);
+    var dt = new Date($scope.config.dateto);
+
+    if ( pos == 'datefrom' ) {
+      if (dt <= df) {
+        var nd = df;
+        nd.setDate(nd.getDate() + 1);
+        $scope.config.dateto = nd;
+      }
+    }
+
+    $scope.config.nights = diff - 1;
   }
 
   $scope.loadTerms = function( callback )
@@ -1076,6 +1131,7 @@ app.controller('SzallasCalculator', ['$scope', '$http', function( $scope, $http 
         $scope.loading = false;
         console.log(r);
         if (r.error == 0) {
+          $scope.loaded = true;
           $scope.rooms = r.data.rooms;
           $scope.szallas_adat = r.data.szallas;
         }
@@ -1097,7 +1153,7 @@ app.controller('SzallasCalculator', ['$scope', '$http', function( $scope, $http 
     var pc = $scope.picked_rooms.priceconfig;
     var adults = $scope.config.adults;
     var children = $scope.config.children;
-    var nights = 1;
+    var nights = $scope.config.nights;
     var roomprices = 0;
     var total_prices = 0;
     var ifaprices = 0;
@@ -1110,6 +1166,11 @@ app.controller('SzallasCalculator', ['$scope', '$http', function( $scope, $http 
     if (children > 0) {
       roomprices += nights * (children * parseFloat(pc.gyerek_ar));
       ifaprices += nights * (children * parseFloat($scope.szallas_adat.datas.ifa));
+    }
+
+    if ($scope.config.kisallatot_hoz)
+    {
+      $scope.config.kisallat_dij += ($scope.szallas_adat.datas.kisallat_dij*nights);
     }
 
     total_prices += roomprices;

@@ -9440,15 +9440,50 @@ body.homepage .szallasok > .holder .szallas-top > .wrapper {
   padding: 10px;
 }
 
-/* line 7596, sass/_base.scss */
+/* line 7597, sass/_base.scss */
+.md-calendar-day-header th {
+  height: auto !important;
+  padding: 10px 0 !important;
+}
+
+/* line 7602, sass/_base.scss */
 .szallas-kereso-block {
   flex-basis: 30%;
 }
-/* line 7599, sass/_base.scss */
+/* line 7605, sass/_base.scss */
+.szallas-kereso-block .no-datas {
+  background: #dd4d3d;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin: 10px 0 0 0;
+}
+/* line 7612, sass/_base.scss */
+.szallas-kereso-block .no-datas h4 {
+  text-transform: uppercase;
+  margin: 0 0 8px 0;
+}
+/* line 7618, sass/_base.scss */
+.szallas-kereso-block .md-datepicker-input-container {
+  position: absolute;
+  right: 0;
+  left: 43px;
+  top: 22px;
+}
+/* line 7624, sass/_base.scss */
+.szallas-kereso-block .md-calendar-date.md-focus .md-default-theme .md-calendar-date-selection-indicator, .szallas-kereso-block .md-calendar-date.md-focus .md-calendar-date-selection-indicator, .szallas-kereso-block .md-default-theme .md-calendar-date-selection-indicator:hover, .szallas-kereso-block .md-calendar-date-selection-indicator:hover {
+  background: #f5b801 !important;
+  color: white !important;
+}
+/* line 7628, sass/_base.scss */
+.szallas-kereso-block .md-default-theme .md-calendar-date.md-calendar-date-today .md-calendar-date-selection-indicator, .szallas-kereso-block .md-calendar-date.md-calendar-date-today .md-calendar-date-selection-indicator {
+  border: 1px solid #d0a00f;
+}
+/* line 7632, sass/_base.scss */
 .szallas-kereso-block > .wrapper {
   padding: 10px;
 }
-/* line 7603, sass/_base.scss */
+/* line 7636, sass/_base.scss */
 .szallas-kereso-block .head {
   background: #8eaf35;
   color: white;
@@ -9458,27 +9493,27 @@ body.homepage .szallasok > .holder .szallas-top > .wrapper {
   text-transform: uppercase;
   margin: 0 00 10px 0;
 }
-/* line 7612, sass/_base.scss */
+/* line 7645, sass/_base.scss */
 .szallas-kereso-block .head .ico {
   height: 16px;
   float: left;
   vertical-align: middle;
   margin: 0 10px 0 0;
 }
-/* line 7620, sass/_base.scss */
+/* line 7653, sass/_base.scss */
 .szallas-kereso-block .fcont {
   border: 0.5px solid #cecece;
   background: #ffffff;
 }
-/* line 7624, sass/_base.scss */
+/* line 7657, sass/_base.scss */
 .szallas-kereso-block .fcont > .wrapper {
   padding: 10px;
 }
-/* line 7628, sass/_base.scss */
+/* line 7661, sass/_base.scss */
 .szallas-kereso-block .fcont.grey {
   background: #f5f5f5;
 }
-/* line 7631, sass/_base.scss */
+/* line 7664, sass/_base.scss */
 .szallas-kereso-block .fcont.grey > .wrapper {
   padding: 10px;
   display: -webkit-box;
@@ -9486,65 +9521,69 @@ body.homepage .szallasok > .holder .szallas-top > .wrapper {
   display: flex;
   flex-wrap: wrap;
 }
-/* line 7639, sass/_base.scss */
+/* line 7672, sass/_base.scss */
 .szallas-kereso-block .fcont.grey > .wrapper > div > .wrapper {
   padding: 0 5px;
 }
-/* line 7641, sass/_base.scss */
+/* line 7674, sass/_base.scss */
 .szallas-kereso-block .fcont.grey > .wrapper > div > .wrapper label {
   font-weight: bold;
   font-size: 0.8em;
   color: #acacac;
 }
-/* line 7649, sass/_base.scss */
+/* line 7682, sass/_base.scss */
 .szallas-kereso-block .fcont.grey > .wrapper > .children-ages {
   flex-basis: 30%;
 }
-/* line 7655, sass/_base.scss */
+/* line 7688, sass/_base.scss */
 .szallas-kereso-block .fcont.grey > .wrapper > .children, .szallas-kereso-block .fcont.grey > .wrapper > .adults, .szallas-kereso-block .fcont.grey > .wrapper > .rooms {
   flex-basis: calc(70% / 2);
 }
-/* line 7661, sass/_base.scss */
+/* line 7694, sass/_base.scss */
 .szallas-kereso-block .fcont label {
   font-weight: 300;
   display: block;
   width: 100%;
   margin: 0 0 5px 0;
 }
-/* line 7668, sass/_base.scss */
+/* line 7701, sass/_base.scss */
 .szallas-kereso-block .fcont .inp {
   margin: 0 0 10px 0;
 }
-/* line 7671, sass/_base.scss */
+/* line 7704, sass/_base.scss */
+.szallas-kereso-block .fcont .inp > .wrapper {
+  position: relative;
+}
+/* line 7708, sass/_base.scss */
 .szallas-kereso-block .fcont .inp input, .szallas-kereso-block .fcont .inp select {
   width: 100%;
   display: block;
   border: 0.8px solid #d8d8d8;
   padding: 5px;
 }
-/* line 7679, sass/_base.scss */
+/* line 7716, sass/_base.scss */
 .szallas-kereso-block .space {
   height: 10px;
   display: block;
 }
-/* line 7685, sass/_base.scss */
+/* line 7722, sass/_base.scss */
 .szallas-kereso-block .foot input + label {
   margin: 0;
 }
-/* line 7688, sass/_base.scss */
+/* line 7725, sass/_base.scss */
 .szallas-kereso-block .foot input + label:before {
   margin-top: 2px;
 }
-/* line 7693, sass/_base.scss */
+/* line 7730, sass/_base.scss */
 .szallas-kereso-block .foot .opt {
   flex: 1;
 }
-/* line 7696, sass/_base.scss */
+/* line 7733, sass/_base.scss */
 .szallas-kereso-block .foot .button {
   padding: 0 0 0 10px;
   flex-basis: 140px;
 }
-/* line 7700, sass/_base.scss */
+/* line 7737, sass/_base.scss */
 .szallas-kereso-block .foot .button button {
   border-radius: 3px;
   background: #424242;
@@ -9558,12 +9597,12 @@ body.homepage .szallasok > .holder .szallas-top > .wrapper {
   text-transform: uppercase;
   border: none;
 }
-/* line 7719, sass/_base.scss */
+/* line 7756, sass/_base.scss */
 .szallas-kereso-block.configurator .foot .button button {
   background: #f5b801;
 }
 
-/* line 7728, sass/_base.scss */
+/* line 7765, sass/_base.scss */
 .timeviewer > .wrapper {
   background: #efefef;
   display: -webkit-box;
@@ -9573,36 +9612,36 @@ body.homepage .szallasok > .holder .szallas-top > .wrapper {
   height: 25px;
   align-items: baseline;
 }
-/* line 7737, sass/_base.scss */
+/* line 7774, sass/_base.scss */
 .timeviewer > .wrapper > div {
   flex-basis: calc(100%/24);
   position: relative;
   height: 25px;
   margin: 0;
 }
-/* line 7744, sass/_base.scss */
+/* line 7781, sass/_base.scss */
 .timeviewer > .wrapper > div .dstart-text,
 .timeviewer > .wrapper > div .dend-text {
   display: none;
   position: absolute;
   bottom: -15px;
 }
-/* line 7750, sass/_base.scss */
+/* line 7787, sass/_base.scss */
 .timeviewer > .wrapper > div.hl {
   background: #8eaf35;
 }
-/* line 7754, sass/_base.scss */
+/* line 7791, sass/_base.scss */
 .timeviewer > .wrapper > div.dstart .dstart-text {
   display: block;
   left: -13px;
 }
-/* line 7760, sass/_base.scss */
+/* line 7797, sass/_base.scss */
 .timeviewer > .wrapper > div.dend .dend-text {
   display: block;
   right: -13px;
 }
 
-/* line 7771, sass/_base.scss */
+/* line 7808, sass/_base.scss */
 body.szallasok .szallas-lista,
 body.szallasok .szallas-adatlap {
   display: -webkit-box;
@@ -9611,141 +9650,194 @@ body.szallasok .szallas-adatlap {
   flex-wrap: wrap;
   margin: 0 -10px;
 }
-/* line 7778, sass/_base.scss */
+/* line 7815, sass/_base.scss */
 body.szallasok .szallas-lista > .szallas-kereso-block,
 body.szallasok .szallas-adatlap > .szallas-kereso-block {
   flex-basis: 380px;
 }
-/* line 7783, sass/_base.scss */
+/* line 7820, sass/_base.scss */
 body.szallasok .szallas-lista > .szallas-list, body.szallasok .szallas-lista > .adatlap-view,
 body.szallasok .szallas-adatlap > .szallas-list,
 body.szallasok .szallas-adatlap > .adatlap-view {
   flex: 1;
   padding: 10px;
 }
-/* line 7789, sass/_base.scss */
+/* line 7826, sass/_base.scss */
 body.szallasok .szallas-ajanlatok {
   background: white;
-  border: 0.5px solid #cecece;
+  border: 2px solid #fb6f09;
   margin: 10px 0 0 0;
 }
-/* line 7794, sass/_base.scss */
+/* line 7831, sass/_base.scss */
 body.szallasok .szallas-ajanlatok .ajanlat-head {
   padding: 10px;
-  background: #f5b801;
+  background: #fb6f09;
   text-align: center;
   font-size: 0.9em;
   font-weight: 300;
   color: white;
   text-transform: uppercase;
 }
-/* line 7804, sass/_base.scss */
+/* line 7841, sass/_base.scss */
 body.szallasok .szallas-ajanlatok .room .roomhead {
-  background: #f1f1f1;
+  background: #e5e5e5;
   padding: 10px;
   color: black;
   border: 0.5px solid #d2d2d2;
   border-right: 0;
   border-left: 0;
 }
-/* line 7812, sass/_base.scss */
+/* line 7849, sass/_base.scss */
 body.szallasok .szallas-ajanlatok .room .roomhead .name {
   font-weight: bold;
   color: black;
   margin: 0 0 5px 0;
 }
-/* line 7817, sass/_base.scss */
+/* line 7854, sass/_base.scss */
 body.szallasok .szallas-ajanlatok .room .roomhead .desc {
   color: #444444;
   line-height: 1.2;
   font-weight: 300;
   font-size: 0.8em;
 }
-/* line 7824, sass/_base.scss */
+/* line 7861, sass/_base.scss */
 body.szallasok .szallas-ajanlatok .room .roomhead .cap {
   margin: 5px 0 0 0;
   color: #f07171;
   font-size: 0.9em;
 }
-/* line 7831, sass/_base.scss */
+/* line 7868, sass/_base.scss */
 body.szallasok .szallas-ajanlatok .room .price-configs .price-config {
   border-bottom: 0.5px solid #f1f1f1;
   padding: 5px;
 }
-/* line 7834, sass/_base.scss */
+/* line 7871, sass/_base.scss */
 body.szallasok .szallas-ajanlatok .room .price-configs .price-config > .wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   flex-wrap: nowrap;
 }
-/* line 7840, sass/_base.scss */
+/* line 7877, sass/_base.scss */
 body.szallasok .szallas-ajanlatok .room .price-configs .price-config > .wrapper > div {
   padding: 5px;
 }
-/* line 7846, sass/_base.scss */
+/* line 7883, sass/_base.scss */
 body.szallasok .szallas-ajanlatok .room .price-configs .price-config > .wrapper > .adult-price, body.szallasok .szallas-ajanlatok .room .price-configs .price-config > .wrapper > .child-price, body.szallasok .szallas-ajanlatok .room .price-configs .price-config > .wrapper > .total-price-calc {
   flex-basis: 25%;
   text-align: center;
   font-size: 0.9em;
 }
-/* line 7851, sass/_base.scss */
+/* line 7888, sass/_base.scss */
 body.szallasok .szallas-ajanlatok .room .price-configs .price-config > .wrapper > .adult-price .lab, body.szallasok .szallas-ajanlatok .room .price-configs .price-config > .wrapper > .child-price .lab, body.szallasok .szallas-ajanlatok .room .price-configs .price-config > .wrapper > .total-price-calc .lab {
   font-weight: 300;
   font-size: 0.7em;
   margin: 4px 0 0 0;
 }
-/* line 7857, sass/_base.scss */
+/* line 7894, sass/_base.scss */
 body.szallasok .szallas-ajanlatok .room .price-configs .price-config > .wrapper > .total-price-calc {
   font-weight: bold;
   color: #8eaf35;
 }
-/* line 7861, sass/_base.scss */
+/* line 7898, sass/_base.scss */
 body.szallasok .szallas-ajanlatok .room .price-configs .price-config > .wrapper > .ellatas {
   text-align: right;
   flex: 1;
   font-weight: bold;
   color: black;
 }
-/* line 7869, sass/_base.scss */
+/* line 7906, sass/_base.scss */
 body.szallasok .szallas-ajanlatok .room .price-configs .price-config.disabled {
   cursor: not-allowed;
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAMElEQVQYV2P89OnTfwYkcOvWLQZGZEGQgJqaGkIQJgDSBFaJLAAWPHPmzH+QFmQAADz+Hr2uuMpfAAAAAElFTkSuQmCC);
   opacity: 0.5;
   filter: alpha(opacity=50);
 }
-/* line 7875, sass/_base.scss */
+/* line 7912, sass/_base.scss */
 body.szallasok .szallas-ajanlatok .room .price-configs .price-config:not(.disabled) {
   cursor: pointer;
 }
-/* line 7878, sass/_base.scss */
+/* line 7915, sass/_base.scss */
 body.szallasok .szallas-ajanlatok .room .price-configs .price-config:not(.disabled):hover {
   background: #f5b801;
   color: white !important;
 }
-/* line 7882, sass/_base.scss */
+/* line 7919, sass/_base.scss */
 body.szallasok .szallas-ajanlatok .room .price-configs .price-config:not(.disabled):hover .ellatas,
 body.szallasok .szallas-ajanlatok .room .price-configs .price-config:not(.disabled):hover .total-price-calc {
   color: white !important;
 }
-/* line 7887, sass/_base.scss */
+/* line 7924, sass/_base.scss */
 body.szallasok .szallas-ajanlatok .room .price-configs .price-config.picked {
   background: #8eaf35;
   color: white !important;
 }
-/* line 7892, sass/_base.scss */
+/* line 7929, sass/_base.scss */
 body.szallasok .szallas-ajanlatok .room .price-configs .price-config.picked .ellatas,
 body.szallasok .szallas-ajanlatok .room .price-configs .price-config.picked .total-price-calc {
   color: white !important;
 }
-/* line 7901, sass/_base.scss */
+/* line 7938, sass/_base.scss */
 body.szallasok .szallas-calculation {
   background: white;
   margin: 25px 0 10px 0;
   border: 1px solid #f6b801;
   position: relative;
 }
-/* line 7907, sass/_base.scss */
+/* line 7944, sass/_base.scss */
+body.szallasok .szallas-calculation .config-stat {
+  font-size: 0.8em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  padding: 5px;
+}
+/* line 7955, sass/_base.scss */
+body.szallasok .szallas-calculation .config-stat > .datefilter, body.szallasok .szallas-calculation .config-stat > .daynight {
+  font-size: 1.2em;
+}
+/* line 7958, sass/_base.scss */
+body.szallasok .szallas-calculation .config-stat > .datefilter {
+  flex-basis: 60%;
+}
+/* line 7961, sass/_base.scss */
+body.szallasok .szallas-calculation .config-stat > .daynight {
+  flex-basis: 40%;
+  text-align: right;
+}
+/* line 7968, sass/_base.scss */
+body.szallasok .szallas-calculation .config-stat > .adults, body.szallasok .szallas-calculation .config-stat > .children, body.szallasok .szallas-calculation .config-stat > .ellatas, body.szallasok .szallas-calculation .config-stat > .kisallat {
+  text-decoration: underline;
+}
+/* line 7973, sass/_base.scss */
+body.szallasok .szallas-calculation .config-stat > .adults, body.szallasok .szallas-calculation .config-stat > .children {
+  flex-basis: 25%;
+}
+/* line 7976, sass/_base.scss */
+body.szallasok .szallas-calculation .config-stat > .ellatas {
+  flex-basis: 30%;
+}
+/* line 7980, sass/_base.scss */
+body.szallasok .szallas-calculation .config-stat > .kisallat {
+  flex-basis: 20%;
+}
+/* line 7984, sass/_base.scss */
+body.szallasok .szallas-calculation .config-stat .wrap {
+  padding: 5px;
+}
+/* line 7987, sass/_base.scss */
+body.szallasok .szallas-calculation .config-stat .wrap .ico {
+  height: 18px;
+  vertical-align: bottom;
+  margin: 0 5px 0 0;
+}
+/* line 7997, sass/_base.scss */
+body.szallasok .szallas-calculation .config-stat > .ellatas .ico, body.szallasok .szallas-calculation .config-stat > .kisallat .ico {
+  height: 13px;
+}
+/* line 8003, sass/_base.scss */
 body.szallasok .szallas-calculation:before {
   content: "";
   background: url("//www.cp.vemend.web-pro.hu/src/images/config-result-arrow-top.png") no-repeat center;
@@ -9757,12 +9849,12 @@ body.szallasok .szallas-calculation:before {
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
 }
-/* line 7919, sass/_base.scss */
+/* line 8015, sass/_base.scss */
 body.szallasok .szallas-calculation .divider {
   background: #f5b801;
   margin: 5px;
 }
-/* line 7924, sass/_base.scss */
+/* line 8020, sass/_base.scss */
 body.szallasok .szallas-calculation .calc-info {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -9771,23 +9863,23 @@ body.szallasok .szallas-calculation .calc-info {
   margin: 10px 0;
   align-items: flex-start;
 }
-/* line 7932, sass/_base.scss */
+/* line 8028, sass/_base.scss */
 body.szallasok .szallas-calculation .calc-info .spacer {
   flex-basis: 8%;
 }
-/* line 7937, sass/_base.scss */
+/* line 8033, sass/_base.scss */
 body.szallasok .szallas-calculation .calc-info .prices,
 body.szallasok .szallas-calculation .calc-info .total-price {
   flex-basis: 51%;
   padding: 10px;
 }
-/* line 7942, sass/_base.scss */
+/* line 8038, sass/_base.scss */
 body.szallasok .szallas-calculation .calc-info .prices {
   font-size: 0.8em;
   line-height: 1.3;
   padding: 0 10px;
 }
-/* line 7947, sass/_base.scss */
+/* line 8043, sass/_base.scss */
 body.szallasok .szallas-calculation .calc-info .prices .price {
   font-weight: bold;
   color: #f5b801;
@@ -9795,48 +9887,48 @@ body.szallasok .szallas-calculation .calc-info .prices .price {
   font-weight: bold;
   margin: 0 0 5px 0;
 }
-/* line 7956, sass/_base.scss */
+/* line 8052, sass/_base.scss */
 body.szallasok .szallas-calculation .calc-info .total-price {
   background: #8eaf35;
   color: white;
   text-align: center;
 }
-/* line 7961, sass/_base.scss */
+/* line 8057, sass/_base.scss */
 body.szallasok .szallas-calculation .calc-info .total-price .tprice {
   font-size: 1.8em;
   font-weight: bold;
   margin: 10px 0 0 0;
 }
-/* line 7969, sass/_base.scss */
+/* line 8065, sass/_base.scss */
 body.szallasok .szallas-calculation .foot {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   flex-wrap: nowrap;
 }
-/* line 7975, sass/_base.scss */
+/* line 8071, sass/_base.scss */
 body.szallasok .szallas-calculation .foot .spacer {
   flex-basis: 8%;
 }
-/* line 7980, sass/_base.scss */
+/* line 8076, sass/_base.scss */
 body.szallasok .szallas-calculation .foot .alert-foglalas,
 body.szallasok .szallas-calculation .foot .foglal {
   flex-basis: 51%;
   padding: 10px;
 }
-/* line 7985, sass/_base.scss */
+/* line 8081, sass/_base.scss */
 body.szallasok .szallas-calculation .foot .alert-foglalas {
   background: #ffd6d8;
   color: #e62b34;
   font-size: 0.8em;
 }
-/* line 7990, sass/_base.scss */
+/* line 8086, sass/_base.scss */
 body.szallasok .szallas-calculation .foot .alert-foglalas i {
   font-size: 21px;
   margin: 0 5px 0 0;
   float: left;
 }
-/* line 7997, sass/_base.scss */
+/* line 8093, sass/_base.scss */
 body.szallasok .szallas-calculation .foot .foglal {
   cursor: pointer;
   background: #f5b801;
@@ -9844,11 +9936,59 @@ body.szallasok .szallas-calculation .foot .foglal {
   text-transform: uppercase;
   text-align: center;
 }
-/* line 8004, sass/_base.scss */
+/* line 8100, sass/_base.scss */
 body.szallasok .szallas-calculation .foot .foglal:hover {
   background: #c29201;
 }
-/* line 8011, sass/_base.scss */
+/* line 8106, sass/_base.scss */
+body.szallasok .szallas-calculation .foot.in-order .foglal {
+  flex-basis: 100%;
+  height: 40px;
+}
+/* line 8113, sass/_base.scss */
+body.szallasok .szallas-calculation .ordercontact .head {
+  background: #585858;
+  font-size: 0.8em;
+  position: relative;
+}
+/* line 8117, sass/_base.scss */
+body.szallasok .szallas-calculation .ordercontact .head:before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  border-style: solid;
+  border-width: 10px;
+  border-color: transparent transparent #585858 transparent;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+/* line 8131, sass/_base.scss */
+body.szallasok .szallas-calculation .ordercontact > .wrapper {
+  padding: 0 10px 10px 10px;
+}
+/* line 8135, sass/_base.scss */
+body.szallasok .szallas-calculation .ordercontact .inp {
+  margin: 0 0 10px 0;
+}
+/* line 8138, sass/_base.scss */
+body.szallasok .szallas-calculation .ordercontact .inp > .wrapper label {
+  display: block;
+  margin: 0 0 10px 0;
+  font-weight: 300;
+  font-size: 0.8em;
+}
+/* line 8145, sass/_base.scss */
+body.szallasok .szallas-calculation .ordercontact .inp > .wrapper input, body.szallasok .szallas-calculation .ordercontact .inp > .wrapper textarea {
+  width: 100%;
+  max-width: 100%;
+  border: 0.5px solid #cccccc;
+  padding: 10px;
+  color: black;
+  font-weight: bold;
+}
+/* line 8158, sass/_base.scss */
 body.szallasok .connect-msg {
   border: 0.5px solid #8eaf35;
   padding: 10px;
@@ -9856,14 +9996,14 @@ body.szallasok .connect-msg {
   color: black;
   margin: 10px 0;
 }
-/* line 8019, sass/_base.scss */
+/* line 8166, sass/_base.scss */
 body.szallasok .map {
   margin: 10px 0;
   background: white;
   border: 0.5px solid #cecece;
   min-height: 250px;
 }
-/* line 8025, sass/_base.scss */
+/* line 8172, sass/_base.scss */
 body.szallasok .map .head {
   margin: 0;
   font-size: 1.2em;
@@ -9874,22 +10014,22 @@ body.szallasok .map .head {
   text-align: left;
   font-weight: 300;
 }
-/* line 8036, sass/_base.scss */
+/* line 8183, sass/_base.scss */
 body.szallasok .map .map-canvas {
   overflow: hidden;
   height: 200px;
 }
-/* line 8039, sass/_base.scss */
+/* line 8186, sass/_base.scss */
 body.szallasok .map .map-canvas iframe {
   width: 100%;
   height: 100%;
 }
-/* line 8046, sass/_base.scss */
+/* line 8193, sass/_base.scss */
 body.szallasok .szallas-infok {
   background: white;
   border: 0.5px solid #cecece;
 }
-/* line 8049, sass/_base.scss */
+/* line 8196, sass/_base.scss */
 body.szallasok .szallas-infok .head {
   font-size: 1.2em;
   font-weight: 300;
@@ -9897,40 +10037,40 @@ body.szallasok .szallas-infok .head {
   padding: 10px 15px;
   text-transform: none;
 }
-/* line 8057, sass/_base.scss */
+/* line 8204, sass/_base.scss */
 body.szallasok .szallas-infok .block {
   font-weight: 300;
   font-size: 0.9em;
   color: #636363;
   padding: 10px 15px;
 }
-/* line 8063, sass/_base.scss */
+/* line 8210, sass/_base.scss */
 body.szallasok .szallas-infok .block h3 {
   font-weight: 300;
   margin: 0 0 5px 0;
   color: #000000;
 }
-/* line 8067, sass/_base.scss */
+/* line 8214, sass/_base.scss */
 body.szallasok .szallas-infok .block h3 .ico {
   height: 16px;
   float: left;
   vertical-align: middle;
   margin: 0 8px 0 0;
 }
-/* line 8075, sass/_base.scss */
+/* line 8222, sass/_base.scss */
 body.szallasok .szallas-infok .block .text {
   line-height: 1.3;
 }
 
-/* line 8084, sass/_base.scss */
+/* line 8231, sass/_base.scss */
 .adatlap-view .header {
   margin: 0 0 15px 0;
 }
-/* line 8087, sass/_base.scss */
+/* line 8234, sass/_base.scss */
 .adatlap-view .header .infos {
   margin: 0 0 15px 0;
 }
-/* line 8091, sass/_base.scss */
+/* line 8238, sass/_base.scss */
 .adatlap-view .header .titles > .wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -9938,33 +10078,33 @@ body.szallasok .szallas-infok .block .text {
   flex-wrap: wrap;
   align-items: flex-start;
 }
-/* line 8097, sass/_base.scss */
+/* line 8244, sass/_base.scss */
 .adatlap-view .header .titles > .wrapper .title {
   flex: 1;
 }
-/* line 8099, sass/_base.scss */
+/* line 8246, sass/_base.scss */
 .adatlap-view .header .titles > .wrapper .title h1 {
   text-transform: none;
   font-weight: normal;
   font-size: 2.3em;
   color: #424242;
 }
-/* line 8106, sass/_base.scss */
+/* line 8253, sass/_base.scss */
 .adatlap-view .header .titles > .wrapper .title .address {
   margin: 5px 0 0 0;
   font-size: 1.1em;
   color: #424242;
   font-weight: 300;
 }
-/* line 8112, sass/_base.scss */
+/* line 8259, sass/_base.scss */
 .adatlap-view .header .titles > .wrapper .title .address i {
   color: #999999;
 }
-/* line 8118, sass/_base.scss */
+/* line 8265, sass/_base.scss */
 .adatlap-view .header .titles > .wrapper .badgetext {
   flex-basis: 40%;
 }
-/* line 8121, sass/_base.scss */
+/* line 8268, sass/_base.scss */
 .adatlap-view .header .titles > .wrapper .badgetext .kisallat {
   background: white;
   border: 0.5px solid #d4a311;
@@ -9974,49 +10114,49 @@ body.szallasok .szallas-infok .block .text {
   color: #d4a311;
   font-size: 1.15em;
 }
-/* line 8130, sass/_base.scss */
+/* line 8277, sass/_base.scss */
 .adatlap-view .header .titles > .wrapper .badgetext .kisallat .ico {
   height: 16px;
   vertical-align: bottom;
   margin: 0 4px 0 0;
 }
-/* line 8140, sass/_base.scss */
+/* line 8287, sass/_base.scss */
 .adatlap-view .adatlap-body {
   color: #242424;
 }
-/* line 8144, sass/_base.scss */
+/* line 8291, sass/_base.scss */
 .adatlap-view .adatlap-body .images .profil img {
   width: 100%;
   max-width: 100%;
 }
-/* line 8152, sass/_base.scss */
+/* line 8299, sass/_base.scss */
 .adatlap-view .adatlap-body .contents {
   line-height: 1.3;
   margin: 15px 0 0 0;
 }
-/* line 8156, sass/_base.scss */
+/* line 8303, sass/_base.scss */
 .adatlap-view .adatlap-body .contents p {
   margin: 5px 0;
 }
-/* line 8160, sass/_base.scss */
+/* line 8307, sass/_base.scss */
 .adatlap-view .adatlap-body .contents ul {
   list-style: disc;
   margin: 10px 0 25px 15px;
 }
-/* line 8163, sass/_base.scss */
+/* line 8310, sass/_base.scss */
 .adatlap-view .adatlap-body .contents ul li {
   margin: 0 0 5px 0;
 }
-/* line 8169, sass/_base.scss */
+/* line 8316, sass/_base.scss */
 .adatlap-view .adatlap-body .contents .desc h1, .adatlap-view .adatlap-body .contents .desc h2, .adatlap-view .adatlap-body .contents .desc h3 {
   margin: 5px 0 12px 0;
 }
-/* line 8174, sass/_base.scss */
+/* line 8321, sass/_base.scss */
 .adatlap-view .adatlap-body .contents .top-services {
   margin: 10px 0 15px 0;
   position: relative;
 }
-/* line 8177, sass/_base.scss */
+/* line 8324, sass/_base.scss */
 .adatlap-view .adatlap-body .contents .top-services .head {
   background: #8eaf35;
   color: white;
@@ -10027,7 +10167,7 @@ body.szallasok .szallas-infok .block .text {
   left: 0;
   top: -8px;
 }
-/* line 8187, sass/_base.scss */
+/* line 8334, sass/_base.scss */
 .adatlap-view .adatlap-body .contents .top-services .head:after {
   content: "";
   right: -6px;
@@ -10039,7 +10179,7 @@ body.szallasok .szallas-infok .block .text {
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg);
 }
-/* line 8199, sass/_base.scss */
+/* line 8346, sass/_base.scss */
 .adatlap-view .adatlap-body .contents .top-services > .wrapper {
   background: white;
   border: 0.5px solid #cccccc;
@@ -10050,21 +10190,21 @@ body.szallasok .szallas-infok .block .text {
   padding: 5px;
   font-weight: 300;
 }
-/* line 8209, sass/_base.scss */
+/* line 8356, sass/_base.scss */
 .adatlap-view .adatlap-body .contents .top-services > .wrapper > div {
   padding: 10px;
   flex-basis: calc(100% / 3);
 }
-/* line 8213, sass/_base.scss */
+/* line 8360, sass/_base.scss */
 .adatlap-view .adatlap-body .contents .top-services > .wrapper > div i {
   color: #f5b801;
 }
-/* line 8219, sass/_base.scss */
+/* line 8366, sass/_base.scss */
 .adatlap-view .adatlap-body .contents .services {
   margin: 15px 0 0 0;
   font-weight: 300;
 }
-/* line 8223, sass/_base.scss */
+/* line 8370, sass/_base.scss */
 .adatlap-view .adatlap-body .contents .services > .wrapper {
   padding: 5px;
   background: white;
@@ -10074,24 +10214,24 @@ body.szallasok .szallas-infok .block .text {
   display: flex;
   flex-flow: row wrap;
 }
-/* line 8232, sass/_base.scss */
+/* line 8379, sass/_base.scss */
 .adatlap-view .adatlap-body .contents .services > .wrapper > .group {
   padding: 10px;
   flex-basis: 25%;
 }
-/* line 8236, sass/_base.scss */
+/* line 8383, sass/_base.scss */
 .adatlap-view .adatlap-body .contents .services > .wrapper > .group h3 {
   font-weight: 300;
   margin: 0 0 5px 0;
 }
-/* line 8242, sass/_base.scss */
+/* line 8389, sass/_base.scss */
 .adatlap-view .adatlap-body .contents .services > .wrapper > .group .serv-list i {
   color: #f5b801;
   font-size: 10px;
   margin: 0 4px 0 0;
 }
 
-/* line 8257, sass/_base.scss */
+/* line 8404, sass/_base.scss */
 .content-wrapper.webshop .webshop > .head {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -10099,38 +10239,38 @@ body.szallasok .szallas-infok .block .text {
   justify-content: space-between;
   align-items: center;
 }
-/* line 8264, sass/_base.scss */
+/* line 8411, sass/_base.scss */
 .content-wrapper.webshop .webshop > .head > .ico {
   flex-basis: 50px;
 }
-/* line 8266, sass/_base.scss */
+/* line 8413, sass/_base.scss */
 .content-wrapper.webshop .webshop > .head > .ico img {
   width: 35px;
   height: 35px;
 }
-/* line 8272, sass/_base.scss */
+/* line 8419, sass/_base.scss */
 .content-wrapper.webshop .webshop > .head > .title {
   font-weight: bold;
   font-size: 1.4em;
   color: #3e3e3e;
   flex-basis: 180px;
 }
-/* line 8279, sass/_base.scss */
+/* line 8426, sass/_base.scss */
 .content-wrapper.webshop .webshop > .head > .desc {
   font-size: 1.3em;
   color: #8f8f8f;
   flex: 1;
 }
-/* line 8285, sass/_base.scss */
+/* line 8432, sass/_base.scss */
 .content-wrapper.webshop .webshop > .head > .webshopnavbar {
   flex-basis: 40%;
 }
-/* line 8288, sass/_base.scss */
+/* line 8435, sass/_base.scss */
 .content-wrapper.webshop .webshop > .head > .webshopnavbar > .wrapper {
   background: white;
   border-radius: 25px;
 }
-/* line 8292, sass/_base.scss */
+/* line 8439, sass/_base.scss */
 .content-wrapper.webshop .webshop > .head > .webshopnavbar > .wrapper .buttons {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -10139,7 +10279,7 @@ body.szallasok .szallas-infok .block .text {
   align-items: center;
   padding: 5px;
 }
-/* line 8299, sass/_base.scss */
+/* line 8446, sass/_base.scss */
 .content-wrapper.webshop .webshop > .head > .webshopnavbar > .wrapper .buttons > div {
   flex-basis: calc(100% / 3);
   text-align: center;
@@ -10147,11 +10287,11 @@ body.szallasok .szallas-infok .block .text {
   -webkit-transition: all .4s;
   transition: all .4s;
 }
-/* line 8306, sass/_base.scss */
+/* line 8453, sass/_base.scss */
 .content-wrapper.webshop .webshop > .head > .webshopnavbar > .wrapper .buttons > div:hover {
   background: #efefef;
 }
-/* line 8311, sass/_base.scss */
+/* line 8458, sass/_base.scss */
 .content-wrapper.webshop .webshop > .head > .webshopnavbar > .wrapper .buttons a {
   color: #969696;
   font-size: 1em;
@@ -10160,44 +10300,44 @@ body.szallasok .szallas-infok .block .text {
   line-height: 34px;
   padding: 0 10px;
 }
-/* line 8320, sass/_base.scss */
+/* line 8467, sass/_base.scss */
 .content-wrapper.webshop .webshop > .head > .webshopnavbar > .wrapper .buttons > div.current {
   background: #f5b801;
 }
-/* line 8323, sass/_base.scss */
+/* line 8470, sass/_base.scss */
 .content-wrapper.webshop .webshop > .head > .webshopnavbar > .wrapper .buttons > div.current a {
   color: white;
 }
 
-/* line 8334, sass/_base.scss */
+/* line 8481, sass/_base.scss */
 .products-list {
   margin: 0 -10px;
 }
-/* line 8337, sass/_base.scss */
+/* line 8484, sass/_base.scss */
 .products-list > .wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   flex-wrap: wrap;
 }
-/* line 8343, sass/_base.scss */
+/* line 8490, sass/_base.scss */
 .products-list > .wrapper > article {
   padding: 10px;
   flex-basis: calc(100% / 3);
 }
-/* line 8346, sass/_base.scss */
+/* line 8493, sass/_base.scss */
 .products-list > .wrapper > article > .wrapper {
   background: white;
   border: 0.5px solid #e4e4e4;
 }
-/* line 8350, sass/_base.scss */
+/* line 8497, sass/_base.scss */
 .products-list > .wrapper > article > .wrapper .image {
   height: 14vw;
   background: #cecece;
   position: relative;
   margin: 0 0 10px 0;
 }
-/* line 8356, sass/_base.scss */
+/* line 8503, sass/_base.scss */
 .products-list > .wrapper > article > .wrapper .image .lab {
   position: absolute;
   background: #9c9c9c;
@@ -10205,48 +10345,48 @@ body.szallasok .szallas-infok .block .text {
   padding: 5px 10px;
   border-radius: 2px;
 }
-/* line 8363, sass/_base.scss */
+/* line 8510, sass/_base.scss */
 .products-list > .wrapper > article > .wrapper .image .lab.new {
   left: 5px;
   top: 5px;
   background: #8eaf35;
 }
-/* line 8368, sass/_base.scss */
+/* line 8515, sass/_base.scss */
 .products-list > .wrapper > article > .wrapper .image .lab.discount {
   right: 5px;
   top: 5px;
   background: #e62b34;
 }
-/* line 8376, sass/_base.scss */
+/* line 8523, sass/_base.scss */
 .products-list > .wrapper > article > .wrapper .title {
   padding: 0 10px;
   margin: 0 0 5px 0;
 }
-/* line 8379, sass/_base.scss */
+/* line 8526, sass/_base.scss */
 .products-list > .wrapper > article > .wrapper .title a {
   display: block;
   color: black;
   font-weight: bold;
 }
-/* line 8385, sass/_base.scss */
+/* line 8532, sass/_base.scss */
 .products-list > .wrapper > article > .wrapper .subtitle {
   padding: 0 10px;
   font-size: 0.8em;
   color: #ababab;
 }
-/* line 8391, sass/_base.scss */
+/* line 8538, sass/_base.scss */
 .products-list > .wrapper > article > .wrapper .author {
   padding: 5px 10px;
   margin: 5px 0 0 0;
 }
-/* line 8395, sass/_base.scss */
+/* line 8542, sass/_base.scss */
 .products-list > .wrapper > article > .wrapper .author a {
   color: #737373;
   font-weight: bold;
   font-size: 0.85em;
   text-decoration: none;
 }
-/* line 8403, sass/_base.scss */
+/* line 8550, sass/_base.scss */
 .products-list > .wrapper > article > .wrapper .prices {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -10257,17 +10397,17 @@ body.szallasok .szallas-infok .block .text {
   padding: 0 10px;
   font-size: 1.1em;
 }
-/* line 8413, sass/_base.scss */
+/* line 8560, sass/_base.scss */
 .products-list > .wrapper > article > .wrapper .prices .old {
   color: #d2d2d2;
 }
-/* line 8417, sass/_base.scss */
+/* line 8564, sass/_base.scss */
 .products-list > .wrapper > article > .wrapper .prices .current {
   color: #e62b34;
   font-weight: bold;
   font-size: 1.2em;
 }
-/* line 8424, sass/_base.scss */
+/* line 8571, sass/_base.scss */
 .products-list > .wrapper > article > .wrapper .buttons {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -10277,11 +10417,11 @@ body.szallasok .szallas-infok .block .text {
   border-top: 0.5px solid #e4e4e4;
   margin: 10px 0 0 0;
 }
-/* line 8433, sass/_base.scss */
+/* line 8580, sass/_base.scss */
 .products-list > .wrapper > article > .wrapper .buttons > .tocart {
   border-right: 0.5px solid #e4e4e4;
 }
-/* line 8437, sass/_base.scss */
+/* line 8584, sass/_base.scss */
 .products-list > .wrapper > article > .wrapper .buttons > div {
   flex-basis: 50%;
   text-align: center;
@@ -10290,16 +10430,16 @@ body.szallasok .szallas-infok .block .text {
   font-size: 0.9em;
   color: #9c9c9c;
 }
-/* line 8452, sass/_base.scss */
+/* line 8599, sass/_base.scss */
 .products-list.grid-x4 > .wrapper > article {
   flex-basis: calc(100% / 4);
 }
 
-/* line 8460, sass/_base.scss */
+/* line 8607, sass/_base.scss */
 .szallas-list {
   margin: -15px;
 }
-/* line 8462, sass/_base.scss */
+/* line 8609, sass/_base.scss */
 .szallas-list > .wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -10308,30 +10448,30 @@ body.szallasok .szallas-infok .block .text {
   align-items: flex-start;
   justify-content: flex-start;
 }
-/* line 8470, sass/_base.scss */
+/* line 8617, sass/_base.scss */
 .szallas-list > .wrapper .szallas {
   flex-basis: calc(100% / 3);
   padding: 15px;
 }
-/* line 8474, sass/_base.scss */
+/* line 8621, sass/_base.scss */
 .szallas-list > .wrapper .szallas > .wrapper {
   background: white;
   border: 0.5px solid #d2d0d0;
 }
-/* line 8478, sass/_base.scss */
+/* line 8625, sass/_base.scss */
 .szallas-list > .wrapper .szallas > .wrapper .image {
   height: 14vw;
   background: #cecece;
   position: relative;
   margin: 0 0 25px 0;
 }
-/* line 8484, sass/_base.scss */
+/* line 8631, sass/_base.scss */
 .szallas-list > .wrapper .szallas > .wrapper .image > .wrapper {
   height: 100%;
   width: 100%;
   overflow: hidden;
 }
-/* line 8490, sass/_base.scss */
+/* line 8637, sass/_base.scss */
 .szallas-list > .wrapper .szallas > .wrapper .image .discount {
   z-index: 1;
   position: absolute;
@@ -10344,20 +10484,20 @@ body.szallasok .szallas-infok .block .text {
   font-weight: bold;
   border-radius: 5px;
 }
-/* line 8503, sass/_base.scss */
+/* line 8650, sass/_base.scss */
 .szallas-list > .wrapper .szallas > .wrapper .image .title {
   position: absolute;
   left: 0;
   bottom: -15px;
   width: 100%;
 }
-/* line 8508, sass/_base.scss */
+/* line 8655, sass/_base.scss */
 .szallas-list > .wrapper .szallas > .wrapper .image .title .in {
   width: 90%;
   margin: 0 auto;
   background: #a8c94e;
 }
-/* line 8512, sass/_base.scss */
+/* line 8659, sass/_base.scss */
 .szallas-list > .wrapper .szallas > .wrapper .image .title .in a {
   display: block;
   color: white;
@@ -10366,20 +10506,20 @@ body.szallasok .szallas-infok .block .text {
   padding: 10px;
   text-decoration: none;
 }
-/* line 8523, sass/_base.scss */
+/* line 8670, sass/_base.scss */
 .szallas-list > .wrapper .szallas > .wrapper .address {
   text-align: center;
   font-weight: bold;
   padding: 5px;
   color: #323232;
 }
-/* line 8529, sass/_base.scss */
+/* line 8676, sass/_base.scss */
 .szallas-list > .wrapper .szallas > .wrapper .distance {
   text-align: center;
   padding: 5px;
   color: #323232;
 }
-/* line 8535, sass/_base.scss */
+/* line 8682, sass/_base.scss */
 .szallas-list > .wrapper .szallas > .wrapper .info-block {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -10387,7 +10527,7 @@ body.szallasok .szallas-infok .block .text {
   flex-wrap: wrap;
   margin: 15px 0 0 0;
 }
-/* line 8542, sass/_base.scss */
+/* line 8689, sass/_base.scss */
 .szallas-list > .wrapper .szallas > .wrapper .info-block > div {
   flex-basis: calc(100% / 3);
   text-align: center;
@@ -10397,7 +10537,7 @@ body.szallasok .szallas-infok .block .text {
   position: relative;
   overflow: hidden;
 }
-/* line 8551, sass/_base.scss */
+/* line 8698, sass/_base.scss */
 .szallas-list > .wrapper .szallas > .wrapper .info-block > div > .wrapper {
   position: absolute;
   left: 50%;
@@ -10407,30 +10547,30 @@ body.szallasok .szallas-infok .block .text {
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
-/* line 8563, sass/_base.scss */
+/* line 8710, sass/_base.scss */
 .szallas-list > .wrapper .szallas > .wrapper .info-block > div.block-left, .szallas-list > .wrapper .szallas > .wrapper .info-block > div.block-right {
   background: #f1f1f1;
 }
-/* line 8566, sass/_base.scss */
+/* line 8713, sass/_base.scss */
 .szallas-list > .wrapper .szallas > .wrapper .info-block > div.block-right {
   font-size: 0.9em;
 }
-/* line 8571, sass/_base.scss */
+/* line 8718, sass/_base.scss */
 .szallas-list > .wrapper .szallas > .wrapper .info-block .prices > div {
   padding: 5px 0;
 }
-/* line 8575, sass/_base.scss */
+/* line 8722, sass/_base.scss */
 .szallas-list > .wrapper .szallas > .wrapper .info-block .prices .old {
   color: #5c5c5c;
   text-decoration: line-through;
 }
-/* line 8580, sass/_base.scss */
+/* line 8727, sass/_base.scss */
 .szallas-list > .wrapper .szallas > .wrapper .info-block .prices .current {
   color: #e62b34;
   font-weight: bold;
   font-size: 1.2em;
 }
-/* line 8589, sass/_base.scss */
+/* line 8736, sass/_base.scss */
 .szallas-list > .wrapper .szallas > .wrapper .button a {
   color: white;
   text-decoration: none;
@@ -10443,16 +10583,16 @@ body.szallasok .szallas-infok .block .text {
   -webkit-transition: all .4s;
   transition: all .4s;
 }
-/* line 8601, sass/_base.scss */
+/* line 8748, sass/_base.scss */
 .szallas-list > .wrapper .szallas > .wrapper .button a:hover {
   background: #f5b801;
 }
-/* line 8611, sass/_base.scss */
+/* line 8758, sass/_base.scss */
 .szallas-list.grid-x2 > .wrapper .szallas {
   flex-basis: calc(100% / 2);
 }
 
-/* line 8620, sass/_base.scss */
+/* line 8767, sass/_base.scss */
 .banners.banner-billboard > .wrapper {
   position: relative;
   border: 0.5px solid #cecece;
@@ -10461,7 +10601,7 @@ body.szallasok .szallas-infok .block .text {
   overflow: hidden;
   height: 280px;
 }
-/* line 8630, sass/_base.scss */
+/* line 8777, sass/_base.scss */
 .banners .placeholdertext {
   position: absolute;
   left: 50%;
@@ -10469,7 +10609,7 @@ body.szallasok .szallas-infok .block .text {
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
-/* line 8638, sass/_base.scss */
+/* line 8785, sass/_base.scss */
 .banners .groups {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -10479,57 +10619,57 @@ body.szallasok .szallas-infok .block .text {
   justify-content: center;
   margin: 0 -15px;
 }
-/* line 8647, sass/_base.scss */
+/* line 8794, sass/_base.scss */
 .banners .groups > .banner {
   padding: 0 15px;
   flex-basis: calc(100% / 4);
 }
-/* line 8651, sass/_base.scss */
+/* line 8798, sass/_base.scss */
 .banners .groups > .banner > .wrapper {
   background: #efefef;
   position: relative;
   height: 18vh;
 }
 
-/* line 8660, sass/_base.scss */
+/* line 8807, sass/_base.scss */
 .top-articles {
   margin: -10px;
 }
-/* line 8663, sass/_base.scss */
+/* line 8810, sass/_base.scss */
 .top-articles > .flex > .top {
   flex-basis: 65%;
 }
-/* line 8665, sass/_base.scss */
+/* line 8812, sass/_base.scss */
 .top-articles > .flex > .top > .wrapper {
   padding: 10px;
 }
-/* line 8668, sass/_base.scss */
+/* line 8815, sass/_base.scss */
 .top-articles > .flex > .top > .wrapper > .holder {
   background: white;
   border: 1px solid #cecece;
 }
-/* line 8671, sass/_base.scss */
+/* line 8818, sass/_base.scss */
 .top-articles > .flex > .top > .wrapper > .holder > .flex {
   align-items: initial;
 }
-/* line 8673, sass/_base.scss */
+/* line 8820, sass/_base.scss */
 .top-articles > .flex > .top > .wrapper > .holder > .flex > .image {
   background: #cecece;
   flex-basis: 45%;
 }
-/* line 8677, sass/_base.scss */
+/* line 8824, sass/_base.scss */
 .top-articles > .flex > .top > .wrapper > .holder > .flex > .data {
   flex: 1;
 }
-/* line 8679, sass/_base.scss */
+/* line 8826, sass/_base.scss */
 .top-articles > .flex > .top > .wrapper > .holder > .flex > .data > .wrapper {
   padding: 10px;
 }
-/* line 8682, sass/_base.scss */
+/* line 8829, sass/_base.scss */
 .top-articles > .flex > .top > .wrapper > .holder > .flex > .data > .wrapper .badges {
   margin: -4px;
 }
-/* line 8684, sass/_base.scss */
+/* line 8831, sass/_base.scss */
 .top-articles > .flex > .top > .wrapper > .holder > .flex > .data > .wrapper .badges > div:not(.clr) {
   padding: 5px;
   margin: 4px;
@@ -10540,46 +10680,46 @@ body.szallasok .szallas-infok .block .text {
   float: left;
   font-size: 0.9em;
 }
-/* line 8695, sass/_base.scss */
+/* line 8842, sass/_base.scss */
 .top-articles > .flex > .top > .wrapper > .holder > .flex > .data > .wrapper .badges > .badge-orange {
   background: #f5b801 !important;
 }
-/* line 8698, sass/_base.scss */
+/* line 8845, sass/_base.scss */
 .top-articles > .flex > .top > .wrapper > .holder > .flex > .data > .wrapper .badges > .badge-green {
   background: #8eaf35 !important;
 }
-/* line 8702, sass/_base.scss */
+/* line 8849, sass/_base.scss */
 .top-articles > .flex > .top > .wrapper > .holder > .flex > .data > .wrapper .badges > .badge-red {
   background: #e62b34 !important;
 }
-/* line 8707, sass/_base.scss */
+/* line 8854, sass/_base.scss */
 .top-articles > .flex > .top > .wrapper > .holder > .flex > .data > .wrapper .data-content {
   margin: 40px 0;
   height: 190px;
   overflow: hidden;
 }
-/* line 8712, sass/_base.scss */
+/* line 8859, sass/_base.scss */
 .top-articles > .flex > .top > .wrapper > .holder > .flex > .data > .wrapper .data-content h3 {
   font-size: 2em;
   line-height: 1.2;
   margin: 0 0 8px 0;
 }
-/* line 8718, sass/_base.scss */
+/* line 8865, sass/_base.scss */
 .top-articles > .flex > .top > .wrapper > .holder > .flex > .data > .wrapper .data-content .desc {
   line-height: 1.4;
   font-size: 1.2em;
 }
-/* line 8724, sass/_base.scss */
+/* line 8871, sass/_base.scss */
 .top-articles > .flex > .top > .wrapper > .holder > .flex > .data > .wrapper .footer {
   font-size: 0.85em;
   color: #666666;
 }
-/* line 8727, sass/_base.scss */
+/* line 8874, sass/_base.scss */
 .top-articles > .flex > .top > .wrapper > .holder > .flex > .data > .wrapper .footer > .flex {
   justify-content: space-between;
   align-items: center;
 }
-/* line 8731, sass/_base.scss */
+/* line 8878, sass/_base.scss */
 .top-articles > .flex > .top > .wrapper > .holder > .flex > .data > .wrapper .footer > .flex > div {
   flex-basis: calc(70% / 3);
   text-align: center;
@@ -10587,15 +10727,15 @@ body.szallasok .szallas-infok .block .text {
   height: 35px;
   line-height: 35px;
 }
-/* line 8738, sass/_base.scss */
+/* line 8885, sass/_base.scss */
 .top-articles > .flex > .top > .wrapper > .holder > .flex > .data > .wrapper .footer > .flex > div:not(.button):not(.views) {
   border-right: 0.5px solid #666666;
 }
-/* line 8742, sass/_base.scss */
+/* line 8889, sass/_base.scss */
 .top-articles > .flex > .top > .wrapper > .holder > .flex > .data > .wrapper .footer > .flex > div.button {
   flex-basis: 30%;
 }
-/* line 8745, sass/_base.scss */
+/* line 8892, sass/_base.scss */
 .top-articles > .flex > .top > .wrapper > .holder > .flex > .data > .wrapper .footer > .flex > div.button a {
   display: block;
   background: #363636;
@@ -10606,42 +10746,42 @@ body.szallasok .szallas-infok .block .text {
   line-height: 35px;
   height: 35px;
 }
-/* line 8758, sass/_base.scss */
+/* line 8905, sass/_base.scss */
 .top-articles > .flex > .top > .wrapper > .holder > .flex > .data > .wrapper .footer i {
   font-size: 18px;
   margin: 0 5px 0 0;
   color: #666666;
 }
-/* line 8770, sass/_base.scss */
+/* line 8917, sass/_base.scss */
 .top-articles > .flex > .more {
   flex: 1;
 }
-/* line 8772, sass/_base.scss */
+/* line 8919, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper {
   padding: 10px;
 }
-/* line 8775, sass/_base.scss */
+/* line 8922, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .title {
   padding: 10px 0;
 }
-/* line 8778, sass/_base.scss */
+/* line 8925, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .title a {
   color: #363636;
   font-size: 1.4em;
   line-height: 1.4;
 }
-/* line 8785, sass/_base.scss */
+/* line 8932, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .image {
   position: relative;
 }
-/* line 8787, sass/_base.scss */
+/* line 8934, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .image > .wrapper {
   overflow: hidden;
   position: relative;
   background: #cecece;
   height: 180px;
 }
-/* line 8793, sass/_base.scss */
+/* line 8940, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .image .excerpt {
   position: absolute;
   background: white;
@@ -10654,24 +10794,24 @@ body.szallasok .szallas-infok .block .text {
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
 }
-/* line 8805, sass/_base.scss */
+/* line 8952, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .image .excerpt > .wrapper {
   height: 40px;
   overflow: hidden;
 }
-/* line 8811, sass/_base.scss */
+/* line 8958, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .footer {
   font-size: 0.85em;
   color: #666666;
   margin: 25px auto 0 auto;
   width: 90%;
 }
-/* line 8817, sass/_base.scss */
+/* line 8964, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .footer > .flex {
   justify-content: space-between;
   align-items: center;
 }
-/* line 8823, sass/_base.scss */
+/* line 8970, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .footer > .flex > div {
   flex-basis: calc(70% / 3);
   text-align: center;
@@ -10679,15 +10819,15 @@ body.szallasok .szallas-infok .block .text {
   height: 35px;
   line-height: 35px;
 }
-/* line 8830, sass/_base.scss */
+/* line 8977, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .footer > .flex > div:not(.button):not(.views) {
   border-right: 0.5px solid #666666;
 }
-/* line 8834, sass/_base.scss */
+/* line 8981, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .footer > .flex > div.button {
   flex-basis: 30%;
 }
-/* line 8837, sass/_base.scss */
+/* line 8984, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .footer > .flex > div.button a {
   display: block;
   background: #363636;
@@ -10698,48 +10838,48 @@ body.szallasok .szallas-infok .block .text {
   line-height: 35px;
   height: 35px;
 }
-/* line 8850, sass/_base.scss */
+/* line 8997, sass/_base.scss */
 .top-articles > .flex > .more > .wrapper > .article .footer i {
   font-size: 18px;
   margin: 0 5px 0 0;
   color: #666666;
 }
 
-/* line 8862, sass/_base.scss */
+/* line 9009, sass/_base.scss */
 .content-wrapper .header {
   border-bottom: 0.5px solid #a7a7a7;
   padding: 0 0 10px 0;
   margin: 0 0 10px 0;
 }
-/* line 8867, sass/_base.scss */
+/* line 9014, sass/_base.scss */
 .content-wrapper .header > .flex {
   justify-content: space-between;
   align-items: center;
 }
-/* line 8871, sass/_base.scss */
+/* line 9018, sass/_base.scss */
 .content-wrapper .header > .flex a {
   font-weight: bold;
   color: #a7a7a7;
   font-size: 0.9em;
 }
-/* line 8877, sass/_base.scss */
+/* line 9024, sass/_base.scss */
 .content-wrapper .header > .flex > div {
   flex-basis: 30%;
   text-align: right;
 }
-/* line 8882, sass/_base.scss */
+/* line 9029, sass/_base.scss */
 .content-wrapper .header > .flex > div.title {
   text-align: left;
   flex-basis: 40%;
   font-weight: bold;
   font-size: 1.2em;
 }
-/* line 8890, sass/_base.scss */
+/* line 9037, sass/_base.scss */
 .content-wrapper .header.no-border {
   border-bottom: none;
 }
 
-/* line 8896, sass/_base.scss */
+/* line 9043, sass/_base.scss */
 .naptar-block > .wrapper {
   border: 1px solid #dbdbdb;
   background: white;
@@ -10747,7 +10887,7 @@ body.szallasok .szallas-infok .block .text {
   position: relative;
   padding-bottom: 42px;
 }
-/* line 8903, sass/_base.scss */
+/* line 9050, sass/_base.scss */
 .naptar-block > .wrapper .etlap-nav-btn {
   position: absolute;
   bottom: 0;
@@ -10755,7 +10895,7 @@ body.szallasok .szallas-infok .block .text {
   left: 0;
   right: 0;
 }
-/* line 8909, sass/_base.scss */
+/* line 9056, sass/_base.scss */
 .naptar-block > .wrapper .etlap-nav-btn a {
   width: 100%;
   background: #e62b34;
@@ -10767,7 +10907,7 @@ body.szallasok .szallas-infok .block .text {
   padding: 15px;
   text-transform: uppercase;
 }
-/* line 8922, sass/_base.scss */
+/* line 9069, sass/_base.scss */
 .naptar-block > .wrapper .sel-dates {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -10776,16 +10916,16 @@ body.szallasok .szallas-infok .block .text {
   align-items: center;
   padding: 10px;
 }
-/* line 8930, sass/_base.scss */
+/* line 9077, sass/_base.scss */
 .naptar-block > .wrapper .sel-dates > .div {
   flex-basis: 40px;
   text-align: center;
 }
-/* line 8936, sass/_base.scss */
+/* line 9083, sass/_base.scss */
 .naptar-block > .wrapper .sel-dates > .start, .naptar-block > .wrapper .sel-dates > .end {
   flex-basis: calc((100% - 40px) / 2 );
 }
-/* line 8939, sass/_base.scss */
+/* line 9086, sass/_base.scss */
 .naptar-block > .wrapper .sel-dates > .start input[type=text], .naptar-block > .wrapper .sel-dates > .end input[type=text] {
   font-weight: bold;
   text-align: center;
@@ -10796,36 +10936,36 @@ body.szallasok .szallas-infok .block .text {
   display: block;
   border-bottom: 4px solid #f5b801;
 }
-/* line 8949, sass/_base.scss */
+/* line 9096, sass/_base.scss */
 .naptar-block > .wrapper .sel-dates > .start input[type=text]:focus, .naptar-block > .wrapper .sel-dates > .start input[type=text]:active, .naptar-block > .wrapper .sel-dates > .end input[type=text]:focus, .naptar-block > .wrapper .sel-dates > .end input[type=text]:active {
   border-bottom: 4px solid #f5b801;
   outline: none;
 }
-/* line 8954, sass/_base.scss */
+/* line 9101, sass/_base.scss */
 .naptar-block > .wrapper .sel-dates > .start input[type=text]:disabled, .naptar-block > .wrapper .sel-dates > .end input[type=text]:disabled {
   color: #222222;
   background: none;
 }
-/* line 8962, sass/_base.scss */
+/* line 9109, sass/_base.scss */
 .naptar-block > .wrapper .md-whiteframe-1dp, .naptar-block > .wrapper .md-whiteframe-z1 {
   box-shadow: none !important;
 }
-/* line 8965, sass/_base.scss */
+/* line 9112, sass/_base.scss */
 .naptar-block > .wrapper .md-date-range-picker__month-year {
   background: none;
   border-bottom: 0.8px solid #efefef;
 }
-/* line 8970, sass/_base.scss */
+/* line 9117, sass/_base.scss */
 .naptar-block > .wrapper .layout-margin,
 .naptar-block > .wrapper .layout-margin > * {
   margin: 0 !important;
 }
-/* line 8973, sass/_base.scss */
+/* line 9120, sass/_base.scss */
 .naptar-block > .wrapper .md-date-range-picker__calendar-wrapper {
   width: 100%;
   max-width: 100%;
 }
-/* line 8978, sass/_base.scss */
+/* line 9125, sass/_base.scss */
 .naptar-block > .wrapper .md-date-range-picker__calendar,
 .naptar-block > .wrapper .md-date-range-picker__week {
   display: -webkit-box;
@@ -10834,87 +10974,87 @@ body.szallasok .szallas-infok .block .text {
   flex-wrap: wrap;
   justify-content: flex-start;
 }
-/* line 8985, sass/_base.scss */
+/* line 9132, sass/_base.scss */
 .naptar-block > .wrapper .md-date-range-picker__calendar > span.md-date-range-picker__calendar__grid,
 .naptar-block > .wrapper .md-date-range-picker__week > span.md-date-range-picker__calendar__grid {
   flex-basis: calc(100% / 7);
 }
-/* line 8990, sass/_base.scss */
+/* line 9137, sass/_base.scss */
 .naptar-block > .wrapper .md-date-range-picker__week {
   background: none;
   border-bottom: 0.8px solid #e2e2e2;
 }
-/* line 8994, sass/_base.scss */
+/* line 9141, sass/_base.scss */
 .naptar-block > .wrapper .md-date-range-picker__week .md-date-range-picker__calendar__grid {
   font-weight: 300;
   color: #696969 !important;
 }
-/* line 9000, sass/_base.scss */
+/* line 9147, sass/_base.scss */
 .naptar-block > .wrapper .md-date-range-picker__calendar__selected {
   background: #fec92b;
 }
-/* line 9003, sass/_base.scss */
+/* line 9150, sass/_base.scss */
 .naptar-block > .wrapper .md-date-range-picker__calendar .md-date-range-picker__calendar__grid:hover:not(.md-date-range-picker__calendar__selected):not(.md-date-range-picker__calendar__disabled) {
   background: #ffe390;
 }
 
-/* line 9010, sass/_base.scss */
+/* line 9157, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder {
   margin: -10px;
 }
-/* line 9014, sass/_base.scss */
+/* line 9161, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex {
   align-items: initial;
 }
-/* line 9017, sass/_base.scss */
+/* line 9164, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > div > div.wrapper {
   padding: 10px;
 }
-/* line 9021, sass/_base.scss */
+/* line 9168, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .miserend {
   flex-basis: 25%;
 }
-/* line 9025, sass/_base.scss */
+/* line 9172, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .miserend .header .title {
   flex-basis: 50%;
 }
-/* line 9028, sass/_base.scss */
+/* line 9175, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .miserend .header .more {
   flex-basis: 50%;
 }
-/* line 9033, sass/_base.scss */
+/* line 9180, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .miserend .content-holder {
   background: white;
   border: 1px solid #dbdbdb;
 }
-/* line 9037, sass/_base.scss */
+/* line 9184, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .miserend .content-holder article {
   border-bottom: 0.5px solid #dbdbdb;
   padding: 0 0 5px 0;
 }
-/* line 9041, sass/_base.scss */
+/* line 9188, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .miserend .content-holder article .title {
   font-size: 1.25em;
   line-height: 1.2;
   padding: 5px 15px;
 }
-/* line 9045, sass/_base.scss */
+/* line 9192, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .miserend .content-holder article .title a {
   color: #424242;
   display: block;
 }
-/* line 9051, sass/_base.scss */
+/* line 9198, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .miserend .content-holder article .meta {
   padding: 5px 15px;
   font-size: 0.8em;
   margin-bottom: 4px;
   color: #dca501;
 }
-/* line 9058, sass/_base.scss */
+/* line 9205, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .miserend .content-holder article:last-child {
   border-bottom: none;
 }
-/* line 9062, sass/_base.scss */
+/* line 9209, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .miserend .content-holder article .image {
   height: 180px;
   margin: 0 0 5px 0;
@@ -10922,38 +11062,38 @@ body.szallasok .szallas-infok .block .text {
   position: relative;
   overflow: hidden;
 }
-/* line 9073, sass/_base.scss */
+/* line 9220, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap {
   flex: 1;
 }
-/* line 9076, sass/_base.scss */
+/* line 9223, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder {
   margin: 0 -10px;
 }
-/* line 9078, sass/_base.scss */
+/* line 9225, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex {
   align-items: initial;
 }
-/* line 9080, sass/_base.scss */
+/* line 9227, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > div {
   padding: 0 10px;
 }
-/* line 9083, sass/_base.scss */
+/* line 9230, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .naptar-block {
   flex-basis: 360px;
 }
-/* line 9087, sass/_base.scss */
+/* line 9234, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual {
   flex: 1;
 }
-/* line 9091, sass/_base.scss */
+/* line 9238, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .date-on,
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .text {
   height: 70px;
   position: relative;
   font-weight: 300;
 }
-/* line 9096, sass/_base.scss */
+/* line 9243, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .date-on .air-text,
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .text .air-text {
   position: absolute;
@@ -10965,14 +11105,14 @@ body.szallasok .szallas-infok .block .text {
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
-/* line 9107, sass/_base.scss */
+/* line 9254, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .text {
   color: white;
   background: #8eaf35;
   font-size: 1.2em;
   margin-top: 5px;
 }
-/* line 9113, sass/_base.scss */
+/* line 9260, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .date-on {
   text-align: center;
   color: white;
@@ -10980,27 +11120,27 @@ body.szallasok .szallas-infok .block .text {
   font-size: 1.3em;
   margin-bottom: 5px;
 }
-/* line 9120, sass/_base.scss */
+/* line 9267, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .date-on .week {
   text-transform: uppercase;
   font-size: 1.55em;
   margin: 0 0 5px 0;
   font-weight: 400;
 }
-/* line 9127, sass/_base.scss */
+/* line 9274, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .image {
   height: 120px;
   background: #ffffff;
   position: relative;
   overflow: hidden;
 }
-/* line 9132, sass/_base.scss */
+/* line 9279, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .image > .wrapper {
   height: 100%;
   width: 100%;
   position: relative;
 }
-/* line 9137, sass/_base.scss */
+/* line 9284, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .image > .wrapper img {
   height: auto;
   width: 110%;
@@ -11011,32 +11151,32 @@ body.szallasok .szallas-infok .block .text {
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
-/* line 9149, sass/_base.scss */
+/* line 9296, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .side-left {
   flex-basis: 40%;
 }
-/* line 9152, sass/_base.scss */
+/* line 9299, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .side-right {
   flex-basis: 60%;
   padding-left: 5px;
 }
-/* line 9156, sass/_base.scss */
+/* line 9303, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .line-one {
   margin-bottom: 5px;
 }
-/* line 9160, sass/_base.scss */
+/* line 9307, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .line-one .side-left .text {
   background: #f5b801;
 }
-/* line 9166, sass/_base.scss */
+/* line 9313, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .line-one .side-right .image {
   height: 195px;
 }
-/* line 9172, sass/_base.scss */
+/* line 9319, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .line-two > .flex {
   align-items: initial;
 }
-/* line 9177, sass/_base.scss */
+/* line 9324, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .kieg2 {
   height: 100%;
   display: -webkit-box;
@@ -11044,78 +11184,78 @@ body.szallasok .szallas-infok .block .text {
   display: flex;
   flex-wrap: nowrap;
 }
-/* line 9184, sass/_base.scss */
+/* line 9331, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .kieg2 > .image {
   flex: 1;
   height: 100%;
   margin-right: 5px;
 }
-/* line 9189, sass/_base.scss */
+/* line 9336, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .kieg2 > .image img {
   max-width: 120% !important;
   width: 120% !important;
 }
-/* line 9194, sass/_base.scss */
+/* line 9341, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .kieg2 > .text {
   height: 100%;
   flex-basis: 70px;
   margin: 0;
 }
-/* line 9199, sass/_base.scss */
+/* line 9346, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual > .wrapper .kieg2 > .text .air-text {
   -webkit-transform: translate(-50%, -50%) rotate(-90deg);
   transform: translate(-50%, -50%) rotate(-90deg);
 }
-/* line 9210, sass/_base.scss */
+/* line 9357, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual .no-image .image img {
   width: 80% !important;
   max-width: 80% !important;
 }
-/* line 9217, sass/_base.scss */
+/* line 9364, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual .disabled {
   opacity: 0.6;
   filter: alpha(opacity=60);
   border: 0.5px dashed #a2a2a2;
   padding: 0.5px;
 }
-/* line 9223, sass/_base.scss */
+/* line 9370, sass/_base.scss */
 .home-etlap-miserend > .pw > .holder > .flex > .etlap > .wrapper > .holder > .flex > .etlap-visual .disabled .text {
   background: #dbdbdb !important;
 }
 
-/* line 9234, sass/_base.scss */
+/* line 9381, sass/_base.scss */
 .etlap-page {
   background-image: url("//www.cp.vemend.web-pro.hu/src/images/etlap-bg-overlay.jpg");
   background-repeat: repeat-y;
   background-position: center;
   background-size: 100%;
 }
-/* line 9240, sass/_base.scss */
+/* line 9387, sass/_base.scss */
 .etlap-page .page-wrapper {
   padding: 50px 0 40px 0;
 }
-/* line 9244, sass/_base.scss */
+/* line 9391, sass/_base.scss */
 .etlap-page .menu-line {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
-/* line 9248, sass/_base.scss */
+/* line 9395, sass/_base.scss */
 .etlap-page .menu-line > .naptar-block {
   flex-basis: 320px;
 }
-/* line 9251, sass/_base.scss */
+/* line 9398, sass/_base.scss */
 .etlap-page .menu-line > .current-menu {
   flex: 1;
   padding: 0 0 0 15px;
 }
-/* line 9258, sass/_base.scss */
+/* line 9405, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .top, .etlap-page .menu-line > .current-menu > .top > .pretitle, .etlap-page .menu-line > .current-menu > .top > .eteltablazat, .etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek > .tabla {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
-/* line 9264, sass/_base.scss */
+/* line 9411, sass/_base.scss */
 .etlap-page .menu-line > .current-menu .fin {
   position: absolute;
   width: 100%;
@@ -11125,107 +11265,107 @@ body.szallasok .szallas-infok .block .text {
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
-/* line 9275, sass/_base.scss */
+/* line 9422, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .top > .pretitle {
   flex-basis: 50%;
   color: white;
   font-size: 1.4em;
 }
-/* line 9279, sass/_base.scss */
+/* line 9426, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .top > .pretitle > .m {
   position: relative;
   flex-basis: 50%;
   background: #8eaf35;
   font-size: 1.6em;
 }
-/* line 9285, sass/_base.scss */
+/* line 9432, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .top > .pretitle > .v {
   position: relative;
   flex-basis: 50%;
   background: #7e9b2f;
 }
-/* line 9291, sass/_base.scss */
+/* line 9438, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .top > .eteltablazat {
   flex-basis: 50%;
   background: white;
   font-size: 0.8em;
   border: 0.5px solid #b1b1b1;
 }
-/* line 9297, sass/_base.scss */
+/* line 9444, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .top > .eteltablazat > .head {
   flex-basis: 100px;
   background: #f5f5f5;
   border-right: 0.5px solid #dbdbdb;
   position: relative;
 }
-/* line 9303, sass/_base.scss */
+/* line 9450, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .top > .eteltablazat > .head img {
   width: 50%;
 }
-/* line 9308, sass/_base.scss */
+/* line 9455, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek {
   flex: 1;
 }
-/* line 9310, sass/_base.scss */
+/* line 9457, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek > .tabla {
   padding: 5px;
 }
-/* line 9313, sass/_base.scss */
+/* line 9460, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek > .tabla table {
   width: 100%;
 }
-/* line 9317, sass/_base.scss */
+/* line 9464, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek > .tabla table td {
   padding: 5px;
 }
-/* line 9320, sass/_base.scss */
+/* line 9467, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek > .tabla table td.h {
   font-weight: bold;
 }
-/* line 9323, sass/_base.scss */
+/* line 9470, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek > .tabla table td.v {
   font-weight: 300;
   text-align: right;
 }
-/* line 9329, sass/_base.scss */
+/* line 9476, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek > .allergenek {
   padding: 10px;
   border-top: 0.5px solid #dbdbdb;
 }
-/* line 9334, sass/_base.scss */
+/* line 9481, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .top > .eteltablazat > .ertekek > .tabla > div {
   flex-basis: 50%;
 }
-/* line 9341, sass/_base.scss */
+/* line 9488, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .menu {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   margin: 15px 0 0 0;
 }
-/* line 9347, sass/_base.scss */
+/* line 9494, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .menu > div {
   flex-basis: calc(100% / 4);
   background: white;
 }
-/* line 9351, sass/_base.scss */
+/* line 9498, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .menu > div .image {
   height: 14vh;
 }
-/* line 9353, sass/_base.scss */
+/* line 9500, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .menu > div .image .wrapper {
   height: 100%;
   overflow: hidden;
   position: relative;
 }
-/* line 9360, sass/_base.scss */
+/* line 9507, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .menu > div .text {
   color: white;
   position: relative;
   height: 75px;
   font-size: 1.1em;
 }
-/* line 9366, sass/_base.scss */
+/* line 9513, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .menu > div .text .air-text {
   position: absolute;
   width: 100%;
@@ -11236,7 +11376,7 @@ body.szallasok .szallas-infok .block .text {
   transform: translate(-50%, -50%);
   line-height: 1.1;
 }
-/* line 9378, sass/_base.scss */
+/* line 9525, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .menu > div.disabled {
   cursor: not-allowed;
   opacity: 0.6;
@@ -11244,27 +11384,27 @@ body.szallasok .szallas-infok .block .text {
   border: 0.5px dashed #a2a2a2;
   padding: 0.5px;
 }
-/* line 9388, sass/_base.scss */
+/* line 9535, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .menu > div:nth-child(1) .text {
   background: #424242;
 }
-/* line 9394, sass/_base.scss */
+/* line 9541, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .menu > div:nth-child(2) .text {
   background: #5c5c5c;
 }
-/* line 9399, sass/_base.scss */
+/* line 9546, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .menu > div:nth-child(3) .text {
   background: #757575;
 }
-/* line 9404, sass/_base.scss */
+/* line 9551, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .menu > div:nth-child(4) .text {
   background: #8f8f8f;
 }
-/* line 9409, sass/_base.scss */
+/* line 9556, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .menu .image {
   position: relative;
 }
-/* line 9412, sass/_base.scss */
+/* line 9559, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .menu .image img {
   position: absolute;
   max-height: 110%;
@@ -11276,20 +11416,20 @@ body.szallasok .szallas-infok .block .text {
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
-/* line 9426, sass/_base.scss */
+/* line 9573, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .bottom {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   margin: 15px -5px 0 -5px;
 }
-/* line 9433, sass/_base.scss */
+/* line 9580, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .bottom > div {
   flex-basis: 50%;
   padding: 0 5px;
   height: 60px;
 }
-/* line 9437, sass/_base.scss */
+/* line 9584, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .bottom > div > .wrapper {
   border-width: 1px;
   border-style: solid;
@@ -11299,54 +11439,54 @@ body.szallasok .szallas-infok .block .text {
   display: flex;
   height: 100%;
 }
-/* line 9445, sass/_base.scss */
+/* line 9592, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .bottom > div > .wrapper > div {
   flex-basis: 50%;
   padding: 10px;
   position: relative;
 }
-/* line 9453, sass/_base.scss */
+/* line 9600, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .bottom > div .text i {
   font-size: 23px;
   vertical-align: middle;
   margin: 0 5px 0 0;
 }
-/* line 9462, sass/_base.scss */
+/* line 9609, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .bottom > .deadline > .wrapper {
   border-color: #e2261b;
 }
-/* line 9465, sass/_base.scss */
+/* line 9612, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .bottom > .deadline .text {
   background: #ffd6d8;
   color: red;
 }
-/* line 9469, sass/_base.scss */
+/* line 9616, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .bottom > .deadline .text i {
   float: left;
   margin: 0 0 0 15px;
 }
-/* line 9475, sass/_base.scss */
+/* line 9622, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .bottom > .deadline .val {
   background: #e2261b;
   color: white;
   font-size: 1.8em;
 }
-/* line 9483, sass/_base.scss */
+/* line 9630, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .bottom > .contact > .wrapper {
   border-color: #d4a311;
 }
-/* line 9486, sass/_base.scss */
+/* line 9633, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .bottom > .contact .text {
   background: #f6f6d9;
   color: #d4a311;
 }
-/* line 9491, sass/_base.scss */
+/* line 9638, sass/_base.scss */
 .etlap-page .menu-line > .current-menu > .bottom > .contact .val {
   background: #d4a311;
   color: white;
   font-size: 1.8em;
 }
-/* line 9503, sass/_base.scss */
+/* line 9650, sass/_base.scss */
 .etlap-page .week-menus .no-etlap-selection {
   font-size: 1.2em;
   padding: 15px;
@@ -11355,56 +11495,56 @@ body.szallasok .szallas-infok .block .text {
   box-shadow: 2px 2px 0 #dcd2b2;
   border-radius: 8px;
 }
-/* line 9511, sass/_base.scss */
+/* line 9658, sass/_base.scss */
 .etlap-page .week-menus h2 {
   font-weight: bold;
   font-size: 1.5em;
   margin: 15px 0 10px 0;
 }
-/* line 9516, sass/_base.scss */
+/* line 9663, sass/_base.scss */
 .etlap-page .week-menus h2.datefilterweek {
   font-size: 1.8em;
   color: #e62b34;
 }
-/* line 9521, sass/_base.scss */
+/* line 9668, sass/_base.scss */
 .etlap-page .week-menus h2 .daterange {
   font-size: 0.85em;
   font-weight: 400;
   margin: 0 0 0 15px;
   color: #323232;
 }
-/* line 9529, sass/_base.scss */
+/* line 9676, sass/_base.scss */
 .etlap-page .week-menus .menu-set {
   margin: 0 0 25px 0;
 }
-/* line 9531, sass/_base.scss */
+/* line 9678, sass/_base.scss */
 .etlap-page .week-menus .menu-set .header {
   font-size: 1.5em;
   text-transform: uppercase;
   margin: 0 0 15px 0;
 }
-/* line 9535, sass/_base.scss */
+/* line 9682, sass/_base.scss */
 .etlap-page .week-menus .menu-set .header .daterange {
   font-size: 0.6em;
   margin: 0 0 0 15px;
 }
-/* line 9542, sass/_base.scss */
+/* line 9689, sass/_base.scss */
 .etlap-page .week-menus .menu-set .set > .wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
-/* line 9546, sass/_base.scss */
+/* line 9693, sass/_base.scss */
 .etlap-page .week-menus .menu-set .set > .wrapper > .nap {
   flex-basis: calc(100% / 5);
 }
-/* line 9548, sass/_base.scss */
+/* line 9695, sass/_base.scss */
 .etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper {
   border: 0.5px solid #d5d5d5;
   background: white;
   padding: 0.5px;
 }
-/* line 9553, sass/_base.scss */
+/* line 9700, sass/_base.scss */
 .etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .head {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -11412,32 +11552,32 @@ body.szallasok .szallas-infok .block .text {
   flex-wrap: nowrap;
   border-bottom: 0.5px solid #d5d5d5;
 }
-/* line 9559, sass/_base.scss */
+/* line 9706, sass/_base.scss */
 .etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .head > div {
   flex-basis: 50%;
   padding: 10px;
 }
-/* line 9562, sass/_base.scss */
+/* line 9709, sass/_base.scss */
 .etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .head > div.day {
   border-right: 0.5px solid #d5d5d5;
 }
-/* line 9565, sass/_base.scss */
+/* line 9712, sass/_base.scss */
 .etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .head > div.weekday {
   background: #fafafa;
   font-weight: bold;
 }
-/* line 9572, sass/_base.scss */
+/* line 9719, sass/_base.scss */
 .etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .image {
   border-bottom: 0.5px solid #d5d5d5;
   height: 14vh;
 }
-/* line 9575, sass/_base.scss */
+/* line 9722, sass/_base.scss */
 .etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .image > .wrapper {
   height: 100%;
   overflow: hidden;
   position: relative;
 }
-/* line 9580, sass/_base.scss */
+/* line 9727, sass/_base.scss */
 .etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .image > .wrapper img {
   position: absolute;
   max-height: 110%;
@@ -11449,7 +11589,7 @@ body.szallasok .szallas-infok .block .text {
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
-/* line 9593, sass/_base.scss */
+/* line 9740, sass/_base.scss */
 .etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .menu {
   height: 100px;
   padding: 10px;
@@ -11457,7 +11597,7 @@ body.szallasok .szallas-infok .block .text {
   background: #f8f8f8;
   border-bottom: 0.5px solid #d5d5d5;
 }
-/* line 9599, sass/_base.scss */
+/* line 9746, sass/_base.scss */
 .etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .menu > .air-text {
   position: absolute;
   width: 100%;
@@ -11467,72 +11607,72 @@ body.szallasok .szallas-infok .block .text {
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
-/* line 9607, sass/_base.scss */
+/* line 9754, sass/_base.scss */
 .etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .menu > .air-text > div {
   margin: 5px 0;
   line-height: 1.1;
   font-size: 1.1em;
   text-align: center;
 }
-/* line 9617, sass/_base.scss */
+/* line 9764, sass/_base.scss */
 .etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .ertekek > .tabla {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   flex-wrap: nowrap;
 }
-/* line 9622, sass/_base.scss */
+/* line 9769, sass/_base.scss */
 .etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .ertekek > .tabla > div {
   flex-basis: 50%;
   padding: 5px;
   font-size: 0.8em;
 }
-/* line 9626, sass/_base.scss */
+/* line 9773, sass/_base.scss */
 .etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .ertekek > .tabla > div table {
   width: 100%;
 }
-/* line 9629, sass/_base.scss */
+/* line 9776, sass/_base.scss */
 .etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .ertekek > .tabla > div table td {
   padding: 1px 5px;
 }
-/* line 9633, sass/_base.scss */
+/* line 9780, sass/_base.scss */
 .etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .ertekek > .tabla > div table .v {
   text-align: right;
   color: #8c8c8c;
   font-weight: 300;
 }
-/* line 9640, sass/_base.scss */
+/* line 9787, sass/_base.scss */
 .etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .ertekek > .tabla > div:first-child {
   border-right: 0.5px solid #d5d5d5;
 }
-/* line 9646, sass/_base.scss */
+/* line 9793, sass/_base.scss */
 .etlap-page .week-menus .menu-set .set > .wrapper > .nap > .wrapper > .allergenek {
   border-top: 0.5px solid #d5d5d5;
   background: #fafafa;
   font-size: 0.8em;
   padding: 10px;
 }
-/* line 9655, sass/_base.scss */
+/* line 9802, sass/_base.scss */
 .etlap-page .week-menus .menu-set .set > .wrapper > .nap.aktualis > .wrapper {
   border: 2px solid #d4a311;
   padding: 0;
 }
-/* line 9660, sass/_base.scss */
+/* line 9807, sass/_base.scss */
 .etlap-page .week-menus .menu-set .set > .wrapper > .nap.aktualis > .wrapper .head .day {
   background: #d4a311;
   color: white;
 }
-/* line 9664, sass/_base.scss */
+/* line 9811, sass/_base.scss */
 .etlap-page .week-menus .menu-set .set > .wrapper > .nap.aktualis > .wrapper .head .weekday {
   background: #ffda69;
   color: #666666;
 }
-/* line 9670, sass/_base.scss */
+/* line 9817, sass/_base.scss */
 .etlap-page .week-menus .menu-set .set > .wrapper > .nap.aktualis > .wrapper .menu {
   background: #f6f6d9;
 }
 
-/* line 9683, sass/_base.scss */
+/* line 9830, sass/_base.scss */
 .szalag .highlight-view {
   background: white;
   display: -webkit-box;
@@ -11541,12 +11681,12 @@ body.szallasok .szallas-infok .block .text {
   flex-wrap: nowrap;
   align-items: center;
 }
-/* line 9691, sass/_base.scss */
+/* line 9838, sass/_base.scss */
 .szalag .highlight-view > .p {
   flex-basis: 40px;
   background: #8eaf35;
 }
-/* line 9695, sass/_base.scss */
+/* line 9842, sass/_base.scss */
 .szalag .highlight-view > .p a {
   display: block;
   color: white;
@@ -11554,31 +11694,31 @@ body.szallasok .szallas-infok .block .text {
   text-align: center;
   line-height: 40px;
 }
-/* line 9704, sass/_base.scss */
+/* line 9851, sass/_base.scss */
 .szalag .highlight-view .items {
   flex: 1;
 }
-/* line 9706, sass/_base.scss */
+/* line 9853, sass/_base.scss */
 .szalag .highlight-view .items .hl-cont {
   padding: 0 15px;
   line-height: 40px;
 }
-/* line 9711, sass/_base.scss */
+/* line 9858, sass/_base.scss */
 .szalag .highlight-view .items ul li {
   display: none;
   font-size: 1.1em;
   text-align: center;
 }
-/* line 9715, sass/_base.scss */
+/* line 9862, sass/_base.scss */
 .szalag .highlight-view .items ul li.active {
   display: block;
 }
 
-/* line 9724, sass/_base.scss */
+/* line 9871, sass/_base.scss */
 .air-text-in {
   position: relative;
 }
-/* line 9726, sass/_base.scss */
+/* line 9873, sass/_base.scss */
 .air-text-in > .atext {
   position: absolute;
   width: 100%;
@@ -11590,51 +11730,51 @@ body.szallasok .szallas-infok .block .text {
   line-height: 1.1;
 }
 
-/* line 9740, sass/_base.scss */
+/* line 9887, sass/_base.scss */
 body.homepage footer,
 body.article footer {
   margin-top: 0;
 }
 
-/* line 9746, sass/_base.scss */
+/* line 9893, sass/_base.scss */
 body.article .website {
   width: 100%;
 }
 
-/* line 9752, sass/_base.scss */
+/* line 9899, sass/_base.scss */
 body.product-page .website {
   width: 100%;
 }
-/* line 9756, sass/_base.scss */
+/* line 9903, sass/_base.scss */
 body.product-page footer {
   margin-top: 0;
 }
-/* line 9759, sass/_base.scss */
+/* line 9906, sass/_base.scss */
 body.product-page header .bottom > .pw > .flex {
   padding-left: 0;
 }
-/* line 9763, sass/_base.scss */
+/* line 9910, sass/_base.scss */
 body.product-page .nav.nav-fix {
   flex: 1;
 }
 
-/* line 9769, sass/_base.scss */
+/* line 9916, sass/_base.scss */
 .sidebar .inp {
   padding: 10px 15px;
 }
-/* line 9771, sass/_base.scss */
+/* line 9918, sass/_base.scss */
 .sidebar .inp label {
   display: block;
   padding: 0 0 15px 0;
 }
-/* line 9776, sass/_base.scss */
+/* line 9923, sass/_base.scss */
 .sidebar .inp input, .sidebar .inp select {
   width: 100%;
   padding: 10px;
   font-size: 1.2em;
   border: 1px solid #e8e8e8;
 }
-/* line 9782, sass/_base.scss */
+/* line 9929, sass/_base.scss */
 .sidebar .inp button {
   display: block;
   width: 100%;
@@ -11647,11 +11787,11 @@ body.product-page .nav.nav-fix {
   font-size: 1.2em;
 }
 
-/* line 9796, sass/_base.scss */
+/* line 9943, sass/_base.scss */
 .programs-view {
   margin: 20px 0;
 }
-/* line 9798, sass/_base.scss */
+/* line 9945, sass/_base.scss */
 .programs-view .content-view-holder {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -11660,54 +11800,54 @@ body.product-page .nav.nav-fix {
   align-items: flex-start;
   margin: 0 -15px;
 }
-/* line 9806, sass/_base.scss */
+/* line 9953, sass/_base.scss */
 .programs-view .content-view-holder > div {
   padding: 0 15px;
 }
-/* line 9810, sass/_base.scss */
+/* line 9957, sass/_base.scss */
 .programs-view .content-view-holder > .sidebar {
   flex-basis: 30%;
 }
-/* line 9814, sass/_base.scss */
+/* line 9961, sass/_base.scss */
 .programs-view .content-view-holder > .view-holder {
   flex: 1;
 }
-/* line 9819, sass/_base.scss */
+/* line 9966, sass/_base.scss */
 .programs-view .content-view-holder .program-page .details {
   margin: 15px 0 30px 0;
   font-size: 1.2em;
   color: black;
 }
-/* line 9824, sass/_base.scss */
+/* line 9971, sass/_base.scss */
 .programs-view .content-view-holder .program-page .details span.date {
   background: #f5b801;
   color: white;
   padding: 4px 6px;
 }
-/* line 9829, sass/_base.scss */
+/* line 9976, sass/_base.scss */
 .programs-view .content-view-holder .program-page .details span.position {
   font-weight: bold;
   padding-left: 15px;
   color: #81b83a;
 }
-/* line 9835, sass/_base.scss */
+/* line 9982, sass/_base.scss */
 .programs-view .content-view-holder .program-page .content {
   line-height: 1.4;
   font-size: 1.23em;
 }
-/* line 9839, sass/_base.scss */
+/* line 9986, sass/_base.scss */
 .programs-view .content-view-holder .program-page .content p {
   margin: 5px 0;
 }
-/* line 9846, sass/_base.scss */
+/* line 9993, sass/_base.scss */
 .programs-view .categories {
   margin: 0 0 15px 0;
 }
-/* line 9849, sass/_base.scss */
+/* line 9996, sass/_base.scss */
 .programs-view .categories .list .cat {
   padding: 2px 0;
 }
-/* line 9851, sass/_base.scss */
+/* line 9998, sass/_base.scss */
 .programs-view .categories .list .cat a {
   text-transform: uppercase;
   display: block;
@@ -11718,7 +11858,7 @@ body.product-page .nav.nav-fix {
   border-radius: 2px;
   border: 0.5px solid transparent;
 }
-/* line 9862, sass/_base.scss */
+/* line 10009, sass/_base.scss */
 .programs-view .categories .list .cat:hover a, .programs-view .categories .list .cat.active a {
   background: white;
   color: black;
@@ -11726,7 +11866,7 @@ body.product-page .nav.nav-fix {
   border: 0.5px solid #d1d1d1;
 }
 
-/* line 9876, sass/_base.scss */
+/* line 10023, sass/_base.scss */
 .program-list > .wrapper .articles {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -11734,51 +11874,51 @@ body.product-page .nav.nav-fix {
   flex-wrap: wrap;
   margin: -10px;
 }
-/* line 9883, sass/_base.scss */
+/* line 10030, sass/_base.scss */
 .program-list > .wrapper .articles > .program {
   flex-basis: calc(100% / 3);
   padding: 10px;
 }
-/* line 9887, sass/_base.scss */
+/* line 10034, sass/_base.scss */
 .program-list > .wrapper .articles > .program .wrapper {
   background: white;
 }
-/* line 9891, sass/_base.scss */
+/* line 10038, sass/_base.scss */
 .program-list > .wrapper .articles > .program .datain {
   position: relative;
   padding: 25px 0 0 0;
 }
-/* line 9896, sass/_base.scss */
+/* line 10043, sass/_base.scss */
 .program-list > .wrapper .articles > .program .image {
   height: 13vw;
 }
-/* line 9901, sass/_base.scss */
+/* line 10048, sass/_base.scss */
 .program-list > .wrapper .articles > .program .title h3 {
   font-size: 1em;
   margin: 0;
 }
-/* line 9905, sass/_base.scss */
+/* line 10052, sass/_base.scss */
 .program-list > .wrapper .articles > .program .title a {
   text-align: center;
   display: block;
   padding: 5px 10px;
   color: black;
 }
-/* line 9913, sass/_base.scss */
+/* line 10060, sass/_base.scss */
 .program-list > .wrapper .articles > .program .pos {
   text-align: center;
   color: #a0a0a0;
   font-size: 0.85em;
   padding: 5px 10px 10px 5px;
 }
-/* line 9920, sass/_base.scss */
+/* line 10067, sass/_base.scss */
 .program-list > .wrapper .articles > .program .ondate {
   position: absolute;
   left: 0;
   top: -18px;
   width: 100%;
 }
-/* line 9925, sass/_base.scss */
+/* line 10072, sass/_base.scss */
 .program-list > .wrapper .articles > .program .ondate .in {
   width: 90%;
   margin: 0 auto;
@@ -11790,11 +11930,11 @@ body.product-page .nav.nav-fix {
   text-decoration: none;
   font-weight: bold;
 }
-/* line 9938, sass/_base.scss */
+/* line 10085, sass/_base.scss */
 .program-list > .wrapper .articles > .program .details {
   margin-top: 10px;
 }
-/* line 9940, sass/_base.scss */
+/* line 10087, sass/_base.scss */
 .program-list > .wrapper .articles > .program .details a {
   color: white;
   text-decoration: none;
@@ -11807,11 +11947,11 @@ body.product-page .nav.nav-fix {
   -webkit-transition: all .4s;
   transition: all .4s;
 }
-/* line 9952, sass/_base.scss */
+/* line 10099, sass/_base.scss */
 .program-list > .wrapper .articles > .program .details a:hover {
   background: #f5b801;
 }
-/* line 9959, sass/_base.scss */
+/* line 10106, sass/_base.scss */
 .program-list > .wrapper .articles .no-news {
   line-height: 1.4;
   font-size: 1.3em;
@@ -11820,13 +11960,13 @@ body.product-page .nav.nav-fix {
   flex-basis: 100%;
 }
 
-/* line 9972, sass/_base.scss */
+/* line 10119, sass/_base.scss */
 .sidebar > .box {
   background: white;
   margin: 0 0 20px 0;
   box-shadow: 2px 2px 20px -10px black;
 }
-/* line 9977, sass/_base.scss */
+/* line 10124, sass/_base.scss */
 .sidebar > .box > .header {
   background: #898989;
   color: white;
@@ -11835,15 +11975,15 @@ body.product-page .nav.nav-fix {
   font-size: 1.2em;
   text-transform: uppercase;
 }
-/* line 9987, sass/_base.scss */
+/* line 10134, sass/_base.scss */
 .sidebar > .box > .c > .p {
   padding: 15px;
 }
-/* line 9993, sass/_base.scss */
+/* line 10140, sass/_base.scss */
 .sidebar > .box.green-header > .header {
   background: #8eaf35;
 }
-/* line 9998, sass/_base.scss */
+/* line 10145, sass/_base.scss */
 .sidebar > .box.orange-header > .header {
   background: #f5b801;
 }

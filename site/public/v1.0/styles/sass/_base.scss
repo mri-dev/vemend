@@ -7593,8 +7593,41 @@ body.homepage{
 	}
 }
 
+
+.md-calendar-day-header th{
+	height: auto !important;
+	padding: 10px 0 !important;
+}
+
 .szallas-kereso-block{
 	flex-basis: 30%;
+
+	.no-datas{
+		background: #dd4d3d;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin: 10px 0 0 0;
+
+		h4{
+			text-transform: uppercase;
+			margin: 0 0 8px 0;
+		}
+	}
+
+	.md-datepicker-input-container{
+		position: absolute;
+		right: 0;
+		left: 43px;
+		top: 22px;
+	}
+	.md-calendar-date.md-focus .md-default-theme .md-calendar-date-selection-indicator, .md-calendar-date.md-focus .md-calendar-date-selection-indicator, .md-default-theme .md-calendar-date-selection-indicator:hover, .md-calendar-date-selection-indicator:hover{
+		background: $color-orange !important;
+		color: white !important;
+	}
+	.md-default-theme .md-calendar-date.md-calendar-date-today .md-calendar-date-selection-indicator, .md-calendar-date.md-calendar-date-today .md-calendar-date-selection-indicator{
+		border: 1px solid rgb(208, 160, 15);
+	}
 
 	& > .wrapper{
 		padding: 10px;
@@ -7667,6 +7700,10 @@ body.homepage{
 
 		.inp{
 			margin: 0 0 10px 0;
+
+			& > .wrapper{
+				position: relative;
+			}
 
 			input, select{
 				width: 100%;
@@ -7788,12 +7825,12 @@ body.szallasok{
 
 	.szallas-ajanlatok{
 		background: white;
-		border: 0.5px solid #cecece;
+		border:2px solid #fb6f09;
 		margin: 10px 0 0 0;
 
 		.ajanlat-head{
 			padding: 10px;
-			background: $color-orange;
+			background: #fb6f09;
 			text-align: center;
 			font-size: 0.9em;
 			font-weight: 300;
@@ -7802,7 +7839,7 @@ body.szallasok{
 		}
 		.room {
 			.roomhead{
-				background: #f1f1f1;
+				background: #e5e5e5;
 				padding: 10px;
 				color: black;
 				border: 0.5px solid #d2d2d2;
@@ -7904,6 +7941,65 @@ body.szallasok{
 		border: 1px solid #f6b801;
 		position: relative;
 
+		.config-stat{
+			font-size: 0.8em;
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: flex;
+			flex-wrap: wrap;
+			align-items: baseline;
+			padding: 5px;
+
+			& > .datefilter,
+			& > .daynight
+			{
+				font-size: 1.2em;
+			}
+			& > .datefilter{
+				flex-basis: 60%;
+			}
+			& > .daynight{
+				flex-basis: 40%;
+				text-align: right;
+			}
+			& > .adults,
+			& > .children,
+			& > .ellatas,
+			& > .kisallat{
+				text-decoration: underline;
+			}
+
+			& > .adults,
+			& > .children{
+				flex-basis: 25%;
+			}
+			& > .ellatas{
+				flex-basis: 30%;
+			}
+
+			& > .kisallat{
+				flex-basis: 20%;
+			}
+
+			.wrap{
+				padding: 5px;
+
+				.ico{
+					height: 18px;
+					vertical-align: bottom;
+					margin: 0 5px 0 0;
+				}
+			}
+
+
+			& > .ellatas,
+			& > .kisallat{
+				.ico {
+					height: 13px;
+				}
+			}
+		}
+
 		&:before{
 			content: "";
 			background: url("#{$imgroot}config-result-arrow-top.png") no-repeat center;
@@ -8003,6 +8099,57 @@ body.szallasok{
 
 				&:hover{
 					background: darken($color-orange, 10%);
+				}
+			}
+
+			&.in-order{
+				.foglal{
+					flex-basis: 100%;
+					height: 40px;
+				}
+			}
+		}
+		.ordercontact{
+			.head{
+				background: #585858;
+				font-size: 0.8em;
+				position: relative;
+				&:before{
+					content: "";
+					position: absolute;
+					top: -20px;
+					left: 50%;
+					border-style: solid;
+					border-width: 10px;
+					border-color: transparent transparent #585858 transparent;
+					-webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+					pointer-events: none;
+				}
+			}
+
+			& > .wrapper{
+				padding: 0 10px 10px 10px;
+			}
+
+			.inp{
+				margin: 0 0 10px 0;
+				& > .wrapper{
+					label{
+						display: block;
+				    margin: 0 0 10px 0;
+				    font-weight: 300;
+				    font-size: 0.8em;
+					}
+
+					input,textarea{
+						width: 100%;
+						max-width: 100%;
+						border: 0.5px solid #cccccc;
+						padding: 10px;
+						color: black;
+						font-weight: bold;
+					}
 				}
 			}
 		}
