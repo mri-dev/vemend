@@ -199,11 +199,19 @@ class SzallasFramework
 
   public function sendOrderAlert( $to_name, $to_email, $subject, $config, $to_owner = true )
   {
+    if ($to_owner) {
+      $from = $config['order_contacts']['name'];
+    } else {
+      $from = $config['szallas']['title'] . ' - '.$this->settings['page_title'];
+    }
+
     $mail = new Mailer(
-      $this->settings['page_title'],
+      $from,
       SMTP_USER,
       "smtp"
     );
+
+    $mail->add( $to_email );
 
     if ($to_owner) {
       $mail->setReplyTo( $config['order_contacts']['name'], $config['order_contacts']['email'] );
@@ -211,7 +219,6 @@ class SzallasFramework
       $mail->setReplyTo( $config['szallas']['title'] . ' - '.$this->settings['page_title'], $this->settings['email_noreply_address'] );
     }
 
-    $mail->add( $to_email );
 
     $arg = array(
       'settings' => $this->settings,
