@@ -45,6 +45,14 @@ class ajax extends Controller{
 							$ret['data']['szallas'] = $szallasok->loadSzallas( (int)$szallasid, true );
 							$ret['data']['rooms'] = $szallasok->getRoomsConfig( (int)$szallasid, $config );
 						break;
+						case 'sendOrder':
+							$config['room'] = $room;
+							try {
+								$szallasok->sendOrder( (int)$szallasid, $config );
+							} catch (\Exception $e) {
+
+							}
+						break;
 					}
 
 					echo json_encode($ret);

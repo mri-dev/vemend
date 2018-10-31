@@ -212,33 +212,42 @@
           <div class="inp">
             <div class="wrapper">
               <label for="order_contacts_name">Az Ön neve *</label>
-              <input type="text" ng-model="order_contacts.name">
+              <input type="text" ng-model="config.order_contacts.name">
             </div>
           </div>
           <div class="inp">
             <div class="wrapper">
               <label for="order_contacts_email">Az Ön e-mail címe *</label>
-              <input type="text" ng-model="order_contacts.email">
+              <input type="text" ng-model="config.order_contacts.email">
             </div>
           </div>
           <div class="inp">
             <div class="wrapper">
               <label for="order_contacts_phone">Az Ön telefonszáma *</label>
-              <input type="text" ng-model="order_contacts.phone">
+              <input type="text" ng-model="config.order_contacts.phone">
             </div>
           </div>
           <div class="inp">
             <div class="wrapper">
               <label for="order_contacts_phone">Megjegyzés</label>
-              <textarea ng-model="order_contacts.comment"></textarea>
+              <textarea ng-model="config.order_contacts.comment"></textarea>
             </div>
           </div>
         </div>
+        <div class="order-sending" ng-show="sendingorder">
+          Az ajánlatkérés küldése folyamatban... <i class="fa fa-spin fa-spinner"></i>
+        </div>
+        <button ng-show="!sendingorder && (config.order_contacts.name && config.order_contacts.email && config.order_contacts.phone)" type="button" class="sendorder" ng-click="sendOrder()">Ajánlatkérés elküldése <i class="fa fa-arrow-circle-right"></i></button>
       </div>
     </div>
 
-    <div class="connect-msg">
-      Az ajánlatkérésről azonnal megkapja a visszaigazolást!
+    <div class="connect-msg" ng-class="(sendedorder)?'sended-order':''">
+      <div ng-show="!sendedorder">
+        Az ajánlatkérésről azonnal megkapja a visszaigazolást!
+      </div>
+      <div ng-show="sendedorder">
+        <i class="fa fa-check-circle"></i> Az ajánlatkérését sikeresen elküldtük a szálláshelynek!
+      </div>
     </div>
 
     <div class="map">

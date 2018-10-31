@@ -1010,7 +1010,7 @@ app.controller('Tudastar',['$scope', '$http', '$mdToast', '$element', '$location
 /**
 * Szállás konfigurátor
 **/
-app.controller('SzallasCalculator', ['$scope', '$http', function( $scope, $http )
+app.controller('SzallasCalculator', ['$scope', '$http', '$timeout', function( $scope, $http, $timeout )
 {
   //var m = new moment();
   //console.log(m);
@@ -1018,6 +1018,8 @@ app.controller('SzallasCalculator', ['$scope', '$http', function( $scope, $http 
   $scope.szallas_adat = {};
   $scope.loading = false;
   $scope.loaded = false;
+  $scope.sendingorder = false;
+  $scope.sendedorder = false;
   $scope.terms = [];
   var startdate = new Date();
   var enddate = new Date();
@@ -1058,7 +1060,7 @@ app.controller('SzallasCalculator', ['$scope', '$http', function( $scope, $http 
     var mm = d.getMonth() + 1;
     var dd = d.getDate();
     var yy = d.getFullYear();
-    return yy + '. ' + mm + '. ' + dd+'.';
+    return yy + '-' + mm + '-' + dd;
   }
 
   $scope.getDateDayDiff = function( d1, d2 )
@@ -1109,6 +1111,48 @@ app.controller('SzallasCalculator', ['$scope', '$http', function( $scope, $http 
 			if (typeof callback !== 'undefined') {
 				callback();
 			}
+    });
+  }
+
+  $scope.sendOrder = function() {
+    $scope.sendingorder = true;
+    $scope.sendedorder = false;
+
+    $scope.config.datefrom = $scope.dateFormating($scope.config.datefrom);
+    $scope.config.dateto = $scope.dateFormating($scope.config.dateto);
+
+    $http({
+      method: 'POST',
+      url: '/ajax/post',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: $.param({
+        type: "Szallasok",
+        key: 'sendOrder',
+        szallasid: $scope.szallasid,
+        config: $scope.config,
+        room: $scope.picked_rooms
+      })
+    }).success(function(r)
+    {
+      $scope.sendingorder = false;
+      console.log(r);
+
+      if (r.error == 0) {
+        $scope.config.order_contacts = {
+          'name': '',
+          'email': '',
+          'phone': '',
+          'comment': ''
+        };
+        $scope.sendedorder = true;
+        $scope.config.startorder = false;
+
+        $timeout(function()
+        {
+          $scope.sendedorder = false;
+          $scope.picked_rooms = {};
+        }, 5000);
+      }
     });
   }
 

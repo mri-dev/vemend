@@ -1,6 +1,9 @@
 <?php
 namespace SzallasManager;
 
+use MailManager\Mailer;
+use PortalManager\Template;
+
 class SzallasFramework
 {
   const DBSZALLASOK = 'Szallasok';
@@ -11,6 +14,7 @@ class SzallasFramework
   const DBSZALLASXREFELLATAS = 'Szallas_xref_Ellatas';
   const DBSZOBAK = 'Szallasok_Szobak';
   const DBSZOBAAR = 'Szallasok_Szoba_ar';
+  const DBORDERS = 'Szallas_Orders';
 
   protected $arg = null;
   protected $db = null;
@@ -24,6 +28,35 @@ class SzallasFramework
 		$this->settings = $arg['db']->settings;
 
 		return $this;
+  }
+
+  public function getSzallas( $id )
+  {
+    $back = array();
+    $qparam = array();
+
+    if (!$id) {
+      return false;
+    }
+
+    $q = "SELECT
+      sz.*
+    FROM ".self::DBSZALLASOK." as sz
+    WHERE 1=1 and sz.ID = :id";
+
+    $qparam['id'] = $id;
+
+    $data = $this->db->squery( $q, $qparam );
+
+    if( $data->rowCount() == 0 ) {
+      return $back;
+    }
+
+    $data = $data->fetch(\PDO::FETCH_ASSOC);
+    $back = $data;
+    $back['url'] = $this->szallasURL($back);
+
+    return $back;
   }
 
   public function getAuthor( $id )
@@ -55,6 +88,8 @@ class SzallasFramework
 
 		return $data;
   }
+
+
 
   public function rebuildSzallasEllatas( $szallasid, $ids = array() )
   {
@@ -115,6 +150,87 @@ class SzallasFramework
   public function szallasURL( $data )
   {
     return '/szallas/'.$data['ID'].'/'.\Helper::makeSafeUrl($data['title'],'');
+  }
+
+  public function sendOrder( $szallas_id, $config )
+  {
+    $insert = array();
+
+    $insert['szallas_id'] = $szallas_id;
+    $insert['contact_name'] = addslashes($config['order_contacts']['name']);
+    $insert['contact_email'] = addslashes($config['order_contacts']['email']);
+    $insert['contact_phone'] = addslashes($config['order_contacts']['phone']);
+    $insert['contact_comment'] = ($config['order_contacts']['comment'] != '') ? addslashes($config['order_contacts']['comment']) : NULL;
+    $insert['datefrom'] = ($config['datefrom']);
+    $insert['dateto'] = ($config['dateto']);
+    $insert['nights'] = (int)($config['nights']);
+    $insert['total_prices'] = (float)($config['total_price']);
+    $insert['ifa_total'] = (float)($config['ifa_price']);
+    $insert['ellatas_id'] = (int)($config['room']['priceconfig']['ellatas_id']);
+    $insert['room_id'] = (int)($config['room']['room']['ID']);
+    $insert['price_id'] = (int)($config['room']['priceconfig']['ID']);
+    $insert['adults'] = (int)($config['adults']);
+    $insert['children'] = (int)($config['children']);
+    $insert['children_ages'] = (!isset($config['children_age'])) ? NULL : json_encode((array)$config['children_age']);
+    $insert['kisallatot_hoz'] = ($config['kisallatot_hoz'] == 'true') ? 1 : 0;
+    $insert['kisallat_dij'] = (float)($config['kisallat_dij']);
+    $insert['configraw'] = json_encode($config['room'], \JSON_UNESCAPED_UNICODE);
+
+    $this->db->insert(
+      self::DBORDERS,
+      $insert
+    );
+
+    // Referencia ID
+    $refid = $this->db->lastInsertId();
+
+    // Szállás adatok
+    $config['szallas'] = $this->getSzallas( $szallas_id );
+    $config['rfid'] = $refid;
+
+    // Értesítés az adminnak
+    $this->sendOrderAlert( 'Szállásadó', $config['szallas']['contact_email'], 'Új szállás ajánlatkérés - RFID#'.$refid, $config, true );
+
+    // Értesítés az ajánlatkérőnek
+    $this->sendOrderAlert( $config['order_contacts']['name'], $config['order_contacts']['email'], 'Szállás ajánlatkérés elküldve - RFID#'.$refid, $config, false );
+
+    return $refid;
+  }
+
+  public function sendOrderAlert( $to_name, $to_email, $subject, $config, $to_owner = true )
+  {
+    $mail = new Mailer(
+      $this->settings['page_title'],
+      SMTP_USER,
+      "smtp"
+    );
+
+    if ($to_owner) {
+      $mail->setReplyTo( $config['order_contacts']['name'], $config['order_contacts']['email'] );
+    } else {
+      $mail->setReplyTo( $config['szallas']['title'] . ' - '.$this->settings['page_title'], $this->settings['email_noreply_address'] );
+    }
+
+    $mail->add( $to_email );
+
+    $arg = array(
+      'settings' => $this->settings,
+      'to_owner' => $to_owner,
+      'config' => $config,
+      'rfid' => $config['rfid'],
+      'szallas' => $config['szallas'],
+      'contact_name' => $to_name,
+      'name' => $to_name
+    );
+
+    $mail->setSubject( $subject );
+    $msg = (new Template( VIEW . 'templates/mail/' ))->get( 'szallas_alert', $arg );
+    $mail->setMsg( $msg );
+
+    if ( true ) {
+      $re = $mail->sendMail();
+      return $re;
+    }
   }
 
   public function saveSzallas( $szallas )
