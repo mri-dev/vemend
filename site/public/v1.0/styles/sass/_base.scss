@@ -8762,6 +8762,11 @@ body.szallasok{
 							color: $color-red;
 							font-weight: bold;
 							font-size: 1.2em;
+
+							.frm {
+								font-size: 0.7em;
+								font-weight: 300;
+							}
 						}
 					}
 				}

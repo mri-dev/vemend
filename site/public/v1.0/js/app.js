@@ -1014,6 +1014,7 @@ app.controller('SzallasCalculator', ['$scope', '$http', '$timeout', function( $s
 {
   //var m = new moment();
   //console.log(m);
+  $scope.urlGET = {};
   $scope.szallasid = 0;
   $scope.szallas_adat = {};
   $scope.loading = false;
@@ -1048,8 +1049,36 @@ app.controller('SzallasCalculator', ['$scope', '$http', '$timeout', function( $s
   $scope.picked_rooms = {};
   $scope.rooms = [];
 
-  $scope.init = function( id ) {
+  $scope.decodeURIString = function( queryString ) {
+    var query = {};
+     var pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
+     for (var i = 0; i < pairs.length; i++) {
+         var pair = pairs[i].split('=');
+         query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+     }
+     return query;
+  }
+
+  $scope.init = function( id, httpgetstr )
+  {
+    if (typeof httpgetstr !== 'undefined') {
+      // URL get serialized paraméter dekódolása
+      $scope.urlGET = $scope.decodeURIString(httpgetstr);
+      console.log($scope.urlGET);
+    }
+
     $scope.szallasid = id;
+
+    if (id == 0) {
+      if ( $scope.urlGET.erkezes ) { $scope.config.datefrom = new Date($scope.urlGET.erkezes); }
+      if ( $scope.urlGET.tavozas ) { $scope.config.dateto = new Date($scope.urlGET.tavozas); }
+      if ( $scope.urlGET.adults ) { $scope.config.adults = parseInt($scope.urlGET.adults); }
+      if ( $scope.urlGET.children ) { $scope.config.children = parseInt($scope.urlGET.children); }
+      if ( $scope.urlGET.ellatas ) { $scope.config.ellatas = parseInt($scope.urlGET.ellatas); }
+      if ( $scope.urlGET.kisallat ) { $scope.config.kisallatot_hoz = ($scope.urlGET.kisallat == 'true') ? true : false; }
+      if ( $scope.urlGET.childrenage ) { $scope.config.children_age = $scope.urlGET.childrenage.split(","); }
+    }
+
     $scope.loadTerms(function() {
 
     });
@@ -1154,6 +1183,23 @@ app.controller('SzallasCalculator', ['$scope', '$http', '$timeout', function( $s
         }, 5000);
       }
     });
+  }
+
+  $scope.listSearcher = function() {
+    var url = '/szallasok/?';
+
+    $scope.config.datefrom = $scope.dateFormating($scope.config.datefrom);
+    $scope.config.dateto = $scope.dateFormating($scope.config.dateto);
+
+    url += 'erkezes='+$scope.config.datefrom;
+    url += '&tavozas='+$scope.config.dateto;
+    url += '&adults='+$scope.config.adults;
+    url += '&children='+$scope.config.children;
+    url += '&ellatas='+$scope.config.ellatas;
+    url += '&kisallat='+$scope.config.kisallatot_hoz;
+    url += '&childrenage='+$scope.config.children_age.join();
+
+    window.location = url;
   }
 
   $scope.refresh = function( callback )

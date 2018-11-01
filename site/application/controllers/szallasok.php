@@ -12,8 +12,28 @@ class szallasok extends Controller{
 			$this->out( 'template', $temp );
 
 			// Szállások
+			$param = array();
+			$param['admin'] = false;
+			if (isset($_GET['erkezes'])) {
+				$param['filters']['erkezes'] = date('Y-m-d', strtotime($_GET['erkezes']));
+			}
+			if (isset($_GET['tavozas'])) {
+				$param['filters']['tavozas'] = date('Y-m-d', strtotime($_GET['tavozas']));
+			}
+			if (isset($_GET['adults'])) {
+				$param['filters']['adults'] = (int)$_GET['adults'];
+			}
+			if (isset($_GET['children'])) {
+				$param['filters']['children'] = (int)$_GET['children'];
+			}
+			if (isset($_GET['ellatas'])) {
+				$param['filters']['ellatas'] = (int)$_GET['ellatas'];
+			}
+			if (isset($_GET['kisallat'])) {
+				$param['filters']['kisallat'] = ($_GET['kisallat'] == 'true') ? 1 : 0;
+			}
 			$szallaslista = new SzallasList( array( 'db' => $this->db ) );
-			$szallasok = $szallaslista->getList();
+			$szallasok = $szallaslista->getList( $param );
 			$this->out('szallasok', $szallasok);
 
 			if ( $_GET['adatlap'] == 1 )

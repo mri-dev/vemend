@@ -17,11 +17,40 @@ class SzallasList extends SzallasFramework
     $back = array();
     $darg = array();
     $arg['loadfulldata'] = false;
+    $config_filters = array();
+    $filters = $arg['filters'];
+    $admin = (isset($arg['admin']) && $arg['admin'] === false) ? false : true;
+
+    // Config filter prepare
+    if (isset($filters['erkezes'])) {
+      $config_filters['datefrom'] = $filters['erkezes'];
+    }
+    if (isset($filters['tavozas'])) {
+      $config_filters['dateto'] = $filters['tavozas'];
+    }
+
+    if (isset($filters['adults'])) {
+      $config_filters['adults'] = $filters['adults'];
+    }
+
+    if (isset($filters['children'])) {
+      $config_filters['children'] = $filters['children'];
+    }
+
+    if (isset($filters['ellatas'])) {
+      $config_filters['ellatas'] = $filters['ellatas'];
+    }
 
     $q = "SELECT
       sz.*
-    FROM ".parent::DBSZALLASOK." as sz
-    WHERE 1=1 ";
+    FROM ".parent::DBSZALLASOK." as sz ";
+
+    // Joins
+    if (isset($config_filters['adults'])) {
+      $q .= " LEFT OUTER JOIN ".parent::DBSZOBAK." as szo ON szo.szallas_id = sz.ID";
+    }
+
+    $q .= " WHERE 1=1 ";
 
     // Adott szállás lekérése
     if (isset($arg['getid']) && !empty($arg['getid'])) {
@@ -30,10 +59,32 @@ class SzallasList extends SzallasFramework
       $darg['id'] = (int)$arg['getid'];
     }
 
+    if (isset($config_filters['adults'])) {
+      $q .= " and szo.elerheto = 1 and szo.felnott_db >= ".$config_filters['adults'];
+    }
+
+    if (isset($config_filters['children'])) {
+      $q .= " and szo.gyermek_db >= ".$config_filters['children'];
+    }
+
+    if (isset($config_filters['ellatas']) && $config_filters['ellatas'] != 0) {
+      $q .= " and :ellatas IN (SELECT sza.ellatas_id FROM ".parent::DBSZOBAAR." as sza WHERE sza.szoba_id = szo.ID)";
+      $darg['ellatas'] = $config_filters['ellatas'];
+    }
+
+    // Joins GROUP
+    if (isset($config_filters['adults'])) {
+      $q .= " GROUP BY sz.ID ";
+    }
+
     if (!isset($arg['order'])) {
       $q .= " ORDER BY sz.kiemelt DESC, sz.title ASC ";
     }
 
+
+    // Run query
+
+    //echo $q;
     $qry = $this->db->squery( $q, $darg );
 
     if ($qry->rowCount() == 0) {
@@ -54,6 +105,7 @@ class SzallasList extends SzallasFramework
       $d['ellatasok'] = $this->getSzallasEllatasIDS($d['ID']);
       $d['bejelentkezes_data'] = $this->calcNyitvaTartasData($d['bejelentkezes']);
       $d['kijelentkezes_data'] = $this->calcNyitvaTartasData($d['kijelentkezes']);
+      $d['prices'] = $this->getSzallasPriceInfo( $d, $config_filters, $admin );
 
       // Összes vonatkozó adat betöltése
       if (isset($arg['loadfulldata']) && !empty($arg['loadfulldata'])) {

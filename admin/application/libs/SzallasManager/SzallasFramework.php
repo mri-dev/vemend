@@ -245,11 +245,12 @@ class SzallasFramework
     if ((int)$szallas['ID'] != 0)
     {
       // MENTÉS
-
       $update = array(
         'title' => $szallas['title'],
         'leiras' => $szallas['leiras'],
         'cim' => $szallas['cim'],
+        'cim_sub' => $szallas['cim_sub'],
+        'kiemelt_szoveg' => $szallas['kiemelt_szoveg'],
         'contact_email' => $szallas['contact_email'],
         'contact_phone' => $szallas['contact_phone'],
         'bejelentkezes' => $szallas['bejelentkezes'],
@@ -279,11 +280,12 @@ class SzallasFramework
      else
     {
       // LÉTREHOZÁS
-
       $insert = array(
         'title' => $szallas['title'],
         'leiras' => $szallas['leiras'],
         'cim' => $szallas['cim'],
+        'cim_sub' => $szallas['cim_sub'],
+        'kiemelt_szoveg' => $szallas['kiemelt_szoveg'],
         'contact_email' => $szallas['contact_email'],
         'contact_phone' => $szallas['contact_phone'],
         'bejelentkezes' => $szallas['bejelentkezes'],
@@ -306,7 +308,79 @@ class SzallasFramework
     }
   }
 
-  public function getRoomsConfig( $szallasid, $config = array() )
+  public function getSzallasPriceInfo( $data, $config_filters, $admin = true )
+  {
+    $back = array(
+      'old' => false,
+      'current' => 0,
+      'discount' => false,
+      'datas' => array(),
+      'adults' => 1,
+      'children' => 0,
+      'total_person' => 0,
+      'nights' => 1
+    );
+
+
+
+    if (isset($config_filters['dateto']) && isset($config_filters['datefrom'])) {
+      $back['nights'] = $this->getDateDayDiff($config_filters['dateto'], $config_filters['datefrom']);
+    }
+
+    if (isset($config_filters['adults']) && $config_filters['adults'] != 0) {
+      $back['adults'] = $config_filters['adults'];
+    }
+    if (isset($config_filters['children']) && $config_filters['children'] != 0) {
+      $back['children'] = $config_filters['children'];
+    }
+
+
+    $back['total_person'] = $back['adults'] + $back['children'];
+
+    $actual_min_price = 9999999999999;
+
+    $rooms = $this->getRoomsConfig( $data['ID'], $config_filters, $admin );
+
+    if ($rooms) {
+      foreach ((array) $rooms as $room) {
+        //$back['set'][] = $room;
+        if (empty($room['prices'])) {
+          continue;
+        }
+
+        foreach ( (array)$room['prices'] as $rp ) {
+          if (isset($config_filters['ellatas']) && $config_filters['ellatas'] != 0 && $rp['ellatas_id'] != $config_filters['ellatas']) {
+            continue;
+          }
+          if($rp['felnott_ar'] != 0 && $rp['felnott_ar'] < $actual_min_price ) {
+            $actual_min_price = $rp['felnott_ar'];
+            $back['datas']['room'] = $room;
+            $back['datas']['roomprice'] = $rp;
+          }
+        }
+      }
+
+      $actual_min_price =
+        ($back['nights'] * ($back['adults'] * $back['datas']['roomprice']['felnott_ar'])) +
+        ($back['nights'] * ($back['children'] * $back['datas']['roomprice']['gyerek_ar']));
+
+
+      $back['current'] = $actual_min_price;
+    }
+
+    return $back;
+  }
+
+  public function getDateDayDiff( $date1, $date2 )
+  {
+    $now = strtotime($date1); // or your date as well
+    $your_date = strtotime($date2);
+    $datediff = $now - $your_date;
+
+    return round($datediff / (60 * 60 * 24));
+  }
+
+  public function getRoomsConfig( $szallasid, $config = array(), $admin = true )
   {
     $back = array();
     $qparam = array();
@@ -316,9 +390,17 @@ class SzallasFramework
       r.name,
       r.leiras,
       r.felnott_db,
-      r.gyermek_db
+      r.gyermek_db,
+      r.elerheto
     FROM ".self::DBSZOBAK." as r
-    WHERE 1=1 and r.szallas_id = :szallas";
+    WHERE 1=1";
+
+    if (!$admin) {
+      $q .= " and r.elerheto = :io";
+      $qparam['io'] = 1;
+    }
+
+    $q .= " and r.szallas_id = :szallas";
     $qparam['szallas'] = $szallasid;
 
     $q .= " and r.felnott_db >= :adultdb";

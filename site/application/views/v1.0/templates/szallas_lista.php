@@ -1,12 +1,14 @@
 <div class="szallas-list grid-x2">
   <div class="wrapper">
-    
+
     <?php if ( $this->szallasok || true ): ?>
     <?php foreach ( (array)$this->szallasok['list'] as $szallas ): ?>
     <div class="szallas">
       <div class="wrapper">
         <div class="image">
-          <div class="discount">-30%</div>
+          <?php if ($szallas['prices']['discount']): ?>
+          <div class="discount">-<?=$szallas['prices']['discount']?>%</div>
+          <?php endif; ?>
           <div class="wrapper image-abs-center">
             <img src="<?=$szallas['profilkep']?>" alt="">
           </div>
@@ -20,29 +22,31 @@
           <i class="fa fa-map-marker"></i> <?=$szallas['cim']?>
         </div>
         <div class="distance">
-          1 km a központtól
+          <?=($szallas['cim_sub'])?:'&nbsp;'?>
         </div>
         <div class="info-block">
           <div class="block-left">
             <div class="wrapper">
-              1 fő/1 éj
+              <?=$szallas['prices']['total_person']?> fő / <?=$szallas['prices']['nights']?> éj
             </div>
           </div>
           <div class="block-center">
             <div class="wrapper">
               <div class="prices">
+                <?php if ($szallas['prices']['old']): ?>
                 <div class="old">
-                  23 780 Ft
+                  <?php echo \Helper::cashFormat($szallas['prices']['old']); ?> Ft
                 </div>
-                <div class="current">
-                  18 950 Ft
+                <?php endif; ?>
+                <div class="current" <? if($szallas['prices']['datas']): ?>title="Szoba: <?=$szallas['prices']['datas']['room']['name']?>, <?=$szallas['prices']['datas']['roomprice']['ellatas_name']?> esetén."<? endif; ?>>
+                  <?php echo \Helper::cashFormat($szallas['prices']['current']); ?> Ft<span class="frm">-tól</span>
                 </div>
               </div>
             </div>
           </div>
           <div class="block-right">
             <div class="wrapper">
-              A szálláshely kisállatokat is fogad!
+              <?=$szallas['kiemelt_szoveg']?>
             </div>
           </div>
         </div>

@@ -84,6 +84,22 @@
 							</div>
 							<br>
 							<div class="row">
+								<div class="col-md-12">
+									<label for="cim_sub">Cím kiegészítő megjegyzés - listázásban jelenik meg (pl: 1 km-re a központtól, 50 méterre a fürdőtől, stb.)</label>
+									<input type="text" maxlength="60" id="cim_sub" ng-model="create.cim_sub" class="form-control">
+									<small>60 / {{60-create.cim_sub.length}}</small>
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div class="col-md-12">
+									<label for="kiemelt_szoveg">Kiemelt kiegészítő megjegyzés - listázásban jelenik meg (pl: a szállás SZÉP kártyát is elfogad.)</label>
+									<input type="text" maxlength="60" id="kiemelt_szoveg" ng-model="create.kiemelt_szoveg" class="form-control">
+									<small>60 / {{60-create.kiemelt_szoveg.length}}</small>
+								</div>
+							</div>
+							<br>
+							<div class="row">
 								<div class="col-md-6">
 									<label for="contact_email">Kapcsolat e-mail cím</label>
 									<input type="text" id="contact_email" ng-model="create.contact_email" class="form-control">
