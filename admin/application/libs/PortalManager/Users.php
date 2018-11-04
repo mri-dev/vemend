@@ -1060,7 +1060,7 @@ class Users
 			throw new \Exception("Felhasználói csoport kiválasztása kötelező!");
 		}
 
-		$user_group 	= $data['data']['user_group '];
+		$user_group 	= $data['data']['user_group'];
 		$price_group 	= (int)$data['data']['price_group'];
 		$distributor 	= 0;
 		$jelszo 		= $data['data']['felhasznalok']['jelszo'];
