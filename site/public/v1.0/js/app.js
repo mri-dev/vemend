@@ -1069,7 +1069,7 @@ app.controller('SzallasCalculator', ['$scope', '$http', '$timeout', function( $s
 
     $scope.szallasid = id;
 
-    if (id == 0) {
+    if ( $scope.urlGET ) {
       if ( $scope.urlGET.erkezes ) { $scope.config.datefrom = new Date($scope.urlGET.erkezes); }
       if ( $scope.urlGET.tavozas ) { $scope.config.dateto = new Date($scope.urlGET.tavozas); }
       if ( $scope.urlGET.adults ) { $scope.config.adults = parseInt($scope.urlGET.adults); }
@@ -1080,7 +1080,9 @@ app.controller('SzallasCalculator', ['$scope', '$http', '$timeout', function( $s
     }
 
     $scope.loadTerms(function() {
-
+      if ($scope.szallasid != 0 && $scope.urlGET ) {
+        $scope.refresh();
+      }
     });
   }
 
@@ -1102,8 +1104,8 @@ app.controller('SzallasCalculator', ['$scope', '$http', '$timeout', function( $s
     return diffDays;
   }
 
-  $scope.dateChanged = function( pos ) {
-    var diff = $scope.getDateDayDiff($scope.config.datefrom, $scope.config.dateto);
+  $scope.dateChanged = function( pos )
+  {
     var df = new Date($scope.config.datefrom);
     var dt = new Date($scope.config.dateto);
 
@@ -1114,8 +1116,6 @@ app.controller('SzallasCalculator', ['$scope', '$http', '$timeout', function( $s
         $scope.config.dateto = nd;
       }
     }
-
-    $scope.config.nights = diff - 1;
   }
 
   $scope.loadTerms = function( callback )
@@ -1205,6 +1205,10 @@ app.controller('SzallasCalculator', ['$scope', '$http', '$timeout', function( $s
   $scope.refresh = function( callback )
   {
     if ( !$scope.loading ) {
+      var diff = $scope.getDateDayDiff($scope.config.datefrom, $scope.config.dateto);
+      console.log(diff);
+      $scope.config.nights = diff - 1;
+
       $scope.loading = true;
       $scope.picked_rooms = {};
       $http({

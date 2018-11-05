@@ -1,4 +1,4 @@
-<div class="szallas-kereso-block configurator" ng-controller="SzallasCalculator" ng-init="init(<?=$this->szallas['datas']['ID']?>)">
+<div class="szallas-kereso-block configurator" ng-controller="SzallasCalculator" ng-init="init(<?=$this->szallas['datas']['ID']?>,'<?=http_build_query($_GET)?>')">
   <div class="wrapper">
     <div class="head">
       <i class="fa fa-briefcase"></i> Szállás ajánlatkérő

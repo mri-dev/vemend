@@ -111,16 +111,22 @@ class Categories
 			throw new \Exception( "Kérjük, hogy adja meg a kategória elnevezését!" );
 		}
 
-		$category->edit(array(
-			'neve' 		=> $name,
+		$row = array(
+			'neve' => $name,
 			'slug' => $eleres,
-			'szulo_id' 	=> $parent,
-			'sorrend' 	=> $sort,
-			'deep' 		=> $deep,
-			'hashkey' 	=> $hashkey,
+			'szulo_id' => $parent,
+			'sorrend' => $sort,
+			'deep' => $deep,
+			'hashkey' => $hashkey,
 			'oldal_hashkeys' => $oldal_hashkeys,
-			'kep' 		=> $image
-		));
+			'kep' => $image
+		);
+
+		if (isset($new_data['bgcolor'])) {
+			$row['bgcolor'] = '#'.str_replace("#","",$new_data['bgcolor']);
+		}
+
+		$category->edit($row);
 	}
 
 	public function delete( Category $category )

@@ -89,7 +89,9 @@ class home extends Controller{
 
 			// Szállások
 			$szallaslista = new SzallasList( array( 'db' => $this->db ) );
-			$szallasok = $szallaslista->getList();
+			$szallasok = $szallaslista->getList(array(
+				'admin' => false
+			));
 			$this->out('szallasok', $szallasok);
 
 			//

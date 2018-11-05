@@ -32,7 +32,7 @@ class ajax extends Controller{
 					);
 					$ret['pass'] = $_POST;
 
-					$szallasok = new SzallasList( array('db' => $this->db) );
+					$szallasok = new SzallasList( array('db' => $this->db, 'admin' => false) );
 
 					switch ($key)
 					{
@@ -43,7 +43,7 @@ class ajax extends Controller{
 						break;
 						case 'getConfig':
 							$ret['data']['szallas'] = $szallasok->loadSzallas( (int)$szallasid, true );
-							$ret['data']['rooms'] = $szallasok->getRoomsConfig( (int)$szallasid, $config );
+							$ret['data']['rooms'] = $szallasok->getRoomsConfig( (int)$szallasid, $config, false );
 						break;
 						case 'sendOrder':
 							$config['room'] = $room;

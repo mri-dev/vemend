@@ -321,8 +321,6 @@ class SzallasFramework
       'nights' => 1
     );
 
-
-
     if (isset($config_filters['dateto']) && isset($config_filters['datefrom'])) {
       $back['nights'] = $this->getDateDayDiff($config_filters['dateto'], $config_filters['datefrom']);
     }

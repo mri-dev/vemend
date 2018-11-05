@@ -3019,6 +3019,13 @@ fieldset.block {
 	zoom: 1;
 	margin-right: 5px;
 }
+.doc-groupes > div a {
+  color: #888888;
+}
+.doc-groupes > div.filtered a {
+  color: #000000;
+  font-weight: bold;
+}
 .hasRegistered{
 	background: #CCE6CC;
     padding: 2px 4px;
@@ -3767,4 +3774,12 @@ input[type=file].lab-selector + label img {
 }
 .tab-block .rnav{
   float: right;
+}
+.document-list-table .keywords{
+  color: #8c8c8c;
+}
+.document-list-table .categories span{
+  color: white;
+  font-size: 0.8em;
+  padding: 2px 4px;
 }

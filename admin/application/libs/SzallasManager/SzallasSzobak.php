@@ -5,9 +5,11 @@ namespace SzallasManager;
 class SzallasSzobak extends SzallasFramework
 {
   public $szallas_id = 0;
+  public $arg = array();
   function __construct( $szallas_id, $arg = array() )
   {
     parent::__construct( $arg );
+    $this->arg = $arg;
 
     $this->szallas_id = $szallas_id;
 
@@ -207,6 +209,10 @@ class SzallasSzobak extends SzallasFramework
 
     $q .= " and sz.szallas_id = :id ";
     $darg['id'] = $this->szallas_id;
+
+    if ( isset($this->arg['admin']) && $this->arg['admin'] === false ) {
+      $q .= " and sz.elerheto = 1";
+    }
 
     if (!isset($arg['order'])) {
       $q .= " ORDER BY sz.felnott_db ASC, sz.gyermek_db ASC, sz.name ASC ";

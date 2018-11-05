@@ -123,6 +123,10 @@ class Category
 	{
 		return $this->cat_data['ID'];
 	}
+	public function getVar( $v )
+	{
+		return $this->cat_data[$v];
+	}
 	/*-----  End of GETTERS  ------*/
 
 	public function __destruct()

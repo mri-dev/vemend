@@ -1,7 +1,7 @@
 <div class="szallas-list grid-x2">
   <div class="wrapper">
 
-    <?php if ( $this->szallasok || true ): ?>
+    <?php if ( $this->szallasok ): ?>
     <?php foreach ( (array)$this->szallasok['list'] as $szallas ): ?>
     <div class="szallas">
       <div class="wrapper">
@@ -51,7 +51,12 @@
           </div>
         </div>
         <div class="button">
-          <a href="<?=$szallas['url']?>">Szálláshely megtekintése</a>
+          <?php
+          $get = $_GET;
+          unset($get['tag']);
+          unset($get['page']);
+          ?>
+          <a href="<?=$szallas['url']?>?<?=http_build_query($get)?>">Szálláshely megtekintése</a>
         </div>
       </div>
     </div>
