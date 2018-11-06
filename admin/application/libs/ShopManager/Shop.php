@@ -2976,6 +2976,12 @@ class Shop
 						case 'doc': case 'docx':
 							$icon = 'file-word-o';
 						break;
+						case 'txt': case 'rtf':
+							$icon = 'file-text-o';
+						break;
+						case 'rar': case 'zip':
+							$icon = 'file-archive-o';
+						break;
 						case 'xlsx': case 'xls':
 							$icon = 'file-excel-o';
 						break;
@@ -2995,6 +3001,7 @@ class Shop
 				} else
 				{
 					$row['extension'] = 'link';
+					$icon = 'external-link';
 				}
 
 				// Check watched

@@ -151,6 +151,30 @@ body.singlepage{
 	}
 }
 
+.backurl{
+	a{
+		border: 0.4px solid #acacac;
+		padding: 0 5px;
+		border-radius: 3px;
+		line-height: 20px;
+		height: 20px;
+		font-size: 0.6em;
+		text-transform: uppercase;
+		display: block;
+		color: black;
+		font-weight: bold;
+		text-decoration: none;
+		float: left;
+		margin: 0 5px 0 0;
+
+		&:hover{
+			background: $color-blue;
+			border: 0.4px solid $color-blue;
+			color: white;
+		}
+	}
+}
+
 .slideShow {
 	position: relative;
 	background: #FFFFFF;
@@ -9981,6 +10005,43 @@ body.szallasok{
 
 		& > .documents{
 			flex: 1;
+
+			.doc-adatlap{
+				.watch{
+					margin: 20px 0;
+					padding: 25px;
+					background: white;
+					color: #0e8543;
+					text-align: center;
+					font-size: 1.5em;
+					display: block;
+					text-decoration: none;
+					border: 2px solid #61bf61;
+					border-radius: 5px;
+					-webkit-transition: all .3s;
+  				transition:all .3s;
+
+					&:hover{
+						background: #61bf61;
+						color: white;
+					}
+				}
+				h1 + .sub{
+					margin: 5px 0 0 0;
+
+					& > span {
+						margin: 0 8px 0 0;
+					}
+
+					.cats{
+						& > .cat{
+							color: white;
+							padding: 4px;
+							font-size: 0.8em;
+						}
+					}
+				}
+			}
 			& > .wrapper{
 				padding: 0 0 0 25px;
 

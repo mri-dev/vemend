@@ -134,12 +134,6 @@ class dokumentumok extends Controller {
 					$_POST['data']['user_container_in'] = NULL;
 				}
 
-				$this->db->update(
-					'shop_documents',
-					$_POST['data'],
-					"ID = ".$_POST['id']
-				);
-
 				// Kategória
 				$this->db->squery("DELETE FROM shop_documents_group_xref WHERE doc_id = :did", array('did' => $_POST['id'] ));
 				if (isset($_POST['data']['kategoriak'])) {
@@ -154,6 +148,14 @@ class dokumentumok extends Controller {
 						);
 					}
 				}
+
+				unset($_POST['data']['kategoriak']);
+
+				$this->db->update(
+					'shop_documents',
+					$_POST['data'],
+					"ID = ".$_POST['id']
+				);
 
 				Helper::reload( '/dokumentumok' );
 			}
@@ -194,6 +196,7 @@ class dokumentumok extends Controller {
 				if( $removed )
 				{
 					$this->db->query("DELETE FROM shop_documents WHERE ID = ".$_POST['id']);
+					$this->db->squery("DELETE FROM shop_documents_group_xref WHERE doc_id = :did", array('did' => $_POST['id'] ));
 				}
 
 				Helper::reload( '/dokumentumok' );
@@ -213,6 +216,9 @@ class dokumentumok extends Controller {
 				$path 		= 'src/uploaded_files/'.$filename;
 				$is_upload 	= false;
 				$sorrend 	= (isset($_POST[data][sorrend])) ? $_POST[data][sorrend] : 0;
+
+				$kategoriak = $_POST['data']['kategoriak'];
+				unset($_POST['data']['kategoriak']);
 
 				$_POST['data']['user_group_in'] = implode(",",$_POST['data']['user_group']);
 				unset($_POST['data']['user_group']);
@@ -256,12 +262,29 @@ class dokumentumok extends Controller {
 									'szaktanacsado_only' 	=> (isset($_POST['data']['szaktanacsado_only'])) ? 1 : 0,
 									'sorrend' 				=> $sorrend,
 									'groupkey' 				=> $_POST['data']['groupkey'],
+									'keywords' => $_POST['data']['keywords'],
 									'tipus' 				=> 'local',
 									'user_group_in' 		=> $_POST['data']['user_group_in'],
 									'user_container_in' 	=> $_POST['data']['user_container_in']
 								)
 							);
 
+							$newdocic = $this->db->lastInsertId();
+
+							// Kategória
+							$this->db->squery("DELETE FROM shop_documents_group_xref WHERE doc_id = :did", array('did' => $newdocic ));
+							if (isset($kategoriak)) {
+								foreach ((array)$kategoriak as $cid) {
+									if($cid == '') continue;
+									$this->db->insert(
+										'shop_documents_group_xref',
+										array(
+											'doc_id' => $newdocic,
+											'cat_id' => $cid
+										)
+									);
+								}
+							}
 						} else
 						{
 							$this->view->msg = Helper::makeAlertMsg( 'pError', 'Fájlfeltöltés sikertelen volt.' );
@@ -282,10 +305,27 @@ class dokumentumok extends Controller {
 								'szaktanacsado_only' 	=> (isset($_POST['data']['szaktanacsado_only'])) ? 1 : 0,
 								'sorrend' 				=> $sorrend,
 								'groupkey' 				=> $_POST['data']['groupkey'],
+								'keywords' => $_POST['data']['keywords'],
 								'tipus' 				=> 'external',
 								'user_group_in' 		=> $_POST['data']['user_group_in']
 							)
 						);
+						$newdocic = $this->db->lastInsertId();
+
+						// Kategória
+						$this->db->squery("DELETE FROM shop_documents_group_xref WHERE doc_id = :did", array('did' => $newdocic ));
+						if (isset($kategoriak)) {
+							foreach ((array)$kategoriak as $cid) {
+								if($cid == '') continue;
+								$this->db->insert(
+									'shop_documents_group_xref',
+									array(
+										'doc_id' => $newdocic,
+										'cat_id' => $cid
+									)
+								);
+							}
+						}
 					}
 
 					Helper::reload( '/dokumentumok' );

@@ -22,6 +22,14 @@ class docs extends Controller
 			$this->out( 'doc_groupes',	$this->shop->getDocumentGroupes());
 			$this->out( 'doc_colors', $this->shop->getDocumentGroupeColors());
 
+      // Dokumentum adatlap
+      if (isset($_GET['view'])) {
+        $fq = $this->db->squery("SELECT * FROM shop_documents WHERE hashname = :hash", array('hash' => $_GET['hashkey']));
+  			$f 	= $fq->fetch(\PDO::FETCH_ASSOC);
+  			$f['in_cat'] = $this->shop->documentFileGroups($f['ID']);
+  			$this->out( 'file', $f);
+      }
+
 
 			$this->out( 'head_img_title', 'Dokumentumok, letöltések.' );
 			$this->out( 'head_img', IMGDOMAIN.'/src/uploads/covers/cover-'.__CLASS__.'.jpg' );

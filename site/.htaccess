@@ -68,6 +68,18 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
+RewriteRule ^docs/v/([0-9a-zA-Z]+)$ index.php?tag=docs&view=1&hashkey=$1 [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^docs/l/([0-9a-zA-Z]+)$ index.php?tag=app/dcl/$1 [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
 RewriteRule ^kapcsolat(/)?$ index.php?tag=p/kapcsolat [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
