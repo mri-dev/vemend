@@ -2860,9 +2860,26 @@ class Shop
 
 			$cq .= " and d.hashname = '{$file[hashname]}'";
 
+			if (isset($arg['search']) && !empty($arg['search'])) {
+				$xs = explode(" ", trim($arg['search']));
+				if ($xs && $xs[0] != "") {
+					$cq .= " and (";
+					$srcs = '';
+					foreach ($xs as $xsrc) {
+						$srcs .= "d.keywords LIKE '%".trim($xsrc)."%' or d.cim LIKE '%".trim($xsrc)."%' or ";
+					}
+					$srcs = rtrim($srcs," or ");
+					$cq .= $srcs;;
+					$cq .= ")";
+				}
+			}
+
 			if( isset($arg['user_group_in']) ) {
 				$cq .= " and d.user_group_in LIKE '%".$arg['user_group_in']."%' ";
 			}
+
+			//echo $cq ."<br><br>";
+
 
 			$c = $this->db->query( $cq );
 
@@ -2885,22 +2902,39 @@ class Shop
 				$temp[$file['hashname']] = $file;
 
 			}
+
+			/*
 			elseif( $arg['showOffline'] === true )
 			{
 				$temp[$file['hashname']] = $file;
-			}
+			}*/
 		}
 
 		// External links
-
 		$eq = "SELECT d.*, (SELECT SUM(clicked) FROM shop_documents_click WHERE doc_id = d.ID) as clicks FROM shop_documents as d WHERE 1=1 ";
 
-		if( isset($arg['showOffline']) ) {
+		if( $arg['showHided'] === true ) {
 
+		} else {
+			$eq .= " and d.lathato = 1 ";
 		}
 
 		if( isset($arg['user_group_in']) ) {
 			$eq .= " and d.user_group_in LIKE '%".$arg['user_group_in']."%' ";
+		}
+
+		if (isset($arg['search']) && !empty($arg['search'])) {
+			$xs = explode(" ", trim($arg['search']));
+			if ($xs && $xs[0] != "") {
+				$eq .= " and (";
+				$srcs = '';
+				foreach ($xs as $xsrc) {
+					$srcs .= "d.keywords LIKE '%".trim($xsrc)."%' or d.cim LIKE '%".trim($xsrc)."%' or ";
+				}
+				$srcs = rtrim($srcs," or ");
+				$eq .= $srcs;;
+				$eq .= ")";
+			}
 		}
 
 		$eq .= " ORDER BY sorrend ASC;";
@@ -3004,7 +3038,11 @@ class Shop
 
 			if ($docs)
 			foreach ( $docs as $d ) {
-				$stack[$d['doc_groupkey']][] = $d;
+				if ($d['in_cat']['ids']) {
+					foreach ($d['in_cat']['ids'] as $dd) {
+						$stack[$dd][] = $d;
+					}
+				}
 			}
 
 			// Reset
@@ -3014,7 +3052,9 @@ class Shop
 			{
 				if($stack[$key])
 				{
-					$docs[$key] = $stack[$key];
+					$docs[$key]['ID'] = $key;
+					$docs[$key]['name'] = $value;
+					$docs[$key]['docs'] = $stack[$key];
 				}
 			}
 			unset($stack);
