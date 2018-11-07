@@ -437,6 +437,50 @@ body.singlepage{
 				margin: 0 0 20px 0;
 			}
 		}
+
+		.content-block {
+			&.content-nyitvatartas{
+				.header{
+					padding: 15px;
+					margin: 0 0 15px 0;
+					background: #acacac;
+					text-align: center;
+					color: white;
+					text-transform: uppercase;
+					border-radius: 5px;
+				}
+				.nyitvatartas{
+					font-size: 1.2em;
+					.row {
+						margin: 0 0 20px 0;
+
+						.day{
+							color: black;
+						}
+
+						.opens{
+							text-align: center;
+						}
+					}
+				}
+			}
+			&.content-map{
+				.header{
+					padding: 15px;
+					margin: 0;
+					background: #dddddd;
+					text-align: center;
+					color: black;
+					text-transform: uppercase;
+					border-radius: 5px 5px 0 0;
+				}
+				.map{
+					background: #dddddd;
+					padding: 0 5px 5px 5px;
+					border-radius: 0 0 5px 5px;
+				}
+			}
+		}
 	}
 }
 .news,

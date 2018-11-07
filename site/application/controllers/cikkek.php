@@ -23,7 +23,7 @@ class cikkek extends Controller{
 		if ( isset($_GET['cikk']) ) {
 			$this->out( 'news', $news->get( trim($_GET['cikk']) ) );
 			$news->log_view($this->view->news->getId());
-			
+
 			$arg = array(
 				'limit' => 4,
 				'page' 	=> 1,
@@ -60,11 +60,13 @@ class cikkek extends Controller{
 				'page' => (isset($_GET['page'])) ? (int)$_GET['page'] : 1,
 			);
 			$this->out( 'list', $news->getTree( $arg ) );
+
+			$navroot = (in_array($_GET['cat'], $news->tematic_cikk_slugs)) ? $_GET['cat'] : '/'.__CLASS__.( (isset($_GET['cat'])) ? '/'.$_GET['cat'] : '' );
 			$this->out( 'navigator', (new Pagination(array(
 					'class' 	=> 'pagination pagination-sm center',
 					'current' 	=> $news->getCurrentPage(),
 					'max' 		=> $news->getMaxPage(),
-					'root' 		=> '/'.__CLASS__. (isset($_GET['cat']) ? '/'.$_GET['cat']: ''),
+					'root' => $navroot,
 					'item_limit'=> 12
 				)))->render() );
 		}

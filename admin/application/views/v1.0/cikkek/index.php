@@ -30,6 +30,7 @@
             while( $this->news_list->walk() ):
               $news = $this->news_list->the_news();
 							$cats = $this->news_list->getCategories();
+							$url = $this->news_list->getUrl( false, false );
             ?>
             <div class="row np deep<?=$news['deep']?> markarow  <?=($this->news && $this->gets[1] == 'szerkeszt' && $this->news->getId() == $news['ID'] ? 'on-edit' : '')?> <?=($this->news && $this->gets[1] == 'torles' && $this->news->getId() == $news['ID'] ? 'on-del' : '')?>">
             	<div class="col-md-5">
@@ -37,7 +38,7 @@
                       <a href="<?=$news['belyeg_kep']?>" class="zoom"><img src="<?=$news['belyeg_kep']?>" alt=""></a>
                   </div>
                 	<strong><?=$news[cim]?></strong>
-                  <div class="subline"><a target="_blank" class="url" href="<?=HOMEDOMAIN?>cikkek/olvas/<?=$news['eleres']?>" class="news-url"><i title="<?=HOMEDOMAIN?>" class="fa fa-home"></i>/cikkek/olvas/<strong><?=$news[eleres]?></strong></a></div>
+                  <div class="subline"><a target="_blank" class="url" href="<?=HOMEDOMAIN?><?=$url?>" class="news-url"><i title="<?=HOMEDOMAIN?>" class="fa fa-home"></i> <strong><?=$url?></strong></a></div>
                 </div>
                 <div class="col-md-3 center">
 									<?php if (count($cats['ids']) != 0): $icat = ''; ?>

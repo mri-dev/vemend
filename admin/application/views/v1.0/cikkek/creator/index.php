@@ -35,12 +35,28 @@
             <?php while( $this->categories->walk() ):
             $cat = $this->categories->the_cat(); ?>
             <div class="">
-              <input type="checkbox" id="cats<?=$cat['ID']?>" name="cats[]" value="<?=$cat['ID']?>" <?=(($this->news && in_array($cat['ID'], $scats['ids'])) || in_array($cat['ID'], $_POST['cats']) )?'checked="checked"':''?>> <label for="cats<?=$cat['ID']?>"><?=$cat['neve']?></label>
+              <input type="checkbox" class="cont-binder" data-cont-value="<?=$cat['slug']?>" id="cats<?=$cat['ID']?>" name="cats[]" value="<?=$cat['ID']?>" <?=(($this->news && in_array($cat['ID'], $scats['ids'])) || in_array($cat['ID'], $_POST['cats']) )?'checked="checked"':''?>> <label for="cats<?=$cat['ID']?>"><?=$cat['neve']?></label>
             </div>
-
             <?php endwhile; ?>
           <?php endif; ?>
         </div>
+				<div class="con cont-option" data-cont-option="boltok,vendeglatas">
+					<div class="option-label">Opcionális adatmező</div>
+					<h2>Nyitvatartás</h2>
+					<?php
+					$nyt_values = $this->news->getOptional('nyitvatartas', true);
+					foreach (array('Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat', 'Vasárnap') as $nap): ?>
+						<label for="option_nyitvatartas_<?=$nap?>"><?=$nap?></label>
+						<input type="text" id="option_nyitvatartas_<?=$nap?>" placeholder="Pl.: 08:00 - 17:00, zárva" name="optional[nyitvatartas][<?=$nap?>]" class="form-control" value="<?=$nyt_values[$nap]?>">
+						<br>
+					<?php endforeach; ?>
+				</div>
+				<div class="con cont-option" data-cont-option="intezmenyek,boltok,vendeglatas,turizmus">
+					<div class="option-label">Opcionális adatmező</div>
+					<h2>Google térkép</h2>
+					<label for="option_maps">Pontos cím megadása</label>
+					<input type="text" id="option_maps"name="optional[maps]" class="form-control" value="<?=$this->news->getOptional('maps')?>">
+				</div>
       </div>
     	<div class="col-md-9">
         	<div class="con <?=($this->gets[2] == 'szerkeszt')?'con-edit':''?>">
@@ -112,18 +128,44 @@
 <? endif; ?>
 <script>
     $(function(){
-        $('#menu_type').change(function(){
-            var stype = $(this).val();
-            $('.type-row').hide();
-            $('.type_'+stype).show();
-            $('.submit-row').show();
-        });
-        $('#remove_url_img').click( function (){
-            $('#url_img').find('img').attr('src','').hide();
-            $('#belyegkep').val('');
-            $(this).hide();
-        });
+			bindContentHandler();
+
+      $('#menu_type').change(function(){
+          var stype = $(this).val();
+          $('.type-row').hide();
+          $('.type_'+stype).show();
+          $('.submit-row').show();
+      });
+      $('#remove_url_img').click( function (){
+          $('#url_img').find('img').attr('src','').hide();
+          $('#belyegkep').val('');
+          $(this).hide();
+      });
+
+			$('.cont-binder').click(function(){
+				bindContentHandler();
+			});
     })
+
+		function bindContentHandler() {
+			var selected = [];
+			jQuery.each($('input[type=checkbox].cont-binder:checked'), function(i,v) {
+				var val = $(v).data('cont-value');
+				selected.push(val);
+			});
+
+			jQuery.each($('.cont-option'), function(i,e){
+				$(e).removeClass('active');
+				var keys = $(e).data('cont-option').split(",");
+				jQuery.each(keys, function(ii,ee){
+					var p = selected.indexOf(ee);
+					if ( p !== -1 ) {
+						$(e).addClass('active');
+					}
+				});
+			});
+
+		}
 
     function responsive_filemanager_callback(field_id){
         var imgurl = $('#'+field_id).val();

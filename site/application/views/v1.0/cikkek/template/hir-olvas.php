@@ -25,7 +25,64 @@
 			</div>
 		</div>
 	</div>
+
 	<div class="content">
 		<?=\PortalManager\News::textRewrites($szoveg)?>
 	</div>
+
+	<div class="row">
+		<?php if ($optional_nyitvatartas != ''): $nyitvatartas = json_decode($optional_nyitvatartas, \JSON_UNESCAPED_UNICODE); ?>
+		<?php $noopensdata = 0; foreach ((array)$nyitvatartas as $nap => $v): if($v == '') $noopensdata++; endforeach; ?>
+		<?php  if ($noopensdata < 7): ?>
+		<div class="<?=($optional_maps == '') ? 'col-md-4' : 'col-md-4'?>">
+			<div class="content-block content-nyitvatartas">
+				<div class="wrapper">
+					<div class="header">
+						<i class="fa fa-clock-o"></i> Nyitvatartási idő
+					</div>
+					<div class="nyitvatartas">
+					<?php foreach ((array)$nyitvatartas as $nap => $v): ?>
+					<div class="row">
+						<div class="col-md-4 day">
+							<strong><?=$nap?></strong>
+						</div>
+						<div class="col-md-8 opens">
+							<?=($v != '')?$v:'&mdash;'?>
+						</div>
+					</div>
+					<?php endforeach; ?>
+					</div>
+				</div>
+			</div>
+		</div>
+		<?php endif; ?>
+		<?php endif; ?>
+
+		<?php if ($optional_maps != ''): ?>
+		<div class="<?=($noopensdata == 7) ? 'col-md-12' : 'col-md-8'?>">
+			<div class="content-block content-map">
+				<div class="wrapper">
+					<div class="header">
+						<i class="fa fa-map"></i> <?php echo $optional_maps; ?>
+					</div>
+					<div class="map" id="map">
+						<iframe
+						  width="100%"
+						  height="450"
+						  frameborder="0" style="border:0"
+						  src="https://www.google.com/maps/embed/v1/place?
+							key=<?=APIKEY_GOOGLE_MAP_EMBEDKEY?>&
+							q=<?=$optional_maps?>&
+							language=hu-HU" allowfullscreen>
+						</iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+		<?php endif; ?>
+	</div>
+
+
+
+
 </div>

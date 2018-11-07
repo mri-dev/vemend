@@ -19,7 +19,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
-RewriteRule ^cikkek(/)([0-9+])??$ index.php?tag=cikkek&list=1&page=$2 [QSA,L]
+RewriteRule ^cikkek(/)?([0-9+])?$ index.php?tag=cikkek&list=1&page=$2 [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
@@ -32,6 +32,54 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
 RewriteRule ^cikkek/([0-9a-zA-Z_-]+)/([0-9a-zA-Z_-]+)(/)?$ index.php?tag=cikkek&reader=1&cikk=$2&cat=$1 [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^boltok(/)?([0-9+])?$ index.php?tag=cikkek&list=1&cat=boltok&page=$2 [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^boltok/([0-9a-zA-Z_-]+)$ index.php?tag=cikkek&reader=1&cikk=$1&cat=boltok [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^turizmus(/)?([0-9+])?$ index.php?tag=cikkek&list=1&cat=turizmus&page=$2 [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^turizmus/([0-9a-zA-Z_-]+)$ index.php?tag=cikkek&reader=1&cikk=$1&cat=turizmus [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^vendeglatas(/)?([0-9+])?$ index.php?tag=cikkek&list=1&cat=vendeglatas&page=$2 [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^vendeglatas/([0-9a-zA-Z_-]+)$ index.php?tag=cikkek&reader=1&cikk=$1&cat=vendeglatas [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^intezmenyek(/)?([0-9+])?$ index.php?tag=cikkek&list=1&cat=intezmenyek&page=$2 [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^intezmenyek/([0-9a-zA-Z_-]+)$ index.php?tag=cikkek&reader=1&cikk=$1&cat=intezmenyek [QSA,L]
 
 # Programok
 RewriteCond %{REQUEST_FILENAME} !-f

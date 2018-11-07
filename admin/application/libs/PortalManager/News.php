@@ -26,6 +26,7 @@ class News
 	private $selected_news_id = false;
 	private $item_limit_per_page = 50;
 	private $sitem_numbers = 0;
+  public $tematic_cikk_slugs = array('boltok', 'intezmenyek', 'vendeglatas', 'turizmus');
 
 	function __construct( $news_id = false, $arg = array() )
 	{
@@ -99,6 +100,8 @@ class News
 		$bevezeto = ($data['bevezeto']) ?: NULL;
 		$kep 	= ($data['belyegkep']) ?: NULL;
 		$lathato= ($data['lathato']) ? 1 : 0;
+    $optional = $data['optional'];
+    $optional_data = array();
 
 		if (!$cim) { throw new \Exception("Kérjük, hogy adja meg a <strong>Cikk címét</strong>!"); }
 
@@ -106,6 +109,15 @@ class News
 		if (!$eleres) {
 			$eleres = $this->checkEleres( $cim );
 		}
+
+    // Optional
+    if ($optional && !empty($optional)) {
+      foreach ((array)$optional as $key => $value) {
+        if ($value != '') {
+          $optional_data[$key] = (is_string($value)) ? addslashes($value) : $value;
+        }
+      }
+    }
 
 		$this->db->update(
 			"hirek",
@@ -117,6 +129,8 @@ class News
 				'bevezeto' => $bevezeto,
 				'idopont' => NOW,
 				'lathato' => $lathato,
+        'optional_nyitvatartas' => ($optional_data['nyitvatartas']) ? json_encode($optional_data['nyitvatartas'], \JSON_UNESCAPED_UNICODE) : NULL,
+        'optional_maps' => ($optional_data['maps'] != '') ? $optional_data['maps'] : NULL,
 			),
 			sprintf("ID = %d", $this->selected_news_id)
 		);
@@ -435,9 +449,22 @@ class News
 	{
 		return $this->current_get_item['cim'];
 	}
-	public function getUrl( $cat_prefix = false )
+	public function getUrl( $cat_prefix = false, $include_domain = true )
 	{
-		return DOMAIN.'cikkek/'.( ($cat_prefix) ? $cat_prefix : 'olvas' ).'/'.$this->current_get_item['eleres'];
+    $tematic_cikk_slug = false;
+    $cats = $this->getCategories();
+    foreach ((array)$cats['list'] as $l) {
+      if (in_array($l['slug'], $this->tematic_cikk_slugs)) {
+        $tematic_cikk_slug = $l['slug'];
+        break;
+      }
+    }
+
+    if ($tematic_cikk_slug) {
+    	return ( ($include_domain) ? DOMAIN : '/' ) .$tematic_cikk_slug.'/'.$this->current_get_item['eleres'];
+    } else {
+    	return ( ($include_domain) ? DOMAIN : '/' ) .'cikkek/'.( ($cat_prefix) ? $cat_prefix : 'olvas' ).'/'.$this->current_get_item['eleres'];
+    }
 	}
 	public function getAccessKey()
 	{
@@ -487,6 +514,14 @@ class News
 	{
 		return $this->current_page;
 	}
+  public function getOptional( $what, $json_decode = false )
+  {
+    if ($json_decode) {
+      return json_decode($this->current_get_item['optional_'.$what], \JSON_UNESCAPED_UNICODE);
+    } else {
+      return $this->current_get_item['optional_'.$what];
+    }
+  }
 	public function categoryList()
 	{
 		$q = "SELECT * FROM cikk_kategoriak ORDER BY sorrend ASC";
@@ -513,6 +548,7 @@ class News
 		$q = "SELECT
 			c.cat_id,
 			ct.neve,
+      ct.slug,
 			ct.bgcolor
 		FROM
 		cikk_xref_cat as c

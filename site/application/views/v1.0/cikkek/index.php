@@ -48,7 +48,7 @@
 						</div>
 						<?php foreach ( (array)$this->newscats as $nc ): ?>
 						<div class="cat <?=($_GET['cat'] == ($nc['slug']))?'active':''?>">
-							<a href="/cikkek/<?=($nc['slug'])?>"><span class="dot" style="color:<?=$nc['bgcolor']?>;"></span> <?=$nc['neve']?></a>
+							<a href="<?=(in_array($nc['slug'], (array)$this->history->tematic_cikk_slugs))?'/':'/cikkek/'?><?=($nc['slug'])?>"><span class="dot" style="color:<?=$nc['bgcolor']?>;"></span> <?=$nc['neve']?></a>
 						</div>
 						<?php endforeach; ?>
 					</div>
@@ -87,6 +87,8 @@
 								$arg = $this->list->the_news();
 								$arg['date_format'] = $this->settings['date_format'];
 								$arg['newscats'] = $this->newscats;
+					      $read_prefix = (isset($_GET['cat']) && $_GET['cat'] != '') ? $_GET['cat'] : 'olvas';
+								$arg['url'] = $this->list->getUrl($read_prefix, true);
 
 								echo $this->template->get( 'hir', $arg );
 							}
