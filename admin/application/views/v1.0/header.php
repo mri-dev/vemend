@@ -173,20 +173,20 @@
         	<ul>
             	<li class="<?=($this->gets[0] == 'home')?'on':''?>"><a href="/" title="Dashboard"><span class="ni">1</span><i class="fa fa-life-saver"></i> Dashboard</a></li>
               <?php if ( $this->adm->user['user_group'] == 'admin' || $this->USERS->hasPermission($this->adm->user, array('adminuser'), 'webshop')): ?>
-              <li class="<?=($this->gets[0] == 'megrendelesek')?'on':''?>"><a href="/megrendelesek" title="Megrendelések"><span class="ni">2</span><i class="fa fa-briefcase"></i> Megrendelések</a></li>
+              <li class="<?=($this->gets[0] == 'termekek')?'on':''?>"><a href="/termekek" title="Webshop"><span class="ni">2</span><i class="fa fa-cubes"></i> Webshop</a></li>
+              <?php if (in_array($this->gets[0], array('termekek', 'kategoriak', 'megrendelesek','markak'))): ?>
+                <li class="sub <?=($this->gets[0] == 'kategoriak')?'on':''?>"><a href="/kategoriak" title="Kategóriák"><span class="ni">6</span>Kategóriák</a></li>
+                <li class="sub <?=($this->gets[0] == 'termekek')?'on':''?>"><a href="/termekek" title="Termékek"><span class="ni">2</span>Termékek</a></li>
+                <li class="sub <?=($this->gets[0] == 'megrendelesek')?'on':''?>"><a href="/megrendelesek" title="Megrendelések"><span class="ni">2</span>Megrendelések</a></li>
+                <li class="sub <?=($this->gets[0] == 'markak')?'on':''?>"><a href="/markak" title="Márkák"><span class="ni">7</span>Márkák</a></li>
               <?php endif; ?>
-              <?php if ( $this->adm->user['user_group'] == 'admin' || $this->USERS->hasPermission($this->adm->user, array('adminuser'), 'webshop')): ?>
-              <li class="<?=($this->gets[0] == 'markak')?'on':''?>"><a href="/markak" title="Márkák"><span class="ni">7</span><i class="fa fa-bookmark"></i> Márkák</a></li>
+
               <?php endif; ?>
-              <?php if ( $this->adm->user['user_group'] == 'admin' || $this->USERS->hasPermission($this->adm->user, array('adminuser'), 'webshop')): ?>
-              <li class="<?=($this->gets[0] == 'termekek')?'on':''?>"><a href="/termekek" title="Termékek"><span class="ni">2</span><i class="fa fa-cubes"></i> Termékek</a></li>
-              <?php endif; ?>
-              <?php if ( $this->adm->user['user_group'] == 'admin' || $this->USERS->hasPermission($this->adm->user, array('adminuser'), 'webshop')): ?>
-              <li class="<?=($this->gets[0] == 'kategoriak')?'on':''?>"><a href="/kategoriak" title="Kategóriák"><span class="ni">6</span><i class="fa fa-bars"></i> Kategóriák</a></li>
-              <?php endif; ?>
+
               <?php if ( $this->adm->user['user_group'] == 'admin'): ?>
               <li class="<?=($this->gets[0] == 'felhasznalok')?'on':''?>"><a href="/felhasznalok" title="Felhasználók"><span class="ni">2</span><i class="fa fa-group"></i> Felhasználók</a></li>
               <?php endif; ?>
+
               <li class="<?=($this->gets[0] == 'uzenetek')?'on':''?>"><a href="/uzenetek" title="Üzenetek"><span class="ni">8</span><i class="fa fa-envelope-o"></i> Üzenetek</a></li>
               <li class="<?=($this->gets[0] == 'menu')?'on':''?>"><a href="/menu" title="Menü"><span class="ni">4</span><i class="fa fa-ellipsis-h"></i> Menü</a></li>
               <li class="<?=($this->gets[0] == 'oldalak')?'on':''?>"><a href="/oldalak" title="Oldalak"><span class="ni">5</span><i class="fa fa-file-o"></i> Oldalak</a></li>

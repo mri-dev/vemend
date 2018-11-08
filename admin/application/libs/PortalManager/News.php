@@ -131,6 +131,8 @@ class News
 				'lathato' => $lathato,
         'optional_nyitvatartas' => ($optional_data['nyitvatartas']) ? json_encode($optional_data['nyitvatartas'], \JSON_UNESCAPED_UNICODE) : NULL,
         'optional_maps' => ($optional_data['maps'] != '') ? $optional_data['maps'] : NULL,
+        'optional_logo' => ($optional_data['logo'] != '') ? $optional_data['logo'] : NULL,
+        'optional_firstimage' => ($optional_data['firstimage'] != '') ? $optional_data['firstimage'] : NULL,
 			),
 			sprintf("ID = %d", $this->selected_news_id)
 		);
@@ -227,6 +229,16 @@ class News
 		if( $arg['except_id'] ) {
 			$qry .= " and h.ID != ".$arg['except_id'];
 		}
+
+    // Kategória slug exlude
+    if( isset($arg['exc_cat_slug']) && !empty($arg['exc_cat_slug']) ) {
+      $qry .= " and (";
+        foreach ((array)$arg['exc_cat_slug'] as $exc_cat ) {
+          $qry .= "'".$exc_cat."' NOT IN (SELECT ck.slug  FROM `cikk_xref_cat` as c LEFT OUTER JOIN cikk_kategoriak as ck ON ck.ID = c.cat_id WHERE c.`cikk_id` = h.ID) and ";
+        }
+        $qry = trim($qry," and ");
+      $qry .= ")";
+    }
 
 		if( isset($arg['in_id']) && !empty($arg['in_id']) ) {
       $qry .= " and h.ID IN(".implode(",", (array)$arg['in_id']).")";

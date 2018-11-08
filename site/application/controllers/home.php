@@ -19,6 +19,7 @@ class home extends Controller{
 			$arg = array(
 				'limit' => 2,
 				'page' 	=> 1,
+				'exc_cat_slug' => array('boltok','intezmenyek','turizmus','vendeglatas'),
 				'order' => array(
 					'by' => 'letrehozva',
 					'how' => 'DESC'

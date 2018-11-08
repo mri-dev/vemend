@@ -385,6 +385,23 @@ body.singlepage{
 	}
 	.news-content{
 		padding: 25px 0;
+		.logo{
+			float: left;
+			margin: 0 20px 0 0;
+
+			img {
+				height: 70px;
+			}
+		}
+		.content-firstimage{
+			float: left;
+			margin: 8px 25px 10px 0;
+			max-width: 30%;
+			img {
+				max-width: 100%;
+				width: 100%;
+			}
+		}
 		.head{
 			.subline{
 				display: -webkit-box;
@@ -719,7 +736,7 @@ body.singlepage{
 
 .categories{
 	.list{
-		margin: 10px 0 0 0;
+		margin: 10px 0 20px 0;
 		a{
 			display: block;
 			padding: 8px 0;

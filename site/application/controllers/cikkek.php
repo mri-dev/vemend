@@ -20,8 +20,10 @@ class cikkek extends Controller{
 		$this->out( 'template', $temp );
 		$this->out( 'newscats', $news->categoryList());
 
+
 		if ( isset($_GET['cikk']) ) {
 			$this->out( 'news', $news->get( trim($_GET['cikk']) ) );
+			$this->out( 'is_tematic_cat', 1);
 			$news->log_view($this->view->news->getId());
 
 			$arg = array(
@@ -62,6 +64,7 @@ class cikkek extends Controller{
 			$this->out( 'list', $news->getTree( $arg ) );
 
 			$navroot = (in_array($_GET['cat'], $news->tematic_cikk_slugs)) ? $_GET['cat'] : '/'.__CLASS__.( (isset($_GET['cat'])) ? '/'.$_GET['cat'] : '' );
+
 			$this->out( 'navigator', (new Pagination(array(
 					'class' 	=> 'pagination pagination-sm center',
 					'current' 	=> $news->getCurrentPage(),

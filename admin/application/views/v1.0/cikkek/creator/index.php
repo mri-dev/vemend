@@ -40,11 +40,36 @@
             <?php endwhile; ?>
           <?php endif; ?>
         </div>
+
+				<div class="con cont-option" data-cont-option="intezmenyek,boltok,vendeglatas">
+					<div class="option-label">Opcionális adatmező</div>
+					<h2>Logó</h2>
+					<div style="display:block;">
+							<input type="text" id="option_logo" name="optional[logo]" value="<?=($this->news) ? $this->news->getOptional('logo') : ''?>" style="display:none;">
+							<a title="Kép kiválasztása" href="<?=FILE_BROWSER_IMAGE?>&field_id=option_logo" data-fancybox-type="iframe" class="btn btn-sm btn-default iframe-btn" type="button"><i class="fa fa-search"></i></a>
+							<span id="url_option_logo" class="img-selected-thumbnail"><a href="<?=($this->news) ? $this->news->getOptional('logo') : ''?>" class="zoom"><img src="<?=($this->news) ? $this->news->getOptional('logo') : ''?>" title="Kiválasztott kép" alt=""></a></span>
+							<i class="fa fa-times" title="Kép eltávolítása" id="remove_option_logo" style="color:red; <?=($this->news && $this->news->getOptional('logo') ? '' :'display:none;')?>"></i>
+					</div>
+				</div>
+
+				<div class="con cont-option" data-cont-option="intezmenyek,boltok,vendeglatas,turizmus">
+					<div class="option-label">Opcionális adatmező</div>
+					<h2>Elsődleges kép</h2>
+					<small>A cikk tartalmában jelenik meg körbefuttatva a tartalommal.</small>
+					<br><br>
+					<div style="display:block;">
+							<input type="text" id="option_firstimage" name="optional[firstimage]" value="<?=($this->news) ? $this->news->getOptional('firstimage') : ''?>" style="display:none;">
+							<a title="Kép kiválasztása" href="<?=FILE_BROWSER_IMAGE?>&field_id=option_firstimage" data-fancybox-type="iframe" class="btn btn-sm btn-default iframe-btn" type="button"><i class="fa fa-search"></i></a>
+							<span id="url_option_firstimage" class="img-selected-thumbnail"><a href="<?=($this->news) ? $this->news->getOptional('firstimage') : ''?>" class="zoom"><img src="<?=($this->news) ? $this->news->getOptional('firstimage') : ''?>" title="Kiválasztott kép" alt=""></a></span>
+							<i class="fa fa-times" title="Kép eltávolítása" id="remove_option_firstimage" style="color:red; <?=($this->news && $this->news->getOptional('firstimage') ? '' :'display:none;')?>"></i>
+					</div>
+				</div>
+
 				<div class="con cont-option" data-cont-option="boltok,vendeglatas">
 					<div class="option-label">Opcionális adatmező</div>
 					<h2>Nyitvatartás</h2>
 					<?php
-					$nyt_values = $this->news->getOptional('nyitvatartas', true);
+					$nyt_values = ($this->news) ? $this->news->getOptional('nyitvatartas', true) : false ;
 					foreach (array('Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat', 'Vasárnap') as $nap): ?>
 						<label for="option_nyitvatartas_<?=$nap?>"><?=$nap?></label>
 						<input type="text" id="option_nyitvatartas_<?=$nap?>" placeholder="Pl.: 08:00 - 17:00, zárva" name="optional[nyitvatartas][<?=$nap?>]" class="form-control" value="<?=$nyt_values[$nap]?>">
@@ -55,7 +80,7 @@
 					<div class="option-label">Opcionális adatmező</div>
 					<h2>Google térkép</h2>
 					<label for="option_maps">Pontos cím megadása</label>
-					<input type="text" id="option_maps"name="optional[maps]" class="form-control" value="<?=$this->news->getOptional('maps')?>">
+					<input type="text" id="option_maps"name="optional[maps]" class="form-control" value="<?=($this->news)?$this->news->getOptional('maps'):false?>">
 				</div>
       </div>
     	<div class="col-md-9">
@@ -88,8 +113,8 @@
                       <div style="display:block;">
                           <input type="text" id="belyegkep" name="belyegkep" value="<?=($this->news) ? $this->news->getImage() : ''?>" style="display:none;">
                           <a title="Kép kiválasztása" href="<?=FILE_BROWSER_IMAGE?>&field_id=belyegkep" data-fancybox-type="iframe" class="btn btn-sm btn-default iframe-btn" type="button"><i class="fa fa-search"></i></a>
-                          <span id="url_img" class="img-selected-thumbnail"><a href="<?=($this->news) ? $this->news->getImage() : ''?>" class="zoom"><img src="<?=($this->news) ? $this->news->getImage() : ''?>" title="Kiválasztott menükép" alt=""></a></span>
-                          <i class="fa fa-times" title="Kép eltávolítása" id="remove_url_img" style="color:red; <?=($this->news && $this->news->getImage() ? '' :'display:none;')?>"></i>
+                          <span id="url_belyegkep" class="img-selected-thumbnail"><a href="<?=($this->news) ? $this->news->getImage() : ''?>" class="zoom"><img src="<?=($this->news) ? $this->news->getImage() : ''?>" title="Kiválasztott menükép" alt=""></a></span>
+                          <i class="fa fa-times" title="Kép eltávolítása" id="remove_belyegkep" style="color:red; <?=($this->news && $this->news->getImage() ? '' :'display:none;')?>"></i>
                       </div>
                   </div>
               </div>
@@ -108,7 +133,7 @@
                   </div>
               </div>
               <br />
-              <div class="row">
+              <div class="row floating-buttons">
                 <div class="col-md-12 right">
                   <? if($this->gets[2] == 'szerkeszt'): ?>
                     <input type="hidden" name="id" value="<?=$this->gets[2]?>" />
@@ -136,9 +161,22 @@
           $('.type_'+stype).show();
           $('.submit-row').show();
       });
+
       $('#remove_url_img').click( function (){
           $('#url_img').find('img').attr('src','').hide();
           $('#belyegkep').val('');
+          $(this).hide();
+      });
+
+      $('#remove_option_logo').click( function (){
+          $('#url_option_logo').find('img').attr('src','').hide();
+          $('#option_logo').val('');
+          $(this).hide();
+      });
+
+      $('#remove_option_firstimage').click( function (){
+          $('#url_option_firstimage').find('img').attr('src','').hide();
+          $('#option_firstimage').val('');
           $(this).hide();
       });
 
@@ -169,7 +207,7 @@
 
     function responsive_filemanager_callback(field_id){
         var imgurl = $('#'+field_id).val();
-        $('#url_img').find('img').attr('src',imgurl).show();
-        $('#remove_url_img').show();
+        $('#url_'+field_id).find('img').attr('src',imgurl).show();
+        $('#remove_'+field_id).show();
     }
 </script>

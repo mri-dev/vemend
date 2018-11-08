@@ -1,11 +1,16 @@
 <div class="news-content">
+	<?php if ($optional_logo): ?>
+	<div class="logo">
+		<img src="<?=ADMROOT?><?=$optional_logo?>" alt="<?=$cim?>">
+	</div>
+	<?php endif; ?>
 	<div class="head">
 		<h1><?=$cim?></h1>
 		<div class="subline">
 			<div class="backurl">
 				<a href="/cikkek"><i class="fa fa-th" aria-hidden="true"></i> összes cikk</a>
 				<?php if (isset($_GET['cat']) && $_GET['cat'] != '' && $_GET['cat'] != 'olvas'): ?>
-					<a href="/cikkek/<?=$_GET['cat']?>"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> <?=$newscats[$_GET['cat']]['neve']?></a>
+					<a href="<?=($is_tematic)?'/':'/cikkek/'?><?=$_GET['cat']?>"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> <?=$newscats[$_GET['cat']]['neve']?></a>
 				<?php endif; ?>
 			</div>
 			<div class="share">
@@ -15,10 +20,12 @@
 			<div class="nav">
 				<ul class="cat-nav">
 					<li><a href="/"><i class="fa fa-home"></i></a></li>
+					<?php if (!$is_tematic): ?>
 					<li><a href="/cikkek">Cikkek</a></li>
+					<?php endif; ?>
 					<li>
 						<?php foreach ( (array)$categories['list'] as $cat ): ?>
-						<a class="cat" href="/cikkek/<?=\Helper::makeSafeUrl($cat['neve'])?>"><?=$cat['label']?></a>
+						<a class="cat" href="<?=($is_tematic)?'/':'/cikkek/'?><?=\Helper::makeSafeUrl($cat['neve'])?>"><?=$cat['label']?></a>
 						<?php endforeach; ?>
 					</li>
 				</ul>
@@ -27,6 +34,11 @@
 	</div>
 
 	<div class="content">
+		<?php if ($optional_firstimage): ?>
+		<div class="content-firstimage">
+			<img src="<?=ADMROOT?><?=$optional_firstimage?>" alt="<?=$cim?>">
+		</div>
+		<?php endif; ?>
 		<?=\PortalManager\News::textRewrites($szoveg)?>
 	</div>
 
@@ -57,7 +69,6 @@
 		</div>
 		<?php endif; ?>
 		<?php endif; ?>
-
 		<?php if ($optional_maps != ''): ?>
 		<div class="<?=($noopensdata == 7) ? 'col-md-12' : 'col-md-8'?>">
 			<div class="content-block content-map">

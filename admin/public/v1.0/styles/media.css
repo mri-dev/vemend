@@ -41,6 +41,14 @@ body{
 	font-size:1.43em;
 	height: 100%;
 }
+.floating-buttons{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 12px 0;
+  background: #d0d0d0;
+}
 
 body, html {
 	position: relative;
@@ -265,6 +273,9 @@ body.blured-bg #content .container-fluid{
 	padding-left:75px;
 	z-index:10;
 }
+#content .ct > .innerContent{
+  padding: 0 0 60px 0;
+}
 #content .ct > .innerContent > .row{
   margin: 0 -15px !important;
 }
@@ -290,6 +301,9 @@ body.blured-bg #content .container-fluid{
 #content .slideMenu .menu ul li{
 	border-bottom: 1px solid #7f7f7f;
 }
+#content .slideMenu .menu ul li.sub{
+  	border-bottom: 1px solid #4b4b4b;
+}
 #content .slideMenu .menu ul li.div{
   background: #525252;
   height: 8px;
@@ -304,12 +318,11 @@ body.blured-bg #content .container-fluid{
 }
 
 #content .slideMenu .menu ul li.sub a {
-	font-size: 0.85em;
-    line-height: 2.4;
-    padding-right: 25px;
-    background: #333;
-
-	color: #737373;
+	font-size: 0.95em;
+  line-height: 2.4;
+  padding-right: 30px;
+  background: #333;
+	color: #bebebe;
 }
 #content .slideMenu .menu ul li a span.ni{
 	visibility:hidden;
@@ -347,18 +360,23 @@ body.blured-bg #content .container-fluid{
 	content:"";
 	/*background:#ededed;*/
 	border-style:solid;
-	border-width:18px;
+	border-width:25px;
 	border-color: transparent #f4f4f4 transparent transparent;
-	width:16px;
+	width:25px;
 	height:100%;
 	position:absolute;
 }
-#content .slideMenu .menu ul li:hover a,#content .slideMenu .menu ul li.on a{
+#content .slideMenu .menu ul li:not(.sub):hover a,
+#content .slideMenu .menu ul li:not(.sub).on a{
 	background:#f4f4f4;
 	color: #dba516;
 	text-decoration:none;
 }
-#content .slideMenu .menu ul li:hover i, #content .slideMenu .menu ul li.on i{
+#content .slideMenu .menu ul li.sub.on a{
+	background:#222;
+}
+#content .slideMenu .menu ul li:hover i,
+#content .slideMenu .menu ul li.on i{
 	color:#dba516;
 }
 #content .ct h1{
