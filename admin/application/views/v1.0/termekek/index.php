@@ -56,10 +56,10 @@
     	<tr class="search <? if($_COOKIE['filtered'] == '1'): ?>filtered<? endif;?>">
     		<td><input type="text" name="ID" class="form-control" value="<?=$_COOKIE['filter_ID']?>" /></td>
     		<? if( true ): ?>
-			<td class="">
-				<input type="text" name="cikkszam" placeholder="azonosító..." class="form-control" value="<?=$_COOKIE['filter_cikkszam']?>" />
-			</td>
-			<? endif; ?>
+  			<td class="">
+  				<input type="text" name="cikkszam" placeholder="azonosító..." class="form-control" value="<?=$_COOKIE['filter_cikkszam']?>" />
+  			</td>
+  			<? endif; ?>
     		<td>
           <div class="filter-inps">
             <div class="nev">

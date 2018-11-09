@@ -65,6 +65,7 @@ class SzallasList extends SzallasFramework
       $arg['loadfulldata'] = true;
       $q .= " and sz.ID = :id ";
       $darg['id'] = (int)$arg['getid'];
+      $loadeach = true;
     }
 
     if (isset($config_filters['adults'])) {
@@ -118,7 +119,11 @@ class SzallasList extends SzallasFramework
       // Összes vonatkozó adat betöltése
       if (isset($arg['loadfulldata']) && !empty($arg['loadfulldata'])) {
         $d['rooms'] = (new SzallasSzobak((int)$d['ID'], $this->arg))->getRooms();
-        $d['services'] = (new SzallasSzolgaltatasok((int)$d['ID'], $this->arg))->getServices();
+        $srcarg = array();
+        if ($loadeach) {
+          $srcarg['onlyszallas'] = true;
+        }
+        $d['services'] = (new SzallasSzolgaltatasok((int)$d['ID'], $this->arg))->getServices($srcarg);
       }
 
       $back['list'][] = $d;

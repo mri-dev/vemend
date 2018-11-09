@@ -1,40 +1,48 @@
-<? 
+<?
 use PortalManager\Menus;
 use PortalManager\Pages;
 use ShopManager\Categories;
 use ShopManager\Category;
 
 class menu extends Controller{
-		function __construct(){	
+		function __construct(){
 			parent::__construct();
 			parent::$pageTitle = 'Menü / Adminisztráció';
-			
+
 			$this->view->adm = $this->AdminUser;
 			$this->view->adm->logged = $this->AdminUser->isLogged();
 
+			if(Post::on('filterList')){
+				$filtered = false;
 
-			if(Post::on('flag')){
-				$flag = $_POST[$_POST['flag']];
-				
-				if( $flag )
-					setcookie($_POST['flag'], $_POST[$_POST['flag']], time()+3600*24, '/menu');
-				else
-					setcookie($_POST['flag'], false , time()-1, '/menu');
+				if($_POST['position'] != ''){
+					setcookie('filter_position',$_POST['position'],time()+60*24,'/'.$this->view->gets[0]);
+					$filtered = true;
+				}else{
+					setcookie('filter_position','',time()-100,'/'.$this->view->gets[0]);
+				}
 
-				Helper::reload();
+				if($filtered){
+					setcookie('filtered','1',time()+60*24*7,'/'.$this->view->gets[0]);
+				}else{
+					setcookie('filtered','',time()-100,'/'.$this->view->gets[0]);
+				}
+				Helper::reload('/menu');
 			}
 
-			$menus = new Menus( $this->view->gets[2], array( 'db' => $this->db ) ); 
-			if(isset($_COOKIE['flag_menu_type_filter'])) {
-				$menus->addFilter( 'menu_type', $_COOKIE['flag_menu_type_filter'] );
+			$menus = new Menus( $this->view->gets[2], array( 'db' => $this->db ) );
+
+			if(isset($_COOKIE['filter_position'])) {
+				$menus->addFilter( 'menu_type', $_COOKIE['filter_position'] );
 			}
+
 			$categories = new Categories(  array( 'db' => $this->db )  );
 			$pages = new Pages( false, array( 'db' => $this->db )  );
 
 			if(Post::on('add')){
 				try{
 					$menus->add($_POST);
-					Helper::reload();	
+					Helper::reload();
 				}catch(Exception $e){
 					$this->view->err 	= true;
 					$this->view->msg 	= Helper::makeAlertMsg('pError', $e->getMessage());
@@ -45,7 +53,7 @@ class menu extends Controller{
 				case 'szerkeszt':
 					if(Post::on('save')){
 						try{
-							$menus->save($_POST);	
+							$menus->save($_POST);
 							Helper::reload();
 						}catch(Exception $e){
 							$this->view->err 	= true;
@@ -57,7 +65,7 @@ class menu extends Controller{
 				case 'torles':
 					if(Post::on('delId')){
 						try{
-							$menus->delete();	
+							$menus->delete();
 							Helper::reload('/menu');
 						}catch(Exception $e){
 							$this->view->err 	= true;
@@ -90,7 +98,7 @@ class menu extends Controller{
 			$page_tree 	= $pages->getTree();
 			// Oldalak
 			$this->out( 'pages', $page_tree );
-			
+
 
 			// SEO Információk
 			$SEO = null;
@@ -98,16 +106,23 @@ class menu extends Controller{
 			$SEO .= $this->view->addMeta('description','');
 			$SEO .= $this->view->addMeta('keywords','');
 			$SEO .= $this->view->addMeta('revisit-after','3 days');
-			
+
 			// FB info
 			$SEO .= $this->view->addOG('type','website');
 			$SEO .= $this->view->addOG('url',DOMAIN);
 			$SEO .= $this->view->addOG('image',DOMAIN.substr(IMG,1).'noimg.jpg');
 			$SEO .= $this->view->addOG('site_name',TITLE);
-			
+
 			$this->view->SEOSERVICE = $SEO;
 		}
-		
+
+		function clearfilters(){
+			setcookie('filter_position','',time()-100,'/'.$this->view->gets[0]);
+			setcookie('filtered','',time()-100,'/'.$this->view->gets[0]);
+			Helper::reload('/menu/');
+		}
+
+
 		function __destruct(){
 			// RENDER OUTPUT
 				parent::bodyHead();					# HEADER

@@ -28,7 +28,8 @@ class ajax extends Controller{
 					{
 						// uploads image in the folder images
 						$temp = explode(".", $_FILES["file"]["name"]);
-						$newfilename = substr(md5(time()), 0, 10) . '.' . end($temp);
+						//$newfilename = substr(md5(time()), 0, 10) . '.' . end($temp);
+						$newfilename = uniqid() . '.' . end($temp);
 						$szid = (int)$params['id'];
 						$szallas_path = 'store/images/szallas/'.$szid.'/';
 
@@ -53,6 +54,7 @@ class ajax extends Controller{
 					}
 
 					$re['FILE'] = $_FILES['file'];
+					$re['PARAMS'] = $params['params'];
 				break;
 			}
 
@@ -476,6 +478,19 @@ class ajax extends Controller{
 
 					switch ( $key )
 					{
+						case 'registerUploadedImageToSzallas':
+							try {
+								$re['data'] = $szallaslist->registerImage( $id, array(
+									'filepath' => $filepath,
+									'imagename' => $origin_name,
+									'filemeret' => $size,
+									'kiterjesztes' => $ext,
+								) );
+							} catch (\Exception $e) {
+								$re['error'] = 1;
+								$re['msg'] = $e->getMessage();
+							}
+						break;
 						case 'LoadSzallasData':
 							try {
 								$re['data'] = $szallaslist->loadSzallas( $id );

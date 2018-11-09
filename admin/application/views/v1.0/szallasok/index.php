@@ -302,6 +302,50 @@
 
 					<div class="tab-block" ng-show="(editing_page=='pictures')">
 						<h3>Képek</h3>
+						<?php if (false): ?>
+						<div class="uploader">
+							<input type="file" class="lab-selector" id="imagesuploader" image-uploader="profil" multiple="multiple">
+							<label for="imagesuploader">
+								<div class="img" ng-show="profilpreview">
+									<img ng-src="{{profilpreview}}" alt="{{selectedprofilimg.name}}" class="preview">
+								</div>
+								<strong>Képek feltöltéséhez kattintson ide.</strong>
+								<div class="allows">Engedélyezett méret: max. 2024 KB. Fájlformátumok: jpg, jpeg, png.</div>
+								<div class="clr"></div>
+							</label>
+							<div class="uploading-image-dataset" ng-show="selectedUploadingImages.length!=0">
+								<h4>Újonnan feltöltendő képek ({{selectedUploadingImages.length}}):</h4>
+								<div class="picture" ng-class="(img.correct_extension && img.correct_size)?'':'unable-to-upload'" ng-repeat="img in selectedUploadingImages" >
+									<div class="wrapper">
+										<div class="image">
+											<img src="{{img.preview}}" alt="">
+										</div>
+										<div class="data">
+											<div class="title">
+												<strong>{{img.name}}</strong>
+											</div>
+											<div class="size" ng-hide="img.uploaded" ng-class="(img.correct_size)?'correct-val':'incorrect-val'">
+												Méret: <strong>{{img.size|number}} KB</strong>
+											</div>
+											<div class="size" ng-hide="img.uploaded" ng-class="(img.correct_extension)?'correct-val':'incorrect-val'">
+												Kiterjesztés: <strong>{{img.type}}</strong>
+											</div>
+											<div class="uploaded-msg"  ng-show="img.uploaded">
+												<i class="fa fa-check-circle-o"></i> Kép feltöltve.
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="alert alert-warning" ng-show="uploadingimages">
+									<i class="fa fa-spin fa-spinner"></i> Képek feltöltése folyamatban.
+								</div>
+								<div class="upload-button" ng-show="selectedUploadingImages.length!=0" ng-hide="uploadingimages">
+									<button type="button" ng-click="uploadImages(create.id)" class="btn btn-default" name="button">Képek feltöltése <i class="fa fa-upload"></i></button>
+								</div>
+							</div>
+						</div>
+						<?php endif; ?>
+						<div class="clr"></div>
 						{{create.pictures}}
 					</div>
 
@@ -317,7 +361,7 @@
 								<div class="service-list-group">
 									<div class="" ng-repeat="service in services | filter:{szallas_id: create.ID}">
 										<div class="value" ng-hide="serviceediting">
-											{{service.title}} {{service.szallas_id}}
+											{{service.title}}
 										</div>
 										<div class="edit-field" ng-show="serviceediting">
 											<input type="text" ng-model="service.title">

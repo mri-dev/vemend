@@ -48,6 +48,9 @@ class SzallasSzolgaltatasok extends SzallasFramework
     foreach ((array)$qry as $d )
     {
       $d['ID'] = (int)$d['ID'];
+      if (isset($arg['onlyszallas']) && $arg['onlyszallas'] === true) {
+        if($d['szallas_id'] != $this->szallas_id) continue;
+      }
       $back[$d['kategoria']][] = array(
         'ID' => $d['ID'],
         'szallas_id' => (int)$d['szallas_id'],

@@ -14,7 +14,7 @@ szallasok.config(function($mdDateLocaleProvider){
 });
 
 szallasok.service('fileUploadService', function($http, $q){
-  this.uploadFileToUrl = function (szallas_id, file, uploadUrl, callback) {
+  this.uploadFileToUrl = function (szallas_id, file, uploadUrl, params, callback) {
       var fileFormData = new FormData();
       fileFormData.append('file', file);
       var deffered = $q.defer();
@@ -24,7 +24,8 @@ szallasok.service('fileUploadService', function($http, $q){
         url: uploadUrl,
         params: {
           type: 'SzallasProfilUpload',
-          id: szallas_id
+          id: szallas_id,
+          params: params
         },
         data: fileFormData,
         headers: {
@@ -42,6 +43,59 @@ szallasok.filter('html', ['$sce', function($sce){
     return function(text) {
         return $sce.trustAsHtml(text);
     };
+}]);
+
+szallasok.directive('imageUploader', ['$parse', function ($parse) {
+  return {
+    link: function(scope, element, attributes) {
+      element.bind("change", function(changeEvent)
+      {
+        scope.selectedUploadingImages = [];
+        scope.uploadimages = [];
+
+        angular.forEach( changeEvent.target.files, function(file,index)
+        {
+          scope.uploadimages.push(file);
+          var ext = file.name.split('.').pop().toLowerCase();
+          var correct_ext = scope.allowProfilType.indexOf(ext) > -1;
+          var imageobj = {
+            name: file.name,
+            type: ext,
+            size: file.size/1024,
+            correct_size: false,
+            correct_extension: false,
+            preview: null,
+            uploaded: false
+          };
+
+          // Fájlméret ellenőrzése
+          if(imageobj.size > 2024) {
+            imageobj.correct_size = false;
+          } else {
+            imageobj.correct_size = true;
+          }
+
+          // Kiterjesztés ellenőrzése
+          if (correct_ext) {
+            if (imageobj.correct_size) {
+              var reader = new FileReader();
+              reader.onload = function(loadEvent) {
+                scope.$apply(function() {
+                  imageobj.correct_extension = true;
+                  imageobj.preview = loadEvent.target.result;
+                });
+              }
+              reader.readAsDataURL(file);
+            }
+          } else {
+            imageobj.correct_extension = false;
+          }
+
+          scope.selectedUploadingImages.push(imageobj);
+        });
+      });
+    }
+  }
 }]);
 
 szallasok.directive('fileModel', ['$parse', function ($parse) {
@@ -90,6 +144,7 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$pa
 {
 
   $scope.allowProfilType = ['jpg', 'jpeg', 'png'];
+  $scope.selectedUploadingImages = [];
   $scope.selectedprofilimg = {
     size: 0,
     sizecorrect: true,
@@ -309,11 +364,22 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$pa
     };
   }
 
-  $scope.uploadSzallasImage = function(szallas_id, callback){
+  $scope.uploadSzallasImage = function(szallas_id, callback)
+  {
     var file = $scope.fileinput;
     var uploadUrl = "/ajax/data/", //Url 1of webservice/api/server
-    promise = fileUploadService.uploadFileToUrl(szallas_id, file, uploadUrl, function(re){
+    promise = fileUploadService.uploadFileToUrl(szallas_id, file, uploadUrl, false, function(re){
       callback(re);
+    });
+  }
+
+  $scope.uploadSzallasImages = function(szallas_id, callback)
+  {
+    var uploadUrl = "/ajax/data/"; //Url 1of webservice/api/server
+    angular.forEach($scope.uploadimages, function( file, i ){
+      promise = fileUploadService.uploadFileToUrl(szallas_id, file, uploadUrl, false, function(re){
+        callback(i, re);
+      });
     });
   }
 
@@ -415,6 +481,53 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$pa
       })
     }).success(function( r ){
     });
+  }
+
+  $scope.saveUploadedImageToSzallas = function( szallasid, imageobject, uploadreturn, callback ) {
+    $http({
+      method: 'POST',
+      url: '/ajax/get',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: $.param({
+        type: "Szallasok",
+        key: 'registerUploadedImageToSzallas',
+        id: szallasid,
+        origin_name: imageobject.name,
+        size: imageobject.size,
+        ext: imageobject.type,
+        filepath: uploadreturn.uploaded_path
+      })
+    }).success(function( r ){
+        callback(r);
+    });
+  }
+
+  $scope.uploadImages = function(id)
+  {
+    $scope.uploadingimages = true;
+    var uploaded = 0;
+    $scope.uploadSzallasImages(id, function(index, re)
+    {
+      console.log($scope.selectedUploadingImages[index]);
+      if (re && !re.error) {
+        $scope.selectedUploadingImages[index].uploaded = true;
+        $scope.saveUploadedImageToSzallas(id, $scope.selectedUploadingImages[index], re, function(save){
+          if (save.error == 0) {
+            uploaded++;
+            // Finish upload
+            if (uploaded == $scope.selectedUploadingImages.length) {
+              $scope.uploadingimages = false;
+              $timeout(function(){
+                $scope.selectedUploadingImages = [];
+                $scope.uploadimages = [];
+              }, 2000);
+            }
+          }
+        });
+      }
+    });
+
+
   }
 
   $scope.saveSzallas = function()

@@ -5,7 +5,7 @@
 <input type="hidden" name="delId" value="<?=$this->gets[2]?>" />
 <div class="row">
 	<div class="col-md-12 con con-del">
-        <h2></i> Menü elem törlése</h2>           
+        <h2></i> Menü elem törlése</h2>
     	<div>
         	<div style="float:right;">
             	<a href="/<?=$this->gets[0]?>/" class="btn btn-danger"><i class="fa fa-times"></i> NEM</a>
@@ -32,91 +32,91 @@
                         <option value="" selected="selected">&mdash; kérjük válasszon &mdash;</option>
                         <option value="" disabled="disabled"></option>
                         <? foreach ( $this->menu_positions as $mp ) { ?>
-                        <option value="<?=$mp?>" <?=($this->menu && $this->menu->getPosition() == $mp)?'selected="selected"':''?>><?=$mp?></option>    
+                        <option value="<?=$mp?>" <?=($this->menu && $this->menu->getPosition() == $mp)?'selected="selected"':''?>><?=$mp?></option>
                         <? } ?>
                     </select>
-                </div>                 
+                </div>
                 <div class="col-md-3">
                     <label for="menu_parent">Szülő menü <?=($this->menus->filters['menu_type'] ? '<span style="font-weight:normal;">(csak <strong>'.$this->menus->filters['menu_type'].'</strong> elemek)</span>': '')?></label>
                     <select name="parent" id="menu_parent" class="form-control">
                         <option value="" selected="selected">&mdash; ne legyen / legfelső menüelem &mdash;</option>
                         <option value="" disabled="disabled"></option>
                         <option value="" disabled="disabled">Szülő menü kiválasztása:</option>
-                         <? 
-                            while( $this->menus->walk() ): 
+                         <?
+                            while( $this->menus->walk() ):
                             $menu = $this->menus->the_menu();
                         ?>
                         <option value="<?=$menu['ID']?>_<?=$menu['deep']?>" <?=($this->menu && $this->menu->getParentKey() == $menu['ID'].'_'.$menu['deep'] ? 'selected="selected"':'')?>><? for($s=$menu['deep']; $s>0; $s--){echo '&mdash;';}?><?=$menu['nev']?></option>
-                        <? endwhile; ?>                  
+                        <? endwhile; ?>
                     </select>
-                </div>  
+                </div>
                 <div class="col-md-3">
                     <label for="menu_type">Menü típus kiválasztása*</label>
                     <select name="menu_type" id="menu_type" class="form-control">
                         <option value="" selected="selected">&mdash; kérjük válasszon &mdash;</option>
                         <option value="" disabled="disabled"></option>
                         <? foreach ( $this->menu_types as $key => $type ) { ?>
-                        <option value="<?=$key?>" <?=($this->menu && $this->menu->getType() == $key)?'selected="selected"':''?>><?=$type?></option>    
-                        <? } ?>                       
+                        <option value="<?=$key?>" <?=($this->menu && $this->menu->getType() == $key)?'selected="selected"':''?>><?=$type?></option>
+                        <? } ?>
                     </select>
-                </div>  
+                </div>
                 <div class="col-md-2">
                     <label for="menu_nev">Felirat <?=\PortalManager\Formater::tooltip('<strong>URL típus esetén:</strong><br> A felirat szövege fog megjelenni a menüben. Ha nem adjuk meg, akkor nem lesz megjelenő szöveg a linknél. <br><br> <strong>Egyéb (csatolt) típusú menük esetén:</strong><br>Nem szükséges megadni. A becsatolt oldal címe / elnevezése lesz az alapértelmezetten megjelenő szöveg, ha nem adjuk meg. Amennyiben megadjuk a feliratot, felüldefiniálja az eredeti szöveget és a megadott felirat fog megjelenni.')?></label>
                     <input type="text" class="form-control" name="nev" id="menu_nev" value="<?=($this->menu) ? $this->menu->getTitle() : ''?>">
-                </div>  
+                </div>
 
                 <div class="col-md-1">
                     <label for="menu_order">Sorrend</label>
                     <input type="number" class="form-control" name="sorrend" id="menu_order" value="<?=($this->menu)?$this->menu->getSortNumber():0?>" min="-100" max="100" step="1">
-                </div>   
+                </div>
                 <div class="col-md-1">
                     <label for="menu_lathato">Látható</label>
                     <input type="checkbox" class="form-control" name="lathato" <?=( ($this->menu && $this->menu->isVisible()) || !$this->menu )?'checked="checked"':''?> id="menu_lathato">
-                </div>       
+                </div>
             </div>
             <br>
-            <div class="row type-row type_template" id="type_template" style="<?=($this->menu && $this->menu->getType() == 'template' )?'':'display:none;'?>">                
+            <div class="row type-row type_template" id="type_template" style="<?=($this->menu && $this->menu->getType() == 'template' )?'':'display:none;'?>">
                 <div class="col-md-12">
                     <label for="type_template">Template azonosító </label>
                     <input type="text" class="form-control" name="data_value" id="type_template" value="<?=($this->menu) ? $this->menu->getValue() : ''?>">
                 </div>
             </div>
-            <div class="row type-row type_url" id="type_url" style="<?=($this->menu && $this->menu->getType() == 'url' )?'':'display:none;'?>">                
+            <div class="row type-row type_url" id="type_url" style="<?=($this->menu && $this->menu->getType() == 'url' )?'':'display:none;'?>">
                 <div class="col-md-12">
                     <label for="url">Hivatkozás <?=\PortalManager\Formater::tooltip('Ha nem adja meg az URL-t, akkor a menü elem sima szövegként fog megjenni. Ez alkalmas lehet főcím használatára. Ha főcím a cél, akkor a CSS osztálynál adjuk meg a text-item-header osztályt.')?></label>
                     <input type="text" class="form-control" name="url" id="url" value="<?=($this->menu) ? $this->menu->getUrl() : ''?>">
                 </div>
             </div>
-            <div class="row type-row type_kategoria_alkategoria_lista type_kategoria_link" id="type_cat" style="<?=($this->menu && ($this->menu->getType() == 'kategoria_link' || $this->menu->getType() == 'kategoria_alkategoria_lista') )?'':'display:none;'?>">                
+            <div class="row type-row type_kategoria_alkategoria_lista type_kategoria_link" id="type_cat" style="<?=($this->menu && ($this->menu->getType() == 'kategoria_link' || $this->menu->getType() == 'kategoria_alkategoria_lista') )?'':'display:none;'?>">
                 <div class="col-md-12">
                     <label for="cat_select">Kapcsolódó kategória kiválasztása*</label>
                     <select name="cat_elem_id" id="cat_select" class="form-control">
                         <option value="" selected="selected">&mdash; kérjük válasszon &mdash;</option>
                         <option value="" disabled="disabled"></option>
-                        <? 
-                            while( $this->categories->walk() ): 
+                        <?
+                            while( $this->categories->walk() ):
                             $cat = $this->categories->the_cat();
                         ?>
                         <option value="<?=$cat['ID']?>" <?=($this->menu && $this->menu->getElemId() == $cat['ID'] ? 'selected="selected"':'')?>><? for($s=$cat['deep']; $s>0; $s--){echo '&mdash;';}?><?=$cat['neve']?></option>
-                        <? endwhile; ?>                   
+                        <? endwhile; ?>
                     </select>
                     <div class="info">
                         <a href="/kategoriak" target="_blank"><i class="fa fa-gear"></i> <em>kategóriák kezelése</em></a>
                     </div>
                 </div>
             </div>
-            <div class="row type-row type_oldal_link" id="type_cat" style="<?=($this->menu && ($this->menu->getType() == 'oldal_link') )?'':'display:none;'?>">                
+            <div class="row type-row type_oldal_link" id="type_cat" style="<?=($this->menu && ($this->menu->getType() == 'oldal_link') )?'':'display:none;'?>">
                 <div class="col-md-12">
                     <label for="page_select">Kapcsolódó oldal kiválasztása*</label>
                     <select name="page_elem_id" id="page_select" class="form-control">
                         <option value="" selected="selected">&mdash; kérjük válasszon &mdash;</option>
                         <option value="" disabled="disabled"></option>
-                        <? 
-                            while( $this->pages->walk() ): 
+                        <?
+                            while( $this->pages->walk() ):
                             $page = $this->pages->the_page();
                         ?>
                         <option value="<?=$page['ID']?>" <?=($this->menu && $this->menu->getElemId() == $page['ID'] ? 'selected="selected"':'')?>><? for($s=$page['deep']; $s>0; $s--){echo '&mdash;';}?><?=$page['cim']?></option>
-                        <? endwhile; ?>                   
+                        <? endwhile; ?>
                     </select>
                     <div class="info">
                         <a href="/oldalak" target="_blank"><i class="fa fa-plus"></i> <em>új oldal létrehozása</em></a>
@@ -147,14 +147,14 @@
                         nav-img-medium - menü kép médium méret (96px magas)<br>
                         nav-img-large - menü kép nagy méret (180px magas)<br>
                         nav-img-top - menü kép a szöveg felé helyezése<br>
-                        item-align-center - középre rendezett tartalom                        
+                        item-align-center - középre rendezett tartalom
                      ')?></label>
                      <input type="text" class="form-control" name="css_class" id="css_class" value="<?=($this->menu) ? $this->menu->getCssClass() : ''?>">
                 </div>
                 <div class="col-md-3">
                      <label for="css_style">Style <?=\PortalManager\Formater::tooltip('Pl.: font-weight: bold; font-size: 16px; color: black;')?></label>
                      <input type="text" class="form-control" name="css_styles" id="css_style" value="<?=($this->menu) ? $this->menu->getCssStyle() : ''?>">
-                </div>                
+                </div>
                 <div class="col-md-2">
                     <label for="uimg">Menü kép</label>
                     <div style="display:block;">
@@ -182,24 +182,8 @@
 <? endif; ?>
 <div class="row">
 	<div class="col-md-12">
-    	<div class="con">
-            <div style="float:right;">
-                <form action="" id="flag_menu_type_filter" method="post">
-                    <input type="hidden" name="flag" value="flag_menu_type_filter">
-                    <span style="padding:0 5px 0 0; line-height:22px; float:left;">Menü pozíció szűrés</span>
-                    <select name="flag_menu_type_filter" onchange="$('#flag_menu_type_filter').submit();">
-                        <option value="" selected="selected">összes</option>
-                        <option value="" disabled="disabled"></option>
-                        <? foreach ( $this->menu_positions as $mp ) { ?>
-                        <option value="<?=$mp?>" <?=($_COOKIE['flag_menu_type_filter'] == $mp)?'selected="selected"':''?>><?=$mp?></option>    
-                        <? } ?>
-                    </select>
-                </form>
-            </div>
-        	<h2>Menü elemek</h2>
-            <div><?=($this->menus->filters['menu_type'] ? 'Szűrt lista, mint <u>menü pozíció</u>: <strong>'.$this->menus->filters['menu_type'].'</strong>': '')?></div>
-            <br />
-            <div class="row" style="color:#aaa;">
+    	<div class="con con-row-list">
+            <div class="row row-header" style="color:#aaa;">
             	<div class="col-md-5">
                 	<em>Felirat</em>
                 </div>
@@ -216,19 +200,42 @@
                     <em>Látható</em>
                 </div>
                 <div class="col-md-1">
-                	
+
                 </div>
            	</div>
-        	<?  if( $this->menus->has_menu() ): 
-                while( $this->menus->walk() ): 
-                $menu = $this->menus->the_menu(); 
+						<div class="row row-filter <? if($_COOKIE['filtered'] == '1'): ?>filtered<? endif;?>">
+							<form action="" method="post">
+								<div class="col-md-5">
+									<?=($this->menus->filters['menu_type'] ? 'Szűrt lista, mint <u>menü pozíció</u>: <strong>'.$this->menus->filters['menu_type'].'</strong>': '')?>
+								</div>
+                <div class="col-md-1">
+									<select name="position" class="form-control">
+											<option value="" selected="selected">összes</option>
+											<option value="" disabled="disabled"></option>
+											<? foreach ( $this->menu_positions as $mp ) { ?>
+											<option value="<?=$mp?>" <?=($_COOKIE['filter_position'] == $mp)?'selected="selected"':''?>><?=$mp?></option>
+											<? } ?>
+									</select>
+                </div>
+                <div class="col-md-5"></div>
+								<div class="col-md-1 right">
+									<?php if ($_COOKIE[filtered] == '1'): ?>
+									<a href="/menu/clearfilters" class="btn btn-danger" title="Szűrőfeltételek törlése"><i class="fa fa-times"></i></a>
+									<?php endif; ?>
+	              	<button name="filterList" class="btn btn-default"><i class="fa fa-search"></i></button>
+	              </div>
+							</form>
+						</div>
+        	<?  if( $this->menus->has_menu() ):
+                while( $this->menus->walk() ):
+                $menu = $this->menus->the_menu();
             ?>
-            <div class="row np markarow deep<?=$menu['deep']?> <?=($this->menu && $this->gets[1] == 'szerkeszt' && $this->menu->getId() == $menu['ID'] ? 'on-edit' : '')?> <?=($this->menu && $this->gets[1] == 'torles' && $this->menu->getId() == $menu['ID'] ? 'on-del' : '')?>">
+            <div class="row markarow deep<?=$menu['deep']?> <?=($this->menu && $this->gets[1] == 'szerkeszt' && $this->menu->getId() == $menu['ID'] ? 'on-edit' : '')?> <?=($this->menu && $this->gets[1] == 'torles' && $this->menu->getId() == $menu['ID'] ? 'on-del' : '')?>">
             	<div class="col-md-5">
                     <? if($menu['kep']): ?>
                     <div class="img-thb"><img src="<?=$menu['kep']?>" alt=""></div>
                     <? endif; ?>
-                	<strong><?=$menu[nev]?></strong> 
+                	<strong><?=$menu[nev]?></strong>
                     <div><em class="menu-type" title="menü típus">(<?=$this->menus->the_menu_type()['text']?>)</em></div>
                 </div>
                 <div class="col-md-1">
@@ -253,7 +260,7 @@
                 	Nincs létrehozott menü elemek!
                 </div>
             <? endif; ?>
-            
+
         </div>
     </div>
 </div>

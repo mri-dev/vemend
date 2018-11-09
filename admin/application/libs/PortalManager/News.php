@@ -209,7 +209,6 @@ class News
 	{
 		$tree 		= array();
 
-
 		if ( $arg['limit'] ) {
 			if( $arg['limit'] > 0 ) {
 				$this->item_limit_per_page = ( is_numeric($this->item_limit_per_page) && $this->item_limit_per_page > 0) ? (int)$arg['limit'] : $this->item_limit_per_page;
@@ -246,6 +245,10 @@ class News
 
 		if (isset($arg['in_cat']) && !empty($arg['in_cat']) && $arg['in_cat'] != 0) {
 			$qry .= " and ".$arg['in_cat']." IN (SELECT cat_id FROM cikk_xref_cat WHERE cikk_id = h.ID)";
+		}
+
+    if (isset($arg['search']) && !empty($arg['search'])) {
+			$qry .= " and h.cim LIKE '%".addslashes($arg['search'])."%'";
 		}
 
 

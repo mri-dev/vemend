@@ -89,7 +89,21 @@ class SzallasFramework
 		return $data;
   }
 
+  public function registerImage( $szallasid, $imagedata )
+  {
+    $this->db->insert(
+      self::DBKEPEK,
+      array(
+        'szallas_id' => $szallasid,
+        'filepath' => $imagedata['filepath'],
+        'imagename' => $imagedata['imagename'],
+        'kiterjesztes' => $imagedata['kiterjesztes'],
+        'filemeret' => $imagedata['filemeret'],
+      )
+    );
 
+    return $this->db->lastInsertId();
+  }
 
   public function rebuildSzallasEllatas( $szallasid, $ids = array() )
   {
@@ -447,11 +461,17 @@ class SzallasFramework
     }
 
     $q = "SELECT
-      r.ID, r.ellatas_id, r.felnott_ar, r.gyerek_ar,
+      r.ID,
+      r.ellatas_id,
+      r.felnott_ar,
+      r.gyerek_ar,
       t.name as ellatas_name
     FROM ".self::DBSZOBAAR." as r
     LEFT OUTER JOIN ".self::DBTERMS." as t ON t.ID = r.ellatas_id
-    WHERE 1=1 and r.szoba_id = :roomid
+    LEFT OUTER JOIN ".self::DBSZOBAK." as sz ON sz.ID = r.szoba_id
+    WHERE 1=1 and
+    r.szoba_id = :roomid and
+    r.ellatas_id IN (SELECT el.ellatas_id FROM ".self::DBSZALLASXREFELLATAS." as el WHERE el.szallas_id = sz.szallas_id)
     ORDER BY t.sort ASC ";
 
     $qparam['roomid'] = $room_id;

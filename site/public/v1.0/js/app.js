@@ -1064,7 +1064,6 @@ app.controller('SzallasCalculator', ['$scope', '$http', '$timeout', function( $s
     if (typeof httpgetstr !== 'undefined') {
       // URL get serialized paraméter dekódolása
       $scope.urlGET = $scope.decodeURIString(httpgetstr);
-      console.log($scope.urlGET);
     }
 
     $scope.szallasid = id;

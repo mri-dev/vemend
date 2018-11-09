@@ -9,9 +9,34 @@ class cikkek extends Controller{
 			parent::__construct();
 			parent::$pageTitle = 'Cikkek / Adminisztráció';
 
-
 			$this->view->adm = $this->AdminUser;
 			$this->view->adm->logged = $this->AdminUser->isLogged();
+
+			if(Post::on('filterList')){
+				$filtered = false;
+
+				if($_POST['nev'] != ''){
+					setcookie('filter_nev',$_POST['nev'],time()+60*24,'/'.$this->view->gets[0]);
+					$filtered = true;
+				}else{
+					setcookie('filter_nev','',time()-100,'/'.$this->view->gets[0]);
+				}
+
+				if($_POST['kategoria'] != ''){
+					setcookie('filter_kategoria',$_POST['kategoria'],time()+60*24,'/'.$this->view->gets[0]);
+					$filtered = true;
+				}else{
+					setcookie('filter_kategoria','',time()-100,'/'.$this->view->gets[0]);
+				}
+
+				if($filtered){
+					setcookie('filtered','1',time()+60*24*7,'/'.$this->view->gets[0]);
+				}else{
+					setcookie('filtered','',time()-100,'/'.$this->view->gets[0]);
+				}
+				Helper::reload('/cikkek/1');
+			}
+
 
 			$categories = new Categories( array( 'db' => $this->db ) );
 			$categories->setTable( 'cikk_kategoriak' );
@@ -22,6 +47,12 @@ class cikkek extends Controller{
 				'limit' => 25,
 				'page' 	=> Helper::currentPageNum()
 			);
+			if (isset($_COOKIE['filter_kategoria'])) {
+				$arg['in_cat'] = (int)$_COOKIE['filter_kategoria'];
+			}
+			if (isset($_COOKIE['filter_nev'])) {
+				$arg['search'] = $_COOKIE['filter_nev'];
+			}
 			$page_tree 	= $news->getTree( $arg );
 			// Hírek
 			$this->out( 'news_list', $page_tree );
@@ -163,6 +194,13 @@ class cikkek extends Controller{
 			$cat_tree 	= $categories->getTree();
 			// Kategoriák
 			$this->out( 'categories', $cat_tree );
+		}
+
+		function clearfilters(){
+			setcookie('filter_nev','',time()-100,'/'.$this->view->gets[0]);
+			setcookie('filter_kategoria','',time()-100,'/'.$this->view->gets[0]);
+			setcookie('filtered','',time()-100,'/'.$this->view->gets[0]);
+			Helper::reload('/cikkek/');
 		}
 
 		function __destruct(){

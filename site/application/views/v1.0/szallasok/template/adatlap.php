@@ -66,4 +66,4 @@
     </div>
   </div>
 </div>
-<pre><?php //print_r($this->szallas); ?></pre>
+<pre><?php //print_r($this->szallas['datas']); ?></pre>

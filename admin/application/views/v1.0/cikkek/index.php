@@ -2,29 +2,51 @@
 	<a href="/cikkek/kategoriak" class="btn btn-default"><i class="fa fa-bars"></i> cikk kategóriák</a>
 	<a href="/cikkek/creator" class="btn btn-primary"><i class="fa fa-plus"></i> új cikk</a>
 </div>
-<h1>Cikkek</h1>
+<h1>Cikkek <?php if ($_COOKIE[filtered] == '1'): ?><span style="color: red;">Szűrt lista</span><? endif; ?></h1>
 <? if( true ): ?>
 <div class="row">
 	<div class="col-md-12">
     	<div class="con con-row-list">
-            <div class="row row-header">
-            	<div class="col-md-5">
-                	Cím
-                </div>
-								<div class="col-md-3 center">
-              		Kategóriák
-                </div>
-                <div class="col-md-1 center">
-              		Utoljára frissítve
-                </div>
-                <div class="col-md-1 center">
-                  Létrehozva
-                </div>
-                <div class="col-md-1 center">
-                	Látható
-                </div>
-                <div class="col-md-1" align="right"></div>
-           	</div>
+          <div class="row row-header">
+          	<div class="col-md-5">
+              	Cím
+              </div>
+							<div class="col-md-3 center">
+            		Kategóriák
+              </div>
+              <div class="col-md-1 center">
+            		Utoljára frissítve
+              </div>
+              <div class="col-md-1 center">
+                Létrehozva
+              </div>
+              <div class="col-md-1 center">
+              	Látható
+              </div>
+              <div class="col-md-1" align="right"></div>
+         	</div>
+					<div class="row row-filter <? if($_COOKIE['filtered'] == '1'): ?>filtered<? endif;?>">
+						<form class="" action="" method="post">
+          		<div class="col-md-5">
+              	<input type="text" class="form-control" name="nev" value="<?=$_COOKIE['filter_nev']?>" placeholder="Keresés...">
+              </div>
+							<div class="col-md-3 center">
+								<select class="form-control"  name="kategoria">
+				        	<option value="" selected="selected"># Mind</option>
+		            	<?	while( $this->categories->walk() ): $cat = $this->categories->the_cat(); ?>
+		                <option value="<?=$cat['ID']?>" <?=($cat['ID'] == $_COOKIE['filter_kategoria'])?'selected':''?>><?=$cat['neve']?></option>
+									<? endwhile; ?>
+		            </select>
+              </div>
+              <div class="col-md-3 center"></div>
+              <div class="col-md-1 right">
+								<?php if ($_COOKIE[filtered] == '1'): ?>
+								<a href="/cikkek/clearfilters" class="btn btn-danger" title="Szűrőfeltételek törlése"><i class="fa fa-times"></i></a>
+								<?php endif; ?>
+              	<button name="filterList" class="btn btn-default"><i class="fa fa-search"></i></button>
+              </div>
+						</form>
+         	</div>
         	<?
             if( $this->news_list->has_news() ):
             while( $this->news_list->walk() ):
@@ -32,13 +54,13 @@
 							$cats = $this->news_list->getCategories();
 							$url = $this->news_list->getUrl( false, false );
             ?>
-            <div class="row np deep<?=$news['deep']?> markarow  <?=($this->news && $this->gets[1] == 'szerkeszt' && $this->news->getId() == $news['ID'] ? 'on-edit' : '')?> <?=($this->news && $this->gets[1] == 'torles' && $this->news->getId() == $news['ID'] ? 'on-del' : '')?>">
+            <div class="row deep<?=$news['deep']?> markarow  <?=($this->news && $this->gets[1] == 'szerkeszt' && $this->news->getId() == $news['ID'] ? 'on-edit' : '')?> <?=($this->news && $this->gets[1] == 'torles' && $this->news->getId() == $news['ID'] ? 'on-del' : '')?>">
             	<div class="col-md-5">
                   <div class="img-thb">
                       <a href="<?=$news['belyeg_kep']?>" class="zoom"><img src="<?=$news['belyeg_kep']?>" alt=""></a>
                   </div>
                 	<strong><?=$news[cim]?></strong>
-                  <div class="subline"><a target="_blank" class="url" href="<?=HOMEDOMAIN?><?=$url?>" class="news-url"><i title="<?=HOMEDOMAIN?>" class="fa fa-home"></i> <strong><?=$url?></strong></a></div>
+                  <div class="subline"><a target="_blank" class="url" href="<?=HOMEDOMAIN?><?=$url?>" class="news-url"><i title="<?=HOMEDOMAIN?>" class="fa fa-home"></i> <?=$url?></a></div>
                 </div>
                 <div class="col-md-3 center">
 									<?php if (count($cats['ids']) != 0): $icat = ''; ?>
