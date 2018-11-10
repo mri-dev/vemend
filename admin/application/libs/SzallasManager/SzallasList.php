@@ -124,6 +124,7 @@ class SzallasList extends SzallasFramework
           $srcarg['onlyszallas'] = true;
         }
         $d['services'] = (new SzallasSzolgaltatasok((int)$d['ID'], $this->arg))->getServices($srcarg);
+        $d['pictures'] = $this->getImages((int)$d['ID']);
       }
 
       $back['list'][] = $d;

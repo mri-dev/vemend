@@ -55,7 +55,6 @@ szallasok.directive('imageUploader', ['$parse', function ($parse) {
 
         angular.forEach( changeEvent.target.files, function(file,index)
         {
-          scope.uploadimages.push(file);
           var ext = file.name.split('.').pop().toLowerCase();
           var correct_ext = scope.allowProfilType.indexOf(ext) > -1;
           var imageobj = {
@@ -86,11 +85,13 @@ szallasok.directive('imageUploader', ['$parse', function ($parse) {
                 });
               }
               reader.readAsDataURL(file);
+              imageobj.correct_extension = true;
             }
           } else {
             imageobj.correct_extension = false;
           }
 
+          scope.uploadimages.push(file);
           scope.selectedUploadingImages.push(imageobj);
         });
       });
@@ -483,7 +484,7 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$pa
     });
   }
 
-  $scope.saveUploadedImageToSzallas = function( szallasid, imageobject, uploadreturn, callback ) {
+  $scope.saveUploadedImageToSzallas = function( szallasid, imageobject, uploadreturn, profil, callback ) {
     $http({
       method: 'POST',
       url: '/ajax/get',
@@ -495,7 +496,8 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$pa
         origin_name: imageobject.name,
         size: imageobject.size,
         ext: imageobject.type,
-        filepath: uploadreturn.uploaded_path
+        filepath: uploadreturn.uploaded_path,
+        profil: profil
       })
     }).success(function( r ){
         callback(r);
@@ -509,31 +511,37 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$pa
     $scope.uploadSzallasImages(id, function(index, re)
     {
       console.log($scope.selectedUploadingImages[index]);
+      console.log(re);
+      uploaded++;
+
       if (re && !re.error) {
-        $scope.selectedUploadingImages[index].uploaded = true;
-        $scope.saveUploadedImageToSzallas(id, $scope.selectedUploadingImages[index], re, function(save){
+        $scope.saveUploadedImageToSzallas(id, $scope.selectedUploadingImages[index], re, false, function(save){
           if (save.error == 0) {
-            uploaded++;
             // Finish upload
-            if (uploaded == $scope.selectedUploadingImages.length) {
-              $scope.uploadingimages = false;
-              $timeout(function(){
-                $scope.selectedUploadingImages = [];
-                $scope.uploadimages = [];
-              }, 2000);
-            }
+            $scope.selectedUploadingImages[index].uploaded = true;
+          } else {
+            $scope.selectedUploadingImages[index].uploaded = false;
           }
         });
+      } else {
+        $scope.selectedUploadingImages[index].uploaded = re.msg;
       }
+
+      if (uploaded == $scope.selectedUploadingImages.length) {
+        $scope.uploadingimages = false;
+        $timeout(function(){
+          $scope.selectedUploadingImages = [];
+          $scope.uploadimages = [];
+          $scope.loadSzallasDatas( $scope.create.id );
+        }, 2000);
+      }
+
     });
-
-
   }
 
   $scope.saveSzallas = function()
   {
     $scope.savingszallas = true;
-    console.log($scope.create);
 
     $http({
       method: 'POST',
@@ -552,21 +560,24 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$pa
         $scope.uploadingimages = true;
         $scope.uploadSzallasImage(r.data, function(re)
         {
-          console.log(re);
-          if (re.FILE) {
-            $scope.refreshSzallasProfilkepURI(r.data, re.uploaded_path);
-          }
-          $scope.savingszallas = false;
-          $scope.loadSzallasok();
-          $scope.uploadingimages = false;
-          $scope.create = {};
-          $scope.creating = false;
-          $scope.editing = false;
-          $scope.baseMsg.type = 'success';
-          $scope.baseMsg.msg = r.msg;
-          $timeout(function(){
-            $scope.baseMsg.msg = '';
-          }, 5000);
+          $scope.saveUploadedImageToSzallas(r.data, $scope.selectedprofilimg, re, true, function(save){
+            if (save.error == 0) {
+              if (re.FILE) {
+                $scope.refreshSzallasProfilkepURI(r.data, re.uploaded_path);
+              }
+              $scope.savingszallas = false;
+              $scope.loadSzallasok();
+              $scope.uploadingimages = false;
+              $scope.create = {};
+              $scope.creating = false;
+              $scope.editing = false;
+              $scope.baseMsg.type = 'success';
+              $scope.baseMsg.msg = r.msg;
+              $timeout(function(){
+                $scope.baseMsg.msg = '';
+              }, 5000);
+            }
+          });
         });
         /* */
         /* * /

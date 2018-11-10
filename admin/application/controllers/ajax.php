@@ -26,29 +26,36 @@ class ajax extends Controller{
 				case 'SzallasProfilUpload':
 					if (isset($_FILES['file']) && $_FILES['file']['error'] == 0)
 					{
+
 						// uploads image in the folder images
 						$temp = explode(".", $_FILES["file"]["name"]);
 						//$newfilename = substr(md5(time()), 0, 10) . '.' . end($temp);
-						$newfilename = uniqid() . '.' . end($temp);
-						$szid = (int)$params['id'];
-						$szallas_path = 'store/images/szallas/'.$szid.'/';
+						if (in_array(end($temp),array('jpg','jpeg', 'png'))) {
+							$newfilename = uniqid() . '.' . end($temp);
+							$szid = (int)$params['id'];
+							$szallas_path = 'store/images/szallas/'.$szid.'/';
 
-						if (!file_exists($szallas_path)) {
-							if(!mkdir( $szallas_path, 0755, true)){
-								echo json_encode( array(
-									'error' => 1,
-									'msg' => 'Mappa létrehozás sikertelen.'
-								) );
-								exit;
+							if (!file_exists($szallas_path)) {
+								if(!mkdir( $szallas_path, 0755, true)){
+									echo json_encode( array(
+										'error' => 1,
+										'msg' => 'Mappa létrehozás sikertelen.'
+									) );
+									exit;
+								}
 							}
+
+							move_uploaded_file($_FILES['file']['tmp_name'], $szallas_path. $newfilename);
+
+							// give callback to your angular code with the image src name
+							$re['filename'] = $newfilename;
+							$re['uploaded_path'] = $szallas_path . $newfilename;
+							$re['error'] = false;
+						} else {
+							$re['error'] = true;
+							$re['msg'] = 'A(z) '.end($temp).' fájltípus nem engedélyezett! Feltöltés sikertelen!';
 						}
 
-						move_uploaded_file($_FILES['file']['tmp_name'], $szallas_path. $newfilename);
-
-						// give callback to your angular code with the image src name
-						$re['filename'] = $newfilename;
-						$re['uploaded_path'] = $szallas_path . $newfilename;
-						$re['error'] = false;
 					} else {
 						$re['error'] = false;
 					}
@@ -485,6 +492,7 @@ class ajax extends Controller{
 									'imagename' => $origin_name,
 									'filemeret' => $size,
 									'kiterjesztes' => $ext,
+									'profilkep' => ($profil == 'true') ? 1 : 0
 								) );
 							} catch (\Exception $e) {
 								$re['error'] = 1;

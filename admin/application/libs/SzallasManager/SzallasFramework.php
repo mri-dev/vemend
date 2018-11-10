@@ -99,10 +99,51 @@ class SzallasFramework
         'imagename' => $imagedata['imagename'],
         'kiterjesztes' => $imagedata['kiterjesztes'],
         'filemeret' => $imagedata['filemeret'],
+        'profilkep' => $imagedata['profilkep'],
       )
     );
 
     return $this->db->lastInsertId();
+  }
+
+  public function getImages( $szallasid )
+  {
+    $images = array();
+
+    $q = "SELECT
+      i.ID,
+      i.cim,
+      i.filemeret,
+      i.kiterjesztes,
+      i.filepath,
+      i.imagename,
+      i.profilkep
+    FROM ".self::DBKEPEK." as i
+    WHERE 1=1 and i.szallas_id = :szid
+    ORDER BY i.sorrend ASC
+    ";
+
+    $qry = $this->db->squery($q, array('szid' => $szallasid));
+
+    if ($qry->rowCount() == 0) {
+      return $images;
+    }
+
+    $data = $qry->fetchAll(\PDO::FETCH_ASSOC);
+
+    foreach ((array)$data as $d) {
+      $images[] = $d;
+    }
+
+    $images = array_map(function($v)
+    {
+      $v['ID'] = (int)$v['ID'];
+      $v['filemeret'] = (float)$v['filemeret'];
+      $v['profilkep'] = ($v['profilkep'] == '1') ? true : false;
+      return $v;
+    }, $images);
+
+    return $images;
   }
 
   public function rebuildSzallasEllatas( $szallasid, $ids = array() )

@@ -301,20 +301,16 @@
 					</div>
 
 					<div class="tab-block" ng-show="(editing_page=='pictures')">
-						<h3>Képek</h3>
-						<?php if (false): ?>
+						<?php if (true): ?>
 						<div class="uploader">
 							<input type="file" class="lab-selector" id="imagesuploader" image-uploader="profil" multiple="multiple">
 							<label for="imagesuploader">
-								<div class="img" ng-show="profilpreview">
-									<img ng-src="{{profilpreview}}" alt="{{selectedprofilimg.name}}" class="preview">
-								</div>
 								<strong>Képek feltöltéséhez kattintson ide.</strong>
 								<div class="allows">Engedélyezett méret: max. 2024 KB. Fájlformátumok: jpg, jpeg, png.</div>
 								<div class="clr"></div>
 							</label>
 							<div class="uploading-image-dataset" ng-show="selectedUploadingImages.length!=0">
-								<h4>Újonnan feltöltendő képek ({{selectedUploadingImages.length}}):</h4>
+								<h3>Újonnan feltöltendő képek ({{selectedUploadingImages.length}}):</h3>
 								<div class="picture" ng-class="(img.correct_extension && img.correct_size)?'':'unable-to-upload'" ng-repeat="img in selectedUploadingImages" >
 									<div class="wrapper">
 										<div class="image">
@@ -330,8 +326,11 @@
 											<div class="size" ng-hide="img.uploaded" ng-class="(img.correct_extension)?'correct-val':'incorrect-val'">
 												Kiterjesztés: <strong>{{img.type}}</strong>
 											</div>
-											<div class="uploaded-msg"  ng-show="img.uploaded">
+											<div class="uploaded-msg"  ng-show="img.uploaded===true">
 												<i class="fa fa-check-circle-o"></i> Kép feltöltve.
+											</div>
+											<div class="uploaded-msg msg-error"  ng-show="img.uploaded!==true&&img.uploaded!==false">
+												<i class="fa fa-times"></i> {{img.uploaded}}
 											</div>
 										</div>
 									</div>
@@ -346,7 +345,32 @@
 						</div>
 						<?php endif; ?>
 						<div class="clr"></div>
-						{{create.pictures}}
+						<div class="uploaded-images">
+							<h3>Feltöltött képek</h3>
+							<div class="" ng-show="create.pictures.length==0">
+								Jelenleg nincsenek feltöltött képek!
+							</div>
+							<div class="wrapper">
+								<div class="image" ng-repeat="img in create.pictures">
+									<div class="wrapper">
+										<div class="img-wrapper">
+											<div class="profilkep" ng-show="img.profilkep">
+												<i class="fa fa-check-circle-o"></i> Profilkép
+											</div>
+											<img src="{{img.filepath}}" alt="{{img.cim}}">
+										</div>
+										<div class="info">
+											<div class="ext">
+												{{img.kiterjesztes}}
+											</div>
+											<div class="size">
+												{{img.filemeret}} KB
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 
 					<div class="tab-block" ng-show="(editing_page=='services')">
