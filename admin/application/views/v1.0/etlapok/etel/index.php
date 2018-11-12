@@ -45,6 +45,16 @@
         <br>
         <div class="row">
           <div class="col-md-12">
+            <label for="szenhidrat">Szénhidrát:</label>
+            <div class="input-group">
+              <input type="number" id="szenhidrat" class="form-control" ng-model="creator.szenhidrat">
+              <span class="input-group-addon">g</span>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12">
             <label for="feherje">Fehérje:</label>
             <div class="input-group">
               <input type="number" id="feherje" class="form-control" ng-model="creator.feherje">
@@ -156,6 +166,7 @@
                 <div class="title">{{etel.neve}}</div>
                 <div class="ertekek">
                   <span><strong>Kalória:</strong> {{etel.kaloria}} kcal</span>
+	                <span><strong>Szénhidrát:</strong> {{etel.szenhidrat}}g</span>
                   <span><strong>Fehérje:</strong> {{etel.feherje}}g</span>
                   <span><strong>Rost:</strong> {{etel.rost}}g</span>
                   <span><strong>Zsír:</strong> {{etel.zsir}}g</span>

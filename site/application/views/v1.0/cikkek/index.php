@@ -1,4 +1,4 @@
-<div class="news-page">
+<div class="news-page<?=($this->is_archiv)?' archive-list':''?>">
 		<? if( $this->news ):
 			$arg = $this->news->getFullData();
 			$arg['date_format'] = $this->settings['date_format'];
@@ -42,17 +42,38 @@
 		<div class="news-list">
 			<div class="pw">
 				<div class="categories sidebar">
+					<?php if ($this->is_archiv): ?>
+					<div class="backurl">
+						<a href="/cikkek/">vissza az aktív bejegyzésekhez</a>
+					</div>
+					<div class="clr"></div>
+					<br>
+					<?php endif; ?>
 					<h2>Kategóriák</h2>
 					<div class="list">
 						<div class="cat <?=($_GET['cat'] == '')?'active':''?>">
-							<a href="/cikkek/"><span class="dot" style="color:black;"></span> Összes bejegyzés</a>
+							<a href="<?=$this->cikkroot?>"><span class="dot" style="color:black;"></span> Összes bejegyzés</a>
 						</div>
-						<?php foreach ( (array)$this->newscats as $nc ): ?>
+						<?php foreach ( (array)$this->newscats as $nc ): if($this->is_archiv && in_array($nc['slug'], (array)$this->history->tematic_cikk_slugs)) continue; ?>
 						<div class="cat <?=($_GET['cat'] == ($nc['slug']))?'active':''?>">
-							<a href="<?=(in_array($nc['slug'], (array)$this->history->tematic_cikk_slugs))?'/':'/cikkek/'?><?=($nc['slug'])?>"><span class="dot" style="color:<?=$nc['bgcolor']?>;"></span> <?=$nc['neve']?></a>
+							<a href="<?=(in_array($nc['slug'], (array)$this->history->tematic_cikk_slugs))?'/':$this->cikkroot?><?=($nc['slug'])?>"><span class="dot" style="color:<?=$nc['bgcolor']?>;"></span> <?=$nc['neve']?> <span class="badge"><?=$nc['postc']?></span></a>
 						</div>
 						<?php endforeach; ?>
 					</div>
+
+					<?php if ($this->is_archiv && !empty($this->archive_dates)): ?>
+					<h2>Archívum</h2>
+					<div class="list">
+						<div class="cat <?=($_GET['date'] == '')?'active':''?>">
+							<a href="<?=$this->cikkroot?>">Összes</a>
+						</div>
+						<?php foreach ((array)$this->archive_dates as $nc): ?>
+						<div class="cat <?=($_GET['date'] == ($nc['date']))?'active':''?>">
+							<a href="<?=$this->cikkroot.'date/'.$nc['date'].'/1'?>"><?=$nc['datef']?> <span class="badge"><?=$nc['posts']?></span></a>
+						</div>
+						<?php endforeach; ?>
+					</div>
+					<?php endif; ?>
 
 					<div class="box">
 						<div class="header">

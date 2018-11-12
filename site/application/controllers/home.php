@@ -20,6 +20,7 @@ class home extends Controller{
 				'limit' => 2,
 				'page' 	=> 1,
 				'exc_cat_slug' => array('boltok','intezmenyek','turizmus','vendeglatas'),
+				'hide_archiv' => true,
 				'order' => array(
 					'by' => 'letrehozva',
 					'how' => 'DESC'
@@ -45,6 +46,7 @@ class home extends Controller{
 				'limit' => 4,
 				'page' 	=> 1,
 				'in_cat' => $cats['miserend']['ID'],
+				'hide_archiv' => true,
 				'order' => array(
 					'by' => 'letrehozva',
 					'how' => 'DESC'

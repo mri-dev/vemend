@@ -272,6 +272,7 @@
       </div>
     </div>
   </div>
+  <?php if ($this->show_webshop): ?>
   <div class="content-wrapper webshop">
     <div class="pw">
       <div class="webshop">
@@ -283,7 +284,7 @@
             Webshop ajánlatok
           </div>
           <div class="desc">
-            Oldalunkon jelenleg 4 589 db termék közül tud választani.
+            Oldalunkon jelenleg 0 db termék közül tud választani.
           </div>
           <div class="webshopnavbar">
             <div class="wrapper">
@@ -307,4 +308,5 @@
       </div>
     </div>
   </div>
+  <?php endif; ?>
 </div>

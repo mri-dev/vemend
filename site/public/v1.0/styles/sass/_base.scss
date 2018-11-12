@@ -737,6 +737,9 @@ body.singlepage{
 .categories{
 	.list{
 		margin: 10px 0 20px 0;
+		.badge{
+			float:right;
+		}
 		a{
 			display: block;
 			padding: 8px 0;
@@ -765,6 +768,26 @@ body.singlepage{
 			.dot{
 				&:before{
 					content:"\f111";
+				}
+			}
+		}
+	}
+}
+
+.news-list.archive-list{
+	.categories{
+		.list{
+			.dot{
+				&:before{
+					content:"\f187" !important;
+				}
+			}
+
+			& > div.active{
+				.dot{
+					&:before{
+						content:"\f187" !important;
+					}
 				}
 			}
 		}
@@ -8416,9 +8439,78 @@ body.szallasok{
 					max-width: 100%;
 				}
 			}
+
+			.image-set{
+				margin: 0 auto;
+				.image{
+					& > .wrapper{
+						height: 128px;
+						overflow: hidden;
+						position: relative;
+
+						img {
+							position: absolute;
+							height: 105%;
+							max-height: 105%;
+							left: 50%;
+							top: 50%;
+							width: auto;
+							max-width: initial;
+							-webkit-transform:translate(-50%,-50%);
+          transform:translate(-50%,-50%);
+						}
+					}
+				}
+				.slick-arrow{
+					position: absolute;
+					top: 50%;
+					text-indent: -9999999px;
+					width: 40px;
+					height: 100%;
+					border: none;
+					cursor: pointer;
+					background: $color-orange;
+					-webkit-transform: translateY(-50%);
+							transform: translateY(-50%);
+
+					&:focus{
+						outline: none;
+					}
+
+					&:before{
+						font-family: 'FontAwesome';
+						position: absolute;
+						left: 50%;
+						top: 50%;
+						font-size: 38px;
+						color: white;
+						text-indent: 0;
+						-webkit-transform:translate(-50%,-50%);
+							transform:translate(-50%,-50%);
+					}
+
+					&.slick-next{
+						right: -41px;
+						&:before{
+							content:"\f105";
+						}
+					}
+					&.slick-prev{
+						left: -41px;
+						&:before{
+							content:"\f104";
+						}
+					}
+
+					&:hover{
+						background: darken($color-orange, 10%);
+						&:before{
+							color: white;
+						}
+					}
+				}
+			}
 		}
-
-
 		.contents{
 			line-height: 1.3;
 			margin: 15px 0 0 0;
@@ -9534,6 +9626,7 @@ body.szallasok{
 				display: -webkit-box;
 			  display: -ms-flexbox;
 			  display: flex;
+				flex-wrap: wrap;
 			}
 
 			.fin {
@@ -9608,6 +9701,12 @@ body.szallasok{
 
 						& > .tabla > div {
 							flex-basis: 50%;
+						}
+						& > .tabla > div.kcal {
+							flex-basis: 100%;
+							font-size: 1.25em;
+							margin: 0 0 5px 0;
+							border-bottom: 0.5px solid #dbdbdb;
 						}
 					}
 				}
@@ -9893,7 +9992,8 @@ body.szallasok{
 									display: -webkit-box;
 									display: -ms-flexbox;
 									display: flex;
-									flex-wrap: nowrap;
+									flex-wrap: wrap;
+
 									& > div {
 										flex-basis: 50%;
 										padding: 5px;
@@ -9912,8 +10012,16 @@ body.szallasok{
 											}
 										}
 									}
+									& > div.kcal{
+										flex-basis: 100%;
+										font-size: 1.1em;
+									}
 									& > div:first-child {
-										border-right: 0.5px solid #d5d5d5;
+										border-bottom: 0.5px solid #d5d5d5;
+									}
+
+									& > div:last-child {
+										border-left: 0.5px solid #d5d5d5;
 									}
 								}
 							}

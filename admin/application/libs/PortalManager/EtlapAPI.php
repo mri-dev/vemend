@@ -139,6 +139,7 @@ class EtlapAPI implements InstallModules
         'neve' => $data[$kaja.'_neve'],
         'kep' => (!empty($data[$kaja.'_kep'])) ? UPLOADS.str_replace('/src/uploads/','',$data[$kaja.'_kep']) : false,
         'kategoria' => $data[$kaja.'_kategoria'],
+        'szenhidrat' => (float)$data[$kaja.'_szenhidrat'],
         'kaloria' => (float)$data[$kaja.'_kaloria'],
         'feherje' => (float)$data[$kaja.'_feherje'],
         'ch' => (float)$data[$kaja.'_ch'],
@@ -157,6 +158,7 @@ class EtlapAPI implements InstallModules
         }
       }
 
+      $ertekek['szenhidrat'] += (float)$data[$kaja.'_szenhidrat'];
       $ertekek['kaloria'] += (float)$data[$kaja.'_kaloria'];
       $ertekek['feherje'] += (float)$data[$kaja.'_feherje'];
       $ertekek['ch'] += (float)$data[$kaja.'_ch'];
@@ -273,6 +275,7 @@ class EtlapAPI implements InstallModules
       return false;
     } else {
       $data = $data->fetch(\PDO::FETCH_ASSOC);
+      $data['szenhidrat'] = (float)$data['szenhidrat'];
       $data['feherje'] = (float)$data['feherje'];
       $data['kaloria'] = (float)$data['kaloria'];
       $data['rost'] = (float)$data['rost'];

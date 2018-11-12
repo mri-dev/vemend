@@ -38,11 +38,19 @@
               </div>
               <div class="ertekek">
                 <div class="tabla">
-                  <div>
+                  <div class="kcal">
                     <table>
                       <tr>
                         <td class="h">Kcal</td>
                         <td class="v"><?=$menu['menu']['ertekek']['kaloria']?></td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div>
+                    <table>
+                      <tr>
+                        <td class="h">Szénhidrát (g)</td>
+                        <td class="v"><?=$menu['menu']['ertekek']['szenhidrat']?></td>
                       </tr>
                       <tr>
                         <td class="h">Fehérje (g)</td>

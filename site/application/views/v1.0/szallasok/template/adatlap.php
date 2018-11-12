@@ -26,6 +26,17 @@
       <div class="profil">
         <a class="zoom" href="<?=$this->szallas['datas']['profilkep']?>"><img src="<?=$this->szallas['datas']['profilkep']?>" alt="<?=$this->szallas['datas']['title']?>"></a>
       </div>
+      <div class="image-set <?=(count($this->szallas[datas][pictures])>4)?'slide':''?>">
+        <div class="wrapper">
+          <?php foreach ((array)$this->szallas[datas][pictures] as $img): ?>
+          <div class="image">
+            <div class="wrapper">
+              <a class="zoom" rel="imageset" href="<?php echo IMGDOMAIN.$img['filepath']; ?>"><img src="<?php echo IMGDOMAIN.$img['filepath']; ?>" alt="<?php echo $img['cim']; ?>"></a>
+            </div>
+          </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
     </div>
     <div class="contents">
       <?php if (count($this->kiemelt_services) != 0): ?>
@@ -66,4 +77,23 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  $(function(){
+    fixSizes();
+    $('.images .image-set > .wrapper').slick({
+      infinite: true,
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      autoplay: true,
+      speed: 1200
+    });
+  });
+
+  function fixSizes() {
+    var inbody = $('.adatlap-body').width();
+    $('.images .image-set.slide').css({
+      width: inbody-80
+    });
+  }
+</script>
 <pre><?php //print_r($this->szallas['datas']); ?></pre>

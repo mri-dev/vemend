@@ -1,8 +1,15 @@
-<div style="float:right;">
-	<a href="/cikkek/kategoriak" class="btn btn-default"><i class="fa fa-bars"></i> cikk kategóriák</a>
-	<a href="/cikkek/creator" class="btn btn-primary"><i class="fa fa-plus"></i> új cikk</a>
-</div>
-<h1>Cikkek <?php if ($_COOKIE[filtered] == '1'): ?><span style="color: red;">Szűrt lista</span><? endif; ?></h1>
+<form class="" action="" method="post">
+	<div style="float:right;">
+		<?php if (isset($_COOKIE['showarchive'])): ?>
+			<button class="btn btn-success" name="setArchive" value="<?=(isset($_COOKIE['showarchive']))?'0':'1'?>"><i class="fa fa-th"></i> normál cikkek</button>
+		<?php else: ?>
+			<button class="btn btn-danger" name="setArchive" value="<?=(isset($_COOKIE['showarchive']))?'0':'1'?>"><i class="fa fa-archive"></i> archivált cikkek</button>
+		<?php endif; ?>
+		<a href="/cikkek/kategoriak" class="btn btn-default"><i class="fa fa-bars"></i> cikk kategóriák</a>
+		<a href="/cikkek/creator" class="btn btn-primary"><i class="fa fa-plus"></i> új cikk</a>
+	</div>
+</form>
+<h1><?=(isset($_COOKIE['showarchive']))?'Archivált cikkek':'Cikkek'?> <?php if ($_COOKIE[filtered] == '1'): ?><span style="color: red;">Szűrt lista</span><? endif; ?></h1>
 <? if( true ): ?>
 <div class="row">
 	<div class="col-md-12">

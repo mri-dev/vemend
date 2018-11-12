@@ -12,6 +12,19 @@ class cikkek extends Controller{
 			$this->view->adm = $this->AdminUser;
 			$this->view->adm->logged = $this->AdminUser->isLogged();
 
+			// Archive toggle
+			if (Post::on('setArchive')) {
+			 $switch = (int)$_POST['setArchive'];
+			 if ($switch == 1) {
+				 	setcookie('showarchive',1,time()+60*24,'/'.$this->view->gets[0]);
+				} else{
+					setcookie('showarchive',null,time()-3600,'/'.$this->view->gets[0]);
+				}
+
+				Helper::reload('/cikkek/1');
+			}
+
+			// Szűrő mentése
 			if(Post::on('filterList')){
 				$filtered = false;
 
@@ -47,6 +60,11 @@ class cikkek extends Controller{
 				'limit' => 25,
 				'page' 	=> Helper::currentPageNum()
 			);
+			if (isset($_COOKIE['showarchive'])) {
+				$arg['only_archiv'] = true;
+			} else {
+				$arg['hide_archiv'] = true;
+			}
 			if (isset($_COOKIE['filter_kategoria'])) {
 				$arg['in_cat'] = (int)$_COOKIE['filter_kategoria'];
 			}

@@ -100,11 +100,12 @@ class News
 		$bevezeto = ($data['bevezeto']) ?: NULL;
 		$kep 	= ($data['belyegkep']) ?: NULL;
 		$lathato= ($data['lathato']) ? 1 : 0;
+		$archiv = ($data['archiv']) ? 1 : 0;
+    $archivalva = NULL;
     $optional = $data['optional'];
     $optional_data = array();
 
 		if (!$cim) { throw new \Exception("Kérjük, hogy adja meg a <strong>Cikk címét</strong>!"); }
-
 
 		if (!$eleres) {
 			$eleres = $this->checkEleres( $cim );
@@ -119,21 +120,33 @@ class News
       }
     }
 
+    $upd = array(
+      'cim' => $cim,
+      'eleres' => $eleres,
+      'belyeg_kep' => $kep,
+      'szoveg' => $szoveg,
+      'bevezeto' => $bevezeto,
+      'idopont' => NOW,
+      'lathato' => $lathato,
+      'optional_nyitvatartas' => ($optional_data['nyitvatartas']) ? json_encode($optional_data['nyitvatartas'], \JSON_UNESCAPED_UNICODE) : NULL,
+      'optional_maps' => ($optional_data['maps'] != '') ? $optional_data['maps'] : NULL,
+      'optional_logo' => ($optional_data['logo'] != '') ? $optional_data['logo'] : NULL,
+      'optional_firstimage' => ($optional_data['firstimage'] != '') ? $optional_data['firstimage'] : NULL,
+      'archiv' => $archiv
+    );
+
+    // Check archivalás
+    if ($archiv == 1) {
+      $prearch = (int)$this->db->squery("SELECT archiv FROM hirek WHERE ID = :id", array('id' => $this->selected_news_id))->fetchColumn();
+      if ($prearch == 0) {
+        $archivalva = NOW;
+        $upd['archivalva'] = $archivalva;
+      }
+    }
+
 		$this->db->update(
 			"hirek",
-			array(
-				'cim' => $cim,
-				'eleres' => $eleres,
-				'belyeg_kep' => $kep,
-				'szoveg' => $szoveg,
-				'bevezeto' => $bevezeto,
-				'idopont' => NOW,
-				'lathato' => $lathato,
-        'optional_nyitvatartas' => ($optional_data['nyitvatartas']) ? json_encode($optional_data['nyitvatartas'], \JSON_UNESCAPED_UNICODE) : NULL,
-        'optional_maps' => ($optional_data['maps'] != '') ? $optional_data['maps'] : NULL,
-        'optional_logo' => ($optional_data['logo'] != '') ? $optional_data['logo'] : NULL,
-        'optional_firstimage' => ($optional_data['firstimage'] != '') ? $optional_data['firstimage'] : NULL,
-			),
+			$upd,
 			sprintf("ID = %d", $this->selected_news_id)
 		);
 
@@ -228,6 +241,18 @@ class News
 		if( $arg['except_id'] ) {
 			$qry .= " and h.ID != ".$arg['except_id'];
 		}
+
+    if( isset($arg['hide_archiv']) && !empty($arg['hide_archiv']) ) {
+      $qry .= " and h.archiv = 0";
+    }
+
+    if( isset($arg['only_archiv']) && !empty($arg['only_archiv']) ) {
+      $qry .= " and h.archiv = 1";
+    }
+
+    if( isset($arg['on_date']) && !empty($arg['on_date']) ) {
+      $qry .= " and h.letrehozva LIKE '".addslashes($arg['on_date'])."%'";
+    }
 
     // Kategória slug exlude
     if( isset($arg['exc_cat_slug']) && !empty($arg['exc_cat_slug']) ) {
@@ -347,6 +372,37 @@ class News
 
 		return $text;
 	}
+
+  public function getArchiveDates()
+  {
+    $list = array();
+
+    $qry = "SELECT
+      substr(letrehozva,1,7) as dateg,
+      count(ID) as counts
+    FROM `hirek`
+    WHERE
+      lathato = 1 and
+      archiv = 1
+    GROUP BY dateg
+    ORDER BY dateg DESC";
+
+    $qry = $this->db->query($qry);
+
+    if ($qry->rowCount() == 0 ) {
+      return $list;
+    }
+
+    foreach ((array)$qry->fetchAll(\PDO::FETCH_ASSOC) as $d) {
+      $list[] = array(
+        'date' => $d['dateg'],
+        'datef' => utf8_encode(strftime ('%Y. %B', strtotime($d['dateg']))),
+        'posts' => (int)$d['counts'],
+      );
+    }
+
+    return $list;
+  }
 
 	public function historyList( $limit = 5 )
   {
@@ -517,6 +573,10 @@ class News
 	{
 		return ($this->current_get_item['fontos'] == 1 ? true : false);
 	}
+  public function isArchiv()
+	{
+		return ($this->current_get_item['archiv'] == 1 ? true : false);
+	}
 	public function isKozerdeku()
 	{
 		return ($this->current_get_item['kozerdeku'] == 1 ? true : false);
@@ -537,9 +597,19 @@ class News
       return $this->current_get_item['optional_'.$what];
     }
   }
-	public function categoryList()
+	public function categoryList( $arg = array() )
 	{
-		$q = "SELECT * FROM cikk_kategoriak ORDER BY sorrend ASC";
+    if (isset($arg['archiv'])) {
+      $archivfilter = true;
+    }
+		$q = "SELECT
+      c.*,
+      (SELECT count(cx.cikk_id) FROM cikk_xref_cat as cx LEFT OUTER JOIN hirek as h ON h.ID = cx.cikk_id WHERE cx.cat_id = c.ID and h.lathato = 1 ".( ($archivfilter)?'and h.archiv = 1':'' )." ) as postc
+    FROM cikk_kategoriak as c
+    WHERE
+      1=1 and
+      (SELECT count(cx.cikk_id) FROM cikk_xref_cat as cx LEFT OUTER JOIN hirek as h ON h.ID = cx.cikk_id WHERE cx.cat_id = c.ID and h.lathato = 1 ".( ($archivfilter)?'and h.archiv = 1':'' )." ) != 0
+    ORDER BY c.sorrend ASC";
 
 		$qry = $this->db->squery( $q, array());
 

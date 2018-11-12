@@ -35,6 +35,7 @@ class Controller {
         Session::init();
         Helper::setMashineID();
         $this->gets = Helper::GET();
+        setlocale(LC_ALL, "hu_HU");
         //$this->memory_usage();
 
         // CORE
@@ -104,6 +105,11 @@ class Controller {
         $this->out( 'templates', $templates );
         $this->out( 'highlight_text', $this->Portal->getHighlightItems() );
         $this->out( 'slideshow', $this->Portal->getSlideshow() );
+        $showwebshop = false;
+        if (isset($_COOKIE['showwebshop'])) {
+          $showwebshop = true;
+        }
+        $this->out( 'show_webshop', $showwebshop);
 
         // Menük
         $tree = null;

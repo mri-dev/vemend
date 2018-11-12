@@ -155,7 +155,9 @@
   			</div>
         <div class="nav">
           <ul>
+            <?php if ($this->show_webshop): ?>
             <li><a class="ws" href="/webshop/">Webshop termékek</a></li>
+            <?php endif; ?>
           </ul>
         </div>
       </div>

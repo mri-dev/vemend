@@ -117,10 +117,7 @@
                           <i class="fa fa-times" title="Kép eltávolítása" id="remove_belyegkep" style="color:red; <?=($this->news && $this->news->getImage() ? '' :'display:none;')?>"></i>
                       </div>
                   </div>
-              </div>
-              <br />
-              <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-10">
                       <label for="bevezeto">Bevezető szöveg (a listázásban jelenik meg)</label>
                       <div style="background:#fff;"><textarea name="bevezeto" id="bevezeto" class="form-control no-editor"><?=($this->news ? $this->news->getDescription() : '')?></textarea></div>
                   </div>
@@ -132,6 +129,13 @@
                     <div style="background:#fff;"><textarea name="szoveg" id="szoveg" class="form-control"><?=($this->news ? $this->news->getHtmlContent() : '')?></textarea></div>
                   </div>
               </div>
+							<br>
+							<div class="row">
+								<div class="col-md-1">
+										<label for="archiv">Archiválva:</label>
+										<input type="checkbox" class="form-control" <?=($this->news && $this->news->isArchiv() ? 'checked="checked"' : '')?> id="archiv" name="archiv" />
+								</div>
+							</div>
               <br />
               <div class="row floating-buttons">
                 <div class="col-md-12 right">

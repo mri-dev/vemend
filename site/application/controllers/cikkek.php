@@ -14,12 +14,20 @@ class cikkek extends Controller{
 		$image = \PortalManager\Formater::sourceImg($this->view->settings['logo']);
 		$title = 'Bejegyzéseink';
 		$description = $this->view->settings['page_title'].' friss bejegyzései. Kövesd oldalunkat és tájékozódj az újdonságokról!';
+		$cikkroot = '/cikkek/';
+		$is_archiv = (isset($_GET['archiv'])) ? true : false;
+		if ($is_archiv) {
+			$cikkroot = '/archivum/';
+		}
 
 		$news = new News( false, array( 'db' => $this->db ) );
 		$temp = new Template( VIEW . __CLASS__.'/template/' );
 		$this->out( 'template', $temp );
-		$this->out( 'newscats', $news->categoryList());
-
+		$catarg = array();
+		if ($is_archiv) {
+			$catarg['archiv'] = true;
+		}
+		$this->out( 'newscats', $news->categoryList($catarg));
 
 		if ( isset($_GET['cikk']) ) {
 			$this->out( 'news', $news->get( trim($_GET['cikk']) ) );
@@ -45,15 +53,26 @@ class cikkek extends Controller{
 			$description = substr(strip_tags($this->view->news->getDescription()), 0 , 350);
 
 		} else {
-
 			$cat_slug =  trim($_GET['cat']);
 
+			if ($is_archiv)
+			{
+				// Archív dátumok betöltése
+				$archive_dates = $news->getArchiveDates();
+				$this->out('archive_dates', $archive_dates);
+			}
+
 			if ($cat_slug == '') {
-				$this->out( 'head_img_title', 'Bejegyzéseink' );
-				$this->out( 'head_img', IMGDOMAIN.$this->view->settings['homepage_coverimg'] );
+				$headimgtitle = (!$is_archiv) ? 'Bejegyzéseink': 'Archívum';
+				if (isset($_GET['date'])) {
+					$headimgtitle .= ' - '.utf8_encode(strftime ('%Y. %B', strtotime($_GET['date'])));
+				}
+
+				$this->out( 'head_img_title', $headimgtitle);
+				$this->out( 'head_img', IMGDOMAIN.'/src/uploads/covers/cover-archive.jpg' );
 			} else {
-				$this->out( 'head_img_title', $this->view->newscats[$cat_slug]['neve'] );
-				$this->out( 'head_img', IMGDOMAIN.$this->view->settings['homepage_coverimg'] );
+				$this->out( 'head_img_title', (!$is_archiv) ? $this->view->newscats[$cat_slug]['neve'] : 'Archívum:'.$this->view->newscats[$cat_slug]['neve']  );
+				$this->out( 'head_img', IMGDOMAIN.'/src/uploads/covers/cover-archive.jpg' );
 			}
 
 			$arg = array(
@@ -61,6 +80,12 @@ class cikkek extends Controller{
 				'in_cat' => (int)$this->view->newscats[$cat_slug]['ID'],
 				'page' => (isset($_GET['page'])) ? (int)$_GET['page'] : 1,
 			);
+			if ($is_archiv) {
+				$arg['only_archiv'] = true;
+			}
+			if ($is_archiv && isset($_GET['date'])) {
+				$arg['on_date'] = $_GET['date'];
+			}
 			$this->out( 'list', $news->getTree( $arg ) );
 
 			$navroot = (in_array($_GET['cat'], $news->tematic_cikk_slugs)) ? $_GET['cat'] : '/'.__CLASS__.( (isset($_GET['cat'])) ? '/'.$_GET['cat'] : '' );
@@ -78,7 +103,11 @@ class cikkek extends Controller{
 		$histnews = new News( false, array( 'db' => $this->db ) );
 		$history_list = $histnews->historyList();
 		$this->out( 'history', $history_list );
+
 		unset($histnews);
+
+		$this->out( 'cikkroot', $cikkroot );
+		$this->out( 'is_archiv', $is_archiv );
 
 		// SEO Információk
 		$SEO = null;
