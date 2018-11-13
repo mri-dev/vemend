@@ -184,22 +184,24 @@ $(function(){
 
 	$('.product-view a.zoom, a.zoom').fancybox({
 		padding: 0,
-
 		openEffect : 'elastic',
 		openSpeed  : 250,
-
 		closeEffect : 'elastic',
 		closeSpeed  : 250,
-
 		closeClick : true,
-
 		helpers : {
-			overlay : null,
+			overlay : true,
 			buttons	: {
 				position : 'bottom'
 			},
 			title: {
 				type: 'over'
+			}
+		},
+		beforeShow: function(){
+			var d = $(this.element).data("caption");
+			if (d != "") {
+				this.title =  this.title + "<div class='desc'>" + d +"</div>";
 			}
 		}
 	});
@@ -311,6 +313,18 @@ $(function(){
 		}
 
 	} );
+
+	jQuery.each($('.autocorrett-height-by-width'), function(i,e){
+      var ew = $(e).width();
+      var ap = $(e).data('img-ratio');
+      ap = (typeof ap !== 'undefined') ? ap : '4:3';
+      var aps = ap.split(":");
+      var th = ew / parseInt(aps[0])  * parseInt(aps[1]);
+
+      $(e).css({
+        height: th
+      });
+    });
 
 	// Mobile Device max Width
 	$('*.mobile-max-width').each( function(){

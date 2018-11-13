@@ -242,6 +242,10 @@ class News
 			$qry .= " and h.ID != ".$arg['except_id'];
 		}
 
+    if( isset($arg['hide_offline']) && !empty($arg['hide_offline']) ) {
+      $qry .= " and h.lathato = 1";
+    }
+
     if( isset($arg['hide_archiv']) && !empty($arg['hide_archiv']) ) {
       $qry .= " and h.archiv = 0";
     }

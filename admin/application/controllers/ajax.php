@@ -3,6 +3,7 @@ use PortalManager\Template;
 use PortalManager\Traffic;
 use PortalManager\EtlapAPI;
 use ProductManager\Products;
+use PortalManager\Gallery;
 use SzallasManager\SzallasList;
 use SzallasManager\SzallasSzobak;
 use SzallasManager\SzallasSzolgaltatasok;
@@ -50,6 +51,46 @@ class ajax extends Controller{
 							// give callback to your angular code with the image src name
 							$re['filename'] = $newfilename;
 							$re['uploaded_path'] = $szallas_path . $newfilename;
+							$re['error'] = false;
+						} else {
+							$re['error'] = true;
+							$re['msg'] = 'A(z) '.end($temp).' fájltípus nem engedélyezett! Feltöltés sikertelen!';
+						}
+
+					} else {
+						$re['error'] = false;
+					}
+
+					$re['FILE'] = $_FILES['file'];
+					$re['PARAMS'] = $params['params'];
+				break;
+
+				case 'GalleryUploader':
+					if (isset($_FILES['file']) && $_FILES['file']['error'] == 0)
+					{
+						// uploads image in the folder images
+						$temp = explode(".", $_FILES["file"]["name"]);
+						//$newfilename = substr(md5(time()), 0, 10) . '.' . end($temp);
+						if (in_array(end($temp),array('jpg','jpeg', 'png'))) {
+							$newfilename = uniqid() . '.' . end($temp);
+							$folder = $params['group'];
+							$folder_path = 'store/images/gallery/'.$folder.'/';
+
+							if (!file_exists($folder_path)) {
+								if(!mkdir( $folder_path, 0755, true)){
+									echo json_encode( array(
+										'error' => 1,
+										'msg' => 'Mappa létrehozás sikertelen.'
+									) );
+									exit;
+								}
+							}
+
+							move_uploaded_file($_FILES['file']['tmp_name'], $folder_path. $newfilename);
+
+							// give callback to your angular code with the image src name
+							$re['filename'] = $newfilename;
+							$re['uploaded_path'] = $folder_path . $newfilename;
 							$re['error'] = false;
 						} else {
 							$re['error'] = true;
@@ -471,7 +512,7 @@ class ajax extends Controller{
 				/**
 				* ANGULAR ACTIONS
 				**/
-				case 'Szallasok':
+				case 'Gallery':
 					$key = $_POST['key'];
 					$re = array(
 						'error' => 0,
@@ -480,6 +521,46 @@ class ajax extends Controller{
 					);
 					$re['pass'] = $_POST;
 
+					$gallery = new Gallery( array('db' => $this->db) );
+
+					switch ( $key )
+					{
+						case 'Load':
+							try {
+								$re['data'] = $gallery->loadGalleries();
+							} catch (\Exception $e) {
+								$re['error'] = 1;
+								$re['msg'] = $e->getMessage();
+							}
+						break;
+						case 'registerUploadedImage':
+							try {
+								$re['data'] = $gallery->registerImage( $id, array(
+									'filepath' => $filepath,
+									'origin_name' => $origin_name,
+									'filemeret' => $size,
+									'kiterjesztes' => $ext
+								) );
+							} catch (\Exception $e) {
+								$re['error'] = 1;
+								$re['msg'] = $e->getMessage();
+							}
+						break;
+					}
+
+					unset($gallery);
+					echo json_encode( $re );
+
+				break;
+
+				case 'Szallasok':
+					$key = $_POST['key'];
+					$re = array(
+						'error' => 0,
+						'msg' => null,
+						'data' 	=> array()
+					);
+					$re['pass'] = $_POST;
 
 					$szallaslist = new SzallasList( array('db' => $this->db) );
 

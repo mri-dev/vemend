@@ -158,6 +158,12 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
+RewriteRule ^galeria(/)?([0-9a-zA-Z_-]+)(/)?([0-9]+)?$ index.php?tag=galeria&folder=$2&page=$4 [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
 RewriteRule ^(.+)$ index.php?tag=$1 [QSA,L]
 
 <ifModule mod_gzip.c>

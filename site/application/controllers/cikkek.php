@@ -77,6 +77,7 @@ class cikkek extends Controller{
 
 			$arg = array(
 				'limit' => 12,
+				'hide_offline' => true,
 				'in_cat' => (int)$this->view->newscats[$cat_slug]['ID'],
 				'page' => (isset($_GET['page'])) ? (int)$_GET['page'] : 1,
 			);

@@ -143,7 +143,6 @@ szallasok.directive('fileModel', ['$parse', function ($parse) {
 
 szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$parse', 'fileUploadService', function($scope, $http, $mdToast, $timeout, $parse, fileUploadService)
 {
-
   $scope.allowProfilType = ['jpg', 'jpeg', 'png'];
   $scope.selectedUploadingImages = [];
   $scope.selectedprofilimg = {

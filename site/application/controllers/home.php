@@ -21,6 +21,7 @@ class home extends Controller{
 				'page' 	=> 1,
 				'exc_cat_slug' => array('boltok','intezmenyek','turizmus','vendeglatas'),
 				'hide_archiv' => true,
+				'hide_offline' => true,
 				'order' => array(
 					'by' => 'letrehozva',
 					'how' => 'DESC'
