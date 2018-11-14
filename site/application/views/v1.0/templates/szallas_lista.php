@@ -5,7 +5,7 @@
     <?php foreach ( (array)$this->szallasok['list'] as $szallas ): ?>
     <div class="szallas">
       <div class="wrapper">
-        <div class="image">
+        <div class="image autocorrett-height-by-width" data-image-ratio="4:3">
           <?php if ($szallas['prices']['discount']): ?>
           <div class="discount">-<?=$szallas['prices']['discount']?>%</div>
           <?php endif; ?>

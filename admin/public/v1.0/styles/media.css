@@ -3987,3 +3987,17 @@ input[type=file].lab-selector + label img {
 .uploaded-images > .wrapper > .image > .wrapper .info > div.size{
   text-align: right;
 }
+.uploaded-images > .wrapper > .image > .wrapper .info.editor label{
+  margin: 0 5px;
+}
+.uploaded-images > .wrapper > .image > .wrapper .info.editor input[type=checkbox],
+.uploaded-images > .wrapper > .image > .wrapper .info.editor input[type=radio]{
+  margin: 0;
+  vertical-align: middle;
+}
+.uploaded-images > .wrapper > .image > .wrapper .info.editor .profilkep{
+  text-align: left;
+}
+.uploaded-images > .wrapper > .image > .wrapper .info.editor .deleting{
+  text-align: right;
+}

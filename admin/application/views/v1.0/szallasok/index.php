@@ -33,7 +33,7 @@
 									<div class="clr"></div>
 									<div class="uploaded-profilkep" ng-show="create.kep">
 										<h4>Aktuális profilkép:</h4>
-										<img ng-src="{{create.profilkep}}" alt="">
+										<img ng-src="{{currentProfilkep.filepath}}" alt="">
 									</div>
 									<div class="uploader" ng-hide="create.kep">
 										<input type="file" class="lab-selector" id="profil" file-model="profil">
@@ -346,6 +346,14 @@
 						<?php endif; ?>
 						<div class="clr"></div>
 						<div class="uploaded-images">
+							<div class="rnav">
+								<div style="color: #8ab160; cursor: pointer;"  ng-show="!imageediting" ng-click="toggleVar('imageediting', true)">
+									Képszerkesztő bekapcsolása <i class="fa fa-pencil"></i>
+								</div>
+								<div style="color: #e69a9a; cursor: pointer;" ng-hide="!imageediting" ng-click="toggleVar('imageediting', false)">
+									Képszerkesztő kikapcsolása <i class="fa fa-ban"></i>
+								</div>
+							</div>
 							<h3>Feltöltött képek</h3>
 							<div class="" ng-show="create.pictures.length==0">
 								Jelenleg nincsenek feltöltött képek!
@@ -359,7 +367,7 @@
 											</div>
 											<img src="{{img.filepath}}" alt="{{img.cim}}">
 										</div>
-										<div class="info">
+										<div class="info" ng-show="!imageediting">
 											<div class="ext">
 												{{img.kiterjesztes}}
 											</div>
@@ -367,8 +375,20 @@
 												{{img.filemeret}} KB
 											</div>
 										</div>
+										<div class="info editor" ng-hide="!imageediting">
+											<div class="profilkep">
+												<input type="radio" name="profimg" id="cb_prof_i{{img.ID}}" ng-checked="(img.ID == currentProfilkep.ID)" ng-click="toggleVar('currentProfilkep', img)"> <label for="cb_prof_i{{img.ID}}">profilkép</label>
+											</div>
+											<div class="deleting">
+												<label for="cb_del_i{{img.ID}}">törlés</label> <input class="deletingImageCb" type="checkbox" value="{{img.ID}}" id="cb_del_i{{img.ID}}">
+											</div>
+										</div>
 									</div>
 								</div>
+							</div>
+							<div ng-show="imageediting">
+								<br>
+								<button type="button" ng-click="imageEditing()" class="btn btn-success">Képek mentése <i ng-hide="!imageeditprogress" class="fa fa-spin fa-spinner"></i> <i ng-show="!imageeditprogress" class="fa fa-save"></i></button>
 							</div>
 						</div>
 					</div>

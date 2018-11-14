@@ -566,6 +566,15 @@ class ajax extends Controller{
 
 					switch ( $key )
 					{
+						case 'imageModifier':
+							try {
+								$szallaslist->changeProfilkep( $id, $profilkep['ID'] );
+								$re['data'] = $szallaslist->deleteImages( $id, (array)$deleteimages );
+							} catch (\Exception $e) {
+								$re['error'] = 1;
+								$re['msg'] = $e->getMessage();
+							}
+						break;
 						case 'registerUploadedImageToSzallas':
 							try {
 								$re['data'] = $szallaslist->registerImage( $id, array(

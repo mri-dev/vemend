@@ -152,6 +152,12 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$pa
     typecorrect: true,
     name: ''
   };
+
+  $scope.imageediting = false;
+  $scope.imageeditprogress = false;
+  $scope.currentProfilkep = false;
+  $scope.deletingImages = [];
+
   $scope.tabs = [
     {
       name: 'general',
@@ -248,6 +254,45 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$pa
     m.assign($scope, v);
   }
 
+  $scope.imageEditing = function() {
+    if ( !$scope.imageeditprogress )
+    {
+      $scope.imageeditprogress = true;
+      $scope.collectDeletingImages();
+
+      $http({
+        method: 'POST',
+        url: '/ajax/get',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        data: $.param({
+          type: "Szallasok",
+          key: 'imageModifier',
+          id: $scope.create.ID,
+          deleteimages: $scope.deletingImages,
+          profilkep: $scope.currentProfilkep
+        })
+      }).success(function( r ){
+        console.log(r);
+        if (r.error == 0)
+        {
+          $scope.imageeditprogress = false;
+          $scope.deletingImages = [];
+          $scope.loadSzallasDatas( $scope.create.ID );
+        }
+      });
+    }
+  }
+
+  $scope.collectDeletingImages = function() {
+    var dcb = $('input[type=checkbox].deletingImageCb:checked');
+    $scope.deletingImages = [];
+
+    angular.forEach(dcb, function(e,i){
+      var id = $(e).val();
+      $scope.deletingImages.push(id);
+    });
+  }
+
   $scope.loadSzallasDatas = function( id ) {
     $http({
       method: 'POST',
@@ -260,7 +305,7 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$pa
       })
     }).success(function( r ){
       if (r.data && r.data.datas) {
-        console.log(r.data.datas);
+        $scope.currentProfilkep = false;
         angular.forEach(r.data.datas, function(e,i){
           if (typeof $scope.create[i] === 'undefined') {
             $scope.create[i] = e;
@@ -274,7 +319,12 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$pa
               $scope.serviceCategories.push(i);
             });
           }
+        });
 
+        angular.forEach($scope.create.pictures, function(i, ii){
+          if (i.profilkep) {
+            $scope.currentProfilkep = i;
+          }
         });
       }
     });

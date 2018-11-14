@@ -89,8 +89,99 @@ class SzallasFramework
 		return $data;
   }
 
+  public function changeProfilkep( $szallasid, $imgid )
+  {
+    $img = $this->getImage($imgid);
+
+    if ($img) {
+      // reset
+      $this->db->update(
+        self::DBKEPEK,
+        array(
+          'profilkep' => 0
+        ),
+        sprintf("szallas_id = %d", $szallasid)
+      );
+      $this->db->update(
+        self::DBKEPEK,
+        array(
+          'profilkep' => 1
+        ),
+        sprintf("ID = %d", $imgid)
+      );
+
+      $this->db->update(
+        self::DBSZALLASOK,
+        array(
+          'profilkep' => $img['filepath']
+        ),
+        sprintf("ID = %d", $szallasid)
+      );
+    }
+  }
+
+  public function getImage( $id )
+  {
+    $q = "SELECT
+      i.ID,
+      i.cim,
+      i.filemeret,
+      i.kiterjesztes,
+      i.filepath,
+      i.imagename,
+      i.profilkep
+    FROM ".self::DBKEPEK." as i
+    WHERE 1=1 and i.ID = :id ";
+
+    $qry = $this->db->squery($q, array('id' => $id));
+
+    if ($qry->rowCount() == 0) {
+      return false;
+    }
+
+    $v = $qry->fetch(\PDO::FETCH_ASSOC);
+
+    $v['ID'] = (int)$v['ID'];
+    $v['filemeret'] = (float)$v['filemeret'];
+    $v['profilkep'] = ($v['profilkep'] == '1') ? true : false;
+
+    return $v;
+  }
+
+  public function deleteImages( $szallasid, $imageids )
+  {
+    if (!empty($imageids)) {
+      foreach ((array)$imageids as $iid) {
+        $img = $this->getImage( $iid );
+        $path = $img['filepath'];
+        if (file_exists($path)) {
+          unlink($path);
+
+          $this->db->squery("DELETE FROM ".self::DBKEPEK." WHERE ID = :id", array('id' => $img['ID']));
+
+          if($img['profilkep']){
+            $images = $this->getImages($szallasid);
+            if ($images) {
+              $this->changeProfilkep( $szallasid, $images[1][ID] );
+            } else {
+              $this->db->update(
+                self::DBSZALLASOK,
+                array(
+                  'profilkep' => NULL
+                ),
+                sprintf("ID = %d", $szallasid)
+              );
+            }
+          }
+        }
+      }
+    }
+  }
+
   public function registerImage( $szallasid, $imagedata )
   {
+    $images = $this->getImages( $szallasid );
+
     $this->db->insert(
       self::DBKEPEK,
       array(
@@ -103,7 +194,13 @@ class SzallasFramework
       )
     );
 
-    return $this->db->lastInsertId();
+    $newimgid = $this->db->lastInsertId();
+
+    if (empty($images)) {
+      $this->changeProfilkep($szallasid, $newimgid);
+    }
+
+    return $newimgid;
   }
 
   public function getImages( $szallasid )

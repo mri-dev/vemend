@@ -1,7 +1,7 @@
 /* 1024 - 1050 px - MEDIUM */
 @media all and (max-width: 1050px)
 {
-	.website, .pw, .page-width, 
+	.website, .pw, .page-width,
 	{
 		width: 100%;
 	}
@@ -50,11 +50,138 @@
 /* 0 - 1023 px - SMARTPHONE */
 @media all and (max-width: 1023px)
 {
-
+	body.singlepage .website .page.page-width{
+		width: 100%;
+	}
 	.fb-page {
 		display: none !important;
 	}
-
+	header .logo{
+		text-align: center;
+	}
+	header .top{
+		border-bottom: none;
+	}
+	header .top .navs{
+		display: none;
+	}
+	header .top .social{
+		flex-basis: 100%;
+	}
+	header .top .social .flex{
+		justify-content: center;
+	}
+	header .main > .pw > .flex{
+		justify-content: center;
+	}
+	header .logo,
+	header .main .actions{
+		flex-basis: 100%;
+	}
+	header .bottom{
+		display: none;
+	}
+	.floating-box-menu{
+		display: none;
+	}
+	.main-content{
+		padding-top: 15px;
+	}
+	.top-articles > .flex > .top{
+		flex-basis: 100%;
+	}
+	.home-etlap-miserend > .pw > .holder > .flex > .miserend{
+		flex-basis: 100%;
+	}
+	.szallas-kereso-block{
+		flex-basis: 100%;
+	}
+	body.homepage .programs .cont-holder > .wrapper > .image{
+		flex-basis: 50%;
+	}
+	footer .main > .pw > .wrapper > .flex > div{
+		flex-basis: 100%;
+	}
+	.banners .groups > .banner{
+		flex-basis: calc(100% / 2);
+	}
+	header .main .actions > div.cart{
+		flex: none;
+	}
+	header .logo img {
+		max-height: initial;
+    width: 90%;
+    max-width: 90% !important;
+	}
+	header .main .actions{
+		justify-content: center;
+	}
+	footer .main > .pw > .wrapper > .flex{
+		margin: 0;
+	}
+	body.homepage .programs .cont-holder > .wrapper > .data > .wrapper .data-content{
+		overflow: hidden;
+	}
+	footer .info .bottom{
+		font-size: 1.3vh;
+	}
+	footer .main > .pw > .wrapper .contacts .contact{
+		text-align: center;
+		font-size: 1.4vh;
+	}
+	footer .main > .pw > .wrapper .contacts .contact > div{
+		border-bottom: none;
+	}
+	footer .main > .pw > .wrapper .contacts .social .flex{
+		justify-content: center;
+	}
+	footer .main > .pw > .wrapper > .flex > div.contacts .searcher{
+		text-align: center;
+	}
+	footer .main > .pw > .wrapper > .flex > div.links{
+		text-align: center;
+	}
+	footer .main > .pw > .wrapper .links ul li a{
+		font-size: 1.8vh;
+	}
+	footer .main h3{
+		font-size: 2.2vh;
+		margin: 0 0 25px 0;
+	}
+	.banners .groups{
+		margin: 0 5px;
+	}
+	.banners .groups > .banner{
+		padding: 15px;
+	}
+	.content-wrapper{
+		padding: 15px;
+	}
+	.home-etlap-miserend > .pw > .holder > .flex > div > div.wrapper{
+		padding: 15px;
+	}
+	.szalag .highlight-view .items ul li{
+		line-height: 1.2;
+	}
+	.top-articles > .flex > .more > .wrapper > .article .footer > .flex > div{
+		font-size: 1.5vh;
+	}
+	.top-articles > .flex > .more > .wrapper > .article .image .excerpt{
+		padding: 20px;
+	}
+	.top-articles > .flex > .more > .wrapper > .article .image .excerpt > .wrapper{
+		height: auto;
+		font-size: 1.8vh;
+	}
+	.szallas-kereso-block .fcont .inp input, .szallas-kereso-block .fcont .inp select{
+		font-size: 1.8vh;
+	}
+	.site-container {
+		padding: 0;
+	}
+	body.singlepage .main-content{
+		padding: 15px;
+	}
 	a.fb-link {
 		background: #3a5795;
 		border: 2px solid lighten(#3a5795, 5%);
@@ -65,21 +192,28 @@
 		display: block;
 		width: 100%;
 	}
-
+	footer .info{
+		padding: 0;
+	}
+	footer .info .flex > div {
+		flex-basis: 100%;
+		padding: 15px;
+	}
+	footer .info .flex > div.contact > div {
+		text-align: center;
+		font-size: 2vh;
+	}
+	footer .info .contact .phone{
+		font-size: 3vh !important;
+	}
+	footer .info .flex.emblems > div{
+		flex-basis: 50%;
+		text-align: center;
+	}
 
 	.website {
 		margin: 0;
 		margin-top: 67px;
-	}
-
-	header {
-		position: fixed;
-		top: 0;
-		width: 100%;
-		display: block;
-		z-index: 1111;
-		font-size: 1.4em;
-		border-bottom: 2px solid #e6e6e6;
 	}
 
 	.slideShow {
@@ -113,18 +247,18 @@
 		float: none;
 		display: block;
 	}
-	
+
 	.grid-layout:not(.kpm),
 	.grid-layout:not(.kpm) .grid-row {
 		width: 100% !important;
 		display: block;
 	}
 
-	.product-view, 
+	.product-view,
 	.account {
 		.grid-layout:not(.kpm) *[class^=grid-row],
 		.grid-layout:not(.kpm),
-		.grid-layout:not(.grid-np):not(.kpm) > .grid-row:first-child, 
+		.grid-layout:not(.grid-np):not(.kpm) > .grid-row:first-child,
 		.grid-layout:not(.grid-np):not(.kpm) > .grid-row:last-child {
 			padding: 0 !important;
 		}
@@ -151,7 +285,7 @@
 			line-height: 1;
 			margin: 10px 0;
 		}
-	} 
+	}
 
 	.account {
 		h1 {
@@ -177,7 +311,7 @@
 			float: right;
 
 			a {
-				display: block;				
+				display: block;
 				padding: 0 15px;
 				color: #FF99B5;
 			}
@@ -267,7 +401,7 @@
 		top: 48px;
 	}
 
-	.category-listing{ 
+	.category-listing{
 		.category-title .filters {
 			display: block;
 			width: 100%;
@@ -280,7 +414,7 @@
 		}
 	}
 
-	.product-ajanlott .items .item, 
+	.product-ajanlott .items .item,
 	.related-products .items .item {
 		width: 100%;
 		display: block;
@@ -334,7 +468,7 @@
 		line-height: 1.2;
 	}
 
-	.nextOrded .col1, 
+	.nextOrded .col1,
 	.nextOrded .col2 {
 		padding: 0 !important;
 	}
@@ -360,14 +494,14 @@
 		 			margin: 8px 0;
 			 		line-height: 1;
 			 	}
-		 	}	
+		 	}
 
 		 	.infos {
 		 		text-align: center;
 		 		border-top: 1px solid lighten($color-pr, 20%);
 		 		padding-top: 5px;
 		 		margin-top: 5px;
-		 	}	 	
+		 	}
 		 }
 
 		 .shop-list {
@@ -383,7 +517,7 @@
 			 		border-top: 1px solid lighten($color-sec, 10%);
 			 		padding: 10px 0;
 			 		margin: 15px 15px 5px 15px;
-			 	}	
+			 	}
 		 	}
 		 	.shop:last-child {
 		 		border-bottom: none;

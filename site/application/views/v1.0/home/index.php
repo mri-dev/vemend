@@ -73,7 +73,7 @@
                   <a href="<?=$this->news[1]->getUrl()?>"><?=$this->news[1]->getTitle()?></a>
                 </div>
                 <div class="image">
-                  <div class="wrapper image-abs-center by-width">
+                  <div class="wrapper image-abs-center by-width autocorrett-height-by-width" data-image-ratio="4:3">
                     <img src="<?=($this->news[1]->getImage(true))?$this->news[1]->getImage(true):''?>" alt="">
                   </div>
                   <div class="excerpt">
@@ -162,7 +162,7 @@
                 <?php $misn = 0; foreach ($this->miserend_news as $new): $misn++; if($misn == 1){  $is_top = true; }else{  $is_top = false; } ?>
                 <article class="top">
                   <?php if ($is_top ): ?>
-                    <div class="image image-abs-center">
+                    <div class="image image-abs-center autocorrett-height-by-width" data-image-ratio="4:3">
                       <img src="<?=($new->getImage(true)) ? $new->getImage(true) : ''?>" alt="">
                     </div>
                   <?php endif; ?>
@@ -225,28 +225,28 @@
       <div class="banners">
         <div class="groups">
           <div class="banner">
-            <div class="wrapper">
+            <div class="wrapper autocorrett-height-by-width" data-image-ratio="1:1">
               <div class="placeholdertext">
                 BANNER
               </div>
             </div>
           </div>
           <div class="banner">
-            <div class="wrapper">
+            <div class="wrapper autocorrett-height-by-width" data-image-ratio="1:1">
               <div class="placeholdertext">
                 BANNER
               </div>
             </div>
           </div>
           <div class="banner">
-            <div class="wrapper">
+            <div class="wrapper autocorrett-height-by-width" data-image-ratio="1:1">
               <div class="placeholdertext">
                 BANNER
               </div>
             </div>
           </div>
           <div class="banner">
-            <div class="wrapper">
+            <div class="wrapper autocorrett-height-by-width" data-image-ratio="1:1">
               <div class="placeholdertext">
                 BANNER
               </div>
