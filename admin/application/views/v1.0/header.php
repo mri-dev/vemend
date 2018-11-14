@@ -185,12 +185,13 @@
 
               <?php if ( $this->adm->user['user_group'] == 'admin'): ?>
               <li class="<?=($this->gets[0] == 'felhasznalok')?'on':''?>"><a href="/felhasznalok" title="Felhasználók"><span class="ni">2</span><i class="fa fa-group"></i> Felhasználók</a></li>
-              <?php endif; ?>
-
               <li class="<?=($this->gets[0] == 'uzenetek')?'on':''?>"><a href="/uzenetek" title="Üzenetek"><span class="ni">8</span><i class="fa fa-envelope-o"></i> Üzenetek</a></li>
               <li class="<?=($this->gets[0] == 'menu')?'on':''?>"><a href="/menu" title="Menü"><span class="ni">4</span><i class="fa fa-ellipsis-h"></i> Menü</a></li>
               <li class="<?=($this->gets[0] == 'oldalak')?'on':''?>"><a href="/oldalak" title="Oldalak"><span class="ni">5</span><i class="fa fa-file-o"></i> Oldalak</a></li>
               <li class="<?=($this->gets[0] == 'emails')?'on':''?>"><a href="/emails" title="Email sablonok"><span class="ni">8</span><i class="fa fa-envelope"></i> Email sablonok</a></li>
+              <li class="<?=($this->gets[0] == 'galeria')?'on':''?>"><a href="/galeria" title="Galériák"><span class="ni">8</span><i class="fa fa-picture-o"></i>Galéria</a></li>
+              <?php endif; ?>
+
               <!-- MODULS-->
               <?php if ( !empty($this->modules) ): ?>
               <li class="div"></li>
