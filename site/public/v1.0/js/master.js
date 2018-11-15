@@ -1,5 +1,6 @@
 $(function(){
 	searchFilters();
+	fixSlideWidth();
 	getLocation();
 
 	$.cookieAccepter('https://www.vemend.web-pro.hu/p/aszf/');
@@ -62,6 +63,7 @@ $(function(){
 
 	var width = $(window).width();
 	$(window).resize(function(){
+		fixSlideWidth();
 	   if($(this).width() != width){
 	      autoresizeImages();
 	   }
@@ -316,14 +318,26 @@ $(function(){
 
 	jQuery.each($('.autocorrett-height-by-width'), function(i,e){
       var ew = $(e).width();
-      var ap = $(e).data('img-ratio');
+      var ap = $(e).data('image-ratio');
+      var respunder = $(e).data('image-under');
+			var pw = $(window).width();
       ap = (typeof ap !== 'undefined') ? ap : '4:3';
+			console.log(ap);
       var aps = ap.split(":");
       var th = ew / parseInt(aps[0])  * parseInt(aps[1]);
 
-      $(e).css({
-        height: th
-      });
+			if (respunder) {
+				if (pw < respunder) {
+					$(e).css({
+		        height: th
+		      });
+				}
+			} else{
+				$(e).css({
+	        height: th
+	      });
+			}
+
     });
 
 	// Mobile Device max Width
@@ -336,6 +350,13 @@ $(function(){
 		}
 	});
 })
+
+function fixSlideWidth(){
+	var pw = $('footer > .main > .pw').width();
+	$('.slick-slider').css({
+		width: pw
+	});
+}
 
 function autoresizeImages(){
 	var images = $('.img-auto-cuberatio');

@@ -45,45 +45,47 @@
 							</div>
 						</div>
 						<div class="subs">
-							<h3>Feliratkozás</h3>
-							<div class="subbox">
-								<div class="wrapper">
-									<div class="form">
-										<form class="" action="/feliratkozas" method="get">
-											<div class="name">
-												<div class="flex flexmob-exc-resp">
-													<div class="ico">
-														<i class="fa fa-user"></i>
-													</div>
-													<div class="input">
-														<input type="text" name="name" value="" placeholder="Név">
-													</div>
-												</div>
-											</div>
-											<div class="email">
-												<div class="flex flexmob-exc-resp">
-													<div class="ico">
-														<i class="fa fa-envelope"></i>
-													</div>
-													<div class="input">
-														<input type="text" name="email" value="" placeholder="E-mail">
+							<?php if (false): ?>								
+								<h3>Feliratkozás</h3>
+								<div class="subbox">
+									<div class="wrapper">
+										<div class="form">
+											<form class="" action="/feliratkozas" method="get">
+												<div class="name">
+													<div class="flex flexmob-exc-resp">
+														<div class="ico">
+															<i class="fa fa-user"></i>
+														</div>
+														<div class="input">
+															<input type="text" name="name" value="" placeholder="Név">
+														</div>
 													</div>
 												</div>
-											</div>
-											<div class="aszf">
-												<input type="checkbox" name="cb_av" id="subs_av" value=""> <label for="subs_av"> <a href="/p/adatvedelmi-tajekoztato" target="_blank">Adatvédelmi Tájékoztatót</a> elolvastam és megértettem.</label>
-											</div>
-											<div class="aszf">
-												<input type="checkbox" name="cv_marketing" id="subs_marketing" value=""> <label for="subs_marketing"> Hozzájárulok e-mail címem marketing célú használatához.</label>
-											</div>
+												<div class="email">
+													<div class="flex flexmob-exc-resp">
+														<div class="ico">
+															<i class="fa fa-envelope"></i>
+														</div>
+														<div class="input">
+															<input type="text" name="email" value="" placeholder="E-mail">
+														</div>
+													</div>
+												</div>
+												<div class="aszf">
+													<input type="checkbox" name="cb_av" id="subs_av" value=""> <label for="subs_av"> <a href="/p/adatvedelmi-tajekoztato" target="_blank">Adatvédelmi Tájékoztatót</a> elolvastam és megértettem.</label>
+												</div>
+												<div class="aszf">
+													<input type="checkbox" name="cv_marketing" id="subs_marketing" value=""> <label for="subs_marketing"> Hozzájárulok e-mail címem marketing célú használatához.</label>
+												</div>
 
-											<div class="button">
-												<button type="submit" name="subscribe">Mehet</button>
-											</div>
-										</form>
+												<div class="button">
+													<button type="submit" name="subscribe">Mehet</button>
+												</div>
+											</form>
+										</div>
 									</div>
 								</div>
-							</div>
+							<?php endif; ?>
 						</div>
 						<div class="contacts">
 							<div class="searcher">

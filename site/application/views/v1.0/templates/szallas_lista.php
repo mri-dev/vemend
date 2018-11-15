@@ -25,12 +25,12 @@
           <?=($szallas['cim_sub'])?:'&nbsp;'?>
         </div>
         <div class="info-block">
-          <div class="block-left">
+          <div class="block-left autocorrett-height-by-width" data-image-ratio="1:1">
             <div class="wrapper">
               <?=$szallas['prices']['total_person']?> fő / <?=$szallas['prices']['nights']?> éj
             </div>
           </div>
-          <div class="block-center">
+          <div class="block-center autocorrett-height-by-width" data-image-ratio="1:1">
             <div class="wrapper">
               <div class="prices">
                 <?php if ($szallas['prices']['old']): ?>
@@ -44,7 +44,7 @@
               </div>
             </div>
           </div>
-          <div class="block-right">
+          <div class="block-right autocorrett-height-by-width" data-image-ratio="1:1">
             <div class="wrapper">
               <?=$szallas['kiemelt_szoveg']?>
             </div>

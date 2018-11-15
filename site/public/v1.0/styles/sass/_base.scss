@@ -385,6 +385,9 @@ body.singlepage{
 	}
 	.news-content{
 		padding: 25px 0;
+		img{
+			max-width: 100% !important;
+		}
 		.logo{
 			float: left;
 			margin: 0 20px 0 0;
@@ -623,7 +626,10 @@ body.singlepage{
 					background: white;
 					img {
 						position: absolute;
-						width: 110%;
+						height: 110%;
+						max-height: 110%;
+						width: auto;
+						max-width: initial;
 						left: 50%;
 						top: 50%;
 						-webkit-transform: translate(-50%,-50%);
@@ -9153,7 +9159,7 @@ body.szallasok{
 		& > .wrapper{
 			position: relative;
 			border: 0.5px solid #cecece;
-			width: 90%;
+			width: 100%;
 			margin: 0 auto;
 			overflow: hidden;
 			height: 280px;

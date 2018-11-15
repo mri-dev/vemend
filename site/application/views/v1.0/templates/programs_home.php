@@ -10,7 +10,7 @@
 </div>
 <div class="cont-holder">
   <div class="wrapper">
-    <div class="image image-abs-center">
+    <div class="image image-abs-center autocorrett-height-by-width" data-image-ratio="4:3" data-image-under="398">
       <img src="<?=($this->program->getImage(true))?$this->program->getImage(true):''?>" alt="<?php echo $this->program->getTitle(); ?>">
     </div>
     <div class="data">
@@ -19,7 +19,7 @@
           <i class="fa fa-calendar"></i>
         </div>
         <div class="badges">
-          <?php if (!is_null($this->program->getIdopont())): ?>          
+          <?php if (!is_null($this->program->getIdopont())): ?>
           <div class="badge-orange" title="Esemény ideje">
             <i class="fa fa-clock-o"></i> <?php echo $this->program->getIdopont('Y.m.d. H:i'); ?>
           </div>

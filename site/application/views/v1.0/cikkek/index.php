@@ -33,9 +33,25 @@
 					infinite: true,
 				  slidesToShow: 3,
 				  slidesToScroll: 1,
-					dots: true
+					dots: true,
+					mobileFirst:true,
+					responsive: [
+				    {
+				      breakpoint: 1023,
+				      settings: {
+				        slidesToShow: 2
+				      }
+				    },
+						{
+				      breakpoint: 398,
+				      settings: {
+				        slidesToShow: 1
+				      }
+				    }
+				  ]
 				});
-			})
+				fixSlideWidth();
+			});
 		</script>
 
 		<? else: ?>

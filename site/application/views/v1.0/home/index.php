@@ -10,7 +10,7 @@
             <div class="wrapper">
               <div class="holder">
                 <div class="flex">
-                  <div class="image image-abs-center">
+                  <div class="image image-abs-center autocorrett-height-by-width" data-image-ratio="4:3" data-image-under="398">
                     <img src="<?=($this->news[0]->getImage(true))?$this->news[0]->getImage(true):''?>" alt="">
                   </div>
                   <div class="data">
@@ -108,9 +108,9 @@
   <div class="content-wrapper">
     <div class="pw">
       <div class="banners banner-billboard">
-        <div class="wrapper">
-          <div class="placeholdertext">
-            NAGY BANNER
+        <div class="wrapper by-width autocorrett-height-by-width" data-image-ratio="10:2">
+          <div class="placeholdertext center">
+            BILLBOARD BANNER<br>(10:2 - 1150 x 230)
           </div>
         </div>
       </div>
@@ -226,29 +226,33 @@
         <div class="groups">
           <div class="banner">
             <div class="wrapper autocorrett-height-by-width" data-image-ratio="1:1">
-              <div class="placeholdertext">
-                BANNER
+              <div class="placeholdertext center">
+                BANNER<br>
+                (1:1 - 265x265)
               </div>
             </div>
           </div>
           <div class="banner">
             <div class="wrapper autocorrett-height-by-width" data-image-ratio="1:1">
-              <div class="placeholdertext">
-                BANNER
+              <div class="placeholdertext center">
+                BANNER<br>
+                (1:1 - 265x265)
               </div>
             </div>
           </div>
           <div class="banner">
             <div class="wrapper autocorrett-height-by-width" data-image-ratio="1:1">
-              <div class="placeholdertext">
-                BANNER
+              <div class="placeholdertext center">
+                BANNER<br>
+                (1:1 - 265x265)
               </div>
             </div>
           </div>
           <div class="banner">
             <div class="wrapper autocorrett-height-by-width" data-image-ratio="1:1">
-              <div class="placeholdertext">
-                BANNER
+              <div class="placeholdertext center">
+                BANNER<br>
+                (1:1 - 265x265)
               </div>
             </div>
           </div>

@@ -11,7 +11,7 @@
           <?php echo $e['weekday']; ?>
         </div>
       </div>
-      <div class="image">
+      <div class="image autocorrett-height-by-width" data-image-ratio="4:3">
         <div class="wrapper">
           <img src="<?=($e['menu']['etel_fo'][kep])?:IMG.'no-meal.png'?>" alt="<?php echo $e['menu']['etel_fo'][neve]; ?>">
         </div>
