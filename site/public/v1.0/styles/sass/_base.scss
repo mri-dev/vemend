@@ -456,6 +456,32 @@ body.singlepage{
 			p {
 				margin: 0 0 20px 0;
 			}
+
+			.contact-infos{
+				background: #e0e0e0;;
+				border-radius: 4px;
+				padding: 10px;
+				margin: 10px 0;
+
+				& > div {
+					margin: 5px 0;
+					a {
+						color: black;
+					}
+				}
+
+				i {
+					width: 24px;
+				}
+
+				h2{
+					color: black;
+					text-transform: uppercase;
+					font-weight: bold;
+					font-size: 1.4em;
+					margin: 0 0 10px 0;
+				}
+			}
 		}
 
 		.content-block {

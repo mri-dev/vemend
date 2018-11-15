@@ -65,6 +65,19 @@
 					</div>
 				</div>
 
+				<div class="con cont-option" data-cont-option="intezmenyek,boltok,vendeglatas,turizmus">
+					<div class="option-label">Opcionális adatmező</div>
+					<?php
+						$contacts_values = ($this->news) ? $this->news->getOptional('contacts', true) : false ;
+					?>
+					<h2>Kapcsolat adatok</h2>
+					<label for="option_contacts_email">E-mail cím</label>
+					<input type="text" id="option_contacts_email"name="optional[contacts][email]" class="form-control" value="<?=($this->news)?$contacts_values['email']:false?>">
+					<br>
+					<label for="option_contacts_phone">Telefonszám</label>
+					<input type="text" id="option_contacts_phone"name="optional[contacts][phone]" class="form-control" value="<?=($this->news)?$contacts_values['phone']:false?>">
+				</div>
+
 				<div class="con cont-option" data-cont-option="boltok,vendeglatas">
 					<div class="option-label">Opcionális adatmező</div>
 					<h2>Nyitvatartás</h2>

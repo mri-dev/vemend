@@ -40,7 +40,25 @@
 		</div>
 		<?php endif; ?>
 		<?=\PortalManager\News::textRewrites($szoveg)?>
+		<?php $contacts = json_decode($optional_contacts, \JSON_UNESCAPED_UNICODE);?>
+		<?php if ($contacts): ?>
+			<div class="contact-infos">
+				<h2>Kapcsolat adatok</h2>
+				<?php if ($contacts['email']): ?>
+				<div class="">
+					<i class="fa fa-envelope-o"></i> <a href="mailto:<?=$contacts['email']?>"><?=$contacts['email']?></a>
+				</div>
+				<?php endif; ?>
+				<?php if ($contacts['phone']): ?>
+				<div class="">
+					<i class="fa fa-phone"></i> <a href="tel:<?=$contacts['phone']?>"><?=$contacts['phone']?></a>
+				</div>
+				<?php endif; ?>
+			</div>
+		<?php endif; ?>
 	</div>
+
+	<div class="clr"></div>
 
 	<div class="row">
 		<?php if ($optional_nyitvatartas != ''): $nyitvatartas = json_decode($optional_nyitvatartas, \JSON_UNESCAPED_UNICODE); ?>

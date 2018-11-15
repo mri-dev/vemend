@@ -64,6 +64,10 @@ class News
 		$szoveg = ($data['szoveg']) ?: NULL;
 		$bevezeto = ($data['bevezeto']) ?: NULL;
 		$lathato= ($data['lathato'] == 'on') ? 1 : 0;
+		$archiv = ($data['archiv']) ? 1 : 0;
+    $archivalva = NULL;
+    $optional = $data['optional'];
+    $optional_data = array();
 
 		if (!$cim) { throw new \Exception("Kérjük, hogy adja meg az <strong>Cikk címét</strong>!"); }
 
@@ -72,20 +76,53 @@ class News
 			$eleres = $this->checkEleres( $cim );
 		}
 
+    // Optional
+    if ($optional && !empty($optional)) {
+      foreach ((array)$optional as $key => $value) {
+        if ($value != '') {
+          $optional_data[$key] = (is_string($value)) ? addslashes($value) : $value;
+        }
+      }
+    }
+
+    $upd = array(
+      'cim' => $cim,
+      'eleres' => $eleres,
+      'szoveg' => $szoveg,
+      'bevezeto' => $bevezeto,
+      'idopont' => NOW,
+      'letrehozva' => NOW,
+      'lathato' => $lathato,
+      'optional_contacts' => ($optional_data['contacts']) ? json_encode($optional_data['contacts'], \JSON_UNESCAPED_UNICODE) : NULL,
+      'optional_nyitvatartas' => ($optional_data['nyitvatartas']) ? json_encode($optional_data['nyitvatartas'], \JSON_UNESCAPED_UNICODE) : NULL,
+      'optional_maps' => ($optional_data['maps'] != '') ? $optional_data['maps'] : NULL,
+      'optional_logo' => ($optional_data['logo'] != '') ? $optional_data['logo'] : NULL,
+      'optional_firstimage' => ($optional_data['firstimage'] != '') ? $optional_data['firstimage'] : NULL
+    );
+
 		$this->db->insert(
 			"hirek",
-			array(
-				'cim' => $cim,
-				'eleres' => $eleres,
-				'szoveg' => $szoveg,
-				'bevezeto' => $bevezeto,
-				'idopont' => NOW,
-				'letrehozva' => NOW,
-				'lathato' => $lathato
-			)
+      $upd
 		);
 
 		$id = $this->db->lastInsertId();
+
+    // Check archivalás
+    if ($archiv == 1) {
+      $prearch = (int)$this->db->squery("SELECT archiv FROM hirek WHERE ID = :id", array('id' => $id))->fetchColumn();
+      if ($prearch == 0) {
+        $archivalva = NOW;
+        $upd['archivalva'] = $archivalva;
+        $this->db->update(
+    			"hirek",
+    			array(
+            'archivalva' => $archivalva,
+            'archiv' => 1
+          ),
+    			sprintf("ID = %d", $id)
+    		);
+      }
+    }
 
 		$this->resaveCategories( $id, $data['cats'] );
 
@@ -128,6 +165,7 @@ class News
       'bevezeto' => $bevezeto,
       'idopont' => NOW,
       'lathato' => $lathato,
+      'optional_contacts' => ($optional_data['contacts']) ? json_encode($optional_data['contacts'], \JSON_UNESCAPED_UNICODE) : NULL,
       'optional_nyitvatartas' => ($optional_data['nyitvatartas']) ? json_encode($optional_data['nyitvatartas'], \JSON_UNESCAPED_UNICODE) : NULL,
       'optional_maps' => ($optional_data['maps'] != '') ? $optional_data['maps'] : NULL,
       'optional_logo' => ($optional_data['logo'] != '') ? $optional_data['logo'] : NULL,
