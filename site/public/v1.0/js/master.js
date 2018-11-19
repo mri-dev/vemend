@@ -252,7 +252,7 @@ $(function(){
 			$('.highlight-view .items li[index='+prev+']').addClass('active');
 		}
 
-	}, 2500);
+	}, 5000);
 
 
 	$('.highlight-view a[key]').click( function(){
@@ -297,7 +297,6 @@ $(function(){
 
 		switch (_.event) {
 			case 'toggleOnClick':
-
 				if ( _.target ) {
 					$(_.target).unbind('mouseenter mouseleave click');
 					$(this).click( function(){
@@ -306,6 +305,10 @@ $(function(){
 						if ( opened ) {
 							t.removeClass('opened');
 						} else {
+							$('.mobile-menu .nav').css({
+								height: $(window).height() - $('.mobile-menu .mobil-nav-top').height()-5
+							});
+							$('body').addClass('mobiltoggled');
 							$('.mb-tgl-close').removeClass('opened');
 							t.addClass('opened');
 						}

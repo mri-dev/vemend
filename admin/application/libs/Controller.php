@@ -117,7 +117,7 @@ class Controller {
         // Header menü
         $menu_header->addFilter( 'menu_type', 'header' );
         $menu_header->isFinal(true);
-        $tree   = $menu_header->getTree();
+        $tree   = $menu_header->getTree(false, array('admin' => false));
         $this->out( 'menu_header',  $tree );
 
         // Menük
@@ -126,7 +126,7 @@ class Controller {
         // Header menü
         $menu_top->addFilter( 'menu_type', 'top' );
         $menu_top->isFinal(true);
-        $tree   = $menu_top->getTree();
+        $tree   = $menu_top->getTree(false, array('admin' => false));
         $this->out( 'menu_top',  $tree );
 
         // Megabox
@@ -135,7 +135,7 @@ class Controller {
         // Header menü
         $menu_megabox->addFilter( 'menu_type', 'megabox' );
         $menu_megabox->isFinal(true);
-        $tree   = $menu_megabox->getTree();
+        $tree   = $menu_megabox->getTree(false, array('admin' => false));
         $this->out( 'menu_megabox',  $tree );
 
         // Footer menü
@@ -143,8 +143,16 @@ class Controller {
         $menu_footer  = new Menus( false, array( 'db' => $this->db ) );
         $menu_footer->addFilter( 'menu_type', 'footer' );
         $menu_footer->isFinal(true);
-        $tree   = $menu_footer->getTree();
+        $tree   = $menu_footer->getTree(false, array('admin' => false));
         $this->out( 'menu_footer',  $tree );
+
+        // Mobil menü
+        $tree = null;
+        $menu_footer  = new Menus( false, array( 'db' => $this->db ) );
+        $menu_footer->addFilter( 'menu_type', 'mobil' );
+        $menu_footer->isFinal(true);
+        $tree   = $menu_footer->getTree(false, array('admin' => false));
+        $this->out( 'menu_mobil',  $tree );
 
         unset($tree);
 

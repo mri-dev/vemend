@@ -65,7 +65,7 @@
 					</div>
 				</div>
 
-				<div class="con cont-option" data-cont-option="intezmenyek,boltok,vendeglatas,turizmus">
+				<div class="con cont-option" data-cont-option="intezmenyek,boltok,vendeglatas,turizmus,szolgaltatasok,latnivalok">
 					<div class="option-label">Opcionális adatmező</div>
 					<?php
 						$contacts_values = ($this->news) ? $this->news->getOptional('contacts', true) : false ;
@@ -78,7 +78,7 @@
 					<input type="text" id="option_contacts_phone"name="optional[contacts][phone]" class="form-control" value="<?=($this->news)?$contacts_values['phone']:false?>">
 				</div>
 
-				<div class="con cont-option" data-cont-option="boltok,vendeglatas">
+				<div class="con cont-option" data-cont-option="boltok,vendeglatas,turizmus,szolgaltatasok,latnivalok">
 					<div class="option-label">Opcionális adatmező</div>
 					<h2>Nyitvatartás</h2>
 					<?php
@@ -89,7 +89,7 @@
 						<br>
 					<?php endforeach; ?>
 				</div>
-				<div class="con cont-option" data-cont-option="intezmenyek,boltok,vendeglatas,turizmus">
+				<div class="con cont-option" data-cont-option="intezmenyek,boltok,vendeglatas,turizmus,latnivalok,tura-utvonal">
 					<div class="option-label">Opcionális adatmező</div>
 					<h2>Google térkép</h2>
 					<label for="option_maps">Pontos cím megadása</label>

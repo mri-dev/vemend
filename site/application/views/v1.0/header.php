@@ -74,6 +74,9 @@
   </div>
   <div class="main">
     <div class="pw">
+      <div class="mobil-nav show-on-mobile" mb-event="true" data-mb='{ "event": "toggleOnClick", "target" : ".mobile-menu" }'>
+        <i class="fa fa-bars"></i>
+      </div>
       <div class="flex">
         <div class="logo">
           <a href="<?=$this->settings['page_url']?>"><img src="<?=IMG?>vemend_logo.jpg" alt="<?=$this->settings['page_title']?>"></a>
@@ -224,6 +227,55 @@
     </div>
   </div>
 </header>
+<div class="mobile-menu">
+  <div class="wrapper">
+    <div class="mobil-nav-top">
+      <div class="mbclose" onclick="$('.mobile-menu').removeClass('opened');$('body').removeClass('mobiltoggled');">
+        <i class="fa fa-times"></i>
+      </div>
+      <div class="quicknav">
+        <div>
+          <a href="/" title="Főoldal"><i class="fa fa-home"></i></a>
+        </div>
+        <div>
+          <a href="/cikkek" title="Hírek / Bejegyzések"><i class="fa fa-paper-plane-o"></i></a>
+        </div>
+        <div>
+          <a href="/programok" title="Programok"><i class="fa fa-calendar"></i></a>
+        </div>
+        <div>
+          <a href="/kapcsolat" title="Kapcsolat"><i class="fa fa-phone"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="nav">
+      <ul>
+        <? foreach ( $this->menu_mobil->tree as $menu ): ?>
+        <li>
+          <a href="<?=($menu['link']?:'')?>">
+            <? if($menu['kep']): ?><img src="<?=\PortalManager\Formater::sourceImg($child['kep'])?>"><? endif; ?>
+            <?=$menu['nev']?> <? if($menu['child']): ?><i class="fa fa-angle-down"></i><? endif; ?></a>
+            <? if($menu['child']): ?>
+            <div class="sub nav-sub-view">
+                <div class="inside">
+                  <ul>
+                  <? foreach($menu['child'] as $child): ?>
+                  <li class="<?=$child['css_class']?>">
+                    <? if($child['link']): ?><a href="<?=$child['link']?>"><? endif; ?>
+                    <span style="<?=$child['css_styles']?>"><?=$child['nev']?></span>
+                    <? if($child['link']): ?></a><? endif; ?>
+                  </li>
+                  <? endforeach; ?>
+                  </ul>
+                </div>
+            </div>
+            <? endif; ?>
+        </li>
+        <? endforeach; ?>
+      </ul>
+    </div>
+  </div>
+</div>
 <?php if ( !$this->homepage ): ?>
 <!-- Content View -->
 <div class="website">

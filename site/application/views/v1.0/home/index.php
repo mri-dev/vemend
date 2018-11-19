@@ -76,11 +76,13 @@
                   <div class="wrapper image-abs-center by-width autocorrett-height-by-width" data-image-ratio="4:3">
                     <img src="<?=($this->news[1]->getImage(true))?$this->news[1]->getImage(true):''?>" alt="">
                   </div>
+                  <?php if ($this->news[1]->getDescription() != ''): ?>
                   <div class="excerpt">
                     <div class="wrapper">
                       <?=$this->news[1]->getDescription()?>
                     </div>
                   </div>
+                  <?php endif; ?>
                 </div>
                 <div class="footer">
                   <div class="flex">

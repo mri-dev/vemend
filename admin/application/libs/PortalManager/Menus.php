@@ -13,7 +13,7 @@ class Menus
 	private $db = null;
 	private $selected_menu_id = false;
 	// Engedélyezett menü pozíciók
-	private $allowed_positions = array( 'top', 'header','megabox','footer' );
+	private $allowed_positions = array( 'top', 'header','megabox','footer', 'mobil' );
 	// Elérhető menü típusok
 	private $allowed_menu_type = array(
 		'url' 							=> 'URL',
@@ -276,7 +276,7 @@ class Menus
 			$this->tree_steped_item[] = $top_menu;
 
 			// Alkategóriák betöltése
-			$top_menu['child'] = $this->getChildItems($top_menu['ID']);
+			$top_menu['child'] = $this->getChildItems($top_menu['ID'], true, $arg);
 
 			$tree[] = $top_menu;
 		}
@@ -415,16 +415,25 @@ class Menus
 	 * @param  int $parent_id 	Szülő menü ID
 	 * @return array 			Szülő menü al-elemei
 	 */
-	private function getChildItems( $parent_id, $deep = true )
+	private function getChildItems( $parent_id, $deep = true, $arg )
 	{
 		$tree = array();
+		$qryparam = array();
+
+		$qry = "
+			SELECT *
+			FROM menu
+			WHERE	szulo_id = :pid ";
+
+		if ( !$arg['admin'] ) {
+			$qry .= " and lathato = 1 ";
+		}
+
+		$qry .= "	ORDER BY gyujto DESC, sorrend ASC, ID ASC";
+		$qryparam['pid'] = $parent_id;
 
 		// Gyerek menük
-		$child_menu_qry 	= $this->db->query( sprintf("
-			SELECT 			*
-			FROM 			menu
-			WHERE 			szulo_id = %d
-			ORDER BY 		gyujto DESC, sorrend ASC, ID ASC;", $parent_id));
+		$child_menu_qry 	= $this->db->squery( $qry , $qryparam);
 		$child_menu_data	= $child_menu_qry->fetchAll(\PDO::FETCH_ASSOC);
 
 		if( $child_menu_qry->rowCount() == 0 ) return false;
@@ -436,7 +445,7 @@ class Menus
 			$this->tree_steped_item[] = $child_menu;
 
 			if( $deep ) {
-				$child_menu['child'] = $this->getChildItems($child_menu['ID']);
+				$child_menu['child'] = $this->getChildItems($child_menu['ID'], $deep, $arg);
 			}
 
 			$tree[] = $child_menu;

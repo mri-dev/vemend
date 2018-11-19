@@ -117,6 +117,30 @@ RewriteCond %{REQUEST_FILENAME} !-f
 
 RewriteRule ^intezmenyek/([0-9a-zA-Z_-]+)$ index.php?tag=cikkek&reader=1&cikk=$1&cat=intezmenyek [QSA,L]
 
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^latnivalok(/)?([0-9+])?$ index.php?tag=cikkek&list=1&cat=latnivalok&page=$2 [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^latnivalok/([0-9a-zA-Z_-]+)$ index.php?tag=cikkek&reader=1&cikk=$1&cat=latnivalok [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^tura-utvonal(/)?([0-9+])?$ index.php?tag=cikkek&list=1&cat=tura-utvonal&page=$2 [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^tura-utvonal/([0-9a-zA-Z_-]+)$ index.php?tag=cikkek&reader=1&cikk=$1&cat=tura-utvonal [QSA,L]
+
 # Programok
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

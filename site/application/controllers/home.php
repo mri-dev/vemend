@@ -19,7 +19,7 @@ class home extends Controller{
 			$arg = array(
 				'limit' => 2,
 				'page' 	=> 1,
-				'exc_cat_slug' => array('boltok','intezmenyek','turizmus','vendeglatas'),
+				'exc_cat_slug' => array('boltok','intezmenyek','turizmus','vendeglatas','szolgaltatasok'),
 				'hide_archiv' => true,
 				'hide_offline' => true,
 				'order' => array(

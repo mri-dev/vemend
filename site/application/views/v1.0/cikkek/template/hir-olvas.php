@@ -41,7 +41,7 @@
 		<?php endif; ?>
 		<?=\PortalManager\News::textRewrites($szoveg)?>
 		<?php $contacts = json_decode($optional_contacts, \JSON_UNESCAPED_UNICODE);?>
-		<?php if ($contacts): ?>
+		<?php if ($contacts['email'] ||$contacts['phone']): ?>
 			<div class="contact-infos">
 				<h2>Kapcsolat adatok</h2>
 				<?php if ($contacts['email']): ?>
