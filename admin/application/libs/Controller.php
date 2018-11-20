@@ -57,6 +57,14 @@ class Controller {
           $this->view->adm->logged = $this->AdminUser->isLogged();
         }
 
+        // keresés controller
+        $searchercontrol = array(
+          'placeholder' => 'Keresés...',
+          'url' => '/cikkek/'
+        );
+        $this->out('searchercontrol', $searchercontrol);
+
+
         $this->User = new Users(array(
           'db' => $this->db,
           'view' => $this->view,

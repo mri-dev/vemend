@@ -45,7 +45,7 @@
 							</div>
 						</div>
 						<div class="subs">
-							<?php if (false): ?>								
+							<?php if (false): ?>
 								<h3>Feliratkozás</h3>
 								<div class="subbox">
 									<div class="wrapper">
@@ -91,10 +91,10 @@
 							<div class="searcher">
 								<h3>Keresés</h3>
 			          <div class="searchform">
-			            <form class="" action="/termekek/" method="get">
+			            <form class="" action="<?=$this->searchercontrol['url']?>" method="get">
 			            <div class="flex flexmob-exc-resp">
 			              <div class="input">
-			                <input type="text" name="src" value="<?=$_GET['src']?>" placeholder="Keresőszó megadása">
+			                <input type="text" name="src" value="<?=$_GET['src']?>" placeholder="<?=$this->searchercontrol['placeholder']?>">
 			              </div>
 			              <div class="button">
 			                <button type="submit"><i class="fa fa-search"></i></button>

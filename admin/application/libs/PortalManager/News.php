@@ -314,8 +314,19 @@ class News
 			$qry .= " and ".$arg['in_cat']." IN (SELECT cat_id FROM cikk_xref_cat WHERE cikk_id = h.ID)";
 		}
 
-    if (isset($arg['search']) && !empty($arg['search'])) {
-			$qry .= " and h.cim LIKE '%".addslashes($arg['search'])."%'";
+    if (isset($arg['search']) && !empty($arg['search']))
+    {
+      $xs = explode(" ", trim($arg['search']));
+      if ($xs && $xs[0] != "") {
+        $qry .= " and (";
+        $srcs = '';
+        foreach ($xs as $xsrc) {
+          $srcs .= "h.cim LIKE '%".trim($xsrc)."%' or ";
+        }
+        $srcs = rtrim($srcs," or ");
+        $qry .= $srcs;
+        $qry .= ")";
+      }
 		}
 
 
@@ -644,16 +655,41 @@ class News
     if (isset($arg['archiv'])) {
       $archivfilter = true;
     }
+    $qp = array();
+
+    if (isset($arg['search'])) {
+      $searchfilter = '';
+      $xs = explode(" ", trim($arg['search']));
+      if ($xs && $xs[0] != "") {
+        $searchfilter .= " and (";
+        $srcs = '';
+        foreach ($xs as $xsrc) {
+          $srcs .= "h.cim LIKE '%".trim($xsrc)."%' or ";
+        }
+        $srcs = rtrim($srcs," or ");
+        $searchfilter .= $srcs;
+        $searchfilter .= ")";
+      }
+    }
+
 		$q = "SELECT
       c.*,
-      (SELECT count(cx.cikk_id) FROM cikk_xref_cat as cx LEFT OUTER JOIN hirek as h ON h.ID = cx.cikk_id WHERE cx.cat_id = c.ID and h.lathato = 1 ".( ($archivfilter)?'and h.archiv = 1':'' )." ) as postc
+      (SELECT count(cx.cikk_id) FROM cikk_xref_cat as cx LEFT OUTER JOIN hirek as h ON h.ID = cx.cikk_id WHERE 1=1 ".$searchfilter." and cx.cat_id = c.ID and h.lathato = 1 ".( ($archivfilter)?'and h.archiv = 1':'' )." ) as postc
     FROM cikk_kategoriak as c
     WHERE
-      1=1 and
-      (SELECT count(cx.cikk_id) FROM cikk_xref_cat as cx LEFT OUTER JOIN hirek as h ON h.ID = cx.cikk_id WHERE cx.cat_id = c.ID and h.lathato = 1 ".( ($archivfilter)?'and h.archiv = 1':'' )." ) != 0
+      1=1 ";
+    if (isset($arg['usetree'])) {
+      $q .= " and c.deep = 0 ";
+    }
+    if (isset($arg['childof'])) {
+      $q .= " and c.szulo_id = :szid ";
+      $qp['szid'] = (int)$arg['childof'];
+    }
+
+    $q .= " and (SELECT count(cx.cikk_id) FROM cikk_xref_cat as cx LEFT OUTER JOIN hirek as h ON h.ID = cx.cikk_id WHERE 1=1 ".$searchfilter." and cx.cat_id = c.ID and h.lathato = 1 ".( ($archivfilter)?'and h.archiv = 1':'' )." ) != 0
     ORDER BY c.sorrend ASC";
 
-		$qry = $this->db->squery( $q, array());
+		$qry = $this->db->squery( $q, $qp);
 
 		if ($qry->rowCount() == 0) {
 			return array();
@@ -662,6 +698,7 @@ class News
 			$bdata = array();
 			foreach ($data as $d) {
 				$d['label'] = '<span class="cat-label" style="background-color:'.$d['bgcolor'].';">'.$d['neve'].'</span>';
+        $d['children'] = $this->categoryList(array('childof' => $d['ID']));
 				$bdata[$d['slug']] = $d;
 			}
 			unset($data);
@@ -703,6 +740,7 @@ class News
 
 			$bdata = array();
 			foreach ($data as $d) {
+        $d['is_tematic'] = (in_array($d['slug'], $this->tematic_cikk_slugs)) ? true : false;
 				$d['label'] = '<span class="cat-label" style="background-color:'.$d['bgcolor'].';">'.$d['neve'].'</span>';
 				$inids[] = $d['cat_id'];
 				$bdata[] = $d;

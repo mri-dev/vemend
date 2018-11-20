@@ -661,6 +661,23 @@ body.singlepage{
 						-webkit-transform: translate(-50%,-50%);
           	transform: translate(-50%,-50%);
 					}
+
+					.in-cats{
+						position: absolute;
+						bottom: 10px;
+						right: 10px;
+						z-index: 1;
+						a{
+							text-decoration: none;
+							text-transform: uppercase;
+							font-size: 0.7em;
+							color: white;
+						}
+
+						.cat-label{
+							padding: 2px 4px;
+						}
+					}
 				}
 
 				.title{
@@ -954,6 +971,11 @@ body.singlepage{
 				content:"\f1db";
 				font-size: 14px;
 			}
+		}
+
+		& > div.deep1 {
+			margin-left: 12px;
+    	font-size: 0.9em;
 		}
 
 		& > div.active{

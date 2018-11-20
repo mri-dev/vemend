@@ -27,7 +27,13 @@ class cikkek extends Controller{
 		if ($is_archiv) {
 			$catarg['archiv'] = true;
 		}
+		if (isset($_GET['src']) && !empty($_GET['src'])) {
+			$catarg['search'] = trim($_GET['src']);
+		}
+		$catarg['usetree'] = true;
 		$this->out( 'newscats', $news->categoryList($catarg));
+		unset($catarg['usetree']);
+		$this->out( 'newscatslist', $news->categoryList($catarg));
 
 		if ( isset($_GET['cikk']) ) {
 			$this->out( 'news', $news->get( trim($_GET['cikk']) ) );
@@ -71,14 +77,14 @@ class cikkek extends Controller{
 				$this->out( 'head_img_title', $headimgtitle);
 				$this->out( 'head_img', IMGDOMAIN.'/src/uploads/covers/cover-archive.jpg' );
 			} else {
-				$this->out( 'head_img_title', (!$is_archiv) ? $this->view->newscats[$cat_slug]['neve'] : 'Archívum:'.$this->view->newscats[$cat_slug]['neve']  );
+				$this->out( 'head_img_title', (!$is_archiv) ? $this->view->newscatslist[$cat_slug]['neve'] : 'Archívum:'.$this->view->newscatslist[$cat_slug]['neve']  );
 				$this->out( 'head_img', IMGDOMAIN.'/src/uploads/covers/cover-archive.jpg' );
 			}
 
 			$arg = array(
 				'limit' => 12,
 				'hide_offline' => true,
-				'in_cat' => (int)$this->view->newscats[$cat_slug]['ID'],
+				'in_cat' => (int)$this->view->newscatslist[$cat_slug]['ID'],
 				'page' => (isset($_GET['page'])) ? (int)$_GET['page'] : 1,
 			);
 			if ($is_archiv) {
@@ -86,6 +92,9 @@ class cikkek extends Controller{
 			}
 			if ($is_archiv && isset($_GET['date'])) {
 				$arg['on_date'] = $_GET['date'];
+			}
+			if (isset($_GET['src']) && !empty($_GET['src'])) {
+				$arg['search'] = trim($_GET['src']);
 			}
 			$this->out( 'list', $news->getTree( $arg ) );
 

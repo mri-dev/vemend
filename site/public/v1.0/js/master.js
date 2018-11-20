@@ -305,10 +305,13 @@ $(function(){
 						if ( opened ) {
 							t.removeClass('opened');
 						} else {
-							$('.mobile-menu .nav').css({
-								height: $(window).height() - $('.mobile-menu .mobil-nav-top').height()-5
-							});
-							$('body').addClass('mobiltoggled');
+							if (_.menu) {
+								$('.mobile-menu .nav').css({
+									height: $(window).height() - $('.mobile-menu .mobil-nav-top').height()-5
+								});
+								$('body').addClass('mobiltoggled');
+							}
+
 							$('.mb-tgl-close').removeClass('opened');
 							t.addClass('opened');
 						}

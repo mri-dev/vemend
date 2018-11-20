@@ -41,7 +41,11 @@
 					<? if( true ): ?>
 					<br>
 					<div class="row np">
-						<div class="col-md-12">
+						<div class="col-md-4">
+							<label for="bgcolor">Szín</label>
+							<input type="text" id="bgcolor" name="bgcolor" placeholder="pl.: #888888" value="<?= ( $this->err ? $_POST['bgcolor'] : ($this->category ? str_replace("#", "",$this->category->getVar('bgcolor')):'') ) ?>" class="form-control">
+						</div>
+						<div class="col-md-8" style="padding-left: 10px;">
 							<label for="slug">SEO URL</label>
 							<input type="text" id="slug" name="slug" placeholder="pl.: uj-kategoria-eleres" value="<?= ( $this->err ? $_POST['slug'] : ($this->category ? $this->category->getSlug():'') ) ?>" class="form-control">
 						</div>
@@ -70,7 +74,7 @@
 						</div>
 					</div>
           <?php endif; ?>
-          <?php if (false): ?>
+          <?php if (true): ?>
 					<br>
 					<div class="row np">
 						<div class="col-md-12">
@@ -143,9 +147,10 @@
 			<? endwhile; endif;  ?>
 
 			<div class="row np row-head">
-				<div class="col-md-7"><em>Kategória</em></div>
+				<div class="col-md-6"><em>Kategória</em></div>
+  			<div class="col-md-2 center"><em>Szín</em></div>
   			<div class="col-md-2 left"><em>SEO URL</em></div>
-				<div class="col-md-2 center"><em>Sorrend</em></div>
+				<div class="col-md-1 center"><em>Sorrend</em></div>
 				<div class="col-md-1"></div>
 			</div>
 			<div class="categories">
@@ -154,15 +159,20 @@
 					$cat = $this->categories->the_cat();
 				?>
 				<div class="row np deep<?=$cat['deep']?> <?=($this->category && $this->category->getId() == $cat['ID'] ? 'on-edit' : ( $this->category_d && $this->category_d->getId() == $cat['ID'] ? 'on-del':'') )?>">
-					<div class="col-md-7">
+					<div class="col-md-6">
 						<a href="/<?=$this->gets[0]?>/<?=$this->gets[1]?>/szerkeszt/<?=$cat['ID']?>" title="Szerkesztés"><strong><?=$cat['neve']?></strong></a>
 						 <? if( $cat['oldal_hashkeys'] ): ?> | <span style="color: black;">Csatolt oldalak: <?=count(explode(",",$cat[oldal_hashkeys]))?> db</span><? endif; ?>
 						<div><? if($cat['hashkey']): ?> <span class="hashkey">#<?=$cat['hashkey']?></span> <? endif; ?></div>
 					</div>
+          <div class="col-md-2 center" style="font-size: 0.8em; padding: 0 5px;">
+            <div class="" style="color: white; background:<?=$cat['bgcolor']?>">
+              <?=$cat['bgcolor']?>
+            </div>
+          </div>
           <div class="col-md-2 left">
             <?=$cat['slug']?>
           </div>
-					<div class="col-md-2 center">
+					<div class="col-md-1 center">
 						<?=$cat['sorrend']?>
 					</div>
           <div class="col-md-1 actions" align="right">

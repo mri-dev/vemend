@@ -74,7 +74,7 @@
   </div>
   <div class="main">
     <div class="pw">
-      <div class="mobil-nav show-on-mobile" mb-event="true" data-mb='{ "event": "toggleOnClick", "target" : ".mobile-menu" }'>
+      <div class="mobil-nav show-on-mobile" mb-event="true" data-mb='{ "event": "toggleOnClick", "target" : ".mobile-menu", "menu": true }'>
         <i class="fa fa-bars"></i>
       </div>
       <div class="flex">
@@ -83,10 +83,24 @@
         </div>
         <div class="actions">
           <div class="searcher">
-            <div class="ico">
-              <img src="<?=IMG?>icons/search.svg" alt="Keresés" />
+            <div class="wr" mb-event="true" data-mb='{ "event": "toggleOnClick", "target": ".searcher .searcher-input" }'>
+              <div class="ico">
+                <img src="<?=IMG?>icons/search.svg" alt="Keresés" />
+              </div>
+              Keresés
             </div>
-            Keresés
+            <div class="searcher-input">
+              <form class="" action="<?=$this->searchercontrol['url']?>" method="get">
+                <div class="wrapper">
+                  <div class="inp">
+                    <input type="text" name="src" value="<?=$_GET['src']?>" autocomplete="off" placeholder="<?=$this->searchercontrol['placeholder']?>">
+                  </div>
+                  <div class="button">
+                    <button type="submit"><i class="fa fa-arrow-circle-right"></i></button>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
           <div class="position">
             <a href="/kapcsolat">

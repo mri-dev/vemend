@@ -39,13 +39,13 @@
 				    {
 				      breakpoint: 1023,
 				      settings: {
-				        slidesToShow: 2
+				        slidesToShow: 3
 				      }
 				    },
 						{
 				      breakpoint: 398,
 				      settings: {
-				        slidesToShow: 1
+				        slidesToShow: 3
 				      }
 				    }
 				  ]
@@ -71,9 +71,16 @@
 							<a href="<?=$this->cikkroot?>"><span class="dot" style="color:black;"></span> Összes bejegyzés</a>
 						</div>
 						<?php foreach ( (array)$this->newscats as $nc ): if($this->is_archiv && in_array($nc['slug'], (array)$this->history->tematic_cikk_slugs)) continue; ?>
-						<div class="cat <?=($_GET['cat'] == ($nc['slug']))?'active':''?>">
-							<a href="<?=(in_array($nc['slug'], (array)$this->history->tematic_cikk_slugs))?'/':$this->cikkroot?><?=($nc['slug'])?>"><span class="dot" style="color:<?=$nc['bgcolor']?>;"></span> <?=$nc['neve']?> <span class="badge"><?=$nc['postc']?></span></a>
+						<div class="cat deep<?=$nc['deep']?> <?=($_GET['cat'] == ($nc['slug']))?'active':''?>">
+							<a href="<?=(in_array($nc['slug'], (array)$this->history->tematic_cikk_slugs))?'/':$this->cikkroot?><?=($nc['slug'])?><?=(isset($_GET['src']))?'?src='.$_GET['src']:''?>"><span class="dot" style="color:<?=$nc['bgcolor']?>;"></span> <?=$nc['neve']?> <span class="badge"><?=$nc['postc']?></span></a>
 						</div>
+						<?php if (!empty($nc['children'])): ?>
+							<?php foreach ($nc['children'] as $nc): ?>
+							<div class="cat deep<?=$nc['deep']?> <?=($_GET['cat'] == ($nc['slug']))?'active':''?>">
+								<a href="<?=(in_array($nc['slug'], (array)$this->history->tematic_cikk_slugs))?'/':$this->cikkroot?><?=($nc['slug'])?><?=(isset($_GET['src']))?'?src='.$_GET['src']:''?>"><span class="dot" style="color:<?=$nc['bgcolor']?>;"></span> <?=$nc['neve']?> <span class="badge"><?=$nc['postc']?></span></a>
+							</div>
+							<?php endforeach; ?>
+						<?php endif; ?>
 						<?php endforeach; ?>
 					</div>
 
@@ -115,6 +122,11 @@
 					</div>
 				</div>
 				<div class="art-list">
+					<?php if (isset($_GET['src']) && !empty($_GET['src'])): ?>
+            <div class="search-for">
+             <i class="fa fa-search"></i> Keresés, mint: <?php foreach (explode(" ", $_GET['src']) as $src): ?><span><?=$src?></span><?php endforeach; ?>
+            </div>
+          <?php endif; ?>
 					<div class="articles">
 						<?
 						$step = 0;
@@ -123,6 +135,7 @@
 							while ( $this->list->walk() ) {
 								$step++;
 								$arg = $this->list->the_news();
+								$arg['categories'] = $this->list->getCategories();
 								$arg['date_format'] = $this->settings['date_format'];
 								$arg['newscats'] = $this->newscats;
 					      $read_prefix = (isset($_GET['cat']) && $_GET['cat'] != '') ? $_GET['cat'] : 'olvas';
