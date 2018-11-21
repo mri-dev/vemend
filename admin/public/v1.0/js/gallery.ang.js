@@ -94,11 +94,18 @@ gallery.controller("Creator", ['$scope', '$http', '$mdToast', '$timeout', '$pars
   $scope.galleries = [];
   $scope.pickedfolder = null;
   $scope.imageseditor = false;
+  $scope.imageediting = false;
+  $scope.imagesaving = false;
 
   $scope.init = function( author ){
     $scope.loadGalleries(function() {
     });
 	}
+
+  $scope.toggleVar = function(o,v) {
+    var m = $parse(o);
+    m.assign($scope, v);
+  }
 
   $scope.pickFolder = function( folderslug )
   {
@@ -111,6 +118,26 @@ gallery.controller("Creator", ['$scope', '$http', '$mdToast', '$timeout', '$pars
     angular.forEach($scope.uploadimages, function( file, i ){
       promise = fileUploadService.uploadFileToUrl(group, gallery_id, file, uploadUrl, false, function(re){
         callback(i, re);
+      });
+    });
+  }
+
+  $scope.saveImages = function( ) {
+    var imgs = $scope.galleries[$scope.pickedfolder].images;
+    $scope.imagesaving = true;
+    $http({
+      method: 'POST',
+      url: '/ajax/get',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: $.param({
+        type: "Gallery",
+        key: 'updateImages',
+        images: imgs
+      })
+    }).success(function( r ){
+      console.log(r);
+      $scope.loadGalleries(function(){
+        $scope.imagesaving = false;
       });
     });
   }
@@ -181,7 +208,6 @@ gallery.controller("Creator", ['$scope', '$http', '$mdToast', '$timeout', '$pars
         key: 'Load'
       })
     }).success(function( r ){
-      console.log(r);
       if (r.data && r.error == 0) {
         $scope.galleries = r.data;
       }

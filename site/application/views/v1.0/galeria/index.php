@@ -30,7 +30,7 @@
           <h2>Galériák</h2>
           <div class="list">
             <?php foreach ((array)$this->galleries as $group => $gallery): if($gallery['imagesnum'] == 0) continue; ?>
-            <div class="cat<?=($group == $_GET['folder'])?' active':''?>"><a href="/galeria/<?=$group?>"><i class="fa fa-folder-o"></i> <?=$gallery['neve']?><span class="badge"><?=$gallery['imagesnum']?></span></a></div>
+            <div class="cat<?=($group == $_GET['folder'])?' active':''?>"><a href="/galeria/<?=$group?>"><i class="fa fa-folder-o" style="color:#<?=$gallery['bgcolor']?>;"></i> <?=$gallery['neve']?><span class="badge"><?=$gallery['imagesnum']?></span></a></div>
             <?php endforeach; ?>
           </div>
         </div>

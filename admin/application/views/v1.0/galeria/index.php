@@ -28,6 +28,7 @@
       <div ng-class="(pickedfolder)?'col-md-7':'col-md-12'" ng-hide="!pickedfolder">
         <div class="con">
           <h2><strong>{{galleries[pickedfolder].neve}}</strong> &mdash; képeinek kezelése</h2>
+          <br>
           <h3>Új képek feltöltése</h3>
           <?php if (true): ?>
           <div class="uploader">
@@ -73,30 +74,74 @@
           </div>
           <div class="clr"></div>
           <?php endif; ?>
-
+          <br>
+          <div class="rnav">
+            <div style="color: #8ab160; cursor: pointer;"  ng-show="!imageediting" ng-click="toggleVar('imageediting', true)">
+              Képszerkesztő bekapcsolása <i class="fa fa-pencil"></i>
+            </div>
+            <div style="color: #e69a9a; cursor: pointer;" ng-hide="!imageediting" ng-click="toggleVar('imageediting', false)">
+              Képszerkesztő kikapcsolása <i class="fa fa-ban"></i>
+            </div>
+          </div>
           <h3>Feltöltött képek ({{galleries[pickedfolder].imagesnum}})</h3>
+          <div class="clr"></div>
           <div class="uploaded-images">
             <div class="" ng-show="galleries[pickedfolder].images.length==0">
               Jelenleg nincsenek feltöltött képek!
             </div>
-            <div class="wrapper">
+            <div class="wrapper" ng-class="(imageediting)?'editor':''">
               <div class="image" ng-repeat="img in galleries[pickedfolder].images">
                 <div class="wrapper">
                   <div class="img-wrapper">
                     <img src="{{img.filepath}}" alt="{{img.title}}">
                   </div>
                   <div class="info">
-                    <div class="ext">
+                    <div class="ext" ng-show="!imageediting">
                       {{img.kiterjesztes}}
                     </div>
-                    <div class="size">
+                    <div class="size" ng-show="!imageediting">
                       {{img.filemeret}} KB
+                    </div>
+                    <div class="editor-inps" ng-show="imageediting">
+                      <div class="title">
+                        <label for="">Kép címe</label>
+                        <input type="text" ng-model="img.title" class="form-control">
+                      </div>
+                      <div class="desc">
+                        <label for="">Kép rövid leírása</label>
+                        <textarea class="form-control" ng-model="img.description"></textarea>
+                      </div>
+                      <div class="delete">
+                        <input id="galimg_del_img{{img.ID}}" type="checkbox" ng-model="img.deleting"> <label for="galimg_del_img{{img.ID}}">kép törlése</label>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            <div class="right" ng-show="imageediting">
+              <br>
+              <div class="alert alert-warning left" ng-show="imagesaving">
+                Képek mentése folyamatban...<i class="fa fa-spin fa-spinner"></i>
+              </div>
+              <button ng-hide="imagesaving" type="button" class="btn btn-success" ng-click="saveImages()">Képek mentése <i class="fa fa-save"></i></button>
+            </div>
           </div>
+          <script type="text/javascript">
+            $(function(){
+              $('.uploaded-images > .wrapper').sortable({
+                update: function(e, ui){
+                  var list = $('.uploaded-images > .wrapper > .image');
+                  $.each(list, function(li, le){
+                    var ae = angular.element(le).scope();
+                    ae.$apply(function(){
+                      ae.img.sorrend = li;
+                    });
+                  });
+                }
+              });
+            });
+          </script>
         </div>
       </div>
     </div>

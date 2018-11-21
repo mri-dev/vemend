@@ -6,6 +6,7 @@ use PortalManager\Menus;
 use PortalManager\Template;
 use PortalManager\Users;
 use PortalManager\Redirector;
+use PortalManager\Banners;
 use ShopManager\Shop;
 use ShopManager\Categories;
 use PortalManager\News;
@@ -92,6 +93,13 @@ class Controller {
         if ( !defined('PRODUCTIONSITE') )
         {
           $this->out( 'modules', $this->installer->listModules(array('only_active' => true)) );
+        }
+
+        // Bannerek
+        if ( defined('PRODUCTIONSITE') )
+        {
+          $this->BANNERS = new Banners(array( 'db' => $this->db ));
+          $this->out('BANNERS', $this->BANNERS);
         }
 
         // Kategóriák

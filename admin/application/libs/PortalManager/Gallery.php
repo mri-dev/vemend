@@ -24,6 +24,51 @@ class Gallery implements InstallModules
     return $this;
   }
 
+  public function updateImages( $images )
+  {
+    $ret = array(
+      'deleted' => array()
+    );
+
+    if (empty($images)) {
+      return false;
+    }
+
+    foreach ((array)$images as $img) {
+      if (isset($img['deleting']) && $img['deleting'] == 'true')
+      {
+        // Törlés
+        $get = $this->db->squery("SELECT * FROM ".self::DBTABLE." WHERE ID = :id", array('id' => $img['ID']))->fetch(\PDO::FETCH_ASSOC);
+        $file = $_SERVER['DOCUMENT_ROOT'].'/'.$get['filepath'];
+        if (file_exists($file)) {
+          if (unlink($file)) {
+            $this->db->squery("DELETE FROM ".self::DBTABLE." WHERE ID = :id", array('id' => $get['ID']));
+            $ret['deleted'][] = $get;
+          }
+        }
+
+      } else {
+        // Szerkesztés
+        $imgid = (int)($img['ID']);
+        $title = ($img['title'] == '') ? NULL : addslashes($img['title']);
+        $desc = ($img['description'] == '') ? NULL : addslashes($img['description']);
+        $sort = ($img['sorrend'] == '') ? 100 : (int)($img['sorrend']);
+
+        $this->db->update(
+          self::DBTABLE,
+          array(
+            'title' => $title,
+            'description' => $desc,
+            'sorrend' => $sort
+          ),
+          sprintf('ID = %d', $imgid)
+        );
+      }
+    }
+
+    return $ret;
+  }
+
   public function loadGalleries()
   {
     $list = array();

@@ -533,6 +533,14 @@ class ajax extends Controller{
 								$re['msg'] = $e->getMessage();
 							}
 						break;
+						case 'updateImages':
+						try {
+							$re['data'] = $gallery->updateImages( $images);
+						} catch (\Exception $e) {
+							$re['error'] = 1;
+							$re['msg'] = $e->getMessage();
+						}
+						break;
 						case 'registerUploadedImage':
 							try {
 								$re['data'] = $gallery->registerImage( $id, array(

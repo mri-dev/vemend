@@ -54,7 +54,11 @@
 					<? if( true ): ?>
 					<br>
 					<div class="row np">
-						<div class="col-md-12">
+						<div class="col-md-4">
+							<label for="bgcolor">Szín</label>
+							<input type="text" id="bgcolor" name="bgcolor" placeholder="pl.: #888888" value="<?= ( $this->err ? $_POST['bgcolor'] : ($this->category ? str_replace("#", "",$this->category->getVar('bgcolor')):'') ) ?>" class="form-control">
+						</div>
+						<div class="col-md-8" style="padding-left: 10px;">
 							<label for="slug">SEO URL</label>
 							<input type="text" id="slug" name="slug" placeholder="pl.: uj-kategoria-eleres" value="<?= ( $this->err ? $_POST['slug'] : ($this->category ? $this->category->getSlug():'') ) ?>" class="form-control">
 						</div>

@@ -109,13 +109,15 @@
   </div>
   <div class="content-wrapper">
     <div class="pw">
-      <div class="banners banner-billboard">
-        <div class="wrapper by-width autocorrett-height-by-width" data-image-ratio="10:2">
-          <div class="placeholdertext center">
-            BILLBOARD BANNER<br>(10:2 - 1150 x 230)
-          </div>
-        </div>
-      </div>
+      <?php
+        // Billboard banner
+        $billboard_cap = $this->BANNERS->checkCapability('BILLBOARD', 1);
+
+        if ($billboard_cap) {
+          $banners = $this->BANNERS->pick('BILLBOARD', 1);
+          echo $this->BANNERS->render('BILLBOARD', $banners);
+        }
+      ?>
     </div>
   </div>
   <? if( count($this->highlight_text) > 0 ): ?>
@@ -224,6 +226,35 @@
         </div>
       </div>
       <div class="mspacer"></div>
+      <?php
+        $square_cap = $this->BANNERS->checkCapability('1P1', 4);
+
+        if (!$square_cap) {
+          $block_cap = $this->BANNERS->checkCapability('2P1', 2);
+        }
+
+        if ($square_cap && $square_cap) {
+          $mathrand = rand(1,20);
+          if($mathrand > 10) {
+            $square_cap = false;
+            $block_cap = true;
+          } else {
+            $square_cap = true;
+            $block_cap = false;
+          }
+        }
+
+        if ($square_cap || $block_cap) {
+          if ($square_cap) {
+            $banners = $this->BANNERS->pick('1P1', 4);
+            echo $this->BANNERS->render('1P1', $banners);
+          }
+          if ($block_cap) {
+            $banners = $this->BANNERS->pick('2P1', 2);
+            echo $this->BANNERS->render('2P1', $banners);
+          }
+        }
+      ?>
       <div class="banners">
         <div class="groups">
           <div class="banner">
