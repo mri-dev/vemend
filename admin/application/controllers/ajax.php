@@ -4,6 +4,7 @@ use PortalManager\Traffic;
 use PortalManager\EtlapAPI;
 use ProductManager\Products;
 use PortalManager\Gallery;
+use PortalManager\Banners;
 use SzallasManager\SzallasList;
 use SzallasManager\SzallasSzobak;
 use SzallasManager\SzallasSzolgaltatasok;
@@ -512,6 +513,26 @@ class ajax extends Controller{
 				/**
 				* ANGULAR ACTIONS
 				**/
+				case 'Banners':
+					$key = $_POST['key'];
+					$re = array(
+						'error' => 0,
+						'msg' => null,
+						'data' 	=> array()
+					);
+					$re['pass'] = $_POST;
+					$banners = new Banners( array('db' => $this->db) );
+
+					switch ( $key )
+					{
+						case 'AdminList':
+							$re['data'] = $banners->getGroupedList();
+						break;
+					}
+
+					unset($gallery);
+					echo json_encode( $re );
+				break;
 				case 'Gallery':
 					$key = $_POST['key'];
 					$re = array(

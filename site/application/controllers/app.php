@@ -23,12 +23,32 @@ class app extends Controller{
 		}
 
 		/**
+		 * Banner click log
+		 * */
+		public function ad()
+		{
+			$banner_id = (int)$this->view->gets[2];
+
+			// Get banner
+			$banner = $this->BANNERS->getBannerData( $banner_id );
+
+			if ($banner['target_url'] != '')
+			{
+				$this->BANNERS->logClick( $banner_id );
+				// Redirect
+				Helper::reload($banner['target_url']);
+			} else {
+				Helper::reload('/');
+			}
+		}
+
+		/**
 		 * Documents click log
 		 * */
 		public function dcl()
 		{
-			$hashkey 	= $this->view->gets[2];
-			$uid 		= \Helper::getMachineID();
+			$hashkey = $this->view->gets[2];
+			$uid = \Helper::getMachineID();
 
 			// Get doc
 			$doc = $this->db->squery("SELECT ID, filepath, tipus FROM shop_documents WHERE hashname = :hash;", array('hash'=> $hashkey));

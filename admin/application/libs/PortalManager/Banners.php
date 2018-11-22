@@ -41,6 +41,14 @@ class Banners implements InstallModules
     }
   }
 
+  public function clearURL( $url )
+  {
+    $x = explode("?", $url);
+    $url = $x[0];
+    $url = rtrim($url, '/');
+    return $url;
+  }
+
   public function render( $format, $banners = array() )
   {
     switch ($format) {
@@ -110,9 +118,139 @@ class Banners implements InstallModules
     }
   }
 
+  public function logClick( $banner_id )
+  {
+    $dategroup = date('Y-m-d');
+		$ip = $_SERVER['REMOTE_ADDR'];
+
+    $cc = $this->db->squery("SELECT ID,clicked FROM ".self::DBCLICK." WHERE banner_id = :banner and dategroup = :dategroup and ip = :ip;", array(
+      'banner' => $banner_id,
+      'dategroup' => $dategroup,
+      'ip' => $ip
+    ));
+
+    if ($cc->rowCount() == 0) {
+      $this->db->insert(
+        self::DBCLICK,
+        array(
+          'banner_id' => $banner_id,
+          'ip' => $ip,
+          'clicked' => 1,
+          'dategroup' => $dategroup
+        )
+      );
+    } else {
+      $bann = $cc->fetch(\PDO::FETCH_ASSOC);
+      $this->db->update(
+        self::DBCLICK,
+        array(
+          'clicked' => (int)$bann['clicked'] + 1
+        ),
+        sprintf("ID = %d", (int)$bann['ID'])
+      );
+    }
+  }
+
+  public function getGroupedList()
+  {
+    $banners = array();
+    $total_banners = 0;
+
+    $q = "SELECT
+    b.*
+    FROM ".self::DBTABLE." as b
+    WHERE 1=1
+    ORDER BY b.acc_id ASC, b.sizegroup ASC, b.active DESC
+    ";
+
+    $qry = $this->db->squery($q);
+
+    if ($qry->rowCount() == 0) {
+      return $banners;
+    }
+
+    foreach ((array)$qry->fetchAll(\PDO::FETCH_ASSOC) as $b) {
+      $total_banners++;
+      if (!isset($banners['list'][$b['acc_id']]['author'])) {
+        $banners['list'][$b['acc_id']]['author'] = $this->getAuthor($b['acc_id']);
+      }
+      if (!isset($banners['list'][$b['acc_id']]['banner_active'])) {
+        $banners['list'][$b['acc_id']]['banner_active'] = 0;
+      }
+      if (!isset($banners['list'][$b['acc_id']]['banner_inactive'])) {
+        $banners['list'][$b['acc_id']]['banner_inactive'] = 0;
+      }
+
+      if ($b['active'] == '1') {
+        $banners['list'][$b['acc_id']]['banner_active'] +=1;
+      }else{
+        $banners['list'][$b['acc_id']]['banner_inactive'] +=1;
+      }
+
+      $b['stat'] = $this->getBannerStat( $b['ID'] );
+      $banners['list'][$b['acc_id']]['banner_nums'] +=1;
+
+      $banners['list'][$b['acc_id']]['banners'][] = $b;
+    }
+
+    $banners['total_banners'] = $total_banners;
+
+    return $banners;
+  }
+
+  public function getBannerStat( $banner_id, $arg = array() )
+  {
+    $stat = array(
+      'total' => array(
+        'all_click' => 0,
+        'all_show' => 0,
+        'unique_click' => 0,
+        'unique_show' => 0
+      ),
+      'month' => array(
+        'all_click' => 0,
+        'all_show' => 0,
+        'unique_click' => 0,
+        'unique_show' => 0
+      )
+    );
+
+    return $stat;
+  }
+
+  public function getAuthor( $id )
+  {
+    if($id == '') return false;
+		$q = "SELECT * FROM ".\PortalManager\Users::TABLE_NAME." WHERE `ID` = '$id'";
+
+		extract($this->db->q($q));
+
+		// Felhasználó adatok
+		$detailslist = array();
+
+		if ( !$data['ID'] ) {
+			return false;
+		}
+
+		$details = $this->db->query($q = "SELECT nev, ertek FROM ".\PortalManager\Users::TABLE_DETAILS_NAME." WHERE fiok_id = ".$data['ID'].";");
+
+		if ( $details->rowCount() != 0 ) {
+			foreach ($details->fetchAll(\PDO::FETCH_ASSOC) as $det) {
+				if ($det['nev'] == 'permissions' && $det['ertek'] != '') {
+					$det['ertek'] = json_decode($det['ertek'], \JSON_UNESCAPED_UNICODE);
+				}
+				$detailslist[$det['nev']] = $det['ertek'];
+			}
+		}
+
+		$data = array_merge($data, $detailslist);
+
+		return $data;
+  }
+
   public function getBannerURL( $banner )
   {
-    return $banner['target_url'];
+    return '/app/ad/'.$banner['ID'];
   }
 
   public function getRatio( $format )
@@ -163,10 +301,16 @@ class Banners implements InstallModules
     $query = $query->fetchAll(\PDO::FETCH_ASSOC);
 
     foreach ((array)$query as $b) {
+      $b['target_url'] = $this->clearURL( $b['target_url'] );
       $b['creative'] = IMGDOMAIN. $b['creative'];
       $banners[] = $b;
     }
     return $banners;
+  }
+
+  public function getBannerData( $id )
+  {
+    return $this->db->squery("SELECT * FROM ".self::DBTABLE." WHERE ID = :id;", array('id'=> $id))->fetch(\PDO::FETCH_ASSOC);
   }
 
   public function __destruct()
