@@ -141,6 +141,20 @@ banners.directive('fileModel', ['$parse', function ($parse) {
   }
 }]);
 
+banners.filter('searchbanners', function() {
+  return function(list,search) {
+    var newlist = {};
+    angular.forEach(list, function(e,i){
+      if( search.name == '' ||
+        (e.author.nev.search(new RegExp(search.name, "i")) !== -1 || e.author.email.search(new RegExp(search.name, "i")) !== -1)
+      ){
+        newlist[e.author.ID] = e;
+      }
+    });
+    return newlist;
+  }
+});
+
 banners.controller("Bannerek", ['$scope', '$http', '$mdToast', '$timeout', '$parse', 'fileUploadService', function($scope, $http, $mdToast, $timeout, $parse, fileUploadService)
 {
   $scope.allowProfilType = ['jpg', 'jpeg', 'png', 'gif'];
@@ -150,6 +164,9 @@ banners.controller("Bannerek", ['$scope', '$http', '$mdToast', '$timeout', '$par
     sizecorrect: true,
     type: null,
     typecorrect: true,
+    name: ''
+  };
+  $scope.filter = {
     name: ''
   };
 
@@ -171,6 +188,10 @@ banners.controller("Bannerek", ['$scope', '$http', '$mdToast', '$timeout', '$par
 
     });
 	}
+
+  $scope.searchBanners = function(v) {
+    console.log(v);
+  }
 
   $scope.serviceQuerySearch = function(query)
   {

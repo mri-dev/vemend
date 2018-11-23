@@ -90,10 +90,12 @@ class Banners implements InstallModules
   public function logShow( $banner )
   {
     $dategroup = date('Y-m-d');
+    $ip = $_SERVER['REMOTE_ADDR'];
 
-    $ch = $this->db->squery("SELECT ID, showed FROM ".self::DBLOG." WHERE banner_id = :id and dategroup = :date", array(
+    $ch = $this->db->squery("SELECT ID, showed FROM ".self::DBLOG." WHERE banner_id = :id and dategroup = :date and ip = :ip;", array(
       'id' => $banner['ID'],
-      'date' => $dategroup
+      'date' => $dategroup,
+      'ip' => $ip
     ));
 
     if ($ch->rowCount() != 0) {
@@ -112,6 +114,7 @@ class Banners implements InstallModules
         array(
           'banner_id' => $banner['ID'],
           'showed' => 1,
+          'ip' => $ip,
           'dategroup' => $dategroup
         )
       );
@@ -172,7 +175,10 @@ class Banners implements InstallModules
     foreach ((array)$qry->fetchAll(\PDO::FETCH_ASSOC) as $b) {
       $total_banners++;
       if (!isset($banners['list'][$b['acc_id']]['author'])) {
-        $banners['list'][$b['acc_id']]['author'] = $this->getAuthor($b['acc_id']);
+        $author = $this->getAuthor($b['acc_id']);
+        $banners['list'][$b['acc_id']]['author'] = $author;
+        $banners['list'][$b['acc_id']]['author_nev'] = $author['nev'];
+        $banners['list'][$b['acc_id']]['author_email'] = $author['email'];
       }
       if (!isset($banners['list'][$b['acc_id']]['banner_active'])) {
         $banners['list'][$b['acc_id']]['banner_active'] = 0;
@@ -200,18 +206,30 @@ class Banners implements InstallModules
 
   public function getBannerStat( $banner_id, $arg = array() )
   {
+    $current_month = date('Y-m');
+
+    $q = "SELECT
+    (SELECT sum(clicked) FROM ".self::DBCLICK." WHERE banner_id = :banner) as all_click,
+    (SELECT sum(showed) FROM ".self::DBLOG." WHERE banner_id = :banner) as all_show,
+    (SELECT sum(clicked) FROM ".self::DBCLICK." WHERE banner_id = :banner and dategroup LIKE :month) as month_click,
+    (SELECT sum(showed) FROM ".self::DBLOG." WHERE banner_id = :banner and dategroup LIKE :month) as month_show
+    ";
+
+    $qry = $this->db->squery($q, array('banner' => $banner_id, 'month' => $current_month.'%'));
+    $stats = $qry->fetch(\PDO::FETCH_ASSOC);
+
     $stat = array(
       'total' => array(
-        'all_click' => 0,
-        'all_show' => 0,
-        'unique_click' => 0,
-        'unique_show' => 0
+        'all_click' => (int)$stats['all_click'],
+        'all_show' => (int)$stats['all_show'],
+        'unique_click' => (int)$this->db->squery("SELECT count(ID) FROM ".self::DBCLICK." WHERE banner_id = :banner GROUP BY ip", array('banner' => $banner_id))->rowCount(),
+        'unique_show' => (int)$this->db->squery("SELECT count(ID) FROM ".self::DBLOG." WHERE banner_id = :banner GROUP BY ip", array('banner' => $banner_id))->rowCount()
       ),
       'month' => array(
-        'all_click' => 0,
-        'all_show' => 0,
-        'unique_click' => 0,
-        'unique_show' => 0
+        'all_click' => (int)$stats['month_click'],
+        'all_show' => (int)$stats['month_show'],
+        'unique_click' => (int)$this->db->squery("SELECT count(ID) FROM ".self::DBCLICK." WHERE banner_id = :banner and dategroup LIKE :month GROUP BY ip", array('banner' => $banner_id, 'month' => $current_month.'%'))->rowCount(),
+        'unique_show' => (int)$this->db->squery("SELECT count(ID) FROM ".self::DBLOG." WHERE banner_id = :banner and dategroup LIKE :month GROUP BY ip", array('banner' => $banner_id, 'month' => $current_month.'%'))->rowCount()
       )
     );
 

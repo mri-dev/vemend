@@ -4036,3 +4036,69 @@ input[type=file].lab-selector + label img {
 .gallery-modul .rnav{
   float: right;
 }
+.banner-modul .preview{
+  position: relative;
+}
+.banner-modul .preview img{
+  display: none;
+  position: absolute;
+  left: 0;
+  bottom: 100%;
+  z-index: 1;
+  box-shadow: 0 5px 25px -5px #000000;
+  max-width: 500px;
+}
+.banner-modul .preview:hover img{
+  display: block;
+}
+.banner-modul .banner .month,
+.banner-modul .banner .total{
+  font-size: 0.8em;
+  margin: 2px 0;
+}
+.banner-modul .banner .month span,
+.banner-modul .banner .total span{
+  margin: 0 4px;
+  color: #acacac;
+}
+.banner-modul .banner .comment{
+  margin: 0 0 5px 0;
+  font-size: 0.8em;
+  color: black;
+}
+.banner-modul .banner .url{
+  font-size: 0.8em;
+  color: #8c8c8c;
+}
+.banner-modul .banner .month span strong,
+.banner-modul .banner .total span strong,
+.banner-modul .banner .month span i,
+.banner-modul .banner .total span i{
+  color: black;
+}
+.banner-modul .par .active{
+  color: #4bc64b;
+}
+.banner-modul .par .inactive{
+  color: #f17575;
+}
+.banner-modul .banner-list{
+  display: none;
+}
+.banner-modul .banner-list.active{
+  display: block;
+}
+.banner-modul i[class*=fa-bars]{
+  cursor: pointer;
+}
+.banner-modul .author{
+  line-height: 1.4;
+}
+.banner-modul .author .name{
+  font-size: 1.1em;
+  margin: 0 0 5px 0;
+  color: #acacac;
+}
+.banner-modul .author .name strong{
+  color: orange;
+}
