@@ -4102,3 +4102,8 @@ input[type=file].lab-selector + label img {
 .banner-modul .author .name strong{
   color: orange;
 }
+.banner-modul input[type=file].lab-selector + label img{
+  max-height: initial;
+  max-width: 100%;
+  margin: 10px 0 0 0;
+}

@@ -119,6 +119,33 @@ banners.directive('fileModel', ['$parse', function ($parse) {
               scope.profilselected = true;
               scope.profilpreview = loadEvent.target.result;
             });
+
+            var img = new Image();
+            img.src = loadEvent.target.result;
+            img.onload = function(){
+              scope.$apply(function(){
+                scope.selectedprofilimg.width = img.width;
+                scope.selectedprofilimg.height = img.height;
+
+                if (img.width == img.height) {
+                  scope.selectedprofilimg.ratio = '1:1';
+                  scope.selectedprofilimg.sizegroup = '1P1';
+                  scope.create.sizegroup = '1P1';
+                } else if(img.width == (img.height * 2)){
+                  scope.selectedprofilimg.ratio = '2:1';
+                  scope.selectedprofilimg.sizegroup = '2P1';
+                  scope.create.sizegroup = '2P1';
+                } else if(img.width == (img.height * 5)){
+                  scope.selectedprofilimg.ratio = '10:2';
+                  scope.selectedprofilimg.sizegroup = 'BILLBOARD';
+                  scope.create.sizegroup = 'BILLBOARD';
+                } else {
+                  scope.selectedprofilimg.ratio = '';
+                  scope.selectedprofilimg.sizegroup = '';
+                  scope.create.sizegroup = '';
+                }
+              });
+            };
           }
           reader.readAsDataURL(scope.fileinput);
           scope.cansavenow = true;
@@ -127,7 +154,7 @@ banners.directive('fileModel', ['$parse', function ($parse) {
           scope.selectedprofilimg.typecorrect = false;
         }
 
-        if(scope.selectedprofilimg.size > 2024) {
+        if(scope.selectedprofilimg.size > 5120) {
           scope.selectedprofilimg.sizecorrect = false;
           scope.cansavenow = false;
         } else {
@@ -157,6 +184,7 @@ banners.filter('searchbanners', function() {
 
 banners.controller("Bannerek", ['$scope', '$http', '$mdToast', '$timeout', '$parse', 'fileUploadService', function($scope, $http, $mdToast, $timeout, $parse, fileUploadService)
 {
+  $scope.terms = [];
   $scope.allowProfilType = ['jpg', 'jpeg', 'png', 'gif'];
   $scope.selectedUploadingImages = [];
   $scope.selectedprofilimg = {
@@ -164,12 +192,20 @@ banners.controller("Bannerek", ['$scope', '$http', '$mdToast', '$timeout', '$par
     sizecorrect: true,
     type: null,
     typecorrect: true,
-    name: ''
+    name: '',
+    width: 0,
+    height: 0,
+    ratio: '',
+    sizegroup: ''
   };
   $scope.filter = {
     name: ''
   };
+  $scope.create = {
+    ID: 0
+  };
 
+  $scope.creating = false;
   $scope.imageediting = false;
   $scope.imageeditprogress = false;
   $scope.currentProfilkep = false;
@@ -184,13 +220,41 @@ banners.controller("Bannerek", ['$scope', '$http', '$mdToast', '$timeout', '$par
   $scope.tinymceOptions = {};
 
 	$scope.init = function(){
-    $scope.loadBanners(function() {
+    $scope.loadTerms(function() {
+      $scope.loadBanners(function() {
 
+      });
     });
 	}
 
   $scope.searchBanners = function(v) {
     console.log(v);
+  }
+
+  $scope.bannerAdder = function() {
+    $scope.creating = true;
+    $scope.create = {
+      ID: 0
+    };
+  }
+
+  $scope.pickBanner = function( id ) {
+    $http({
+      method: 'POST',
+      url: '/ajax/get',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: $.param({
+        type: "Banners",
+        key: 'getBanner',
+        id: id
+      })
+    }).success(function( r ){
+      if (r.error == 0) {
+        $scope.creating = true;
+        $scope.create = r.data;
+      }
+      console.log(r);
+    });
   }
 
   $scope.serviceQuerySearch = function(query)
@@ -243,6 +307,31 @@ banners.controller("Bannerek", ['$scope', '$http', '$mdToast', '$timeout', '$par
     }
 
     return false;
+  }
+
+  $scope.loadTerms = function( callback )
+  {
+    $http({
+      method: 'POST',
+      url: '/ajax/get',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: $.param({
+        type: "Banners",
+        key: 'Settings',
+        terms: ['sizegroups']
+      })
+    }).success(function( r ){
+      if (r.data) {
+        angular.forEach(r.data,function(e,i){
+          if (typeof $scope.terms[i] === 'undefined') {
+            $scope.terms[i] = e;
+          }
+        });
+      }
+			if (typeof callback !== 'undefined') {
+				callback();
+			}
+    });
   }
 
 	$scope.loadBanners = function( callback )

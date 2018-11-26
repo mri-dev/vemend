@@ -13,6 +13,11 @@ class Banners implements InstallModules
 
   private $db = null;
   public $settings = array();
+  public $sizegroups = array(
+    '1P1' => '1:1 arányú banner',
+    '2P1' => '2:1 arányú banner',
+    'BILLBOARD' => '10:2 arányú Billboard széles banner'
+  );
 
   function __construct( $arg = array() )
   {
@@ -329,6 +334,16 @@ class Banners implements InstallModules
   public function getBannerData( $id )
   {
     return $this->db->squery("SELECT * FROM ".self::DBTABLE." WHERE ID = :id;", array('id'=> $id))->fetch(\PDO::FETCH_ASSOC);
+  }
+
+  public function getBanner( $id )
+  {
+    $data = $this->getBannerData( $id );
+    $data['ID'] = (int)$data['ID'];
+    $data['acc_id'] = (int)$data['acc_id'];
+    $data['active'] = ($data['active'] == '1') ? true : false;
+
+    return $data;
   }
 
   public function __destruct()

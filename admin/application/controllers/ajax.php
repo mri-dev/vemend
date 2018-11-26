@@ -528,6 +528,18 @@ class ajax extends Controller{
 						case 'AdminList':
 							$re['data'] = $banners->getGroupedList();
 						break;
+						case 'Settings':
+							foreach ((array)$terms as $t) {
+								switch ($t) {
+									case 'sizegroups':
+										$re['data'][$t] = $banners->sizegroups;
+									break;
+								}
+							}
+						break;
+						case 'getBanner':
+							$re['data'] = $banners->getBanner( (int)$id );
+						break;
 					}
 
 					unset($gallery);
