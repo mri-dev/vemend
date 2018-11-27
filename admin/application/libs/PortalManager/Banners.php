@@ -331,6 +331,69 @@ class Banners implements InstallModules
     return $banners;
   }
 
+  public function removeBannerContent( $id )
+  {
+    $data = $this->getBannerData( $id );
+
+    $img = $data['content'];
+
+    if (file_exists($img)) {
+      if (unlink($img)) {
+        $this->db->update(
+          self::DBTABLE,
+          array(
+            'content' => NULL
+          ),
+          sprintf("ID = %d", $id)
+        );
+      }
+    }
+  }
+
+  function registerBannerContent( $bannerid, $filepath )
+  {
+    $this->db->update(
+      self::DBTABLE,
+      array(
+        'content' => $filepath
+      ),
+      sprintf("ID = %d", $bannerid)
+    );
+
+    return $bannerid;
+  }
+
+  public function saveBanner( $banner = array() )
+  {
+    $sizegroup = $banner['sizegroup'];
+    $acc_id = (int)$banner['acc_id'];
+    $comment = ($banner['comment'] == '') ? NULL : $banner['comment'];
+    $target_url = ($banner['target_url'] == '') ? NULL : $banner['target_url'];
+    $active = ($banner['active'] == 'true') ? 1 : 0;
+
+    if (isset($banner['ID']) && $banner['ID'] != '') {
+      // Szerkesztés
+      $this->db->update(
+        self::DBTABLE,
+        array(
+          'sizegroup' => $sizegroup,
+          'comment' => $comment,
+          'acc_id' => $acc_id,
+          'target_url' => $target_url,
+          'active' => $active
+        ),
+        sprintf("ID = %d", (int)$banner['ID'])
+      );
+      return (int)$banner['ID'];
+    }
+    else
+    {
+      // Létrehozás
+
+      return $id;
+    }
+  }
+
   public function getBannerData( $id )
   {
     return $this->db->squery("SELECT * FROM ".self::DBTABLE." WHERE ID = :id;", array('id'=> $id))->fetch(\PDO::FETCH_ASSOC);

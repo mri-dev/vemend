@@ -14,7 +14,7 @@ banners.config(function($mdDateLocaleProvider){
 });
 
 banners.service('fileUploadService', function($http, $q){
-  this.uploadFileToUrl = function (szallas_id, file, uploadUrl, params, callback) {
+  this.uploadFileToUrl = function (bannerid, file, uploadUrl, params, callback) {
       var fileFormData = new FormData();
       fileFormData.append('file', file);
       var deffered = $q.defer();
@@ -23,8 +23,8 @@ banners.service('fileUploadService', function($http, $q){
         method: 'POST',
         url: uploadUrl,
         params: {
-          type: 'SzallasProfilUpload',
-          id: szallas_id,
+          type: 'BannerUploader',
+          id: bannerid,
           params: params
         },
         data: fileFormData,
@@ -43,60 +43,6 @@ banners.filter('html', ['$sce', function($sce){
     return function(text) {
         return $sce.trustAsHtml(text);
     };
-}]);
-
-banners.directive('imageUploader', ['$parse', function ($parse) {
-  return {
-    link: function(scope, element, attributes) {
-      element.bind("change", function(changeEvent)
-      {
-        scope.selectedUploadingImages = [];
-        scope.uploadimages = [];
-
-        angular.forEach( changeEvent.target.files, function(file,index)
-        {
-          var ext = file.name.split('.').pop().toLowerCase();
-          var correct_ext = scope.allowProfilType.indexOf(ext) > -1;
-          var imageobj = {
-            name: file.name,
-            type: ext,
-            size: file.size/1024,
-            correct_size: false,
-            correct_extension: false,
-            preview: null,
-            uploaded: false
-          };
-
-          // Fájlméret ellenőrzése
-          if(imageobj.size > 2024) {
-            imageobj.correct_size = false;
-          } else {
-            imageobj.correct_size = true;
-          }
-
-          // Kiterjesztés ellenőrzése
-          if (correct_ext) {
-            if (imageobj.correct_size) {
-              var reader = new FileReader();
-              reader.onload = function(loadEvent) {
-                scope.$apply(function() {
-                  imageobj.correct_extension = true;
-                  imageobj.preview = loadEvent.target.result;
-                });
-              }
-              reader.readAsDataURL(file);
-              imageobj.correct_extension = true;
-            }
-          } else {
-            imageobj.correct_extension = false;
-          }
-
-          scope.uploadimages.push(file);
-          scope.selectedUploadingImages.push(imageobj);
-        });
-      });
-    }
-  }
 }]);
 
 banners.directive('fileModel', ['$parse', function ($parse) {
@@ -186,7 +132,6 @@ banners.controller("Bannerek", ['$scope', '$http', '$mdToast', '$timeout', '$par
 {
   $scope.terms = [];
   $scope.allowProfilType = ['jpg', 'jpeg', 'png', 'gif'];
-  $scope.selectedUploadingImages = [];
   $scope.selectedprofilimg = {
     size: 0,
     sizecorrect: true,
@@ -206,9 +151,8 @@ banners.controller("Bannerek", ['$scope', '$http', '$mdToast', '$timeout', '$par
   };
 
   $scope.creating = false;
-  $scope.imageediting = false;
-  $scope.imageeditprogress = false;
-  $scope.currentProfilkep = false;
+  $scope.savingbanner = false;
+  $scope.uploadingbanner= false;
   $scope.deletingImages = [];
   $scope.banners = [];
 
@@ -284,11 +228,11 @@ banners.controller("Bannerek", ['$scope', '$http', '$mdToast', '$timeout', '$par
     });
   }
 
-  $scope.uploadSzallasImage = function(szallas_id, callback)
+  $scope.uploadBannerImage = function(bannerid, callback)
   {
     var file = $scope.fileinput;
     var uploadUrl = "/ajax/data/", //Url 1of webservice/api/server
-    promise = fileUploadService.uploadFileToUrl(szallas_id, file, uploadUrl, false, function(re){
+    promise = fileUploadService.uploadFileToUrl(bannerid, file, uploadUrl, false, function(re){
       callback(re);
     });
   }
@@ -356,20 +300,92 @@ banners.controller("Bannerek", ['$scope', '$http', '$mdToast', '$timeout', '$par
     });
 	}
 
-  $scope.saveUploadedImageToSzallas = function( szallasid, imageobject, uploadreturn, profil, callback ) {
+  $scope.saveBanner = function() {
+    $scope.savingbanner = true;
     $http({
       method: 'POST',
       url: '/ajax/get',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       data: $.param({
-        type: "Szallasok",
-        key: 'registerUploadedImageToSzallas',
-        id: szallasid,
+        type: "Banners",
+        key: 'saveBanner',
+        data: $scope.create
+      })
+    }).success(function( r ){
+      if (r.error == 0) {
+        if ($scope.fileinput) {
+          $scope.uploadingbanner = true;
+          $scope.uploadBannerImage(r.data, function(re){
+            $scope.saveUploadedBanner(r.data, $scope.selectedprofilimg, re, function(save){
+              if (save.error == 0) {
+                $scope.loadBanners(function() {});
+                $scope.savingbanner = false;
+                $scope.uploadingbanner= false;
+                $scope.selectedprofilimg = {
+                  size: 0,
+                  sizecorrect: true,
+                  type: null,
+                  typecorrect: true,
+                  name: '',
+                  width: 0,
+                  height: 0,
+                  ratio: '',
+                  sizegroup: ''
+                };
+                $scope.fileinput = false;
+                $scope.create = {
+                  ID: 0
+                };
+                $scope.creating = false;
+                $scope.baseMsg.type = 'success';
+                $scope.baseMsg.msg = r.msg;
+                $timeout(function(){
+                  $scope.baseMsg.msg = '';
+                }, 5000);
+              }
+            });
+          });
+        } else {
+          $scope.loadBanners(function() {});
+          $scope.savingbanner = false;
+        }
+      }
+    });
+  }
+
+  $scope.removeBannerContent  = function(id) {
+    $scope.savingbanner = true;
+    $http({
+      method: 'POST',
+      url: '/ajax/get',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: $.param({
+        type: "Banners",
+        key: 'removeContent',
+        id: id
+      })
+    }).success(function( r ){
+      if (r.error == 0) {
+        $scope.savingbanner = false;
+        $scope.pickBanner( id );
+      }
+    });
+  }
+
+  $scope.saveUploadedBanner = function( bannerid, imageobject, uploadreturn, callback ) {
+    $http({
+      method: 'POST',
+      url: '/ajax/get',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      data: $.param({
+        type: "Banners",
+        key: 'registerUploadedBanner',
+        id: bannerid,
+        imageobject: imageobject,
         origin_name: imageobject.name,
         size: imageobject.size,
         ext: imageobject.type,
-        filepath: uploadreturn.uploaded_path,
-        profil: profil
+        filepath: uploadreturn.uploaded_path
       })
     }).success(function( r ){
         callback(r);

@@ -3,6 +3,12 @@
     <div class="con">
       <h2 ng-show="!create.ID">Új banner rögzítése</h2>
       <h2 ng-show="create.ID">Banner szerkesztése</h2>
+      <div class="alert alert-warning" ng-show="savingbanner">
+        Banner adatainak mentése folyamatban <i class="fa fa-spin fa-spinner"></i>
+      </div>
+      <div class="alert alert-warning" ng-show="uploadingbanner">
+        Banner anyagának feltöltése folyamatban <i class="fa fa-spin fa-spinner"></i>
+      </div>
       <div class="row-neg">
         <div class="row">
           <div class="col-md-2">
@@ -35,6 +41,9 @@
             <label for="banner">Banner anyag</label>
             <div class="uploaded-banner" ng-show="create.content">
               <img src="{{create.content}}" alt="">
+              <div class="">
+                <a href="javascript:void(0);" ng-click="removeBannerContent(create.ID)"><i class="fa fa-times-circle"></i> Banner anyag törlése</a>
+              </div>
             </div>
             <div class="uploader" ng-hide="create.content">
               <input type="file" class="lab-selector" id="banner" file-model="banner">
@@ -81,10 +90,10 @@
               A banner képaránya nem megfelelő! Nincs megfelelő formátum.
             </div>
             <div class="right" ng-show="create.sizegroup && create.acc_id && (!create.ID && profilpreview && selectedprofilimg.ratio)">
-              <button type="button" class="btn btn-success">Banner feltöltése <i class="fa fa-upload"></i></button>
+              <button type="button" class="btn btn-success" ng-click="saveBanner()">Banner feltöltése <i class="fa fa-upload"></i></button>
             </div>
             <div class="right" ng-show="create.sizegroup && create.acc_id && (create.ID)">
-              <button type="button" class="btn btn-success">Banner változásainak mentése <i class="fa fa-save"></i></button>
+              <button type="button" class="btn btn-success" ng-click="saveBanner()">Banner változásainak mentése <i class="fa fa-save"></i></button>
             </div>
           </div>
         </div>
@@ -149,7 +158,7 @@
           </div>
           <div class="banner row markarow" ng-repeat="banner in data.banners">
             <div class="col-md-1 center">
-              {{banner.ID}} <a href="{{banner.content}}" class="preview" target="_blank">Megtekint <img src="{{banner.content}}" alt=""></a>
+              <a href="{{banner.content}}" ng-show="banner.content" class="preview" target="_blank">Megtekint <img src="{{banner.content}}" alt=""></a>
             </div>
             <div class="col-md-1 center">
               {{banner.sizegroup}}
