@@ -32,13 +32,33 @@ class Users
 		'adminuser' => 'Admin felhasználó'
 	);
 	public $user_permissions = array(
-		'webshop' => 'Webáruház használata'
+		'users' => 'Felhasználók kezelése',
+		'belsouzenetek' => 'Üzenetek kezelése',
+		'menu' => 'Menük',
+		'oldalak' => 'Oldalak',
+		'emails' => 'Email sablonok',
+		'galeria' => 'Galéria',
+
+		'cikkek' => 'Cikkek',
+		'feliratok' => 'Ajánló feliratok',
+		'popup' => 'Pop UP',
+		'slideshow' => 'Slideshow',
+		'redirects' => 'Átirányítások',
+
+		'webshop' => 'Webáruház használata',
+		'kuponok' => 'Webáruház - kuponok',
+		'arcsoportok' => 'Árcsoportok',
+
+		'etlap' => 'Étlapok',
+		'bannerek' => 'Bannerek',
+		'szallasok' => 'Szállások',
+		'programok' => 'Programok, események',
 	);
 
 	public $user_group_permissions = array(
 		'user' => array(),
-		'admin' => array(),
-		'adminuser' => array('webshop')
+		'admin' => array('users','belsouzenetek','menu', 'oldalak', 'emails', 'galeria','cikkek','feliratok','popup','slideshow','redirects','webshop','kuponok','arcsoportok','etlap','bannerek','szallasok','programok'),
+		'adminuser' => array('webshop','kuponok','szallasok')
 	);
 
 	public 	$user 		= false;

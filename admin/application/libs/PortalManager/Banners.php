@@ -179,6 +179,15 @@ class Banners implements InstallModules
 
     foreach ((array)$qry->fetchAll(\PDO::FETCH_ASSOC) as $b) {
       $total_banners++;
+
+      if (!isset($banners['list'][$b['acc_id']]['bannersizes'])) {
+        $banners['list'][$b['acc_id']]['bannersizes'] = array();
+      }
+
+      if (!in_array($b['sizegroup'], $banners['list'][$b['acc_id']]['bannersizes'] )) {
+        $banners['list'][$b['acc_id']]['bannersizes'][] = $b['sizegroup'];
+      }
+
       if (!isset($banners['list'][$b['acc_id']]['author'])) {
         $author = $this->getAuthor($b['acc_id']);
         $banners['list'][$b['acc_id']]['author'] = $author;
@@ -203,6 +212,7 @@ class Banners implements InstallModules
 
       $banners['list'][$b['acc_id']]['banners'][] = $b;
     }
+
 
     $banners['total_banners'] = $total_banners;
 
@@ -371,7 +381,7 @@ class Banners implements InstallModules
     $target_url = ($banner['target_url'] == '') ? NULL : $banner['target_url'];
     $active = ($banner['active'] == 'true') ? 1 : 0;
 
-    if (isset($banner['ID']) && $banner['ID'] != '') {
+    if (isset($banner['ID']) && $banner['ID'] != '' && $banner['ID'] != '0') {
       // Szerkesztés
       $this->db->update(
         self::DBTABLE,
@@ -389,7 +399,17 @@ class Banners implements InstallModules
     else
     {
       // Létrehozás
-
+      $this->db->insert(
+        self::DBTABLE,
+        array(
+          'sizegroup' => $sizegroup,
+          'comment' => $comment,
+          'acc_id' => $acc_id,
+          'target_url' => $target_url,
+          'active' => $active
+        )
+      );
+      $id = (int)$this->db->lastInsertId();
       return $id;
     }
   }

@@ -3106,6 +3106,26 @@ class AdminUser
 		}
 	}
 
+	public function hasPermission($user_perm_arr = array(), $required_permissons = array() )
+	{
+		$perm = false;
+		$has_perm = array();
+
+
+		foreach ($required_permissons as $p) {
+			if (in_array($p, (array)$user_perm_arr)) {
+				$has_perm[] = $p;
+				unset($required_permissons[array_search($p, $required_permissons)]);
+			}
+		}
+
+		if (empty($required_permissons)) {
+			$perm = true;
+		}
+		
+		return $perm;
+	}
+
 	public function __destruct()
 	{
 	 	$this->db = null;

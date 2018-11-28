@@ -109,7 +109,13 @@
   <div class="table-filter">
     <div class="row-neg">
       <div class="row">
-        <div class="col-md-9"></div>
+        <div class="col-md-6"></div>
+        <div class="col-md-3 center">
+          <div class="input-group">
+            <span class="input-group-addon">Formátum:</span>
+            <select ng-options="item for item in ['','1P1', '2P1', 'BILLBOARD']" ng-model="filter.size" class="form-control" ></select>
+          </div>
+        </div>
         <div class="col-md-3 right">
           <input type="text" ng-model="filter.name" class="form-control" placeholder="Gyors keresés...">
         </div>
@@ -122,7 +128,7 @@
         <div class="col-md-4 center">Bannerek</div>
         <div class="col-md-1 center"></div>
     </div>
-    <div class="" ng-repeat="(authorid, data) in banners | searchbanners: filter">
+    <div class="" ng-repeat="(authorid, data) in banners | searchbanners: filter" ng-hide="(filter.size!='' && data.bannersizes.indexOf(filter.size) === -1 )">
       <div class="row deep markarow" >
         <div class="col-md-7">
           <div class="author">
@@ -156,7 +162,7 @@
               <div class="col-md-1 center">Aktiv</div>
               <div class="col-md-1 center"></div>
           </div>
-          <div class="banner row markarow" ng-repeat="banner in data.banners">
+          <div class="banner row markarow" ng-repeat="banner in data.banners | filter: {sizegroup: filter.size}">
             <div class="col-md-1 center">
               <a href="{{banner.content}}" ng-show="banner.content" class="preview" target="_blank">Megtekint <img src="{{banner.content}}" alt=""></a>
             </div>

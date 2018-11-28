@@ -8,12 +8,7 @@ class galeria extends Controller{
 			parent::__construct();
 			parent::$pageTitle = 'Galéria / Adminisztráció';
 
-      $this->Admin = new Admin( false, array( 'db' => $this->db, 'view' => $this->view ) );
-
-      if ( $this->view->adm->user['user_group'] != 'admin' )
-      {
-        $perm = $this->User->hasPermission($this->view->adm->user, array('adminuser'), 'X', true);
-      }
+      $perm = $this->User->hasPermission($this->view->adm->user, array('admin'), 'galeria', true);
 
   			// SEO Információk
 			$SEO = null;

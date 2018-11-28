@@ -12,6 +12,8 @@ class menu extends Controller{
 			$this->view->adm = $this->AdminUser;
 			$this->view->adm->logged = $this->AdminUser->isLogged();
 
+			$perm = $this->User->hasPermission($this->view->adm->user, array('admin'), 'menu', true);
+
 			if(Post::on('filterList')){
 				$filtered = false;
 

@@ -180,29 +180,42 @@
                 <li class="sub <?=($this->gets[0] == 'megrendelesek')?'on':''?>"><a href="/megrendelesek" title="Megrendelések"><span class="ni">2</span>Megrendelések</a></li>
                 <li class="sub <?=($this->gets[0] == 'markak')?'on':''?>"><a href="/markak" title="Márkák"><span class="ni">7</span>Márkák</a></li>
               <?php endif; ?>
-
               <?php endif; ?>
 
               <?php if ( $this->adm->user['user_group'] == 'admin'): ?>
-              <li class="<?=($this->gets[0] == 'felhasznalok')?'on':''?>"><a href="/felhasznalok" title="Felhasználók"><span class="ni">2</span><i class="fa fa-group"></i> Felhasználók</a></li>
-              <li class="<?=($this->gets[0] == 'uzenetek')?'on':''?>"><a href="/uzenetek" title="Üzenetek"><span class="ni">8</span><i class="fa fa-envelope-o"></i> Üzenetek</a></li>
-              <li class="<?=($this->gets[0] == 'menu')?'on':''?>"><a href="/menu" title="Menü"><span class="ni">4</span><i class="fa fa-ellipsis-h"></i> Menü</a></li>
-              <li class="<?=($this->gets[0] == 'oldalak')?'on':''?>"><a href="/oldalak" title="Oldalak"><span class="ni">5</span><i class="fa fa-file-o"></i> Oldalak</a></li>
-              <li class="<?=($this->gets[0] == 'emails')?'on':''?>"><a href="/emails" title="Email sablonok"><span class="ni">8</span><i class="fa fa-envelope"></i> Email sablonok</a></li>
-              <li class="<?=($this->gets[0] == 'galeria')?'on':''?>"><a href="/galeria" title="Galériák"><span class="ni">8</span><i class="fa fa-picture-o"></i>Galéria</a></li>
+                <?php if ($this->adm->hasPermission($this->adm->user['permissions'], array('users'))): ?>
+                  <li class="<?=($this->gets[0] == 'felhasznalok')?'on':''?>"><a href="/felhasznalok" title="Felhasználók"><span class="ni">2</span><i class="fa fa-group"></i> Felhasználók</a></li>
+                <?php endif; ?>
+                <?php if ($this->adm->hasPermission($this->adm->user['permissions'], array('belsouzenetek'))): ?>
+                  <li class="<?=($this->gets[0] == 'uzenetek')?'on':''?>"><a href="/uzenetek" title="Üzenetek"><span class="ni">8</span><i class="fa fa-envelope-o"></i> Üzenetek</a></li>
+                <?php endif; ?>
+                <?php if ($this->adm->hasPermission($this->adm->user['permissions'], array('menu'))): ?>
+                  <li class="<?=($this->gets[0] == 'menu')?'on':''?>"><a href="/menu" title="Menü"><span class="ni">4</span><i class="fa fa-ellipsis-h"></i> Menü</a></li>
+                <?php endif; ?>
+                <?php if ($this->adm->hasPermission($this->adm->user['permissions'], array('oldalak'))): ?>
+                  <li class="<?=($this->gets[0] == 'oldalak')?'on':''?>"><a href="/oldalak" title="Oldalak"><span class="ni">5</span><i class="fa fa-file-o"></i> Oldalak</a></li>
+                <?php endif; ?>
+                <?php if ($this->adm->hasPermission($this->adm->user['permissions'], array('emails'))): ?>
+                  <li class="<?=($this->gets[0] == 'emails')?'on':''?>"><a href="/emails" title="Email sablonok"><span class="ni">8</span><i class="fa fa-envelope"></i> Email sablonok</a></li>
+                <?php endif; ?>
+                <?php if ($this->adm->hasPermission($this->adm->user['permissions'], array('galeria'))): ?>
+                    <li class="<?=($this->gets[0] == 'galeria')?'on':''?>"><a href="/galeria" title="Galériák"><span class="ni">8</span><i class="fa fa-picture-o"></i>Galéria</a></li>
+                <?php endif; ?>            
               <?php endif; ?>
 
               <!-- MODULS-->
               <?php if ( !empty($this->modules) ): ?>
               <li class="div"></li>
               <?php foreach ($this->modules as $module): ?>
-                <?php if (empty($module['jogkor']) || in_array($this->adm->user['user_group'], explode(',',$module['jogkor']))): ?>
+                <?php if (empty($module['jogkor']) || $this->adm->hasPermission($this->adm->user['permissions'], explode(',',$module['jogkor']))): ?>
                   <li class="<?=($this->gets[0] == $module['menu_slug'])?'on':''?>"><a href="/<?=$module['menu_slug']?>" title="<?=$module['menu_title']?>"><span class="ni"><?=$module['ID']?></span><i class="fa fa-<?=$module['faico']?>"></i> <?=$module['menu_title']?></a></li>
                 <?php endif; ?>
               <?php endforeach; ?>
               <?php endif; ?>
               <!-- End of MODULS-->
-              <li class="<?=($this->gets[0] == 'beallitasok')?'on':''?>"><a href="/beallitasok" title="Beállítások"><span class="ni">8</span><i class="fa fa-gear"></i> Beállítások</a></li>
+              <?php if ( $this->adm->user['user_group'] == 'admin' ): ?>
+                <li class="<?=($this->gets[0] == 'beallitasok')?'on':''?>"><a href="/beallitasok" title="Beállítások"><span class="ni">8</span><i class="fa fa-gear"></i> Beállítások</a></li>
+              <?php endif; ?>
         	</ul>
         </div>
     </div>

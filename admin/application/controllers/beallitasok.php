@@ -1,22 +1,22 @@
-<? 
+<?
 use PortalManager\Admin;
 use PortalManager\Portal;
 
 class beallitasok extends Controller {
-		function __construct(){	
+		function __construct(){
 			parent::__construct();
 			parent::$pageTitle = 'Beállítások / Adminisztráció';
-						
+
 			$this->view->adm = $this->AdminUser;
 			$this->view->adm->logged = $this->AdminUser->isLogged();
-			
+
 			// Szállítási módok
 			$this->out( 'szallitas', $this->AdminUser->getSzallitasiModok() );
 			// Fizetési módok
 			$this->out( 'fizetes', $this->AdminUser->getFizetesiModok() );
 			// Megrendelés állapotok
 			$this->out( 'orderstatus', $this->AdminUser->getMegrendelesAllapotok() );
-			
+
 			// Load Admin
 			$admin_id = false;
 			if ($this->view->gets[1] == 'admin_torles' || $this->view->gets[1] == 'admin_szerkesztes') {
@@ -24,6 +24,12 @@ class beallitasok extends Controller {
 			}
 
 			$admin = new Admin($admin_id, array( 'db' => $this->db ));
+			
+			if ( $this->view->adm->user['user_group'] != 'admin' )
+      {
+        $perm = $this->User->hasPermission($this->view->adm->user, array('adminuser'), 'X', true);
+      }
+
 			$admins = $admin->getAdminList();
 			$this->out( 'admins', $admins );
 			$this->out( 'admin', $admin );
@@ -38,7 +44,7 @@ class beallitasok extends Controller {
 
 			if ( ( Post::on('addAdmin') || Post::on('saveAdmin') || Post::on('delAdmin') ) && $this->AdminUser->admin_jog != \PortalManager\Admin::SUPER_ADMIN_PRIV_INDEX ) {
 				$this->view->err			= true;
-				$this->view->bmsg['admin'] 	= Helper::makeAlertMsg('pError', 'Nincs jogosultsága a művelet végrehajtására! Csak <strong>Szuper Adminisztrátor</strong> joggal rendelkező fiókkal módosíthatja a beállításokat!'); 
+				$this->view->bmsg['admin'] 	= Helper::makeAlertMsg('pError', 'Nincs jogosultsága a művelet végrehajtására! Csak <strong>Szuper Adminisztrátor</strong> joggal rendelkező fiókkal módosíthatja a beállításokat!');
 			} else {
 				// Admin létrehozása
 				if (Post::on('addAdmin')) {
@@ -47,7 +53,7 @@ class beallitasok extends Controller {
 						Helper::reload();
 					} catch ( Exception $e ) {
 						$this->view->err			= true;
-						$this->view->bmsg['admin'] 	= Helper::makeAlertMsg('pError', $e->getMessage()); 
+						$this->view->bmsg['admin'] 	= Helper::makeAlertMsg('pError', $e->getMessage());
 					}
 				}
 
@@ -58,7 +64,7 @@ class beallitasok extends Controller {
 						Helper::reload();
 					} catch ( Exception $e ) {
 						$this->view->err			= true;
-						$this->view->bmsg['admin'] 	= Helper::makeAlertMsg('pError', $e->getMessage()); 
+						$this->view->bmsg['admin'] 	= Helper::makeAlertMsg('pError', $e->getMessage());
 					}
 				}
 
@@ -69,7 +75,7 @@ class beallitasok extends Controller {
 						Helper::reload( '/beallitasok/#admins' );
 					} catch ( Exception $e ) {
 						$this->view->err			= true;
-						$this->view->bmsg['admin'] 	= Helper::makeAlertMsg('pError', $e->getMessage()); 
+						$this->view->bmsg['admin'] 	= Helper::makeAlertMsg('pError', $e->getMessage());
 					}
 				}
 			}
@@ -77,16 +83,16 @@ class beallitasok extends Controller {
 			// Változók beállítása
 			if ( ( Post::on('saveBasics') ) && $this->AdminUser->admin_jog != \PortalManager\Admin::SUPER_ADMIN_PRIV_INDEX ) {
 				$this->view->err			= true;
-				$this->view->bmsg['basics'] = Helper::makeAlertMsg('pError', 'Nincs jogosultsága a művelet végrehajtására! Csak <strong>Szuper Adminisztrátor</strong> joggal rendelkező fiókkal módosíthatja a beállításokat!'); 
+				$this->view->bmsg['basics'] = Helper::makeAlertMsg('pError', 'Nincs jogosultsága a művelet végrehajtására! Csak <strong>Szuper Adminisztrátor</strong> joggal rendelkező fiókkal módosíthatja a beállításokat!');
 			} else {
 				if (Post::on('saveBasics')) {
 					unset($_POST['saveBasics']);
 					$admin->saveSettings($_POST);
-					Helper::reload();					
-					
+					Helper::reload();
+
 				}
 			}
-			
+
 
 			// SEO Információk
 			$SEO = null;
@@ -94,19 +100,19 @@ class beallitasok extends Controller {
 			$SEO .= $this->view->addMeta('description','');
 			$SEO .= $this->view->addMeta('keywords','');
 			$SEO .= $this->view->addMeta('revisit-after','3 days');
-			
+
 			// FB info
 			$SEO .= $this->view->addOG('type','website');
 			$SEO .= $this->view->addOG('url','');
 			$SEO .= $this->view->addOG('image','');
 			$SEO .= $this->view->addOG('site_name','');
-			
+
 			$this->view->SEOSERVICE = $SEO;
 		}
-		
+
 		public function clearimages()
 		{
-			$portal = new Portal( array( 'db' => $this->db ) );	
+			$portal = new Portal( array( 'db' => $this->db ) );
 
 			// Nem használt termék képek
 			$this->out( 'unused_images', $portal->checkUnusedProductImage() );
@@ -119,11 +125,11 @@ class beallitasok extends Controller {
 				foreach ( $_POST['del_img'] as $img ) {
 					unlink( $img );
 				}
-				Helper::reload( '/' );			
+				Helper::reload( '/' );
 			}
 
 		}
-		
+
 		function __destruct(){
 			// RENDER OUTPUT
 				parent::bodyHead();					# HEADER

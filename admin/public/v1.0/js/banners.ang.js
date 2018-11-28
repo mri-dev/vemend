@@ -144,7 +144,8 @@ banners.controller("Bannerek", ['$scope', '$http', '$mdToast', '$timeout', '$par
     sizegroup: ''
   };
   $scope.filter = {
-    name: ''
+    name: '',
+    size: ''
   };
   $scope.create = {
     ID: 0
@@ -171,15 +172,23 @@ banners.controller("Bannerek", ['$scope', '$http', '$mdToast', '$timeout', '$par
     });
 	}
 
-  $scope.searchBanners = function(v) {
-    console.log(v);
-  }
-
   $scope.bannerAdder = function() {
     $scope.creating = true;
     $scope.create = {
       ID: 0
     };
+    $scope.selectedprofilimg = {
+      size: 0,
+      sizecorrect: true,
+      type: null,
+      typecorrect: true,
+      name: '',
+      width: 0,
+      height: 0,
+      ratio: '',
+      sizegroup: ''
+    };
+    $scope.fileinput;
   }
 
   $scope.pickBanner = function( id ) {
@@ -197,7 +206,6 @@ banners.controller("Bannerek", ['$scope', '$http', '$mdToast', '$timeout', '$par
         $scope.creating = true;
         $scope.create = r.data;
       }
-      console.log(r);
     });
   }
 
