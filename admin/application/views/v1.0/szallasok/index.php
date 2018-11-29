@@ -1,4 +1,4 @@
-<div ng-app="Szallasok" ng-controller="Szallas" ng-init="init(<?=($this->adm->user['user_group'] != 'admin')?$this->adm->user['ID']:'0'?>)">
+<div ng-app="Szallasok" ng-controller="Szallas" ng-init="init(<?=($this->adm->user['user_group'] != 'admin')?$this->adm->user['ID']:'0'?>, '<?=http_build_query($_GET)?>')">
 	<div style="float:right;">
 		<a href="javascript:void(0);" ng-click="creatingSwitch()" ng-hide="creating && !editing" class="btn btn-info"><i class="fa fa-home"></i> új szállás rögzítése</a>
 	</div>
@@ -479,12 +479,17 @@
 		          <tr>
 		            <th ng-show="!creating" width="80" class="center">Kép</th>
 		            <th>Szállás</th>
+								<?php if ($this->adm->user['user_group'] == 'admin'): ?>
+								<th>
+									Felhasználó
+								</th>
+								<?php endif; ?>
 		            <th ng-show="!creating"  width="80" class="center">Aktív</th>
 		            <th ng-show="!creating||(creating && editing)" width="80" class="center"></th>
 		          </tr>
 		        </thead>
 						<tbody>
-							<tr ng-repeat="szallas in szallasok | filter:{title: filter.name}" ng-class="(create.id==szallas.ID)?'selected':''">
+							<tr ng-repeat="szallas in szallasok | szallassearcher: filter" ng-class="(create.id==szallas.ID)?'selected':''">
 								<td ng-show="!creating" >
 									<div class="image">
 										<img ng-src="{{szallas.profilkep}}" alt="{{szallas.title}}">
@@ -502,12 +507,39 @@
 										<span class="phone"><i class="fa fa-phone"></i> {{szallas.contact_phone}}</span>
 									</div>
 								</td>
+								<?php if ($this->adm->user['user_group'] == 'admin'): ?>
+								<td>
+									<div class="author-data">
+										<div class=""><strong><a href="#">{{szallas.author_data.nev}}</a></strong> (#{{szallas.author_data.ID}})</div>
+										<div class="">
+											<span class="email"><i class="fa fa-envelope-o"></i> {{szallas.author_data.email}}</span>
+											<span class="phone"><i class="fa fa-phone"></i> {{szallas.author_data.szallitas_phone}}</span>
+										</div>
+									</div>
+								</td>
+								<?php endif; ?>
 								<td ng-show="!creating"  class="center">
 									<span ng-show="(szallas.aktiv=='1')"><i class="fa fa-check"></i></span>
 									<span ng-hide="(szallas.aktiv=='1')"><i class="fa fa-times"></i></span>
 								</td>
 								<td ng-show="!creating||(creating && editing)" class="actions center">
 									<i class="fa fa-pencil" ng-click="pickSzallas(szallas)" title="Szerkesztés"></i>
+								</td>
+							</tr>
+							<tr ng-show="(loadinglist)">
+								<td colspan="10" class="center">
+									<div class="loader">
+										<i class="fa fa-spin fa-spinner"></i> <br>
+										Szállások betöltése folyamatban...
+									</div>
+								</td>
+							</tr>
+							<tr ng-show="(szallasok.length==0 && !loadinglist && listloaded)">
+								<td colspan="10" class="center">
+									<div class="no-data">
+										<i class="fa fa-times-circle"></i> <br>
+										Nincs találat.
+									</div>
 								</td>
 							</tr>
 						</tbody>

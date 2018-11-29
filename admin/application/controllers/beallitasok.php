@@ -10,6 +10,8 @@ class beallitasok extends Controller {
 			$this->view->adm = $this->AdminUser;
 			$this->view->adm->logged = $this->AdminUser->isLogged();
 
+			$perm = $this->User->hasPermission($this->view->adm->user, array('admin'), 'adminsettings', true);
+
 			// Szállítási módok
 			$this->out( 'szallitas', $this->AdminUser->getSzallitasiModok() );
 			// Fizetési módok
@@ -24,7 +26,7 @@ class beallitasok extends Controller {
 			}
 
 			$admin = new Admin($admin_id, array( 'db' => $this->db ));
-			
+
 			if ( $this->view->adm->user['user_group'] != 'admin' )
       {
         $perm = $this->User->hasPermission($this->view->adm->user, array('adminuser'), 'X', true);

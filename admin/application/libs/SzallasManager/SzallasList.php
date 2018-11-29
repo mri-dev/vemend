@@ -56,6 +56,11 @@ class SzallasList extends SzallasFramework
 
     $q .= " WHERE 1=1 ";
 
+    if (isset($arg['databyuser'])) {
+      $q .= " and sz.author = :author";
+      $darg['author'] = $arg['databyuser'];
+    }
+
     if (!$admin) {
       $q .= " and (SELECT count(szaar.ID) FROM `".parent::DBSZOBAK."` as szb LEFT OUTER JOIN ".parent::DBSZOBAAR." as szaar ON szaar.szoba_id = szb.ID WHERE szb.elerheto = 1 and szb.szallas_id = sz.ID) != 0 ";
     }

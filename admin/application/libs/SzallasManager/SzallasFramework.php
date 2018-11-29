@@ -392,7 +392,7 @@ class SzallasFramework
     }
   }
 
-  public function saveSzallas( $szallas )
+  public function saveSzallas( $author, $szallas )
   {
     if ((int)$szallas['ID'] != 0)
     {
@@ -433,6 +433,7 @@ class SzallasFramework
     {
       // LÉTREHOZÁS
       $insert = array(
+        'author' => $author,
         'title' => $szallas['title'],
         'leiras' => $szallas['leiras'],
         'cim' => $szallas['cim'],
@@ -449,11 +450,12 @@ class SzallasFramework
         'ifa' => (float)$szallas['ifa'],
         'kisallat_dij' => (float)$szallas['kisallat_dijkisallat_dij'],
         'kisallat' => ( ($szallas['kisallat'] == 'true') ? 1 : 0 ),
+        'aktiv' => ( ($szallas['aktiv'] == 'true') ? 1 : 0 ),
       );
 
       $this->db->insert(
-        parent::DBSZALLASOK,
-        $update
+        self::DBSZALLASOK,
+        $insert
       );
 
       return (int) $this->db->lastInsertId();

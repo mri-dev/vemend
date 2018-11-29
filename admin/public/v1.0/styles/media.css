@@ -1783,6 +1783,17 @@ table.termekfrissites > tbody > tr.not-in-product > td{
 	text-align: right;
 }
 
+.no-data{
+  font-size: 1.2em;
+  color: #8c8c8c;
+  line-height: 1.5;
+  padding: 25px;
+}
+.no-data i{
+  font-size: 48px;
+  color: #eaeaea;
+}
+
 .questions .ele-item .del {
 	float: right;
 }
@@ -1799,7 +1810,7 @@ table.termekfrissites > tbody > tr.not-in-product > td{
 .loader {
 	margin: 15px;
 	padding: 10px;
-	color: green;
+	color: rgb(144, 199, 90);
 	font-size:18px;
 }
 

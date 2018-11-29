@@ -172,7 +172,7 @@
    		<div class="menu">
         	<ul>
             	<li class="<?=($this->gets[0] == 'home')?'on':''?>"><a href="/" title="Dashboard"><span class="ni">1</span><i class="fa fa-life-saver"></i> Dashboard</a></li>
-              <?php if ( $this->adm->user['user_group'] == 'admin' || $this->USERS->hasPermission($this->adm->user, array('adminuser'), 'webshop')): ?>
+              <?php if ( $this->USERS->hasPermission($this->adm->user, array('adminuser','admin'), 'webshop')): ?>
               <li class="<?=($this->gets[0] == 'termekek')?'on':''?>"><a href="/termekek" title="Webshop"><span class="ni">2</span><i class="fa fa-cubes"></i> Webshop</a></li>
               <?php if (in_array($this->gets[0], array('termekek', 'kategoriak', 'megrendelesek','markak'))): ?>
                 <li class="sub <?=($this->gets[0] == 'kategoriak')?'on':''?>"><a href="/kategoriak" title="Kategóriák"><span class="ni">6</span>Kategóriák</a></li>
@@ -200,7 +200,7 @@
                 <?php endif; ?>
                 <?php if ($this->adm->hasPermission($this->adm->user['permissions'], array('galeria'))): ?>
                     <li class="<?=($this->gets[0] == 'galeria')?'on':''?>"><a href="/galeria" title="Galériák"><span class="ni">8</span><i class="fa fa-picture-o"></i>Galéria</a></li>
-                <?php endif; ?>            
+                <?php endif; ?>
               <?php endif; ?>
 
               <!-- MODULS-->
@@ -213,7 +213,7 @@
               <?php endforeach; ?>
               <?php endif; ?>
               <!-- End of MODULS-->
-              <?php if ( $this->adm->user['user_group'] == 'admin' ): ?>
+              <?php if ($this->adm->hasPermission($this->adm->user['permissions'], array('adminsettings'))): ?>
                 <li class="<?=($this->gets[0] == 'beallitasok')?'on':''?>"><a href="/beallitasok" title="Beállítások"><span class="ni">8</span><i class="fa fa-gear"></i> Beállítások</a></li>
               <?php endif; ?>
         	</ul>

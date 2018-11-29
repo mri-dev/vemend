@@ -141,6 +141,49 @@ szallasok.directive('fileModel', ['$parse', function ($parse) {
   }
 }]);
 
+szallasok.filter('szallassearcher', function() {
+  return function(list,search) {
+    var newlist = {};
+    var customfilter = false;
+
+    if (search.name.search(new RegExp('user:', "i")) !== -1) {
+      customfilter = true;
+
+      angular.forEach(list, function(e,i){
+        if(search.name == ''){
+          newlist[i] = e;
+        } else {
+          var grab = search.name.match(/user:(\d+)/);
+          if (grab && grab[1] != '' && grab[1] > 0 ) {
+            if(e.author_data.ID == grab[1]){
+              newlist[i] = e;
+            }
+          }
+        }
+      });
+
+
+    } else {
+      customfilter = false;
+      angular.forEach(list, function(e,i){
+        if(
+          search.name == '' ||
+          (
+            e.title.search(new RegExp(search.name, "i")) !== -1 ||
+            e.cim.search(new RegExp(search.name, "i")) !== -1 ||
+            e.contact_email.search(new RegExp(search.name, "i")) !== -1 ||
+            e.author_data.nev.search(new RegExp(search.name, "i")) !== -1 ||
+            e.author_data.email.search(new RegExp(search.name, "i")) !== -1
+          )
+        ){
+          newlist[i] = e;
+        }
+      });
+    }
+    return newlist;
+  }
+});
+
 szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$parse', 'fileUploadService', function($scope, $http, $mdToast, $timeout, $parse, fileUploadService)
 {
   $scope.allowProfilType = ['jpg', 'jpeg', 'png'];
@@ -152,7 +195,12 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$pa
     typecorrect: true,
     name: ''
   };
+  $scope.filter = {
+    name: ''
+  };
 
+  $scope.loadinglist = false;
+  $scope.listloaded = false;
   $scope.imageediting = false;
   $scope.imageeditprogress = false;
   $scope.currentProfilkep = false;
@@ -204,7 +252,15 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$pa
 
   $scope.tinymceOptions = {};
 
-	$scope.init = function( author ){
+	$scope.init = function( author, httpgetstr ){
+
+    // URL get serialized paraméter dekódolása
+    $scope.urlGET = $scope.decodeURIString(httpgetstr);
+
+    if ($scope.urlGET.filter) {
+      $scope.filter.name = $scope.urlGET.filter;
+    }
+
     if (typeof author !== 'undefined') {
       $scope.author = author;
     }
@@ -212,6 +268,16 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$pa
       $scope.loadSzallasok();
     });
 	}
+
+  $scope.decodeURIString = function( queryString ) {
+    var query = {};
+     var pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
+     for (var i = 0; i < pairs.length; i++) {
+         var pair = pairs[i].split('=');
+         query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+     }
+     return query;
+  }
 
   $scope.resetSzallas = function() {
     $scope.creating = false;
@@ -499,6 +565,7 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$pa
 	$scope.loadSzallasok = function( callback )
 	{
     $scope.szallasok = [];
+    $scope.loadinglist = true;
 		$http({
       method: 'POST',
       url: '/ajax/get',
@@ -509,7 +576,10 @@ szallasok.controller("Szallas", ['$scope', '$http', '$mdToast', '$timeout', '$pa
         author: $scope.author
       })
     }).success(function( r ){
-      if (r.data && r.data.list.length != 0) {
+      console.log(r);
+      $scope.loadinglist = false;
+      $scope.listloaded = true;
+      if (r.data && r.data.list && r.data.list.length != 0) {
         $scope.szallasok = r.data.list;
       }
 			if (typeof callback !== 'undefined') {

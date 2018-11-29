@@ -666,6 +666,7 @@ class ajax extends Controller{
 						'data' 	=> array()
 					);
 					$re['pass'] = $_POST;
+					$adminuser = $this->view->adm->user;
 
 					$szallaslist = new SzallasList( array('db' => $this->db) );
 
@@ -710,6 +711,9 @@ class ajax extends Controller{
 						break;
 						case 'List':
 							$arg = array();
+							if ($adminuser['user_group'] != 'admin') {
+								$arg['databyuser'] = (int)$adminuser['ID'];
+							}
 							$re['data'] = $szallaslist->getList( $arg );
 						break;
 						case 'SaveRoomServices':
@@ -753,7 +757,7 @@ class ajax extends Controller{
 						break;
 						case 'SaveCreate':
 							try {
-								$re['data'] = $szallaslist->saveSzallas( $szallas );
+								$re['data'] = $szallaslist->saveSzallas( $adminuser['ID'], $szallas );
 								$re['msg'] = 'Sikeresen mentette a(z) <strong>'.$szallas['title'].'</strong> szállás adatait.';
 							} catch (\Exception $e) {
 								$re['error'] = 1;
@@ -766,6 +770,8 @@ class ajax extends Controller{
 					}
 
 					unset($szallaslist);
+
+					$re['admin'] = $adminuser;
 
 					echo json_encode( $re );
 				break;

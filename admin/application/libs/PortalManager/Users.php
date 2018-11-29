@@ -32,6 +32,7 @@ class Users
 		'adminuser' => 'Admin felhasználó'
 	);
 	public $user_permissions = array(
+		'adminsettings' => 'Admin beállítások',
 		'users' => 'Felhasználók kezelése',
 		'belsouzenetek' => 'Üzenetek kezelése',
 		'menu' => 'Menük',
@@ -57,7 +58,7 @@ class Users
 
 	public $user_group_permissions = array(
 		'user' => array(),
-		'admin' => array('users','belsouzenetek','menu', 'oldalak', 'emails', 'galeria','cikkek','feliratok','popup','slideshow','redirects','webshop','kuponok','arcsoportok','etlap','bannerek','szallasok','programok'),
+		'admin' => array('adminsettings', 'users','belsouzenetek','menu', 'oldalak', 'emails', 'galeria','cikkek','feliratok','popup','slideshow','redirects','webshop','kuponok','arcsoportok','etlap','bannerek','szallasok','programok'),
 		'adminuser' => array('webshop','kuponok','szallasok')
 	);
 
