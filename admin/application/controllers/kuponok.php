@@ -1,16 +1,18 @@
-<? 
+<?
 use PortalManager\Portal;
 use PortalManager\Coupons;
 use PortalManager\Coupon;
 use ProductManager\Products;
 
 class kuponok extends Controller{
-		function __construct(){	
+		function __construct(){
 			parent::__construct();
 			parent::$pageTitle = 'Kuponok / Adminisztráció';
-			
+
 			$this->view->adm = $this->AdminUser;
 			$this->view->adm->logged = $this->AdminUser->isLogged();
+
+			$perm = $this->User->hasPermission($this->view->adm->user, array('admin','adminuser'), 'kuponok', true);
 
 			$coupons = new Coupons(array( 'db' => $this->db ));
 			$coupons->getTree(array(
@@ -24,19 +26,19 @@ class kuponok extends Controller{
 			$SEO .= $this->view->addMeta('description','');
 			$SEO .= $this->view->addMeta('keywords','');
 			$SEO .= $this->view->addMeta('revisit-after','3 days');
-			
+
 			// FB info
 			$SEO .= $this->view->addOG('type','website');
 			$SEO .= $this->view->addOG('url',DOMAIN);
 			$SEO .= $this->view->addOG('image',DOMAIN.substr(IMG,1).'noimg.jpg');
 			$SEO .= $this->view->addOG('site_name',TITLE);
-			
+
 			$this->view->SEOSERVICE = $SEO;
 		}
 
 		function create()
 		{
-			if (Post::on('createCoupon')) 
+			if (Post::on('createCoupon'))
 			{
 				$coupon = new Coupon(array('db'=>$this->db));
 
@@ -45,7 +47,7 @@ class kuponok extends Controller{
 					Helper::reload('/kuponok/');
 				}catch(Exception $e){
 					$this->view->err 	= true;
-					$this->view->msg= Helper::makeAlertMsg('pError', $e->getMessage()); 
+					$this->view->msg= Helper::makeAlertMsg('pError', $e->getMessage());
 				}
 			}
 		}
@@ -56,14 +58,14 @@ class kuponok extends Controller{
 			$coupon = (new Coupon(array('db'=>$this->db)))->get($this->gets[2]);
 			$this->out('coupon', $coupon);
 
-			if (Post::on('saveCoupon')) 
+			if (Post::on('saveCoupon'))
 			{
 				try{
 					$coupon->save($_POST);
 					Helper::reload();
 				}catch(Exception $e){
 					$this->view->err 	= true;
-					$this->view->msg= Helper::makeAlertMsg('pError', $e->getMessage()); 
+					$this->view->msg= Helper::makeAlertMsg('pError', $e->getMessage());
 				}
 			}
 		}
@@ -74,18 +76,18 @@ class kuponok extends Controller{
 			$coupon = (new Coupon(array('db'=>$this->db)))->get($this->gets[2]);
 			$this->out('coupon', $coupon);
 
-			if (Post::on('delCoupon')) 
+			if (Post::on('delCoupon'))
 			{
 				try{
 					$coupon->delete();
 					Helper::reload();
 				}catch(Exception $e){
 					$this->view->err 	= true;
-					$this->view->msg= Helper::makeAlertMsg('pError', $e->getMessage()); 
+					$this->view->msg= Helper::makeAlertMsg('pError', $e->getMessage());
 				}
 			}
 		}
-		
+
 
 		function __destruct(){
 			// RENDER OUTPUT

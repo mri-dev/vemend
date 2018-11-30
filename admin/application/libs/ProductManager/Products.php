@@ -2,7 +2,6 @@
 namespace ProductManager;
 
 use ShopManager\Categories;
-use PortalManager\Vehicles;
 /**
 * class Products
 * @package ProductManager
@@ -24,14 +23,20 @@ class Products
 	private $selected_sizes = array();
 	public $item_ids = array();
 	public $settings = array();
-	private $vehicles = null;
+	public $authorid = 0;
+	public $onlyauthor = false;
 
 	public function __construct( $arg = array() ) {
 		$this->db = $arg[db];
 		$this->user = $arg[user];
 		$this->settings = $arg['settings'];
 
-		$this->vehicles = new Vehicles(array('db' => $this->db));
+			if (isset($arg['authorid'])) {
+			$this->authorid = $arg['authorid'];
+		}
+		if (isset($arg['onlyauthor'])) {
+			$this->onlyauthor = $arg['onlyauthor'];
+		}
 
 		return $this;
 	}
@@ -42,6 +47,7 @@ class Products
 
 		$szallitasID 	= $product->getTransportTimeId();
 		$keszletID 		= $product->getStatusId();
+		$author = (!$this->authorid || $this->authorid == 0) ? NULL : $this->authorid;
 
 		// Kötelező mezők ellenőrzése
 		if( !$product->getName() ) throw new \Exception('Termék nevének megadása kötelező!');
@@ -106,6 +112,7 @@ class Products
 			$this->db->insert(
 				'shop_termekek',
 				array(
+					'author' => $author,
 					'cikkszam' => $cikkszam,
 					'marka' => $marka,
 					'nev' => $nev,
@@ -541,7 +548,6 @@ class Products
 		$mid = \Helper::getMachineID();
 		$this->products = array();
 		$this->products_number = 0;
-		$vehicle_ids = $this->vehicles->getSelectedQueryFilterIDS( $mid );
 
 		if ( $arg['limit'] ) {
 			if( $arg['limit'] > 0 ) {
@@ -681,13 +687,6 @@ class Products
 			$size_whr .= $add;
 		}
 
-		if ( $vehicle_ids && !empty($vehicle_ids) )
-		{
-			$vehicle_ids_str = implode("|",$vehicle_ids);
-			$add = ' and (SELECT CONCAT(",",GROUP_CONCAT(x.vehicle_id),",") as vhc FROM Vehicles_shop_termek_xref as x WHERE x.termek_id = p.ID) REGEXP ",('.$vehicle_ids_str.')," ';
-			$whr .= $add;
-			$size_whr .= $add;
-		}
 
 		if ( $arg['csoport_kategoria'] ) {
 			$add = " and p.csoport_kategoria = '{$arg[csoport_kategoria]}' ";
@@ -1704,10 +1703,6 @@ class Products
 		$data['related_products_ids']	= $this->getRelatedIDS( $product_id );
 		$data['nav'] = array_reverse($categories->getCategoryParentRow((int)$data['alapertelmezett_kategoria'], false));
 
-		$vehicles_compatiblity = $this->vehicles->getProductCompatibilityList( $product_id );
-		$data['vehicles_compatiblity'] = $vehicles_compatiblity['list'];
-		$data['vehicles_compatiblity_num'] = (int)$vehicles_compatiblity['compatibilty_num'];
-		$data['vehicles_filtered_ids'] = $this->vehicles->getSelectedQueryFilterIDS( \Helper::getMachineID() );
 
 		$data['keszlet_info'] = $this->checkProductStockName( $data['keszletID'], $data['raktar_keszlet'], true );
 		$data['szallitas_info'] = $this->checkProductTransportName( $data['szallitasID'], $data['raktar_keszlet'] );
@@ -2149,7 +2144,6 @@ class Products
 		$this->avaiable_sizes = array();
 		$this->qry_str = null;
 		$this->selected_sizes = array();
-		$this->vehicles = null;
 	}
 }
 ?>

@@ -12,6 +12,9 @@ class cikkek extends Controller{
 			$this->view->adm = $this->AdminUser;
 			$this->view->adm->logged = $this->AdminUser->isLogged();
 
+
+			$perm = $this->User->hasPermission($this->view->adm->user, array('admin'), 'cikkek', true);
+
 			// Archive toggle
 			if (Post::on('setArchive')) {
 			 $switch = (int)$_POST['setArchive'];

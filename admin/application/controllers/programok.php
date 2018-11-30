@@ -13,6 +13,8 @@ class programok extends Controller{
 			$this->view->adm = $this->AdminUser;
 			$this->view->adm->logged = $this->AdminUser->isLogged();
 
+			$perm = $this->User->hasPermission($this->view->adm->user, array('admin'), 'programok', true);
+
 			$categories = new Categories( array( 'db' => $this->db ) );
 			$categories->setTable( 'program_kategoriak' );
 			$news = new Programs( $this->view->gets[2],  array( 'db' => $this->db )  );

@@ -10,6 +10,8 @@ class uzletek extends Controller{
 	    $this->view->adm = $this->AdminUser;
 			$this->view->adm->logged = $this->AdminUser->isLogged();
 
+			$perm = $this->User->hasPermission($this->view->adm->user, array('admin'), 'belsouzenetek', true);
+
 			$shops = new CasadaShops(array(
 				'db' => $this->db
 			));

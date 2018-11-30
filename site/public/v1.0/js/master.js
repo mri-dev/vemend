@@ -323,28 +323,28 @@ $(function(){
 	} );
 
 	jQuery.each($('.autocorrett-height-by-width'), function(i,e){
-      var ew = $(e).width();
-      var ap = $(e).data('image-ratio');
-      var respunder = $(e).data('image-under');
-			var pw = $(window).width();
-      ap = (typeof ap !== 'undefined') ? ap : '4:3';
-			console.log(ap);
-      var aps = ap.split(":");
-      var th = ew / parseInt(aps[0])  * parseInt(aps[1]);
+    var ew = $(e).width();
+    var ap = $(e).data('image-ratio');
+    var respunder = $(e).data('image-under');
+		var pw = $(window).width();
+    ap = (typeof ap !== 'undefined') ? ap : '4:3';
+		console.log(ap);
+    var aps = ap.split(":");
+    var th = ew / parseInt(aps[0])  * parseInt(aps[1]);
 
-			if (respunder) {
-				if (pw < respunder) {
-					$(e).css({
-		        height: th
-		      });
-				}
-			} else{
+		if (respunder) {
+			if (pw < respunder) {
 				$(e).css({
 	        height: th
 	      });
 			}
+		} else{
+			$(e).css({
+        height: th
+      });
+		}
 
-    });
+  });
 
 	// Mobile Device max Width
 	$('*.mobile-max-width').each( function(){

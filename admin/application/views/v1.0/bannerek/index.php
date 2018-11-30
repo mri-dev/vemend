@@ -171,7 +171,7 @@
             </div>
             <div class="col-md-5">
               <div class="comment">
-                <div class="no-data" ng-show="!banner.comment">
+                <div class="no-data-set" ng-show="!banner.comment">
                   Nincs leírás.
                 </div>
                 <div class="" ng-hide="!banner.comment">
@@ -179,7 +179,7 @@
                 </div>
               </div>
               <div class="url">
-                <div class="no-data" ng-show="!banner.target_url">
+                <div class="no-data-set" ng-show="!banner.target_url">
                   Nincs hivatkozás a banneren.
                 </div>
                 <div class="" ng-hide="!banner.target_url">

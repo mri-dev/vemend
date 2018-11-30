@@ -216,9 +216,9 @@ class News
 		$text = Formater::makeSafeUrl($text,'');
 
 		$qry = $this->db->query(sprintf("
-			SELECT 		eleres
-			FROM 		hirek
-			WHERE 		eleres = '%s' or
+			SELECT eleres
+			FROM hirek
+			WHERE	eleres = '%s' or
 						eleres like '%s-_' or
 						eleres like '%s-__'
 			ORDER BY 	eleres DESC

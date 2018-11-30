@@ -662,22 +662,24 @@ class AdminUser
 		}
 	}
 
-	function getSzallitasModLista(){
-		extract($this->db->q("SELECT * FROM shop_szallitasi_mod ORDER BY nev ASC",array('multi' => '1')));
+	function getSzallitasModLista( $author = 0 ){
+		extract($this->db->q("SELECT * FROM shop_szallitasi_mod WHERE 1=1 and (author = {$author} or author IS NULL) ORDER BY author ASC, nev ASC",array('multi' => '1')));
 
 		return $data;
 	}
 
-	function getKeszletLista(){
-		extract($this->db->q("SELECT * FROM shop_termek_allapotok ORDER BY elnevezes ASC",array('multi' => '1')));
+	function getKeszletLista( $author = 0 ){
+		extract($this->db->q("SELECT * FROM shop_termek_allapotok WHERE 1=1 and (author = {$author} or author IS NULL) ORDER BY author ASC, elnevezes ASC",array('multi' => '1')));
 
 		return $data;
 	}
-	function getSzallitasIdoLista(){
-		extract($this->db->q("SELECT * FROM shop_szallitasi_ido ORDER BY elnevezes ASC",array('multi' => '1')));
+
+	function getSzallitasIdoLista( $author = 0 ){
+		extract($this->db->q("SELECT * FROM shop_szallitasi_ido WHERE 1=1 and (author = {$author} or author IS NULL) ORDER BY author ASC, elnevezes ASC",array('multi' => '1')));
 
 		return $data;
 	}
+
 	function getTermekek($arg = array()){
 		$akcios_plus_szaz = AKCIOS_BRUTTO_AR_PLUSZ_SZAZALEK;
 		$apsz = $akcios_plus_szaz / 100 + 1;
@@ -1227,23 +1229,27 @@ class AdminUser
 		);
 	}
 
-	function addMarka($post){
+	function addMarka($author, $post){
 		extract($post);
 		$mnev = addslashes($mnev);
 
 		if($mnev == '') throw new \Exception('Márka elnevezésének megadása kötelező!');
 		if($markepz == '') throw new \Exception('Árképzés módjának kiválasztása kötelező!');
 		if($markepz == '0' && $marres == 0) throw new \Exception('Fix árrés esetén kötelező meghatározni az árrés százalékát (%)!');
-		if($this->checkMarkaLetezes($mnev)) throw new \Exception('Ez a márka már létre lett hozva!');
+		if($this->checkMarkaLetezes($author, $mnev)) throw new \Exception('Ez a márka már létre lett hozva!');
+		if (!$author || $author == 0) {
+			throw new \Exception('Webhop tulajdonos ID hiányzik!');
+		}
 
 		$mod 		= $markepz;
 		$fixarres 	= ($markepz == '0') ? $marres : null;
 		$elorend 	= ($elorendelheto == 'on') ? 1 : 0;
 
-		$this->db->insert('shop_markak',
+		$this->db->insert(
+			'shop_markak',
 			array_combine(
-			array('neve','arres_mod','fix_arres','brutto','elorendelheto','nagyker_id'),
-			array($mnev, $mod, $fixarres, $nb, $elorend, $nagyker_id)
+			array('author','neve','arres_mod','fix_arres','brutto','elorendelheto','nagyker_id'),
+			array((int)$author, $mnev, $mod, $fixarres, $nb, $elorend, $nagyker_id)
 			)
 		);
 
@@ -1260,7 +1266,6 @@ class AdminUser
 				$ar_max = ($post[sav_end][$i] != 0) ? $post[sav_end][$i] : null;
 				$arres 	= (is_numeric($post[sav_arres][$i]) && $post[sav_arres][$i] > 0) ? $post[sav_arres][$i] : $arres;
 
-
 				$this->db->insert('shop_marka_arres_savok',
 					array_combine(
 					array('markaID','ar_min','ar_max','arres'),
@@ -1271,8 +1276,11 @@ class AdminUser
 		}
 	}
 
-	function checkMarkaLetezes($marka){
-		$c = $this->db->query("SELECT id FROM shop_markak WHERE neve = '$marka'");
+	function checkMarkaLetezes($author = 0, $marka)
+	{
+		$author = (!$author || $author == 0) ? 0 : (int)$author;
+
+		$c = $this->db->query("SELECT id FROM shop_markak WHERE author = '$author' and neve = '$marka'");
 
 		if($c->rowCount() == 0){
 			return false;
@@ -1478,19 +1486,22 @@ class AdminUser
 		return $back;
 	}
 
-	function getTermekKategoriak(){
-		extract($this->db->q("SELECT * FROM shop_termek_kategoriak ORDER BY neve ASC",array('multi' => '1')));
+	function getTermekKategoriak( $author = 0 ){
+		extract($this->db->q("SELECT * FROM shop_termek_kategoriak WHERE 1=1 and (author = {$author} or author IS NULL) ORDER BY author ASC, neve ASC",array('multi' => '1')));
 
 		return $data;
 	}
 
-	function getMarkak(){
-		extract($this->db->q("SELECT
+	function getMarkak( $author = 0 ){
+		$iq = "SELECT
 			m.*,
 			n.nagyker_nev
 		FROM shop_markak as m
 		LEFT OUTER JOIN nagyker as n ON n.ID = m.nagyker_id
-		ORDER BY m.neve ASC",array('multi' => '1')));
+		WHERE 1=1 and m.author = {$author}
+		ORDER BY m.neve ASC";
+
+		extract($this->db->q($iq,array('multi' => '1')));
 		$cucc = array();
 
 		foreach($data as $d){
@@ -1774,43 +1785,43 @@ class AdminUser
 			)
 		);
 	}
-	function addSzallitasIdo($post){
+	function addSzallitasIdo($author = 0, $post){
 		extract($post);
 
 		$this->db->insert('shop_szallitasi_ido',
 			array_combine(
-			array('elnevezes'),
-			array($nev)
+			array('author','elnevezes'),
+			array($author,$nev)
 			)
 		);
 	}
-	function addSzallitasMod($post){
+	function addSzallitasMod($author = 0, $post){
 		extract($post);
 
 		$this->db->insert('shop_szallitasi_mod',
 			array_combine(
-			array('nev','koltseg','osszeghatar'),
-			array($nev,$koltseg,$osszeghatar)
+			array('author', 'nev','koltseg','osszeghatar'),
+			array($author, $nev,$koltseg,$osszeghatar)
 			)
 		);
 	}
-	function addFizetesiMod($post){
+	function addFizetesiMod($author = 0, $post){
 		extract($post);
 
 		$this->db->insert('shop_fizetesi_modok',
 			array_combine(
-			array('nev'),
-			array($nev)
+			array('author', 'nev'),
+			array($author, $nev)
 			)
 		);
 	}
-	function addTermekAllapot($post){
+	function addTermekAllapot($author = 0,$post){
 		extract($post);
 
 		$this->db->insert('shop_termek_allapotok',
 			array_combine(
-			array('elnevezes', 'color'),
-			array($nev, $color)
+			array('author', 'elnevezes', 'color'),
+			array($author, $nev, $color)
 			)
 		);
 	}
@@ -3122,7 +3133,7 @@ class AdminUser
 		if (empty($required_permissons)) {
 			$perm = true;
 		}
-		
+
 		return $perm;
 	}
 

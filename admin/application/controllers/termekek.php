@@ -16,10 +16,7 @@ class termekek extends Controller
 
 			$this->Admin = new Admin( false, array( 'db' => $this->db, 'view' => $this->view ) );
 
-			if ( $this->view->adm->user['user_group'] != 'admin' )
-			{
-				$perm = $this->User->hasPermission($this->view->adm->user, array('adminuser'), 'webshop', true);
-			}
+			$perm = $this->User->hasPermission($this->view->adm->user, array('adminuser','admin'), 'webshop', true);
 
 			if( $_GET['backmsg'] )
 			{
@@ -27,7 +24,11 @@ class termekek extends Controller
 			}
 
 			// Kategóriák
-			$cats = new Categories(  array( 'db' => $this->db )  );
+			$arg = array( 'db' => $this->db, 'authorid' => $this->view->adm->user['ID'] );
+			if ($this->view->adm->user['user_group'] != 'admin') {
+				$arg['onlyauthor'] = true;
+			}
+			$cats = new Categories( $arg );
 			$this->out( 'categories', $cats->getTree() );
 
 			if(Post::on('actionSaving')){
@@ -127,7 +128,14 @@ class termekek extends Controller
 			}
 
 			// Termék lista
-			$products = new Products( array( 'db' => $this->db ) );
+			$prodarg = array(
+				'db' => $this->db,
+				'authorid' => $this->view->adm->user['ID']
+			);
+			if ($this->view->adm->user['user_group'] != 'admin') {
+				$prodarg['onlyauthor'] = true;
+			}
+			$products = new Products( $prodarg );
 			$price_groups = $products->priceGroupList();
 
 			$filters = Helper::getCookieFilter('filter',array('filtered'));
@@ -158,16 +166,16 @@ class termekek extends Controller
 			)))->render() );
 
 			// Márkák
-			$this->view->markak 	= $this->AdminUser->getMarkak();
+			$this->view->markak 	= $this->AdminUser->getMarkak( (int)$this->view->adm->user['ID'] );
 			// Kategóriák
-			$this->view->kategoria  = $this->AdminUser->getTermekKategoriak();
+			$this->view->kategoria  = $this->AdminUser->getTermekKategoriak( (int)$this->view->adm->user['ID'] );
 
 			// Készlet lista
-			$this->view->keszlet 	= $this->AdminUser->getKeszletLista();
+			$this->view->keszlet 	= $this->AdminUser->getKeszletLista( (int)$this->view->adm->user['ID'] );
 			// Szállításimód lista
-			$this->view->szallitasMod 	= $this->AdminUser->getSzallitasModLista();
+			$this->view->szallitasMod 	= $this->AdminUser->getSzallitasModLista( (int)$this->view->adm->user['ID'] );
 			// Szállításimód lista
-			$fizmod = $this->AdminUser->getFizetesiModok();
+			$fizmod = $this->AdminUser->getFizetesiModok( (int)$this->view->adm->user['ID'] );
 
 			$nfizmod = array();
 			foreach ( $fizmod as $fm ) {
@@ -175,7 +183,7 @@ class termekek extends Controller
 			}
 			$this->view->fizetesiMod = $nfizmod;
 			// Szállítási idő lista
-			$this->view->szallitas 	= $this->AdminUser->getSzallitasIdoLista();
+			$this->view->szallitas 	= $this->AdminUser->getSzallitasIdoLista( (int)$this->view->adm->user['ID'] );
 			// Ár csoportok
 			$this->view->price_groups = $price_groups;
 
@@ -213,7 +221,14 @@ class termekek extends Controller
 
 		function t(){
 
-			$products = new Products( array( 'db' => $this->db ) );
+			$prodarg = array(
+				'db' => $this->db,
+				'authorid' => $this->view->adm->user['ID']
+			);
+			if ($this->view->adm->user['user_group'] != 'admin') {
+				$prodarg['onlyauthor'] = true;
+			}
+			$products = new Products( $prodarg );
 
 			switch($this->view->gets[2]){
 				case 'del':
@@ -412,14 +427,18 @@ class termekek extends Controller
 					}
 
 					// Kategóriák
-					$cats = new Categories( array( 'db' => $this->db ) );
+					$arg = array( 'db' => $this->db, 'authorid' => $this->view->adm->user['ID'] );
+					if ($this->view->adm->user['user_group'] != 'admin') {
+						$arg['onlyauthor'] = true;
+					}
+					$cats = new Categories( $arg );
 					$this->out( 'categories', $cats->getTree() );
 					// Márka lista
-					$this->view->markak 	= $this->AdminUser->getMarkak();
+					$this->view->markak 	= $this->AdminUser->getMarkak((int)$this->view->adm->user['ID']);
 					// Készlet lista
-					$this->view->keszlet 	= $this->AdminUser->getKeszletLista();
+					$this->view->keszlet 	= $this->AdminUser->getKeszletLista((int)$this->view->adm->user['ID']);
 					// Szállítási idő lista
-					$this->view->szallitas 	= $this->AdminUser->getSzallitasIdoLista();
+					$this->view->szallitas 	= $this->AdminUser->getSzallitasIdoLista((int)$this->view->adm->user['ID']);
 
 					$this->view->parameterek = $this->AdminUser->getParameterOnTermekKategoria($this->view->termek['alapertelmezett_kategoria']);
 
@@ -436,7 +455,14 @@ class termekek extends Controller
 		function upload_image()
 		{
 
-			$products = new Products( array( 'db' => $this->db ) );
+			$prodarg = array(
+				'db' => $this->db,
+				'authorid' => $this->view->adm->user['ID']
+			);
+			if ($this->view->adm->user['user_group'] != 'admin') {
+				$prodarg['onlyauthor'] = true;
+			}
+			$products = new Products( $prodarg );
 
 			$ids = explode("|", $this->view->gets[2]);
 			$this->out( 'ids', $ids );
@@ -499,7 +525,7 @@ class termekek extends Controller
 
 			if(Post::on('add')){
 				try{
-					$this->AdminUser->addSzallitasMod($_POST);
+					$this->AdminUser->addSzallitasMod((int)$this->view->adm->user['ID'], $_POST);
 				}catch(Exception $e){
 					$this->view->err 	= true;
 					$this->view->bmsg 	= Helper::makeAlertMsg('pError', $e->getMessage());
@@ -536,7 +562,7 @@ class termekek extends Controller
 
 			if(Post::on('add')){
 				try{
-					$this->AdminUser->addFizetesiMod($_POST);
+					$this->AdminUser->addFizetesiMod((int)$this->view->adm->user['ID'], $_POST);
 					Helper::reload();
 				}catch(Exception $e){
 					$this->view->err 	= true;
@@ -545,7 +571,7 @@ class termekek extends Controller
 			}
 			if(Post::on('save')){
 				try{
-					$this->AdminUser->saveFizetesiMod($_POST);
+					$this->AdminUser->saveFizetesiMod((int)$this->view->adm->user['ID'], $_POST);
 					Helper::reload('/termekek/fizetesi_mod');
 				}catch(Exception $e){
 					$this->view->err 	= true;
@@ -574,7 +600,7 @@ class termekek extends Controller
 
 			if(Post::on('add')){
 				try{
-					$this->AdminUser->addTermekAllapot($_POST);
+					$this->AdminUser->addTermekAllapot((int)$this->view->adm->user['ID'], $_POST);
 					Helper::reload();
 				}catch(Exception $e){
 					$this->view->err 	= true;
@@ -611,7 +637,7 @@ class termekek extends Controller
 		function szallitasi_ido(){
 			if(Post::on('add')){
 				try{
-					$this->AdminUser->addSzallitasIdo($_POST);
+					$this->AdminUser->addSzallitasIdo((int)$this->view->adm->user['ID'], $_POST);
 				}catch(Exception $e){
 					$this->view->err 	= true;
 					$this->view->bmsg 	= Helper::makeAlertMsg('pError', $e->getMessage());
@@ -645,9 +671,16 @@ class termekek extends Controller
 
 		function uj(){
 			// Termék márkák
-			$this->view->markak = $this->AdminUser->getMarkak();
+			$this->view->markak = $this->AdminUser->getMarkak((int)$this->view->adm->user['ID']);
 			// Termékek
-			$products = new Products( array( 'db' => $this->db ) );
+			$prodarg = array(
+				'db' => $this->db,
+				'authorid' => $this->view->adm->user['ID']
+			);
+			if ($this->view->adm->user['user_group'] != 'admin') {
+				$prodarg['onlyauthor'] = true;
+			}
+			$products = new Products( $prodarg );
 
 			// Kategória lista
 			/*$categories = new Categories( false, array( 'db' => $this->db ) );

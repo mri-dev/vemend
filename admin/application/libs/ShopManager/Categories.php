@@ -18,10 +18,18 @@ class Categories
 	private $walk_step = 0;
 	private $parent_data = false;
 	public $table = 'shop_termek_kategoriak';
+	public $authorid = 0;
+	public $onlyauthor = false;
 
 	function __construct( $arg = array() )
 	{
 		$this->db = $arg[db];
+		if (isset($arg['authorid'])) {
+			$this->authorid = $arg['authorid'];
+		}
+		if (isset($arg['onlyauthor'])) {
+			$this->onlyauthor = $arg['onlyauthor'];
+		}
 
 		return $this;
   }
@@ -64,6 +72,8 @@ class Categories
 			throw new \Exception( "Kérjük, hogy adja meg a kategória elnevezését!" );
 		}
 
+		$author = (!$this->authorid || $this->authorid == 0) ? NULL : $this->authorid;
+
 		$this->db->insert(
 			$this->table,
 			array(
@@ -73,7 +83,8 @@ class Categories
 				'sorrend' 	=> $sort,
 				'deep' 		=> $deep,
 				'hashkey' 	=> $hashkey,
-				'oldal_hashkeys' => $oldal_hashkeys
+				'oldal_hashkeys' => $oldal_hashkeys,
+				'author' => $author
 			)
 		);
 	}
@@ -153,6 +164,10 @@ class Categories
 			SELECT 			*
 			FROM 			".$this->table."
 			WHERE 			1=1 ";
+
+		if ( $this->authorid != 0 && $this->onlyauthor === true ) {
+		 $qry .= " and author = ". (int)$this->authorid;
+		}
 
 		if ( !$top_category_id ) {
 			$qry .= " and szulo_id IS NULL ";
@@ -310,15 +325,22 @@ class Categories
 	private function checkEleres( $text )
 	{
 		$text = \PortalManager\Formater::makeSafeUrl($text,'');
-
-		$qry = $this->db->query(sprintf("
+		$qrystr = array();
+		$qry = "
 			SELECT 		slug
 			FROM 		".$this->table."
-			WHERE 		slug = '%s' or
-						slug like '%s-_' or
-						slug like '%s-__'
-			ORDER BY slug DESC
-			LIMIT 0,1", trim($text), trim($text), trim($text) ));
+			WHERE 1=1 and (slug = :str or
+						slug like :str1 or
+						slug like :str2)";
+		if ($this->authorid != 0) {
+			$qry .= " and author = ".(int)$this->authorid;
+		}
+		$qry .= "	ORDER BY slug DESC LIMIT 0,1";
+		$qrystr['str'] = trim($text);
+		$qrystr['str1'] = '%'.trim($text).'-_';
+		$qrystr['str2'] = '%'.trim($text).'-__';
+
+		$qry = $this->db->squery($qry, $qrystr);
 		$last_text = $qry->fetch(\PDO::FETCH_COLUMN);
 
 		if( $qry->rowCount() > 0 ) {

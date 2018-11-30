@@ -33,6 +33,7 @@
     <? if( $this->err && $this->bmsg['admin'] ): ?>
         <?=$this->bmsg['admin']?>
     <? endif; ?>
+		<?php if (false): ?>
     <div class="row np">
         <div class="col-md-4" style="padding-right:8px;">
             <form action="#admins" method="post">
@@ -140,6 +141,7 @@
         </div>
     </div>
     <br>
+		<?php endif; ?>
     <a name="basics"></a>
     <? if( $this->err && $this->bmsg['basics'] ): ?>
         <?=$this->bmsg['basics']?>
