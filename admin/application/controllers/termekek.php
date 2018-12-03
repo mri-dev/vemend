@@ -533,7 +533,7 @@ class termekek extends Controller
 			}
 			if(Post::on('save')){
 				try{
-					$this->AdminUser->saveSzallitasMod($_POST);
+					$this->AdminUser->saveSzallitasMod($_POST, (int)$this->view->adm->user['ID']);
 					Helper::reload('/termekek/szallitasi_mod/?msgkey=msg&msg=Változások sikeresen mentve lettek!');
 				}catch(Exception $e){
 					$this->view->err 	= true;
@@ -542,7 +542,7 @@ class termekek extends Controller
 			}
 			if(Post::on('delId')){
 				try{
-					$this->AdminUser->delSzallitasMod($this->view->gets[3]);
+					$this->AdminUser->delSzallitasMod($this->view->gets[3], (int)$this->view->adm->user['ID']);
 					Helper::reload('/termekek/szallitasi_mod');
 				}catch(Exception $e){
 					$this->view->err 	= true;
@@ -555,7 +555,7 @@ class termekek extends Controller
 			}
 
 
-			$this->view->n = $this->AdminUser->getSzallitasiModok();
+			$this->view->n = $this->AdminUser->getSzallitasiModok((int)$this->view->adm->user['ID']);
 		}
 
 		function fizetesi_mod(){
@@ -593,7 +593,7 @@ class termekek extends Controller
 			}
 
 
-			$this->view->n = $this->AdminUser->getFizetesiModok();
+			$this->view->n = $this->AdminUser->getFizetesiModok((int)$this->view->adm->user['ID']);
 		}
 
 		function termek_allapotok(){
@@ -609,7 +609,7 @@ class termekek extends Controller
 			}
 			if(Post::on('save')){
 				try{
-					$this->AdminUser->saveTermekAllapot($_POST);
+					$this->AdminUser->saveTermekAllapot($_POST, (int)$this->view->adm->user['ID']);
 					Helper::reload('/termekek/termek_allapotok');
 				}catch(Exception $e){
 					$this->view->err 	= true;
@@ -618,7 +618,7 @@ class termekek extends Controller
 			}
 			if(Post::on('delId')){
 				try{
-					$this->AdminUser->delTermekAllapot($this->view->gets[3]);
+					$this->AdminUser->delTermekAllapot($this->view->gets[3], (int)$this->view->adm->user['ID']);
 					Helper::reload('/termekek/termek_allapotok');
 				}catch(Exception $e){
 					$this->view->err 	= true;
@@ -631,7 +631,7 @@ class termekek extends Controller
 			}
 
 
-			$this->view->n = $this->AdminUser->getFizetesiModok();
+			$this->view->n = $this->AdminUser->getFizetesiModok((int)$this->view->adm->user['ID']);
 		}
 
 		function szallitasi_ido(){
@@ -645,7 +645,7 @@ class termekek extends Controller
 			}
 			if(Post::on('save')){
 				try{
-					$this->AdminUser->saveSzallitasIdo($_POST);
+					$this->AdminUser->saveSzallitasIdo($_POST, (int)$this->view->adm->user['ID']);
 					Helper::reload('/termekek/szallitasi_ido');
 				}catch(Exception $e){
 					$this->view->err 	= true;
@@ -654,7 +654,7 @@ class termekek extends Controller
 			}
 			if(Post::on('delId')){
 				try{
-					$this->AdminUser->delSzallitasIdo($this->view->gets[3]);
+					$this->AdminUser->delSzallitasIdo($this->view->gets[3], (int)$this->view->adm->user['ID']);
 					Helper::reload('/termekek/szallitasi_ido');
 				}catch(Exception $e){
 					$this->view->err 	= true;
@@ -666,7 +666,7 @@ class termekek extends Controller
 				$this->view->sm = $this->AdminUser->getSzallitasIdoData($this->view->gets[3]);
 			}
 
-			$this->view->n = $this->AdminUser->getSzallitasIdoList();
+			$this->view->n = $this->AdminUser->getSzallitasIdoList((int)$this->view->adm->user['ID']);
 		}
 
 		function uj(){

@@ -515,8 +515,8 @@ class AdminUser
 		return $back;
 	}
 
-	public function getFizetesiModok(){
-		$q = "SELECT * FROM shop_fizetesi_modok";
+	public function getFizetesiModok( $author = 0 ){
+		$q = "SELECT * FROM shop_fizetesi_modok WHERE 1=1 and (author = {$author} or author IS NULL) ORDER BY author ASC, nev ASC";
 
 		extract($this->db->q($q,array('multi'=>'1')));
 		$back = array();
@@ -526,20 +526,8 @@ class AdminUser
 
 		return $back;
 	}
-	public function getMegrendeltTermekAllapotok(){
-		$q = "SELECT * FROM order_termek_allapot ORDER BY sorrend ASC";
-
-		extract($this->db->q($q,array('multi'=>'1')));
-
-		$back = array();
-		foreach($data as $d){
-			$back[$d[ID]] = $d;
-		}
-
-		return $back;
-	}
-	public function getMegrendelesAllapotok(){
-		$q = "SELECT * FROM order_allapot ORDER BY sorrend ASC";
+	public function getMegrendeltTermekAllapotok( $author = 0 ){
+		$q = "SELECT * FROM order_termek_allapot WHERE 1=1 and (author = {$author} or author IS NULL) ORDER BY author ASC, nev ASC";
 
 		extract($this->db->q($q,array('multi'=>'1')));
 
@@ -550,8 +538,20 @@ class AdminUser
 
 		return $back;
 	}
-	public function getSzallitasiModok(){
-		$q = "SELECT * FROM shop_szallitasi_mod";
+	public function getMegrendelesAllapotok( $author = 0 ){
+		$q = "SELECT * FROM order_allapot WHERE 1=1 and (author = {$author} or author IS NULL) ORDER BY author ASC, nev ASC";
+
+		extract($this->db->q($q,array('multi'=>'1')));
+
+		$back = array();
+		foreach($data as $d){
+			$back[$d[ID]] = $d;
+		}
+
+		return $back;
+	}
+	public function getSzallitasiModok( $author = 0 ){
+		$q = "SELECT * FROM shop_szallitasi_mod WHERE 1=1 and (author = {$author} or author IS NULL) ORDER BY author ASC, nev ASC";
 
 		extract($this->db->q($q,array('multi'=>'1')));
 
@@ -1860,6 +1860,7 @@ class AdminUser
 			"ID = $id"
 		);
 	}
+
 	function saveFizetesiMod($post){
 		extract($post);
 		$this->db->update('shop_fizetesi_modok',
@@ -1869,16 +1870,22 @@ class AdminUser
 			"ID = $id"
 		);
 	}
-	function saveTermekAllapot($post){
+
+	function saveTermekAllapot($post, $author){
 		extract($post);
+		$where = "ID = {$id}";
+		if ($author != '') {
+			$where .= " and author = {$author}";
+		}
 		$this->db->update('shop_termek_allapotok',
 			array(
 				'elnevezes' => $nev,
 				'color' => $color
 			),
-			"ID = $id"
+			$where
 		);
 	}
+
 	function savePage($post){
 		extract($post);
 		$check = $this->db->query("SELECT ID FROM oldalak WHERE eleres = '$eleres' and ID != $id");
@@ -1901,6 +1908,7 @@ class AdminUser
 			"ID = $id"
 		);
 	}
+
 	function addMegrendelesAllapot($post){
 		extract($post);
 		if($nev == '') throw new \Exception('Állapot lenevezése kötelező!');
@@ -1915,6 +1923,7 @@ class AdminUser
 			)
 		);
 	}
+
 	function addMegrendelesTermekAllapot($post){
 		extract($post);
 		if($nev == '') throw new \Exception('Állapot lenevezése kötelező!');
@@ -1929,6 +1938,7 @@ class AdminUser
 			)
 		);
 	}
+
 	function saveMegrendelesAllapot($post){
 		extract($post);
 		if(strpos($szin,'#') !== 0){
@@ -1943,6 +1953,7 @@ class AdminUser
 			"ID = $id"
 		);
 	}
+
 	function saveMegrendelesTermekAllapot($post){
 		extract($post);
 		if(strpos($szin,'#') !== 0){
@@ -1957,33 +1968,61 @@ class AdminUser
 			"ID = $id"
 		);
 	}
-	function delMegrendelesAllapot($id){
+	function delMegrendelesAllapot($id, $author){
 		if($id == '') return false;
-		$this->db->query("DELETE FROM order_allapot WHERE ID = $id");
+		$where = "ID = {$id}";
+		if ($author != '') {
+			$where .= " and author = {$author}";
+		}
+		$this->db->query("DELETE FROM order_allapot WHERE {$where}");
 	}
-	function delMegrendelesTermekAllapot($id){
+	function delMegrendelesTermekAllapot($id, $author){
 		if($id == '') return false;
-		$this->db->query("DELETE FROM order_termek_allapot WHERE ID = $id");
+		$where = "ID = {$id}";
+		if ($author != '') {
+			$where .= " and author = {$author}";
+		}
+		$this->db->query("DELETE FROM order_termek_allapot WHERE {$where}");
 	}
 	function delMenu($id){
 		if($id == '') return false;
 		$this->db->query("DELETE FROM menu WHERE ID = $id");
 	}
-	function delSzallitasIdo($id){
+	function delSzallitasIdo($id, $author){
 		if($id == '') return false;
-		$this->db->query("DELETE FROM shop_szallitasi_ido WHERE ID = $id");
+		$where = "ID = {$id}";
+		if ($author != '') {
+			$where .= " and author = {$author}";
+		}
+		$this->db->query("DELETE FROM shop_szallitasi_ido WHERE {$where}");
 	}
-	function delSzallitasMod($id){
+	function delSzallitasMod($id, $author){
 		if($id == '') return false;
-		$this->db->query("DELETE FROM shop_szallitasi_mod WHERE ID = $id");
+		$where = "ID = {$id}";
+		if ($author != '') {
+			$where .= " and author = {$author}";
+		}
+		$this->db->query("DELETE FROM shop_szallitasi_mod WHERE {$where}");
 	}
-	function delFizetesiMod($id){
+	function delFizetesiMod($id, $author){
 		if($id == '') return false;
-		$this->db->query("DELETE FROM shop_fizetesi_modok WHERE ID = $id");
+
+		$where = "ID = {$id}";
+		if ($author != '') {
+			$where .= " and author = {$author}";
+		}
+
+		$this->db->query("DELETE FROM shop_fizetesi_modok WHERE {$where}");
 	}
-	function delTermekAllapot($id){
+	function delTermekAllapot($id, $author ){
 		if($id == '') return false;
-		$this->db->query("DELETE FROM shop_termek_allapotok WHERE ID = $id");
+
+		$where = "ID = {$id}";
+		if ($author != '') {
+			$where .= " and author = {$author}";
+		}
+
+		$this->db->query("DELETE FROM shop_termek_allapotok WHERE {$where}");
 	}
 	function delPage($id){
 		if($id == '') return false;
