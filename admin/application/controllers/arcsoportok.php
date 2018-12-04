@@ -9,10 +9,13 @@ class arcsoportok extends Controller{
 
  			$this->view->adm = $this->AdminUser;
 			$this->view->adm->logged = $this->AdminUser->isLogged();
-			
-			$perm = $this->User->hasPermission($this->view->adm->user, array('admin'), 'arcsoportok', true);
 
-      $PriceGroups = new PriceGroups( array('db'=> $this->db) );
+			$perm = $this->User->hasPermission($this->view->adm->user, array('admin','adminuser'), 'arcsoportok', true);
+
+			$arg = array();
+			$arg['db'] = $this->db;
+			$arg['authorid'] = $this->view->adm->user['ID'];
+      $PriceGroups = new PriceGroups( $arg );
 			////////////////////////////////////////////////////////////////////////////////////////
 
 			// Új
@@ -30,7 +33,10 @@ class arcsoportok extends Controller{
 			// Szerkesztés
 			if ( $this->view->gets[1] == 'szerkeszt') {
 				// Kategória adatok
-				$item_data = new PriceGroup( $this->view->gets[2],  array( 'db' => $this->db )  );
+				$arg = array();
+				$arg['db'] = $this->db;
+				$arg['authorid'] = $this->view->adm->user['ID'];
+				$item_data = new PriceGroup( $this->view->gets[2], $arg );
 				$this->out( 'PriceGroup', $item_data );
 
 				// Változások mentése
@@ -49,7 +55,10 @@ class arcsoportok extends Controller{
 			// Törlés
 			if ( $this->view->gets[1] == 'torles') {
 				// Adatok
-				$item_data = new PriceGroup( $this->view->gets[2], array( 'db' => $this->db )  );
+				$arg = array();
+				$arg['db'] = $this->db;
+				$arg['authorid'] = $this->view->adm->user['ID'];
+				$item_data = new PriceGroup( $this->view->gets[2], $arg);
 				$this->out( 'PriceGroup_d', $item_data );
 
 				// Törlése

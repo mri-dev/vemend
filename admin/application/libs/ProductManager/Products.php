@@ -31,7 +31,7 @@ class Products
 		$this->user = $arg[user];
 		$this->settings = $arg['settings'];
 
-			if (isset($arg['authorid'])) {
+		if (isset($arg['authorid'])) {
 			$this->authorid = $arg['authorid'];
 		}
 		if (isset($arg['onlyauthor'])) {
@@ -319,6 +319,7 @@ class Products
 			$tudastar_url 	= (!$product->getVariable('tudastar_url')) ? NULL : $product->getVariable('tudastar_url');
 			$referer_price_discount 	= (!$product->getVariable('referer_price_discount')) ? 0 : $product->getVariable('referer_price_discount');
 			$sorrend 			= (!$product->getVariable('sorrend')) ? 0 : $product->getVariable('sorrend');
+			$prices = (!$product->getVariable('prices')) ? false : (array)$product->getVariable('prices');
 
 			// Csatolt hivatkozások előkészítése
 			if( $link_list ) {
@@ -332,6 +333,20 @@ class Products
 
 			$meret 	= ( !$product->getVariable( 'meret' ) ) ? NULL : $product->getVariable( 'meret' );
 			$szin 	= ( !$product->getVariable( 'szin' ) ) ? NULL : $product->getVariable( 'szin' );
+
+			// Prices
+			if ($prices) {
+				$tempp = $prices;
+				$prices = array();
+				foreach ((array)$tempp as $g => $p ) {
+					if ($p != 0 && $p > 0) {
+						$prices[$g] = (float)$p;
+					} else {
+						$prices[$g] = NULL;
+					}
+				}
+				unset($tempp);
+			}
 
 			$this->db->update(
 				'shop_termekek',
@@ -375,7 +390,13 @@ class Products
 					'tudastar_url' => $tudastar_url,
 					'referer_price_discount' => $referer_price_discount,
 					'sorrend' => $sorrend,
-					'show_stock' => $show_stock
+					'show_stock' => $show_stock,
+					'ar1' => $prices['ar1'],
+					'ar2' => $prices['ar2'],
+					'ar3' => $prices['ar3'],
+					'ar4' => $prices['ar4'],
+					'ar5' => $prices['ar5'],
+					'ar6' => $prices['ar6']
 				),
 				sprintf("ID = %d", $product->getId())
 			);
@@ -986,7 +1007,7 @@ class Products
 			$d['link'] 				= DOMAIN.'termek/'.\PortalManager\Formater::makeSafeUrl( $d['product_nev'], '_-'.$d['product_id'] );
 			$d['hasonlo_termek_ids']= $this->getProductRelatives( $d['product_id'] );
 			$d['parameters'] 		= $this->getParameters( $d['product_id'], $d['alapertelmezett_kategoria'] );
-			$d['price_groups'] 	= $this->priceGroups( $d['xml_import_origin'], $d['nagyker_kod'] );
+			$d['price_groups'] 	= $this->priceGroups( $d['product_id'] );
 			$d['inKatList'] 		= $in_cat;
 			//$d['ar'] 				= $arInfo['ar'];
 			//$d['akcios_fogy_ar']	= $akcios_arInfo['ar'];
@@ -1002,7 +1023,14 @@ class Products
 
 	public function priceGroupList()
 	{
-		$q = "SELECT * FROM shop_price_groups ORDER BY groupkey ASC";
+		$q = "SELECT * FROM shop_price_groups WHERE 1=1 ";
+		if ($this->onlyauthor && $this->authorid != 0) {
+			$q .= " and (author = {$this->authorid} or author IS NULL) ";
+			$q .= " ORDER BY author ASC, groupkey ASC";
+		} else {
+			$q .= " ORDER BY groupkey ASC";
+		}
+
 		$qry = $this->db->query($q);
 
 		if ( $qry->rowCount() == 0 ) {
@@ -1019,11 +1047,8 @@ class Products
 		return $bdata;
 	}
 
-	public function priceGroups( $originid = 0, $prodid )
+	public function priceGroups( $prodid )
 	{
-		if ($originid == 0) {
-			return false;
-		}
 		$groups = array();
 		$groups['has'] = array();
 		$pricenums = 6;
@@ -1034,9 +1059,7 @@ class Products
 		}
 		$qkey = rtrim($qkey,", ");
 
-		$prodid = addslashes($prodid);
-
-		$q = "SELECT ".$qkey." FROM xml_temp_products as t WHERE t.origin_id = {$originid} and t.prod_id = '$prodid'";
+		$q = "SELECT ".$qkey." FROM shop_termekek as t WHERE t.ID = '$prodid'";
 		$prices = $this->db->query($q);
 
 		if ( $prices->rowCount() != 0 ) {

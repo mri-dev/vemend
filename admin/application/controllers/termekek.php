@@ -287,6 +287,7 @@ class termekek extends Controller
 								'ar_akcios_netto' => $_POST['akcios_netto_ar'],
 								'ar_akcios_brutto' => $_POST['akcios_brutto_ar'],
 								'raktar_keszlet' => $_POST['raktar_keszlet'],
+								'prices' => (array)$_POST['prices'],
 								'linkek' => array(
 									'nev' => $_POST['linkNev'],
 									'url' => $_POST['linkUrl'],

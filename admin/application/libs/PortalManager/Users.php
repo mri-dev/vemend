@@ -48,7 +48,7 @@ class Users
 
 		'webshop' => 'Webáruház használata',
 		'kuponok' => 'Webáruház - kuponok',
-		'arcsoportok' => 'Árcsoportok',
+		'arcsoportok' => 'Webáruház - Árcsoportok',
 
 		'etlap' => 'Étlapok',
 		'bannerek' => 'Bannerek',
@@ -59,7 +59,7 @@ class Users
 	public $user_group_permissions = array(
 		'user' => array(),
 		'admin' => array('adminsettings', 'users','belsouzenetek','menu', 'oldalak', 'emails', 'galeria','cikkek','feliratok','popup','slideshow','redirects','webshop','kuponok','arcsoportok','etlap','bannerek','szallasok','programok'),
-		'adminuser' => array('webshop','kuponok','szallasok')
+		'adminuser' => array('webshop','kuponok','arcsoportok','szallasok')
 	);
 
 	public 	$user 		= false;
