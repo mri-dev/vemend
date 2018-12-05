@@ -7,8 +7,6 @@
   <span title="Az esemény helyszíne" class="position"><i class="fa fa-map-marker"></i> <?=$program->getHelyszin()?></span>
   <?php endif; ?>
 </div>
-
-
 <div class="content">
   <?php echo $program->getHtmlContent(); ?>
 </div>

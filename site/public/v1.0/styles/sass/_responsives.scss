@@ -6,6 +6,10 @@
 		width: 100%;
 	}
 
+	.programs-view .content-view-holder img {
+		max-width: 100% !important;
+	}
+
 	.slideShow {
 		width: 817px;
 	}
@@ -588,6 +592,26 @@
 	.etlap-page .week-menus .menu-set .header{
 		font-size:4vw;
 	}
+	.programs-view{
+		margin: 0;
+		padding: 15px 0;
+	}
+	.programs-view .content-view-holder{
+		margin: 0;
+	}
+	.programs-view .content-view-holder .program-page .details span.date{
+		margin: 0 0 15px 0;
+		padding: 10px;
+    text-align: center;
+		display: block;
+	}
+	.programs-view .content-view-holder .program-page .details span.position{
+		padding-left: 0;
+		text-align: center;
+	}
+	.program-list > .wrapper .articles > .program{
+		flex-basis: calc(100% / 2);
+	}
 }
 
 /* 0 - 640 px - SMARTPHONE */
@@ -603,6 +627,34 @@
 				display: none;
 			}
 		}
+	}
+	.programs-view .content-view-holder > .sidebar{
+		flex-basis: 100%;
+	}
+	.sidebar > .box .c {
+		display: none;
+	}
+	.sidebar > .box .header{
+		position: relative;
+	}
+	.sidebar > .box .header .mobil-nav-box-toggler{
+		position: absolute;
+		right: 5px;
+		top: 50%;
+		padding: 8px;
+		-webkit-transform: translateY(-50%);
+		transform: translateY(-50%);
+
+		i{
+			font-size: 24px;
+		}
+	}
+
+	.program-list > .wrapper .articles > .program{
+		flex-basis: calc(100% / 1);
+	}
+	.program-list > .wrapper .articles > .program .title a{
+		font-size: 4.5vw;
 	}
 }
 

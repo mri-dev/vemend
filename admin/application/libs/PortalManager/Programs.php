@@ -248,7 +248,7 @@ class Programs
         $qry .= " ORDER BY ".$arg['order']['by']." ".$arg['order']['how'];
       }
 		} else {
-			$qry .= " ORDER BY h.idopont ASC ";
+			$qry .= " ORDER BY h.letrehozva DESC ";
 		}
 
 		// LIMIT
@@ -466,6 +466,7 @@ class Programs
     $c = $this->current_get_item['szoveg'];
 
     $c = str_replace('../../../src/uploads/', UPLOADS, $c);
+    $c = str_replace('src/uploads/', UPLOADS, $c);
 
 		return $c;
 	}

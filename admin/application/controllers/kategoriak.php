@@ -99,7 +99,7 @@ class kategoriak extends Controller {
 
 		function parameterek(){
 			// Termék kategóriák
-			$this->view->termekkategoriak = $this->AdminUser->getTermekKategoriak();
+			$this->view->termekkategoriak = $this->AdminUser->getTermekKategoriak( $this->view->adm->user['ID']);
 
 			if(Post::on('addParameter')){
 				try{

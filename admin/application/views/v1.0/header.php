@@ -173,12 +173,13 @@
         	<ul>
             	<li class="<?=($this->gets[0] == 'home')?'on':''?>"><a href="/" title="Dashboard"><span class="ni">1</span><i class="fa fa-life-saver"></i> Dashboard</a></li>
               <?php if ( $this->USERS->hasPermission($this->adm->user, array('adminuser','admin'), 'webshop')): ?>
-              <li class="<?=($this->gets[0] == 'termekek')?'on':''?>"><a href="/termekek" title="Webshop"><span class="ni">2</span><i class="fa fa-cubes"></i> Webshop</a></li>
+              <li class=""><a href="/megrendelesek" title="Webshop"><span class="ni">2</span><i class="fa fa-cubes"></i> Webshop</a></li>
               <?php if (in_array($this->gets[0], array('termekek', 'kategoriak', 'megrendelesek','markak'))): ?>
-                <li class="sub <?=($this->gets[0] == 'kategoriak')?'on':''?>"><a href="/kategoriak" title="Kategóriák"><span class="ni">6</span>Kategóriák</a></li>
-                <li class="sub <?=($this->gets[0] == 'termekek')?'on':''?>"><a href="/termekek" title="Termékek"><span class="ni">2</span>Termékek</a></li>
                 <li class="sub <?=($this->gets[0] == 'megrendelesek')?'on':''?>"><a href="/megrendelesek" title="Megrendelések"><span class="ni">2</span>Megrendelések</a></li>
+                <li class="sub <?=($this->gets[0] == 'termekek' && $this->gets[1] == '')?'on':''?>"><a href="/termekek" title="Termékek"><span class="ni">2</span>Termékek</a></li>
+                <li class="sub <?=($this->gets[0] == 'kategoriak')?'on':''?>"><a href="/kategoriak" title="Kategóriák"><span class="ni">6</span>Kategóriák</a></li>
                 <li class="sub <?=($this->gets[0] == 'markak')?'on':''?>"><a href="/markak" title="Márkák"><span class="ni">7</span>Márkák</a></li>
+                <li class="sub <?=($this->gets[0] == 'termekek' && $this->gets[1] == 'beallitasok')?'on':''?>"><a href="/termekek/beallitasok" title="Beállítások"><span class="ni">7</span>Beállítások</a></li>
               <?php endif; ?>
               <?php endif; ?>
 

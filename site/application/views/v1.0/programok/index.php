@@ -5,8 +5,9 @@
         <div class="box orange-header">
           <div class="header">
             Program kereső
+            <div class="mobil-nav-box-toggler show-on-mobile" onclick="$('#boxc-searcher').slideToggle(400);"><i class="fa fa-angle-down"></i></div>
           </div>
-          <div class="c">
+          <div class="c" id="boxc-searcher">
             <form class="" action="/programok/" method="get">
               <div class="inp">
                 <label for="from"><i class="fa fa-calendar"></i> Kezdő időpont</label>
@@ -47,8 +48,9 @@
         <div class="box">
           <div class="header">
             Korábban megtekintett
+            <div class="mobil-nav-box-toggler show-on-mobile" onclick="$('#boxc-history-list').slideToggle(400);"><i class="fa fa-angle-down"></i></div>
           </div>
-          <div class="c">
+          <div class="c" id="boxc-history-list">
             <div class="history-list program-list">
             <?php
             $step = 0;

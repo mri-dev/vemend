@@ -368,7 +368,7 @@ class termekek extends Controller
 								'upDir' 	=> $folder,
 								'fileName' 	=> $imgName,
 								'makeThumbImg' => true,
-								'makeWaterMark' => true,
+								'makeWaterMark' => false,
 								'maxFileSize' => 5150
 							));
 						}catch(Exception $e){
@@ -898,6 +898,11 @@ class termekek extends Controller
 
 			if( $_GET[path] != '' )
 			$this->view->csv = CSVParser::GET( $_GET[path] );
+		}
+
+		function beallitasok()
+		{
+			// code...
 		}
 
 		function __destruct(){

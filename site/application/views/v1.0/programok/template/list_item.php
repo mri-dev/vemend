@@ -4,7 +4,7 @@
     $read_prefix = (isset($_GET['cat']) && $_GET['cat'] != '') ? $_GET['cat'] : 'olvas';
   ?>
   <div class="wrapper">
-    <div class="image image-abs-center">
+    <div class="image image-abs-center autocorrett-height-by-width" data-image-ratio="4:3">
       <img src="<?=$belyeg_kep?>" alt="<?=$cim?>">
     </div>
     <div class="datain">
