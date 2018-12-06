@@ -17,7 +17,7 @@ class kategoriak extends Controller {
 			///////////////////////////////////////////////////////////////////////////////////////
 			$arg = array( 'db' => $this->db, 'authorid' => $this->view->adm->user['ID'] );
 			if ($this->view->adm->user['user_group'] != 'admin') {
-				$arg['onlyauthor'] = true;
+				//$arg['onlyauthor'] = true;
 			}
 			$categories = new Categories( $arg );
 			$pages = new Pages( false, array( 'db' => $this->db ) );

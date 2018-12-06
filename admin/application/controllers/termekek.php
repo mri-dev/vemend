@@ -26,7 +26,7 @@ class termekek extends Controller
 			// Kategóriák
 			$arg = array( 'db' => $this->db, 'authorid' => $this->view->adm->user['ID'] );
 			if ($this->view->adm->user['user_group'] != 'admin') {
-				$arg['onlyauthor'] = true;
+				//$arg['onlyauthor'] = true;
 			}
 			$cats = new Categories( $arg );
 			$this->out( 'categories', $cats->getTree() );
@@ -430,7 +430,7 @@ class termekek extends Controller
 					// Kategóriák
 					$arg = array( 'db' => $this->db, 'authorid' => $this->view->adm->user['ID'] );
 					if ($this->view->adm->user['user_group'] != 'admin') {
-						$arg['onlyauthor'] = true;
+						//$arg['onlyauthor'] = true;
 					}
 					$cats = new Categories( $arg );
 					$this->out( 'categories', $cats->getTree() );
@@ -902,7 +902,15 @@ class termekek extends Controller
 
 		function beallitasok()
 		{
-			// code...
+			if( Post::on('saveShopSettings') ){
+				try {
+					$re = $this->AdminUser->saveWebshopSettings((int)$this->view->adm->user['ID'], $_POST);
+					Helper::reload();
+				} catch (Exception $e) {
+					$this->view->err 	= true;
+					$this->view->bmsg	= Helper::makeAlertMsg('pError', $e->getMessage());
+				}
+			}
 		}
 
 		function __destruct(){

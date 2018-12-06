@@ -230,12 +230,11 @@ class Users
 			$torzsvasarloi_kedvezmeny = $kedv[szazalek];
 
 			$kedvezmenyek[] = array(
-				'nev' 			=> 'Viszonteladói kedvezmény',
-				'kedvezmeny' 	=> $torzsvasarloi_kedvezmeny,
-				'link' 			=> '/p/viszonteladoi_kedvezmeny'
+				'nev' => 'Viszonteladói kedvezmény',
+				'kedvezmeny' => $torzsvasarloi_kedvezmeny,
+				'link' => '/p/viszonteladoi_kedvezmeny'
 			);
 		}
-
 
 		/**
 		 * Casada shop adatok

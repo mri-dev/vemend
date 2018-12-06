@@ -72,6 +72,7 @@ class AdminUser
 					$detailslist[$det['nev']] = $det['ertek'];
 				}
 			}
+			$userdata['webshop'] = $this->getWebshopSettings( $userdata['ID'] );
 			$detailslist['permissions'] = ($detailslist['permissions'] != "") ? json_decode($detailslist['permissions'], \JSON_UNESCAPED_UNICODE) : array();
 			$userdata = array_merge( $userdata, $detailslist );
 			return $userdata;
@@ -1518,7 +1519,63 @@ class AdminUser
 		return $cucc;
 	}
 
-	function addNagyker($post){
+	function saveWebshopSettings( $author = 0, $settingspost )
+	{
+		$check = $this->db->query("SELECT author_id FROM shop_settings WHERE author_id = '$author'");
+
+		if( $check->rowCount() != 0 ){
+			$aktiv = (isset($settingspost['aktiv'])) ? 1 : 0;
+
+			// Update
+			$this->db->update(
+				'shop_settings',
+				array(
+					'author_id' => $author,
+					'shopnev' => addslashes($settingspost['shopnev']),
+					'address' => addslashes($settingspost['address']),
+					'leiras' => addslashes($settingspost['leiras']),
+					'aszf' => addslashes($settingspost['aszf']),
+					'alert_email' => addslashes($settingspost['alert_email']),
+					'telefon' => addslashes($settingspost['telefon']),
+					'nyitvatartas' => json_encode((array)$settingspost['nyitvatartas'], \JSON_UNESCAPED_UNICODE),
+					'aktiv' => $aktiv,
+				),
+				sprintf("author_id = %d", $author)
+			);
+		} else {
+			// Insert
+			$this->db->insert(
+				'shop_settings',
+				array(
+					'author_id' => $author,
+					'shopnev' => addslashes($settingspost['shopnev']),
+					'address' => addslashes($settingspost['address']),
+					'leiras' => addslashes($settingspost['leiras']),
+					'aszf' => addslashes($settingspost['aszf']),
+					'alert_email' => addslashes($settingspost['alert_email']),
+					'telefon' => addslashes($settingspost['telefon']),
+					'nyitvatartas' => json_encode((array)$settingspost['nyitvatartas'], \JSON_UNESCAPED_UNICODE)
+				)
+			);
+		}
+	}
+
+	public function getWebshopSettings( $author = 0 )
+	{
+		$data = $this->db->query("SELECT * FROM shop_settings WHERE author_id = '$author'");
+
+		if ($data->rowCount() == 0) {
+			return false;
+		} else {
+			$data = $data->fetch(\PDO::FETCH_ASSOC);
+			$data['nyitvatartas'] = json_decode($data['nyitvatartas'], true);
+			$data['aktiv'] = ($data['aktiv'] == '1') ? true : false;
+			return $data;
+		}
+	}
+
+	function addNagyker($post)
+	{
 		extract($post);
 
 		if($nev == '') throw new \Exception('A nagyker címkének elnevezése kötelező!');
