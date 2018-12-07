@@ -20,7 +20,10 @@
 						$step++;
 						$arg = $this->related->the_news();
 						$arg['date_format'] = $this->settings['date_format'];
+						$arg['categories'] = $this->related->getCategories();
 						$arg['newscats'] = $this->newscats;
+						$read_prefix = (isset($_GET['cat']) && $_GET['cat'] != '') ? $_GET['cat'] : 'olvas';
+						$arg['url'] = $this->related->getUrl($read_prefix, true);
 						echo $this->template->get( 'slide', $arg );
 					}?>
 				</div>

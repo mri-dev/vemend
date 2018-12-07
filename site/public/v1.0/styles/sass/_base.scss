@@ -79,6 +79,10 @@ h1{
 .image-abs-center{
 	position: relative;
 	overflow: hidden;
+	& > a {
+		display: block;
+	}
+	& > a > img,
 	& > img {
 		position: absolute;
 		left: 50%;
@@ -645,7 +649,7 @@ body.singlepage{
 				border: 0.5px solid #d9d9d9;
 
 				.img {
-					height: 13vh;
+					height: 23rem;
 					position: relative;
 					overflow: hidden;
 					border-bottom: 0.5px solid #d9d9d9;
@@ -670,7 +674,7 @@ body.singlepage{
 						a{
 							text-decoration: none;
 							text-transform: uppercase;
-							font-size: 0.7em;
+							font-size: 0.85rem;
 							color: white;
 						}
 
@@ -1143,6 +1147,7 @@ body.singlepage{
 		& > .wrapper{
 			border: 5px solid #f7f7f7;
 			padding: 10px;
+			background: white;
 		}
 
 		.img {
@@ -1196,7 +1201,7 @@ body.singlepage{
 				position: relative;
 				overflow: hidden;
 				border-bottom: 0.4px solid #eaeaea;
-				margin: 0 0 10px 0;
+				margin: 0 0 15px 0;
 				background: white;
 
 				.discount-percent{
@@ -1223,8 +1228,8 @@ body.singlepage{
 				}
 
 				img {
-					width: 80%;
-					max-width: 80%;
+					width: auto;
+					max-width: initial;
 					margin: 0 auto;
 				}
 				.short-desc {
@@ -1248,8 +1253,18 @@ body.singlepage{
 				}
 			}
 
+			.author {
+				margin: 15px 0 0 0;
+				a{
+					padding: 0 15px;
+					font-size: 0.7rem;
+					color: #3c3c3c;
+					display: block;
+				}
+			}
+
 			.prices{
-				padding: 5px;
+				padding:0;
 				position: relative;
 
 				& > .wrapper {
@@ -1264,18 +1279,23 @@ body.singlepage{
 						justify-content: center;
 
 						& > div {
-							padding: 0 8px;
+							padding: 0 15px;
+							flex-basis: 50%;
 						}
+
 						.current{
 							font-weight: bold;
-							color: $color-blue;
-					    font-size: 1.2em;
+							color: #f36565;
+					    font-size: 0.95rem;
 					    line-height: 28px;
+							text-align: right;
 						}
 
 						.old {
-							color: #4c4c4c;
+							color: #bbbbbb;
 							position: relative;
+							text-align: left;
+							font-size: 0.8rem;
 							text-decoration: line-through;
 						}
 					}
@@ -1295,46 +1315,17 @@ body.singlepage{
 				}
 			}
 
-			.add{
-				text-align: center;
-				button {
-					margin: 0 auto;
-					background: $color-blue;
-					border-radius: 3px;
-					color: white;
-					text-transform: uppercase;
-					font-weight: bold;
-					font-size: 0.9em;
-					padding: 10px 12px;
-					border: none;
-					&.in-progress{
-						background: $color-green;
-					}
-
-					img {
-						float: left;
-						margin: 0 10px 0 0;
-						height: 12px;
-					}
-				}
-				margin: 0 0 10px 0;
-			}
-
-
 			.title{
-				text-align: center;
-				padding: 5px;
+				padding: 0 15px;
 
 				h3{
-					font-size: 1.05em;
-					font-weight: bold;
+					font-size: 0.9rem;
+					font-weight: normal;
 				}
 
 				a{
 					color: #202020;
 					display: block;
-					height: 26px;
-					max-height: 26px;
 					overflow: hidden;
 				}
 			}
@@ -1342,12 +1333,12 @@ body.singlepage{
 				text-align: center;
 				padding: 0 10px 10px 10px;
 				color: #3cb741;
-				font-size: 1.2em;
+				font-size: 0.7em;
 			}
 			.subtitle{
-				padding: 5px;
-				text-align: center;
-		    font-size: 0.8em;
+				margin-top: 4px;
+				padding: 0 15px;
+		    font-size: 0.8rem;
 		    color: #9c9c9c;
 			}
 			.buttons{
@@ -1358,6 +1349,8 @@ body.singlepage{
 				border-top: .4px solid #e0e0e0;
 				width: 100%;
 				margin: 0;
+				padding-top: 0.4px;
+				font-size: 0.8rem;
 
 				& > div {
 					line-height: 32px;
@@ -1377,15 +1370,37 @@ body.singlepage{
 				.link {
 					flex-basis: 50%;
 
-					a{
-						border-right: 0.4px solid #e0e0e0;
+					button {
+						width: 100%;
+						height: 32px;
+						line-height: 32px;
+						background: none;
+						border: none;
+						text-align: center;
+						text-transform: uppercase;
+						color: #8e8e8e;
+						&.in-progress{
+							background: $color-green;
+						}
+
+						img {
+							height: 13px;
+							margin: 0 3px 0 0;
+					    vertical-align: text-top;
+						}
 					}
 				}
 
 				.fav {
 					flex-basis: 50%;
 					text-align: center;
+					text-transform: uppercase;
+					color:#8e8e8e;
 					cursor: pointer;
+					i{
+						font-size: 13px;
+						margin: 0 3px 0 0;
+					}
 					&:hover{
 						background: $color-orange;
 						color: white;
@@ -1399,7 +1414,7 @@ body.singlepage{
 			}
 			&:hover{
 				& > .wrapper{
-					border: .4px solid $color-blue;
+					border: .4px solid $color-orange;
 				}
 
 				.short-desc{
@@ -1625,17 +1640,12 @@ body.singlepage{
 		margin: 0 0 15px 0;
 
 		.head{
-			font-size: 1.32em;
+			font-size: 1.1rem;
 			padding: 0 10px;
 			line-height: 40px;
-			font-weight: bold;
 			height: 40px;
-			color: #202020;
+			color: #ffffff;
 			text-transform: uppercase;
-
-			strong {
-				color: $color-blue;
-			}
 		}
 
 		.section-group {
@@ -1768,15 +1778,17 @@ body.singlepage{
 				color: white;
 			}
 			.wrapper{
+				background: white;
 				padding: 5px;
 			}
 		}
 		&.liveproducts,
 		&.topproducts{
 			.head{
-				background: lighten($color-grey, 5%);
+				background: $color-green;
 			}
 			.wrapper{
+				background: white;
 				padding: 5px;
 			}
 		}
@@ -1988,9 +2000,10 @@ body.singlepage{
   padding: 0.2px;
 	border: 0.5px solid $color-grey;
 	box-shadow: 8px 8px 12px -5px rgba(0, 0, 0, 0.11);
+	margin: 0 0 20px 0;
 
 	& > .title {
-	 background: white;
+	 background: #fafafa;
 	 line-height: 38px;
 	 padding: 0 15px;
 	 font-weight: bold;
@@ -2059,7 +2072,7 @@ body.singlepage{
 			top: 0;
 			left: 100%;
 			background: white;
-			border: 0.5px solid lighten($color-blue, 20%);
+			border: 0.5px solid lighten($color-green, 20%);
 			min-width: 200px;
 		}
 		li{
@@ -2100,7 +2113,7 @@ body.singlepage{
 					display: block;
 				}
 				& > a {
-					background: lighten($color-blue, 30%);
+					background: lighten($color-green, 10%);
 					color: white;
 				}
 				& > .toggler{

@@ -621,6 +621,7 @@ class Products
 			p.rovid_leiras,
 			p.xml_import_origin,
 			p.fotermek,
+			p.author as author_id,
 			getTermekAr(p.ID, ".$uid.") as ar,
 			(SELECT GROUP_CONCAT(kategoria_id) FROM shop_termek_in_kategoria WHERE termekID = p.ID ) as in_cat,
 			(SELECT neve FROM shop_termek_kategoriak WHERE ID = p.alapertelmezett_kategoria ) as alap_kategoria";
@@ -981,6 +982,8 @@ class Products
 
 		foreach($data as $d)
 		{
+			$d['author'] = $this->getAuthorData( $d['author_id'] );
+			$d['ws'] = $this->getWebshopSettings( $d['author_id'] );
 			//$brutto_ar = $d['brutto_ar'];
 			//$akcios_brutto_ar = $d['akcios_brutto_ar'];
 
@@ -1019,6 +1022,38 @@ class Products
 		$this->products = $bdata;
 
 		return $this;
+	}
+
+	public function getAuthorData( $id = 0 )
+	{
+		$param = array();
+		$q = "SELECT nev, email, user_group, price_group FROM felhasznalok WHERE ID = :id";
+		$param['id'] = $id;
+
+		$qry = $this->db->squery($q, $param);
+
+		if ($qry->rowCount() == 0) {
+			return false;
+		}
+
+		$data = $qry->fetch(\PDO::FETCH_ASSOC);
+
+		return $data;
+	}
+
+	public function getWebshopSettings( $author = 0 )
+	{
+		$data = $this->db->query("SELECT * FROM shop_settings WHERE author_id = '$author'");
+
+		if ($data->rowCount() == 0) {
+			return false;
+		} else {
+			$data = $data->fetch(\PDO::FETCH_ASSOC);
+			$data['shopurl'] = '/webshop/'.$data['shopslug'];
+			$data['nyitvatartas'] = json_decode($data['nyitvatartas'], true);
+			$data['aktiv'] = ($data['aktiv'] == '1') ? true : false;
+			return $data;
+		}
 	}
 
 	public function priceGroupList()

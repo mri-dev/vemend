@@ -84,7 +84,7 @@
   <? if( $this->live_products_list ): ?>
   <div class="liveproducts side-group">
     <div class="head">
-      Most <strong>nézik</strong>
+      <strong>Most</strong> nézik
     </div>
     <div class="wrapper">
       <div class="product-side-items imaged-style">
@@ -113,7 +113,7 @@
   <? if( $this->top_products && $this->top_products->hasItems() ): ?>
   <div class="topproducts side-group">
     <div class="head">
-      Legtöbbet <strong>vásárolt</strong>
+      <strong>Legtöbbet</strong> vásárolt
     </div>
     <div class="wrapper">
       <div class="product-side-items imaged-style">
@@ -142,7 +142,7 @@
   <? if( $this->viewed_products_list ): ?>
   <div class="lastviewed side-group">
     <div class="head">
-      Utoljára megtekintettek
+      <strong>Utoljára megtekintettek</strong>
     </div>
     <div class="wrapper">
       <div class="product-side-items imaged-style">
@@ -167,5 +167,16 @@
     </div>
   </div>
   <? endif; ?>
+
+  <?php
+  // BANNERS
+  $square_cap = $this->BANNERS->checkCapability('1P1', 2);
+
+  if ($square_cap)
+  {
+    $banners = $this->BANNERS->pick('1P1', 2);
+    echo $this->BANNERS->render('1P1', $banners);
+  }
+  ?>
 
 </div>

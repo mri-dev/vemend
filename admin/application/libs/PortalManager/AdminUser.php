@@ -1568,12 +1568,12 @@ class AdminUser
 			return false;
 		} else {
 			$data = $data->fetch(\PDO::FETCH_ASSOC);
+			$data['shopurl'] = '/webshop/'.$data['shopslug'];
 			$data['nyitvatartas'] = json_decode($data['nyitvatartas'], true);
 			$data['aktiv'] = ($data['aktiv'] == '1') ? true : false;
 			return $data;
 		}
 	}
-
 	function addNagyker($post)
 	{
 		extract($post);
