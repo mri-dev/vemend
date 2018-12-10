@@ -105,7 +105,7 @@ class Controller {
         // Kategóriák
         if ( defined('PRODUCTIONSITE') )
         {
-          $this->Categories = new Categories(array( 'db' => $this->db ));
+          $this->Categories = new Categories(array( 'db' => $this->db, 'ws' => true ));
           $this->Categories->getTree();
           $this->out( 'categories', $this->Categories );
         }

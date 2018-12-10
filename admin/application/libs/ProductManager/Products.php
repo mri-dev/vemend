@@ -99,6 +99,9 @@ class Products
 			$referer_price_discount 	= (!$product->getVariable('referer_price_discount')) ? 0 : $product->getVariable('referer_price_discount');
 			$sorrend 			= (!$product->getVariable('sorrend')) ? 0 : $product->getVariable('sorrend');
 
+			$mertekegyseg = (!$product->getVariable('mertekegyseg')) ? NULL : $product->getVariable('mertekegyseg');
+			$mertekegyseg_ertek = (!$product->getVariable('mertekegyseg_ertek')) ? 1 : $product->getVariable('mertekegyseg_ertek');
+
 			// Csatolt hivatkozások előkészítése
 			if( $link_list ) {
 				foreach( $link_list as $lnev => $url ){
@@ -150,7 +153,9 @@ class Products
 					'ajanlorendszer_kiemelt' => $ajanlorendszer_kiemelt,
 					'referer_price_discount' => $referer_price_discount,
 					'sorrend' => $sorrend,
-					'show_stock' => $show_stock
+					'show_stock' => $show_stock,
+					'mertekegyseg' => $mertekegyseg,
+					'mertekegyseg_ertek' => $mertekegyseg_ertek,
 				)
 			);
 
@@ -321,6 +326,9 @@ class Products
 			$sorrend 			= (!$product->getVariable('sorrend')) ? 0 : $product->getVariable('sorrend');
 			$prices = (!$product->getVariable('prices')) ? false : (array)$product->getVariable('prices');
 
+			$mertekegyseg = (!$product->getVariable('mertekegyseg')) ? NULL : $product->getVariable('mertekegyseg');
+			$mertekegyseg_ertek = (!$product->getVariable('mertekegyseg_ertek')) ? 1 : $product->getVariable('mertekegyseg_ertek');
+
 			// Csatolt hivatkozások előkészítése
 			if( $link_list ) {
 				foreach( $link_list as $lnev => $url ){
@@ -396,7 +404,9 @@ class Products
 					'ar3' => $prices['ar3'],
 					'ar4' => $prices['ar4'],
 					'ar5' => $prices['ar5'],
-					'ar6' => $prices['ar6']
+					'ar6' => $prices['ar6'],
+					'mertekegyseg' => $mertekegyseg,
+					'mertekegyseg_ertek' => $mertekegyseg_ertek,
 				),
 				sprintf("ID = %d", $product->getId())
 			);
@@ -640,15 +650,14 @@ class Products
 		$qry .= " FROM
 		shop_termekek as p
 		LEFT OUTER JOIN shop_termek_parameter as pa ON pa.termekID = p.ID
-		WHERE 1 = 1
-		";
+		WHERE 1 = 1	";
 
 		$whr = '';
 		$size_whr = '';
 		$add = '';
 
 		if (!$admin_listing) {
-			$add = " and p.lathato = 1 and p.profil_kep IS NOT NULL ";
+			$add = " and (SELECT ws.author_id FROM shop_settings as ws WHERE p.author = ws.author_id) IS NOT NULL and p.lathato = 1 and p.profil_kep IS NOT NULL ";
 			$whr .= $add;
 			$size_whr .= $add;
 
@@ -659,7 +668,6 @@ class Products
 				/* $add = " and p.fotermek = 1 ";
 				$whr .= $add;*/
 			}
-
 		}
 
 		/**
@@ -1012,6 +1020,7 @@ class Products
 			$d['parameters'] 		= $this->getParameters( $d['product_id'], $d['alapertelmezett_kategoria'] );
 			$d['price_groups'] 	= $this->priceGroups( $d['product_id'] );
 			$d['inKatList'] 		= $in_cat;
+			$d['mertekegyseg_egysegar'] = $this->calcEgysegAr($d['mertekegyseg'], $d['mertekegyseg_ertek'], $d['ar']);
 			//$d['ar'] 				= $arInfo['ar'];
 			//$d['akcios_fogy_ar']	= $akcios_arInfo['ar'];
 			//$d['arres_szazalek'] 	= $arInfo['arres'];
@@ -1769,11 +1778,36 @@ class Products
 		$data['documents'] = $this->getTermDocuments( $product_id );
 		// Linkek
 		$data['link_lista']	= $this->getProductLinksFromStr( $data['linkek'] );
+
+		$data['mertekegyseg_egysegar'] = $this->calcEgysegAr($data['mertekegyseg'], $data['mertekegyseg_ertek'], $data['ar']);
+
 		// Csatolt link hivatkozások
 		$this->getProductLinksFromCategoryHashkeys( $data['in_cat_page_hashkeys'], $data['link_lista'] );
 
 		return $data;
 	}
+
+	public function calcEgysegAr( $me, $mevar, $price)
+	{
+		$ea = 0;
+		$mert = $me;
+		switch ( $me ) {
+			case 'm':
+				$ea = $price / $mevar;
+			break;
+			case 'ml':
+				$ea = $price / $mevar * 1000;
+				$mert = 'l';
+			break;
+		}
+
+		if ($ea == 0 || $mevar == 1) {
+			return false;
+		} else {
+			return number_format($ea,2, ".", " ") . ' Ft/'.$mert;
+		}
+	}
+
 
 	public function checkProductTransportName( $szallitasID, $keszlet = 1 )
 	{

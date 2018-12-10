@@ -48,7 +48,7 @@
             </div>
           <?php else: ?>
             <div class="ar">
-              <div class="old"><?=Helper::cashFormat($ar)?> <?=$valuta?> helyett</div>
+              <div class="old"></div>
               <div class="current"><?=Helper::cashFormat($ar)?> <?=$valuta?></div>
             </div>
           <?php endif; ?>

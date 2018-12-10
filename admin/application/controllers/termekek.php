@@ -304,6 +304,8 @@ class termekek extends Controller
 								'ajandek' => $_POST['ajandek'],
 								'termek_site_url' => $_POST['termek_site_url'],
 								'tudastar_url' => $_POST['tudastar_url'],
+								'mertekegyseg' => $_POST['mertekegyseg'],
+								'mertekegyseg_ertek' => $_POST['mertekegyseg_ertek'],
 								'referer_price_discount' => $_POST['referer_price_discount'],
 								'show_stock' => $_POST['show_stock'],
 								'sorrend' =>  (isset($_POST['sorrend']) ? $_POST['sorrend'] : 100),

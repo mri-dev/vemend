@@ -20,6 +20,7 @@ class Categories
 	public $table = 'shop_termek_kategoriak';
 	public $authorid = 0;
 	public $onlyauthor = false;
+	public $ws = false;
 
 	function __construct( $arg = array() )
 	{
@@ -29,6 +30,9 @@ class Categories
 		}
 		if (isset($arg['onlyauthor'])) {
 			$this->onlyauthor = $arg['onlyauthor'];
+		}
+		if (isset($arg['ws'])) {
+			$this->ws = $arg['ws'];
 		}
 
 		return $this;
@@ -154,35 +158,46 @@ class Categories
 	public function getTree( $top_category_id = false, $arg = array() )
 	{
 		$tree 		= array();
+		$wsfilter = '';
 
 		if ( $top_category_id ) {
 			$this->parent_data = $this->db->query( sprintf("SELECT * FROM ".$this->table." WHERE ID = %d", $top_category_id) )->fetch(\PDO::FETCH_ASSOC);
 		}
 
+		if ($this->ws) {
+			$wsfilter = "(SELECT count(k.ID) FROM shop_termek_in_kategoria as k LEFT OUTER JOIN shop_termekek as sp ON sp.ID = k.termekID LEFT OUTER JOIN shop_settings as ws ON ws.author_id = sp.author WHERE sp.lathato = 1 and k.kategoria_id = cat.ID and ws.author_id IS NOT NULL )";
+		}
+
 		// Legfelső színtű kategóriák
-		$qry = "
-			SELECT 			*
-			FROM 			".$this->table."
-			WHERE 			1=1 ";
+		$qry = "SELECT cat.*";
+		if ($this->ws) {
+			$qry .= ", ".$wsfilter." as prod";
+		}
+		$qry .= " FROM	".$this->table." as cat ";
+
+		$qry .= " WHERE	1=1 ";
 
 		if ( $this->authorid != 0 && $this->onlyauthor === true ) {
-		 $qry .= " and author = ". (int)$this->authorid;
+		 $qry .= " and cat.author = ". (int)$this->authorid;
 		}
 
 		if ( !$top_category_id ) {
-			$qry .= " and szulo_id IS NULL ";
+			$qry .= " and cat.szulo_id IS NULL ";
 		} else {
-			$qry .= " and  szulo_id = ".$top_category_id;
+			$qry .= " and cat.szulo_id = ".$top_category_id;
 		}
 
 		// ID SET
 		if( isset($arg['id_set']) && count($arg['id_set']) )
 		{
-			$qry .= " and ID IN (".implode(",",$arg['id_set']).") ";
+			$qry .= " and cat.ID IN (".implode(",",$arg['id_set']).") ";
 		}
 
-		$qry .= " ORDER BY 		sorrend ASC, ID ASC;";
+		if ($this->ws) {
+			$qry .= " and (SELECT count(k.ID) FROM shop_termek_in_kategoria as k LEFT OUTER JOIN shop_termekek as sp ON sp.ID = k.termekID LEFT OUTER JOIN shop_settings as ws ON ws.author_id = sp.author WHERE sp.lathato = 1 and k.kategoria_id = cat.ID and ws.author_id IS NOT NULL ) != 0 ";
+		}
 
+		$qry .= " ORDER BY cat.sorrend ASC, cat.ID ASC;";
 		$top_cat_qry 	= $this->db->query($qry);
 		$top_cat_data 	= $top_cat_qry->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -196,7 +211,7 @@ class Categories
 			$this->tree_steped_item[] = $top_cat;
 
 			// Alkategóriák betöltése
-			$top_cat['child'] = $this->getChildCategories($top_cat['ID']);
+			$top_cat['child'] = $this->getChildCategories($top_cat['ID'], $arg);
 			$tree[] = $top_cat;
 		}
 
@@ -252,17 +267,32 @@ class Categories
 	 * @param  int $parent_id 	Szülő kategória ID
 	 * @return array 			Szülő kategória alkategóriái
 	 */
-	public function getChildCategories( $parent_id )
+	public function getChildCategories( $parent_id, $arg = array() )
 	{
 		$tree = array();
+		$qryparam = array();
 
+		if ($this->ws) {
+			$wsfilter = "(SELECT count(k.ID) FROM shop_termek_in_kategoria as k LEFT OUTER JOIN shop_termekek as sp ON sp.ID = k.termekID LEFT OUTER JOIN shop_settings as ws ON ws.author_id = sp.author WHERE sp.lathato = 1 and k.kategoria_id = cat.ID and ws.author_id IS NOT NULL  )";
+		}
+
+		$qry = "SELECT cat.*";
+
+		if ($this->ws) {
+			$qry .= ", ".$wsfilter." as prod";
+		}
+
+		$qry .= " FROM ".$this->table." as cat";
+
+		$qry .= " WHERE cat.szulo_id = :parent";
+		if ($this->ws) {
+			$qry .= " and (SELECT count(k.ID) FROM shop_termek_in_kategoria as k LEFT OUTER JOIN shop_termekek as sp ON sp.ID = k.termekID LEFT OUTER JOIN shop_settings as ws ON ws.author_id = sp.author WHERE sp.lathato = 1 and k.kategoria_id = cat.ID and ws.author_id IS NOT NULL ) != 0  ";
+		}
+		$qry .= " ORDER BY cat.sorrend ASC, cat.ID ASC";
+		$qryparam['parent'] = $parent_id;
 
 		// Gyerek kategóriák
-		$child_cat_qry 	= $this->db->query( sprintf("
-			SELECT 			*
-			FROM 			".$this->table."
-			WHERE 			szulo_id = %d
-			ORDER BY 		sorrend ASC, ID ASC;", $parent_id));
+		$child_cat_qry 	= $this->db->squery( $qry, $qryparam );
 		$child_cat_data	= $child_cat_qry->fetchAll(\PDO::FETCH_ASSOC);
 
 		if( $child_cat_qry->rowCount() == 0 ) return false;
@@ -272,7 +302,7 @@ class Categories
 			$child_cat['kep'] 	= ($child_cat['kep'] == '') ? '/src/images/no-image.png' : $child_cat['kep'];
 			$this->tree_steped_item[] = $child_cat;
 
-			$child_cat['child'] = $this->getChildCategories($child_cat['ID']);
+			$child_cat['child'] = $this->getChildCategories($child_cat['ID'], $arg);
 			$tree[] = $child_cat;
 		}
 

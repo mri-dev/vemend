@@ -197,11 +197,11 @@
 					</div>
 
 					<div class="row">
-						<div class="form-group col-md-3">
+						<div class="form-group col-md-6">
 							<label for="szin">Típus variácó <?=\PortalManager\Formater::tooltip('Több variáció esetén variációk hozhatóak létre, melyet ennél az értéknél lehet megadni. Azonos típus azonosító törzskód és eltérő variácó meghatározásánál a rendszer automatikusan összekapcsolja a termékeket és átjárást biztosít a termék adatlapokon.<br>Pl.: zöld, piros, 16mm, 10 fm, 2x4x10mm, stb...')?></label>
 							<input type="text" class="form-control" name="szin" id="szin" value="<?=$this->termek['szin']?>">
 						</div>
-						<? if(true): ?>
+						<? if(false): ?>
 						<div class="form-group col-md-3">
 							<label for="meret">Kiszerelés <?=\PortalManager\Formater::tooltip('Termékenkét termékkapcsolat hozható létre, amennyiben több fajta kiszerelés van egy-egy azonos termék esetében. Adjuk meg a kiszerelést és ez alapján a vásárló válogathat.<br>Pl.: 1 liter, 1 vödör, 1 zsák, 25 kg, 100 db / csomag, stb...')?></label>
 							<input type="text" class="form-control" name="meret" id="meret" placeholder="1 darab, 25 liter, 100 db / csomag, stb..." value="<?=$this->termek['meret']?>">
@@ -239,9 +239,26 @@
 					</div>
 
 					<div class="row">
-						<div class="form-group col-md-12">
+						<div class="form-group col-md-6">
 							<label for="tudastar_url">Tudástár URL <?=\PortalManager\Formater::tooltip('A termék adatlapon megjelenő tudástár hivatkozásra kattintva erre az URL-re fog érkezni a látogató. Ez lehet egy előzetesen leszűrt (kulcsszó vagy konkrét cikk alapján) tudástár hivatkozás, mely a termékkel kapcsolatos cikk(ek)et listázza ki.')?></label>
 							<input type="text" class="form-control" name="tudastar_url" id="tudastar_url" value="<?=$this->termek['tudastar_url']?>">
+						</div>
+						<div class="form-group col-md-3">
+							<label for="mertekegyseg">Mértékegység</label>
+							<select class="form-control" name="mertekegyseg" id="mertekegyseg">
+								<option value="" selected="selected">--</option>
+								<?php
+									$mes = array('db','méter','ml', 'cl', 'dkg', 'g', 'kg', 'doboz', 'csomag', 'zsák', 'zacskó', 'készlet', 'szett');
+									asort($mes);
+								?>
+								<?php foreach ($mes as $m): ?>
+									<option value="<?=$m?>" <?=($m == $this->termek['mertekegyseg'])?'selected="selected"':''?>><?=$m?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+						<div class="form-group col-md-3">
+							<label for="mertekegyseg_ertek">Mértékegység érték</label>
+							<input type="text" class="form-control" name="mertekegyseg_ertek" id="mertekegyseg_ertek" value="<?=$this->termek['mertekegyseg_ertek']?>">
 						</div>
 					</div>
 
