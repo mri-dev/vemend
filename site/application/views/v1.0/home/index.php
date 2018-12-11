@@ -340,7 +340,17 @@
           </div>
         </div>
         <div class="cont">
-          <?php echo $this->render("templates/webshop_lista"); ?>
+          <div class="webshop-product-top">
+            <div class="items show4prod">
+                <? foreach ( $this->product_list as $p ) {
+                    $p['itemhash'] = hash( 'crc32', microtime() );
+                    $p['sizefilter'] = ( count($this->products->getSelectedSizes()) > 0 ) ? true : false;
+                    $p['show_variation'] = ($this->myfavorite) ? true : false;
+                    $p = array_merge( $p, (array)$this );
+                    echo $this->template->get( 'product_item', $p );
+                } ?>
+            </div>
+          </div>
         </div>
       </div>
     </div>

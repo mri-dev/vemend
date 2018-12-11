@@ -1015,7 +1015,7 @@ class Products
 			// Kategória lista, ahol szerepel a termék
 			$in_cat = $this->getCategoriesWhereProductIn( $d['product_id'] );
 
-			$d['link'] 				= DOMAIN.'termek/'.\PortalManager\Formater::makeSafeUrl( $d['product_nev'], '_-'.$d['product_id'] );
+			$d['link'] 				= $d['ws']['shopurl'].'/'.\PortalManager\Formater::makeSafeUrl( $d['product_nev'], '_-'.$d['product_id'] );
 			$d['hasonlo_termek_ids']= $this->getProductRelatives( $d['product_id'] );
 			$d['parameters'] 		= $this->getParameters( $d['product_id'], $d['alapertelmezett_kategoria'] );
 			$d['price_groups'] 	= $this->priceGroups( $d['product_id'] );
@@ -1736,7 +1736,8 @@ class Products
 		");
 
 		$data = $q->fetch(\PDO::FETCH_ASSOC);
-
+		$data['ws'] = $this->getWebshopSettings( $data['author'] );
+		$data['author'] = $this->getAuthorData( $data['author'] );
 
 		$brutto_ar 			= $data['brutto_ar'];
 		$akcios_brutto_ar 	= $data['akcios_brutto_ar'];

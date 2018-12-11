@@ -1285,9 +1285,9 @@ body.singlepage{
 
 						.current{
 							font-weight: bold;
-							color: #f36565;
-					    font-size: 0.95rem;
-					    line-height: 28px;
+							color: #f36565;							
+					    font-size: 1.1rem;
+					    line-height: 1.5rem;
 							text-align: right;
 						}
 
@@ -1324,6 +1324,7 @@ body.singlepage{
 				}
 
 				a{
+    			font-weight: bold;
 					color: #202020;
 					display: block;
 					overflow: hidden;
@@ -1362,7 +1363,7 @@ body.singlepage{
 				}
 
 				a{
-					color: $color-grey-dark;
+					color: #8e8e8e;
 					display: block;
 					height: 32px;
 				}
@@ -1396,19 +1397,11 @@ body.singlepage{
 					text-align: center;
 					text-transform: uppercase;
 					color:#8e8e8e;
+					border-left: 0.5px solid #e0e0e0;
 					cursor: pointer;
 					i{
 						font-size: 13px;
 						margin: 0 3px 0 0;
-					}
-					&:hover{
-						background: $color-orange;
-						color: white;
-					}
-
-					&.selected{
-						background: $color-red;
-						color: white;
 					}
 				}
 			}
@@ -1420,6 +1413,13 @@ body.singlepage{
 				.short-desc{
 					bottom: 0;
 				}
+			}
+		}
+
+
+		&.show4prod{
+			& > .item{
+				flex-basis: calc(100% / 4);
 			}
 		}
 	}
@@ -2477,8 +2477,20 @@ body.singlepage{
 	.divider {
 		margin: 15px 0;
 	}
-	& > .product-data {
-		padding: 25px 0 0 0;
+	& > .page-width{
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		flex-wrap: wrap;
+		& > .filter-sidebar{
+			flex-basis: $size-sidebar;
+		}
+		& > .product-data{
+			flex: 1;
+			padding: 0 0 0 20px;
+		}
+	}
+	.product-data {
 		.nav{
 			display: -webkit-box;
 			display: -ms-flexbox;
@@ -2486,7 +2498,7 @@ body.singlepage{
 			flex-wrap: wrap;
 			align-items: flex-start;
 			border-bottom: 1px solid #f1f1f1;
-			margin: 0 0 10px 0;
+			margin: 10px 0 15px 0;
 
 			& > .pagi{
 				flex-basis: 70%;
@@ -2503,7 +2515,7 @@ body.singlepage{
 			display: -webkit-box;
 		  display: -ms-flexbox;
 		  display: flex;
-			flex-wrap: wrap;
+			flex-wrap: nowrap;
 			align-items: flex-start;
 
 			& > div{
@@ -2512,7 +2524,6 @@ body.singlepage{
 
 			.images{
 				padding-right: 10px;
-     		padding-top: 25px;
 				.main-img{
 					border: .4px solid #e0e0e0;
 					overflow: hidden;
@@ -2531,7 +2542,7 @@ body.singlepage{
 					}
 
 					img {
-						max-width: 90%;
+						max-width: 95%;
 						position: absolute;
 						top: 50%;
 						left: 50%;
@@ -2590,20 +2601,32 @@ body.singlepage{
 			}
 
 			.main-data {
-				padding-left: 20px;
+				padding-left: 5px;
 				h1 {
 					font-weight: bold;
-					font-size: 3em;
-					line-height: 1.2;
+			    font-size: 1.8rem;
+			    line-height: 1.5rem;
+					text-transform: none;
 				}
 				.csoport {
-					color: #404040;
-					font-size: 2em;
-					margin: 5px 0;
+					color: #6b6b6b;
+					font-size: 1.4rem;
+					margin: 10px 0 0 0;
+				}
+				.author{
+					padding: 10px 0;
+
+					a{
+						text-decoration: none;
+						color: $color-green;
+						&:hover{
+							color: black;
+						}
+					}
 				}
 				.prices {
-					margin-top: 20px;
-					font-size: 1.6em;
+					margin-top: 10px;
+					font-size: 1.4rem;
 					position: relative;
 
 					.cimkek{
@@ -2613,7 +2636,6 @@ body.singlepage{
 					}
 
 					.base {
-						margin-right: 100px;
 						display: -webkit-box;
 					  display: -ms-flexbox;
 					  display: flex;
@@ -2631,12 +2653,8 @@ body.singlepage{
 							color: #3c3c3c;
 
 							&.current{
-								color: $color-blue;
-								font-size: 1.3em;
-
-								&.discounted{
-									color: $color-red;
-								}
+								color: $color-red;
+								font-size: 1.8rem;
 							}
 
 							&.old{
@@ -2646,8 +2664,8 @@ body.singlepage{
 							}
 						}
 
-						& > div {
-							flex-basis: calc(100% / 2);
+						& > .brutto {
+							flex-basis: 100%;
 						}
 					}
 				}
@@ -2860,10 +2878,10 @@ body.singlepage{
 			}
 		}
 		.more-datas{
-			background: #fafafa;
-			border-top: 1px solid #949494;
+			border-top: 1px solid #e6e6e6;
 			margin: 50px 0 0 0;
     	padding: 25px 0;
+			position: relative;
 
 			.actions{
 				position: absolute;
@@ -3083,14 +3101,10 @@ body.singlepage{
 				}
 			}
 
-			.page-width{
-				position: relative;
-			}
-
 			nav.tab-header{
 				position: absolute;
 				left: 0;
-				top: -62px;
+				top: -38px;
 				ul{
 					display: -webkit-box;
 				  display: -ms-flexbox;
@@ -3102,14 +3116,10 @@ body.singlepage{
 						padding: 0 10px 0 0;
 
 						a{
-							font-size: 1.15em;
+							font-size: 1.15rem;
 							display: block;
 							padding: 10px 15px;
-							text-transform: uppercase;
-							font-weight: bold;
-							background: #e8e8e8;
-							border: 1px solid #dbdbdb;
-							border-bottom: none;
+							border-bottom: 2px solid transparent;
 							border-radius: 4px 4px 0 0;
 							color: #333333;
 							text-decoration: none;
@@ -3117,9 +3127,8 @@ body.singlepage{
 
 						&.active {
 							a{
-								background: #3e3e3e;
-								color: white;
-								border: 1px solid #3e3e3e;
+								color: black;
+								border-bottom: 2px solid $color-orange;
 							}
 						}
 					}
@@ -3127,22 +3136,13 @@ body.singlepage{
 			}
 
 			.holder{
-				display: -webkit-box;
-			  display: -ms-flexbox;
-			  display: flex;
-				flex-wrap: wrap;
-				align-items: flex-start;
 
-				& > div{
-					flex-basis: 50%;
-				}
 			}
 
 			.info-texts{
-				padding-right: 10px;
-
+				font-size: 1rem;
 				.no-data{
-					font-size: 1.2em;
+					font-size: 1rem;
 					background: white;
 					border: 1px solid #f1f1f1;
 					padding: 15px;
@@ -5952,7 +5952,7 @@ input[type=checkbox]:checked + label:before {
 }
 
 .divider {
-	height: 0.5px;
+	height: 1px;
 	background: #c8cbcc;
 	display:block;
 }

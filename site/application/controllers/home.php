@@ -4,6 +4,7 @@ use PortalManager\Programs;
 use PortalManager\EtlapAPI;
 use ProductManager\Products;
 use SzallasManager\SzallasList;
+use PortalManager\Template;
 
 class home extends Controller{
 		function __construct(){
@@ -12,6 +13,10 @@ class home extends Controller{
 
 			$this->out('homepage', true);
 			$this->out('bodyclass', 'homepage');
+
+			// Template
+			$temp = new Template( VIEW . 'templates/' );
+			$this->out( 'template', $temp );
 
 			// Hírek
 			$news = new News( false, array( 'db' => $this->db ) );
@@ -97,6 +102,18 @@ class home extends Controller{
 				'admin' => false
 			));
 			$this->out('szallasok', $szallasok);
+
+
+			$arg = array(
+				'limit' 	=> 2
+			);
+
+			$products = (new Products( array(
+				'db' => $this->db
+			) ))->prepareList( $arg );
+
+			$this->out( 'products', $products );
+			$this->out( 'product_list', $products->getList() );
 
 			//
 			/*

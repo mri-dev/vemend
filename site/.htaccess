@@ -25,7 +25,13 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
-RewriteRule ^webshop/([0-9a-zA-Z_-]+)$ index.php?tag=termekek&listbyauthor=$1 [QSA,L]
+RewriteRule ^webshop/bolt/([0-9a-zA-Z_-]+)$ index.php?tag=termekek&listbyauthor=$1 [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^webshop/([0-9a-zA-Z_-]+)/([0-9a-zA-Z_-]+)$ index.php?tag=termek/$2 [QSA,L]
 
 # Cikkek
 RewriteCond %{REQUEST_FILENAME} !-f

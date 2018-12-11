@@ -60,9 +60,8 @@
       <div class="link">
         <button type="button" id="btn-add-p<?=$product_id?>" cart-data="<?=$product_id?>" cart-progress="btn-add-p<?=$product_id?>" cart-me="1" cart-remsg="cart-msg" class="cart tocart"><img src="<?=IMG?>shopcart-ico-grey.svg" alt="Kosárba"> Kosárba</button>
       </div>
-      <div class="fav" ng-class="(fav_ids.indexOf(<?=$product_id?>) !== -1)?'selected':''" title="Kedvencekhez adom" ng-click="productAddToFav(<?=$product_id?>, $event)">
-        <i class="fa fa-star" ng-show="fav_ids.indexOf(<?=$product_id?>) !== -1"></i>
-        <i class="fa fa-star-o" ng-show="fav_ids.indexOf(<?=$product_id?>) === -1"></i> Kedvencekhez
+      <div class="fav">
+        <a href="<?=$link?>"><i class="fa fa-eye"></i> Megtekintés</a>
       </div>
     </div>
   </div>
