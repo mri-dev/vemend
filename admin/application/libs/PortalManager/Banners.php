@@ -54,8 +54,9 @@ class Banners implements InstallModules
     return $url;
   }
 
-  public function render( $format, $banners = array() )
+  public function render( $format, $banners = array(), $arg = array() )
   {
+    $classes = '';
     switch ($format) {
       case '1P1':
        $groupslug = '1p1';
@@ -73,7 +74,12 @@ class Banners implements InstallModules
     if (empty($banners)) {
       return false;
     }
-    $r = '<div class="banners"><div class="groups group-of-'.$groupslug.'">';
+
+    if (isset($arg['class'])) {
+        $classes .= $arg['class'];
+    }
+
+    $r = '<div class="banners '.$classes.'"><div class="groups group-of-'.$groupslug.'">';
       foreach ((array)$banners as $banner) {
         $this->logShow($banner);
         $r .= '<div class="banner"><div class="wrapper by-width autocorrett-height-by-width" data-image-ratio="'.$this->getRatio($format).'">';

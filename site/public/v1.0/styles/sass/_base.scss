@@ -1279,13 +1279,13 @@ body.singlepage{
 						justify-content: center;
 
 						& > div {
-							padding: 0 15px;
+							padding: 5px 15px;
 							flex-basis: 50%;
 						}
 
 						.current{
 							font-weight: bold;
-							color: #f36565;							
+							color: #f36565;
 					    font-size: 1.1rem;
 					    line-height: 1.5rem;
 							text-align: right;
@@ -1807,7 +1807,7 @@ body.singlepage{
 			align-items: center;
 
 			& > .img {
-				flex-basis: 40%;
+				flex-basis: 20%;
 			}
 
 			& > .data {
@@ -1824,9 +1824,22 @@ body.singlepage{
 					color: $color-orange;
 				}
 			}
-
+			.name {
+				font-weight: bold;
+			}
 			.desc {
-				font-size: 0.9em;
+				font-size: 0.8rem;
+		    color: #7c7c7c;
+		    margin: 3px 0 0 0;
+			}
+			.price {
+				font-weight: bold;
+				color: $color-red;
+				margin: 4px 0 0 0;
+				.unit-text {
+					font-size: 0.7rem;
+					font-weight: 400;
+				}
 			}
 
 			&:last-child{
@@ -1841,12 +1854,6 @@ body.singlepage{
 					height: 1px;
 					display: block;
 					content: "";
-				}
-			}
-			.img{
-				img {
-					max-width: 100%;
-					width: 100%;
 				}
 			}
 		}
@@ -2642,6 +2649,11 @@ body.singlepage{
 						flex-wrap: wrap;
 						align-items: flex-start;
 
+						.unit-text{
+							font-size: 0.8rem;
+							font-weight: 400;
+						}
+
 						.pricehead{
 							font-size: 0.6em;
 							margin: 0 0 8px 0;
@@ -2666,6 +2678,12 @@ body.singlepage{
 
 						& > .brutto {
 							flex-basis: 100%;
+
+							.egysegar{
+								font-size: 0.8rem;
+								margin: 5px 0 0 0;
+    						color: #7b7b7b;
+							}
 						}
 					}
 				}
@@ -3822,7 +3840,7 @@ md-toast{
 			font-size: 20px;
 		}
 		.sub .ar {
-			color: $color-blue;
+			color: $color-orange;
 			font-size: 1.3em;
 			font-weight: bold;
 		}
@@ -4518,15 +4536,19 @@ md-toast{
 .cartItems .item .nev a{
 	font-family: 'Din Comp', sans-serif;
 	text-transform: uppercase;
-	font-size:1.2em;
+	font-size:1.1rem;
 	font-weight: bold;
-	color: $color-blue;
+	color: black;
 	line-height: 28px;
 }
 .cartItems .item-header{
 	color: #aaa;
 	font-family: 'Din Comp', sans-serif;
 	margin-bottom: 8px;
+}
+
+.cartItems table.table-bordered{
+	background: white;
 }
 
 .nextOrded .steps {
@@ -4584,7 +4606,7 @@ md-toast{
 	font-family: 'Din Comp', sans-serif;
 	text-transform: uppercase;
 	font-weight: bold;
-	background: $color-blue;
+	background: $color-orange;
 	color: white;
 	font-size: 2.2em;
 }
@@ -4666,7 +4688,7 @@ md-toast{
 				color: white;
 			}
 			&.login{
-				background: $color-blue;
+				background: $color-red;
 				color: white;
 			}
 		}
@@ -4961,7 +4983,7 @@ md-toast{
 
 	.cartInfo {
 		color: white;
-		background: #404040;
+		background: #424242;
     padding: 20px;
     line-height: 1;
 		font-size: 1.2em;
@@ -4994,7 +5016,7 @@ md-toast{
 			font-size: 1.3em;
 			text-align: center;
 			text-transform: uppercase;
-			background: $color-red;
+			background: $color-orange;
 			border: none;
 			height: 56px;
 			line-height: 1;
@@ -9291,6 +9313,13 @@ body.szallasok{
 		}
 		&.groups.group-of-billboard > .banner{
 			flex-basis: calc(100% / 1);
+		}
+	}
+
+	&.show-x1{
+		.groups.groups > .banner{
+			flex-basis: 100% !important;
+			padding: 5px 15px;
 		}
 	}
 }

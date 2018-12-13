@@ -1,5 +1,5 @@
 <?php
-  $ar = $this->product['brutto_ar'];
+  $ar = $this->product['ar'];
 
   if( $this->product['akcios'] == '1' && $this->product['akcios_fogy_ar'] > 0)
   {
@@ -70,12 +70,17 @@
                   </div>
                 <?php else: ?>
                   <div class="brutto">
-                    <span class="price current <?=( $this->product['akcios'] == '1' && $this->product['akcios_fogy_ar'] > 0)?'discounted':''?>"><?=\PortalManager\Formater::cashFormat($ar)?> <?=$this->valuta?></span>
+                    <span class="price current <?=( $this->product['akcios'] == '1' && $this->product['akcios_fogy_ar'] > 0)?'discounted':''?>"><?=\PortalManager\Formater::cashFormat($ar)?> <?=$this->valuta?><? if($this->product['mertekegyseg'] != ''): ?><span class="unit-text">/<?=($this->product['mertekegyseg_ertek']!=1)?$this->product['mertekegyseg_ertek']:''?><?=$this->product['mertekegyseg']?></span><? endif; ?></span>
                     <?  if( $this->product['akcios'] == '1' && $this->product['akcios_fogy_ar'] > 0):
                         $ar = $this->product['akcios_fogy_ar'];
                     ?>
-                    <span class="price old"><strike><?=\PortalManager\Formater::cashFormat($this->product['ar'])?> <?=$this->valuta?></strike></span>
-                    <? endif; ?>
+                    <span class="price old"><strike><?=\PortalManager\Formater::cashFormat($this->product['ar'])?> <?=$this->valuta?><? if($this->product['mertekegyseg'] != ''): ?><span class="unit-text">/<?=($this->product['mertekegyseg_ertek']!=1)?$this->product['mertekegyseg_ertek']:''?><?=$this->product['mertekegyseg']?></span><? endif; ?></strike></span>
+                    <? endif; ?>                    
+                    <?php if ($this->product['mertekegyseg_egysegar']): ?>
+                    <div class="egysegar">
+                     Egységár: <strong><?php echo $this->product['mertekegyseg_egysegar']; ?></strong>
+                    </div>
+                    <?php endif; ?>
                   </div>
                 <?php endif; ?>
               </div>
@@ -126,6 +131,12 @@
             <div class="divider"></div>
             <div class="cart-info">
               <div id="cart-msg"></div>
+              <? if($this->product['mertekegyseg'] != ''): ?>
+                <div class="kiszereles">
+                  Kiszerelés: <span class="unit-text"><strong><?=($this->product['mertekegyseg_ertek']!=1)?$this->product['mertekegyseg_ertek']:''?><?=$this->product['mertekegyseg']?></strong></span>
+                </div>
+              <? endif; ?>
+
               <? if($this->settings['stock_outselling'] == '0' && $this->product['raktar_keszlet'] <= 0): ?>
               <div class="out-of-stock">
                 A termék jelenleg nem rendelhető.

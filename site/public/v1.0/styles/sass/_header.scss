@@ -9,7 +9,7 @@ header {
 		padding: 0;
 
 		& > .pw > .flex {
-			justify-content: space-between;
+			justify-content: flex-end;
 		}
 
 		.flex {
@@ -62,7 +62,18 @@ header {
 				}
 			}
 		}
+		.user{
+			flex-basis: 200px;
+			text-align: right;
+			padding: 0 10px;
+			color: black;
+			a{
+				color: black;
+				text-decoration: none;
+			}
+		}
 		.navs{
+			flex: 1;
 			.flex {
 				& > div {
 					height: 40px;

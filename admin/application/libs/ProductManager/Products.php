@@ -509,16 +509,25 @@ class Products
 	{
 		$data = array();
 
+		$uid = (int)$this->user[data][ID];
+
 		$q = "SELECT
 			v.*,
+			getTermekAr(t.ID, ".$uid.") as ar,
 			t.nev as product_nev,
+			t.mertekegyseg,
+			t.mertekegyseg_ertek,
 			t.ID as product_id,
 			t.profil_kep,
 			t.csoport_kategoria
 		FROM `shop_utoljaraLatottTermek` as v
 		LEFT OUTER JOIN shop_termekek as t ON t.ID = v.termekID
 		LEFT OUTER JOIN shop_markak as m ON m.ID = t.marka
-		WHERE v.mID != '$mID' and t.ID IS NOT NULL and t.lathato = 1
+		WHERE
+		 	1=1 and
+			v.mID != '$mID' and
+			t.lathato = 1 and
+			(SELECT ws.author_id FROM shop_settings as ws WHERE t.author = ws.author_id) IS NOT NULL
 		GROUP BY t.ID
 		ORDER BY v.idopont DESC
 		LIMIT 0,$limit";
@@ -544,16 +553,25 @@ class Products
 	{
 		$data = array();
 
+		$uid = (int)$this->user[data][ID];
+
 		$q = "SELECT
 			v.*,
+			getTermekAr(t.ID, ".$uid.") as ar,
 			t.nev as product_nev,
+			t.mertekegyseg,
+			t.mertekegyseg_ertek,
 			t.ID as product_id,
 			t.profil_kep,
 			t.csoport_kategoria
 		FROM `shop_utoljaraLatottTermek` as v
 		LEFT OUTER JOIN shop_termekek as t ON t.ID = v.termekID
 		LEFT OUTER JOIN shop_markak as m ON m.ID = t.marka
-		WHERE v.mID = '$mID' and t.ID IS NOT NULL and t.lathato = 1
+		WHERE
+			1=1 and
+			v.mID = '$mID' and
+			t.lathato = 1 and
+			(SELECT ws.author_id FROM shop_settings as ws WHERE t.author = ws.author_id) IS NOT NULL
 		ORDER BY v.idopont DESC
 		LIMIT 0,$limit";
 
@@ -1722,11 +1740,14 @@ class Products
 			$row = rtrim( $opt['rows'], ',' );
 		}
 
+		$uid = (int)$this->user[data][ID];
+
 		$q = $this->db->query("
 			SELECT 			$row,
-							k.neve as kategoriaNev,
-							ta.elnevezes as keszletNev,
-							sza.elnevezes as szallitasNev
+					getTermekAr(t.ID, ".$uid.") as ar,
+					k.neve as kategoriaNev,
+					ta.elnevezes as keszletNev,
+					sza.elnevezes as szallitasNev
 			FROM 			shop_termekek as t
 			LEFT OUTER JOIN shop_termek_kategoriak as k ON k.ID = t.alapertelmezett_kategoria
 			LEFT OUTER JOIN shop_termek_allapotok as ta ON ta.ID = t.keszletID
@@ -1739,7 +1760,7 @@ class Products
 		$data['ws'] = $this->getWebshopSettings( $data['author'] );
 		$data['author'] = $this->getAuthorData( $data['author'] );
 
-		$brutto_ar 			= $data['brutto_ar'];
+		$brutto_ar 			= $data['ar'];
 		$akcios_brutto_ar 	= $data['akcios_brutto_ar'];
 
 		$kep = $data['profil_kep'];
@@ -1753,8 +1774,8 @@ class Products
 			$arInfo['ar'] = $arInfo['ar'];
 		}
 
-		$arInfo['ar'] 			= ($this->settings['round_price_5'] == '1') ? round($arInfo['ar'] / 5) * 5 : $arInfo['ar'] ;
-		$akcios_arInfo['ar'] 	= ($this->settings['round_price_5'] == '1') ? round($akcios_arInfo['ar'] / 5) * 5 : $akcios_arInfo['ar'] ;
+		//$arInfo['ar'] 			= ($this->settings['round_price_5'] == '1') ? round($arInfo['ar'] / 5) * 5 : $arInfo['ar'] ;
+		//$akcios_arInfo['ar'] 	= ($this->settings['round_price_5'] == '1') ? round($akcios_arInfo['ar'] / 5) * 5 : $akcios_arInfo['ar'] ;
 
 		$data['rovid_leiras'] 		= $this->addLinkToString( $data, $data['rovid_leiras'] );
 		$data['ar'] 				= $arInfo['ar'];
@@ -1799,6 +1820,10 @@ class Products
 			case 'ml':
 				$ea = $price / $mevar * 1000;
 				$mert = 'l';
+			break;
+			case 'g':
+				$ea = $price / $mevar * 1000;
+				$mert = 'kg';
 			break;
 		}
 

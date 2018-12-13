@@ -40,6 +40,7 @@ class Users
 		'emails' => 'Email sablonok',
 		'galeria' => 'Galéria',
 
+		'dokumentumok' => 'Dokumentumok kezelése',
 		'cikkek' => 'Cikkek',
 		'feliratok' => 'Ajánló feliratok',
 		'popup' => 'Pop UP',
@@ -58,7 +59,7 @@ class Users
 
 	public $user_group_permissions = array(
 		'user' => array(),
-		'admin' => array('adminsettings', 'users','belsouzenetek','menu', 'oldalak', 'emails', 'galeria','cikkek','feliratok','popup','slideshow','redirects','webshop','kuponok','arcsoportok','etlap','bannerek','szallasok','programok'),
+		'admin' => array('adminsettings', 'users','belsouzenetek','menu', 'oldalak', 'emails', 'galeria','dokumentumok','cikkek','feliratok','popup','slideshow','redirects','webshop','kuponok','arcsoportok','etlap','bannerek','szallasok','programok'),
 		'adminuser' => array('webshop','kuponok','arcsoportok','szallasok')
 	);
 

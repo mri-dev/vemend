@@ -90,7 +90,7 @@
       <div class="product-side-items imaged-style">
         <? foreach ( $this->live_products_list as $livep ) { ?>
         <div class="item">
-          <div class="img">
+          <div class="img image-abs-center autocorrett-height-by-width" data-image-ratio="1:1">
             <a href="<?php echo $livep['link']; ?>"><img src="<?php echo $livep['profil_kep']; ?>" alt="<?php echo $livep['product_nev']; ?>"></a>
           </div>
           <div class="data">
@@ -100,6 +100,9 @@
               </div>
               <div class="desc">
                 <?php echo $livep['csoport_kategoria']; ?>
+              </div>
+              <div class="price">
+                <?php echo $livep['ar']; ?> Ft<? if($livep['mertekegyseg'] != ''): ?><span class="unit-text">/<?=($livep['mertekegyseg_ertek']!=1)?$livep['mertekegyseg_ertek']:''?><?=$livep['mertekegyseg']?></span><? endif; ?>
               </div>
             </a>
           </div>
@@ -119,16 +122,19 @@
       <div class="product-side-items imaged-style">
         <? foreach ( $this->top_products_list as $topp ) { ?>
           <div class="item">
-            <div class="img">
-              <a href="<?php echo $livep['link']; ?>"><img src="<?php echo $livep['profil_kep']; ?>" alt="<?php echo $livep['product_nev']; ?>"></a>
+            <div class="img image-abs-center autocorrett-height-by-width" data-image-ratio="1:1">
+              <a href="<?php echo $topp['link']; ?>"><img src="<?php echo $topp['profil_kep']; ?>" alt="<?php echo $topp['product_nev']; ?>"></a>
             </div>
             <div class="data">
-              <a href="<?php echo $livep['link']; ?>">
+              <a href="<?php echo $topp['link']; ?>">
                 <div class="name">
-                  <?php echo $livep['product_nev']; ?>
+                  <?php echo $topp['product_nev']; ?>
                 </div>
                 <div class="desc">
-                  <?php echo $livep['csoport_kategoria']; ?>
+                  <?php echo $topp['csoport_kategoria']; ?>
+                </div>
+                <div class="price">
+                  <?php echo $topp['ar']; ?> Ft<? if($topp['mertekegyseg'] != ''): ?><span class="unit-text">/<?=($topp['mertekegyseg_ertek']!=1)?$topp['mertekegyseg_ertek']:''?><?=$topp['mertekegyseg']?></span><? endif; ?>
                 </div>
               </a>
             </div>
@@ -148,16 +154,19 @@
       <div class="product-side-items imaged-style">
         <? foreach ( $this->viewed_products_list as $viewed ) { ?>
           <div class="item">
-            <div class="img">
-              <a href="<?php echo $livep['link']; ?>"><img src="<?php echo $livep['profil_kep']; ?>" alt="<?php echo $livep['product_nev']; ?>"></a>
+            <div class="img image-abs-center autocorrett-height-by-width" data-image-ratio="1:1">
+              <a href="<?php echo $viewed['link']; ?>"><img src="<?php echo $viewed['profil_kep']; ?>" alt="<?php echo $viewed['product_nev']; ?>"></a>
             </div>
             <div class="data">
-              <a href="<?php echo $livep['link']; ?>">
+              <a href="<?php echo $viewed['link']; ?>">
                 <div class="name">
-                  <?php echo $livep['product_nev']; ?>
+                  <?php echo $viewed['product_nev']; ?>
                 </div>
                 <div class="desc">
-                  <?php echo $livep['csoport_kategoria']; ?>
+                  <?php echo $viewed['csoport_kategoria']; ?>
+                </div>
+                <div class="price">
+                  <?php echo $viewed['ar']; ?> Ft<? if($viewed['mertekegyseg'] != ''): ?><span class="unit-text">/<?=($viewed['mertekegyseg_ertek']!=1)?$viewed['mertekegyseg_ertek']:''?><?=$viewed['mertekegyseg']?></span><? endif; ?>
                 </div>
               </a>
             </div>
@@ -175,7 +184,7 @@
   if ($square_cap)
   {
     $banners = $this->BANNERS->pick('1P1', 2);
-    echo $this->BANNERS->render('1P1', $banners);
+    echo $this->BANNERS->render('1P1', $banners, array('class' => 'show-x1'));
   }
   ?>
 

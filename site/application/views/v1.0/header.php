@@ -45,6 +45,9 @@
   					<? endforeach; ?>
           </div>
         </div>
+        <div class="user">
+          <a href="/user">Bejelentkezés</a>
+        </div>
         <div class="social">
           <div class="flex flexmob-exc-resp">
             <?php if ( !empty($this->settings['social_facebook_link'])) : ?>
