@@ -6,7 +6,8 @@
 <div class="row etel-creator" ng-app="Etlap" ng-controller="Creator" ng-init="init()">
   <div class="col-md-4">
     <div class="con">
-      <h3>Napi menü rögzítése</h3>
+      <h3 ng-show="!create.editor">Napi menü rögzítése</h3>
+	    <h3 ng-show="create.editor">Napi menü szerkesztése</h3>
       <div class="row-neg">
         <div class="row">
           <div class="col-md-12">
@@ -97,7 +98,9 @@
         </div>
         <div class="row" ng-show="!saveEtlap && !menuDateUsed">
           <div class="col-md-12 right">
-            <button type="button" class="btn btn-success" ng-click="menuSave()">Napi menü rögzítése</button>
+						<button type="button" class="btn btn-default" ng-show="create.editor" ng-click="cancelDayEdit()">mégse</button>
+            <button type="button" class="btn btn-primary" ng-show="!create.editor" ng-click="menuSave()">Napi menü rögzítése <i class="fa fa-plus"></i></button>
+						<button type="button" class="btn btn-success" ng-show="create.editor" ng-click="menuSave()">Napi menü mentése <i class="fa fa-save"></i></button>
           </div>
         </div>
       </div>
@@ -112,7 +115,7 @@
             <div class="wrapper">
               <div class="onday">
                 <div class="date">
-                  {{daydate}}
+									<a href="javascript:void(0);" ng-click="pickDayEdit(day)">{{daydate}} <i class="fa fa-pencil"></i></a>
                 </div>
                 <div class="weekday">
                   {{day.weekday}}

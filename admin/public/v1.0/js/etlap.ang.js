@@ -167,6 +167,7 @@ etlap.controller("Creator", ['$scope', '$http', '$mdToast', function($scope, $ht
   $scope.menuDateChecking = false;
   $scope.menuDateUsed = false;
   $scope.create = {
+    editor: false,
     daydate: new Date(),
     etel_leves: {
       text: '',
@@ -280,11 +281,56 @@ etlap.controller("Creator", ['$scope', '$http', '$mdToast', function($scope, $ht
     });
 	}
 
+  $scope.cancelDayEdit = function(){
+    $scope.create = {
+      editor: false,
+      daydate: new Date(),
+      etel_leves: {
+        text: '',
+        id: null
+      },
+      etel_fo: {
+        text: '',
+        id: null
+      },
+      etel_va: {
+        text: '',
+        id: null
+      },
+      etel_vb: {
+        text: '',
+        id: null
+      }
+    };
+  }
+
+
+  $scope.pickDayEdit = function(d) {
+    console.log(d);
+    $scope.create.editor = true;
+    $scope.create.daydate = new Date(d.day);
+    $scope.create.etel_fo = {
+      text: d.menu.etel_fo.neve,
+      id: d.menu.etel_fo.ID
+    };
+    $scope.create.etel_leves = {
+      text: d.menu.etel_leves.neve,
+      id: d.menu.etel_leves.ID
+    };
+    $scope.create.etel_va = {
+      text: (d.menu.etel_va.neve)?d.menu.etel_va.neve:'',
+      id: d.menu.etel_va.ID
+    };
+    $scope.create.etel_vb = {
+      text: (d.menu.etel_vb.neve)?d.menu.etel_vb.neve:'',
+      id: d.menu.etel_vb.ID
+    };
+    console.log($scope.create);
+  }
+
   $scope.menuSave = function(){
     $scope.saveEtlap = true;
-
-    console.log($scope.create.daydate);
-
+    console.log($scope.create);
     $http({
       method: 'POST',
       url: '/ajax/get',
