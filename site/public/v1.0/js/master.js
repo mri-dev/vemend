@@ -3,7 +3,7 @@ $(function(){
 	fixSlideWidth();
 	getLocation();
 
-	$.cookieAccepter('https://www.vemend.web-pro.hu/p/aszf/');
+	$.cookieAccepter('/p/adatvedelmi-tajekoztato/');
 
 	var transports_c 			= $('.transports');
 
