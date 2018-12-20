@@ -46,7 +46,9 @@
           </div>
         </div>
         <div class="user">
+          <?php if (DEVMODE === true): ?>
           <a href="/user">Bejelentkezés</a>
+          <?php endif; ?>
         </div>
         <div class="social">
           <div class="flex flexmob-exc-resp">
