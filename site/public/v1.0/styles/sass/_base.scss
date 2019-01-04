@@ -7747,6 +7747,28 @@ a.cetelem-startrans {
 	& > .pw > .holder{
 		margin: -10px;
 	}
+
+	& > .pw > .holder > .flex{
+		align-items: initial;
+	}
+	& > .pw > .holder > .flex .programs .wrapper{
+		height: 100%;
+		position: relative;
+
+		.no-programs{
+			text-align: center;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			-moz-transform: translate(-50%, -50%);
+
+			i{
+				font-size: 48px;
+				margin: 0 0 15px 0;
+			}
+		}
+	}
 }
 
 body.homepage{
