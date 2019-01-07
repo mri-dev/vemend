@@ -17,7 +17,6 @@ if ($k['items']) {
 }
 
 ?>
-<pre><?php print_r($k); ?></pre>
 <div class="cart page-width">
 	<div class="row np" id="cart">
     <div class="col-sm-12">
