@@ -428,7 +428,11 @@ function Cart(){
 			'</div>'+
 			'<div class="remove"><i class="fa fa-times "  onclick="Cart.remove('+i.termekID+');" title="Eltávolítás"></i></div>'+
 			'<div class="name"><a href="'+i.url+'">'+i.termekNev+'</a> <span class="in">x '+i.me+'</span></div>'+
-			'<div class="sub"><div class="tipus">Variáció: <span class="val">'+((i.szin) ? i.szin+'</span>' : '')+''+( (i.meret)?', Kiszerelés: <span class="val">'+i.meret+'</span>':'')+'</div><span class="ar">'+( (i.ar != '-1')? i.ar+' Ft / db' : 'Ár: érdeklődjön' )+'</span></div>'+
+			'<div class="sub"><div class="tipus">'+
+			(  (i.szin) ? 'Variáció: <span class="val">'+i.szin+'</span>' : '&nbsp;' ) +
+			(  (i.meret) ? ', Kiszerelés: <span class="val">'+i.meret+'</span>>' : '&nbsp;' ) +
+			'</div></div>'+
+			'<span class="ar">'+( (i.ar != '-1')? i.ar+' Ft / db' : 'Ár: érdeklődjön' )+'</span></div>'+
 		'</div>'+
 		'<div class="clr"></div></div>';
 		if(oi.length == 0){

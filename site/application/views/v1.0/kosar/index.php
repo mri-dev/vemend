@@ -1,4 +1,23 @@
-<? $k = $this->kosar; ?>
+<?
+$k = $this->kosar;
+
+if ($k['items']) {
+	$kg = array();
+	foreach ( $k['items'] as $i ) {
+		if (!isset($kg[$i['author']]['shopnev'])) {
+			$kg[$i['author']]['shopnev'] = $i['shopnev'];
+			$kg[$i['author']]['shopslug'] = $i['shopslug'];
+		}
+		$kg[$i['author']]['items'][] = $i;
+	}
+
+	if ($kg) {
+		$k['items'] = $kg;
+	}
+}
+
+?>
+<pre><?php print_r($k); ?></pre>
 <div class="cart page-width">
 	<div class="row np" id="cart">
     <div class="col-sm-12">
@@ -30,83 +49,88 @@
 						</div>
 						<? if( count($k[items]) > 0 ): ?>
 						<div class="mobile-table-container overflowed">
-						<table class="table table-bordered">
-							<thead>
-								<tr class="item-header">
-									<th class="center">Termék</th>
-									<th class="center">Me.</th>
-									<th class="center" width="15%">Egységár</th>
-									<th class="center" width="15%">Ár</th>
-									<th class="center"></th>
-								</tr>
-							</thead>
-							<tbody>
-								<? foreach($k[items] as $d):
-									if($d[szuper_akcios] == 1){
-										$szuperakcios_termekek_ara += $d[sum_ar];
-									}
-									if($d[pickpackszallitas] == 0) $no_ppp_itemNum++;
-									if($d[elorendelheto] == 1) $preOrder_item++;
-								?>
-								<tr class="item">
-									<td class="main">
-										<div class="img img-thb" onclick="document.location.href='<?=$d[url]?>'">
-											<span class="helper"></span>
-											<a href="<?=$d[url]?>"><img src="<?=Images::getThumbImg(75, $d[profil_kep])?>" alt="<?=$d[termekNev]?>" /></a>
-										</div>
-										<div class="tinfo">
-											<div class="nev"><a href="<?=$d[url]?>"><?=$d[markaNev]?> <?=$d[termekNev]?></a></div>
-											<div class="sel-types">
-												<? if($d['szin']): ?><em>Variáció:</em> <strong><?=$d['szin']?></strong><? endif;?>
-												<? if($d['meret']): ?><em>Kiszerelés:</em> <strong><?=$d['meret']?></strong><? endif;?>
-											</div>
-											<div class="subLine">
-												<span title="Termék elérhetősége"><i class="fa fa-truck"></i> <?=$d[allapot]?></span> &nbsp;&nbsp;
-												<span title="Kiszállítási idő"><i class="fa fa-clock-o"></i> <?=$d[szallitasIdo]?></span>
-												<?php if ( !$d[keszlet_data] ): ?>
-													<span class="stock no-stock">Nincs készleten</span>
-												<?php else: ?>
-													<span class="stock">Készleten: <strong><?=$d[keszlet_data]?></strong></span>
-												<?php endif; ?>
-											</div>
-										</div>
-									</td>
-									<td class="center"><span><?=$d[me]?> db</span></td>
-									<td class="center">
-										<? if( $d['discounted'] ): ?>
-											<div><strike><?=Helper::cashFormat($d[prices][old_each])?> Ft</strike></div>
-											<div><strong><?=Helper::cashFormat($d[prices][current_each])?> Ft</strong></div>
-										<? else: ?>
-										<span><?=Helper::cashFormat($d[prices][current_each])?> Ft</span>
-										<? endif; ?>
-									</td>
-									<td class="center">
-										<? if( $d['discounted'] ): ?>
-											<div><strike><?=Helper::cashFormat($d[prices][old_sum])?> Ft</strike></div>
-											<div><strong><?=Helper::cashFormat($d[prices][current_sum])?> Ft</strong></div>
-										<? else: ?>
-										<span><?=Helper::cashFormat($d[prices][current_sum])?> Ft</span>
-										<? endif; ?>
-									</td>
-									<td class="center action">
-										<? if($this->gets[1] == '' || $this->gets[1] == '0'): ?>
-										<span>
-											<i class="fa fa-minus-square cart-adder desc" title="Kevesebb" onclick="Cart.removeItem(<?=$d[termekID]?>)"></i>
-											<i class="fa fa-plus-square cart-adder asc" title="Több" onclick="Cart.addItem(<?=$d[termekID]?>)"></i>
-										</span>
-										<? endif; ?>
-									</td>
-								</tr>
-								<? endforeach;
-								// Végső ár kiszámolása
-								$calc_final_total = $k[totalPrice] - $szuperakcios_termekek_ara;
-								//$calc_final_total = ($calc_final_total -(($this->user[kedvezmeny]/100)*$calc_final_total)) + $szuperakcios_termekek_ara;
-								?>
-								</div>
 
+						<?php foreach ($k['items'] as $shop): ?>
+							<h3><?=$shop['shopnev']?></h3>
+							<? if( count($shop[items]) > 0 ): ?>
+							<table class="table table-bordered">
+								<thead>
+									<tr class="item-header">
+										<th class="center">Termék</th>
+										<th class="center">Me.</th>
+										<th class="center" width="15%">Egységár</th>
+										<th class="center" width="15%">Ár</th>
+										<th class="center"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<? foreach($shop[items] as $d):
+										if($d[szuper_akcios] == 1){
+											$szuperakcios_termekek_ara += $d[sum_ar];
+										}
+										if($d[pickpackszallitas] == 0) $no_ppp_itemNum++;
+										if($d[elorendelheto] == 1) $preOrder_item++;
+									?>
+									<tr class="item">
+										<td class="main">
+											<div class="img img-thb" onclick="document.location.href='<?=$d[url]?>'">
+												<span class="helper"></span>
+												<a href="<?=$d[url]?>"><img src="<?=Images::getThumbImg(75, $d[profil_kep])?>" alt="<?=$d[termekNev]?>" /></a>
+											</div>
+											<div class="tinfo">
+												<div class="nev"><a href="<?=$d[url]?>"><?=$d[markaNev]?> <?=$d[termekNev]?></a></div>
+												<div class="sel-types">
+													<? if($d['szin']): ?><em>Variáció:</em> <strong><?=$d['szin']?></strong><? endif;?>
+													<? if($d['meret']): ?><em>Kiszerelés:</em> <strong><?=$d['meret']?></strong><? endif;?>
+												</div>
+												<div class="subLine">
+													<span title="Termék elérhetősége"><i class="fa fa-truck"></i> <?=$d[allapot]?></span> &nbsp;&nbsp;
+													<span title="Kiszállítási idő"><i class="fa fa-clock-o"></i> <?=$d[szallitasIdo]?></span>
+													<?php if ( !$d[keszlet_data] ): ?>
+														<span class="stock no-stock">Nincs készleten</span>
+													<?php else: ?>
+														<span class="stock">Készleten: <strong><?=$d[keszlet_data]?></strong></span>
+													<?php endif; ?>
+												</div>
+											</div>
+										</td>
+										<td class="center"><span><?=$d[me]?> db</span></td>
+										<td class="center">
+											<? if( $d['discounted'] ): ?>
+												<div><strike><?=Helper::cashFormat($d[prices][old_each])?> Ft</strike></div>
+												<div><strong><?=Helper::cashFormat($d[prices][current_each])?> Ft</strong></div>
+											<? else: ?>
+											<span><?=Helper::cashFormat($d[prices][current_each])?> Ft</span>
+											<? endif; ?>
+										</td>
+										<td class="center">
+											<? if( $d['discounted'] ): ?>
+												<div><strike><?=Helper::cashFormat($d[prices][old_sum])?> Ft</strike></div>
+												<div><strong><?=Helper::cashFormat($d[prices][current_sum])?> Ft</strong></div>
+											<? else: ?>
+											<span><?=Helper::cashFormat($d[prices][current_sum])?> Ft</span>
+											<? endif; ?>
+										</td>
+										<td class="center action">
+											<? if($this->gets[1] == '' || $this->gets[1] == '0'): ?>
+											<span>
+												<i class="fa fa-minus-square cart-adder desc" title="Kevesebb" onclick="Cart.removeItem(<?=$d[termekID]?>)"></i>
+												<i class="fa fa-plus-square cart-adder asc" title="Több" onclick="Cart.addItem(<?=$d[termekID]?>)"></i>
+											</span>
+											<? endif; ?>
+										</td>
+									</tr>
+									<? endforeach;
+									// Végső ár kiszámolása
+									$calc_final_total = $k[totalPrice] - $szuperakcios_termekek_ara;
+									//$calc_final_total = ($calc_final_total -(($this->user[kedvezmeny]/100)*$calc_final_total)) + $szuperakcios_termekek_ara;
+									?>
+									</div>
+								</tbody>
+							</table>
+							<? endif; ?>
+						<?php endforeach; ?>
 
-							</tbody>
-						</table>
 						<? if( $this->not_reached_min_price_text ): ?>
 						<div class="not-enought-price-for-order"><?=$this->not_reached_min_price_text?></div>
 						<? endif; ?>

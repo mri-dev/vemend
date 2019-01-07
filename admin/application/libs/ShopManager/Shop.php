@@ -1039,6 +1039,7 @@ class Shop
 			t.no_cetelem,
 			m.elorendelheto,
 			CONCAT(m.neve,' ',t.nev) as termekNev,
+			t.author,
 			t.szin,
 			t.meret,
 			t.raktar_keszlet,
@@ -1050,12 +1051,15 @@ class Shop
 			getTermekAr(c.termekID, ".$uid.") as ar,
 			(getTermekAr(c.termekID, ".$uid.") * c.me) as sum_ar,
 			t.referer_price_discount,
-			szid.elnevezes as szallitasIdo
+			szid.elnevezes as szallitasIdo,
+			ss.shopnev,
+			ss.shopslug
 		FROM shop_kosar as c
 		LEFT OUTER JOIN shop_termekek AS t ON t.ID = c.termekID
 		LEFT OUTER JOIN shop_markak as m ON m.ID = t.marka
 		LEFT OUTER JOIN shop_termek_allapotok as ta ON ta.ID = t.keszletID
 		LEFT OUTER JOIN shop_szallitasi_ido as szid ON szid.ID = t.szallitasID
+		LEFT OUTER JOIN shop_settings as ss ON ss.author_id = t.author
 		WHERE c.gepID = $mid";
 		$arg[multi] = '1';
 		extract($this->db->q($q, $arg));

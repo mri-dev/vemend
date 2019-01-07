@@ -47,7 +47,11 @@
         </div>
         <div class="user">
           <?php if (DEVMODE === true): ?>
-          <a href="/user">Bejelentkezés</a>
+            <?php if (!$this->user): ?>
+            <a href="/user">Bejelentkezés</a>
+            <?php else: ?>
+            <a href="/user">Bejelentkezve: <strong><?=$this->user['data']['nev']?></strong>.</a>
+            <?php endif; ?>
           <?php endif; ?>
         </div>
         <div class="social">
