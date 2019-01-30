@@ -10868,7 +10868,7 @@ body.product-page {
 				    background: $color-orange;
 				    color: white;
 				    text-align: center;
-				    font-size: 1.25em;
+				    font-size: 0.9rem;
 				    padding: 10px;
 				    text-decoration: none;
 				    font-weight: bold;
@@ -10892,6 +10892,16 @@ body.product-page {
 						&:hover{
 							background: $color-orange;
 						}
+					}
+				}
+				&.archived{
+					opacity: 0.8;
+					filter:alpha(opacity=80);
+					.details a{
+						background: #a9a9a9;
+					}
+					.ondate .in{
+						background: #6f6e6e;
 					}
 				}
 			}

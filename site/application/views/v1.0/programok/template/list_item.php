@@ -1,4 +1,4 @@
-<article class="program<?=($belyeg_kep == '')?' no-img':''?>">
+<article class="program<?=($belyeg_kep == '')?' no-img':''?><?=($archive)?' archived':''?>">
   <?php
     $belyeg_kep = ($belyeg_kep == '') ? IMG.'no-image.png' : \PortalManager\Formater::sourceImg($belyeg_kep);
     $read_prefix = (isset($_GET['cat']) && $_GET['cat'] != '') ? $_GET['cat'] : 'olvas';
@@ -10,7 +10,14 @@
     <div class="datain">
       <?php if ($idopont): ?>
       <div class="ondate">
-        <div class="in" title="Esemény ideje"><i class="fa fa-clock-o"></i> <?=date('Y.m.d. H:i',strtotime($idopont))?></div>
+        <div class="in" title="Esemény ideje">
+          <i class="fa fa-clock-o"></i>
+          <?php if ($end_idopont): ?>
+            <?=date('Y.m.d.',strtotime($idopont))?> &mdash; <?=date('Y.m.d.',strtotime($end_idopont))?>
+          <?php else: ?>
+            <?=date('Y.m.d. H:i',strtotime($idopont))?>
+          <?php endif; ?>
+        </div>
       </div>
       <?php endif; ?>
       <div class="title">

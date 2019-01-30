@@ -58,6 +58,7 @@ class Programs
 		$bevezeto = ($data['bevezeto']) ?: NULL;
 		$lathato= ($data['lathato'] == 'on') ? 1 : 0;
     $idopont = ($data['idopont']) ?: NULL;
+    $end_idopont = ($data['end_idopont']) ?: NULL;
     $helyszin = ($data['helyszin']) ?: NULL;
 
 		if (!$cim) { throw new \Exception("Kérjük, hogy adja meg az <strong>Cikk címét</strong>!"); }
@@ -75,6 +76,7 @@ class Programs
 				'szoveg' => $szoveg,
 				'bevezeto' => $bevezeto,
 				'idopont' => $idopont,
+				'end_idopont' => $end_idopont,
 				'letrehozva' => NOW,
 				'lathato' => $lathato,
         'helyszin' => $helyszin,
@@ -97,6 +99,7 @@ class Programs
 		$kep 	= ($data['belyegkep']) ?: NULL;
 		$lathato= ($data['lathato']) ? 1 : 0;
     $idopont = ($data['idopont']) ?: NULL;
+    $end_idopont = ($data['end_idopont']) ?: NULL;
     $helyszin = ($data['helyszin']) ?: NULL;
 
 		if (!$cim) { throw new \Exception("Kérjük, hogy adja meg a <strong>Cikk címét</strong>!"); }
@@ -115,6 +118,7 @@ class Programs
 				'szoveg' => $szoveg,
 				'bevezeto' => $bevezeto,
 				'idopont' => $idopont,
+				'end_idopont' => $end_idopont,
 				'lathato' => $lathato,
         'helyszin' => $helyszin,
 			),
@@ -266,7 +270,9 @@ class Programs
 
 		if( $top_news_qry->rowCount() == 0 ) return $this;
 
-		foreach ( $top_page_data as $top_page ) {
+		foreach ( $top_page_data as $top_page )
+    {
+      $top_page['archive'] = (strtotime($top_page['idopont']) < time()) ? true : false;
 			$this->tree_items++;
 			$this->tree_steped_item[] = $top_page;
 
@@ -493,6 +499,10 @@ class Programs
 	public function getIdopont( $format = false )
 	{
 		return ( !$format ) ? $this->current_get_item['idopont'] : date($format, strtotime($this->current_get_item['idopont']));
+	}
+  public function getEndIdopont( $format = false )
+	{
+		return ( !$format ) ? $this->current_get_item['end_idopont'] : date($format, strtotime($this->current_get_item['end_idopont']));
 	}
 	public function getVisibility()
 	{

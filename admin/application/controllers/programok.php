@@ -9,7 +9,6 @@ class programok extends Controller{
 			parent::__construct();
 			parent::$pageTitle = 'Programok / Adminisztráció';
 
-
 			$this->view->adm = $this->AdminUser;
 			$this->view->adm->logged = $this->AdminUser->isLogged();
 
@@ -59,7 +58,6 @@ class programok extends Controller{
 
 		public function creator()
 		{
-
 			$news = new Programs( $this->view->gets[3],  array( 'db' => $this->db )  );
 
 			if (isset($_GET['rmsg'])) {
