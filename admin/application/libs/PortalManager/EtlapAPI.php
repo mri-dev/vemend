@@ -91,6 +91,23 @@ class EtlapAPI implements InstallModules
     return $this->db->lastInsertId();
   }
 
+  public function saveMenu( $menu = array() )
+  {
+    $id = $this->db->squery("SELECT ID FROM ".self::DBTABLE." WHERE daydate = :dd LIMIT 0,1", array('dd' => $menu['daydate']))->fetchColumn();
+
+    unset($menu['daydate']);
+
+    $this->db->update(
+      self::DBTABLE,
+      $menu,
+      sprintf("ID = %d", (int)$id)
+    );
+
+    $this->db->query("DELETE FROM ".self::DBTABLE." WHERE etel_fo = 0 and etel_leves = 0 and etel_va = 0 and etel_vb = 0");
+
+    return (int)$id;
+  }
+
   public function getMenu( $date = false )
   {
     $date = (empty($date)) ? date('Y-m-d') : $date;

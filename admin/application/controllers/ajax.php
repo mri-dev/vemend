@@ -812,13 +812,23 @@ class ajax extends Controller{
 							$ondate  = new \DateTime(str_replace('. ','-',$_POST['menu']['daydate']));
 							$ondate = $ondate->format('Y-m-d');
 
-							$insid = $etlap->addMenu(array(
-								'daydate' => $ondate,
-								'etel_fo' => (int)$_POST['menu']['etel_fo']['id'],
-								'etel_leves' => (int)$_POST['menu']['etel_leves']['id'],
-								'etel_va' => (int)$_POST['menu']['etel_va']['id'],
-								'etel_vb' => (int)$_POST['menu']['etel_vb']['id'],
-							));
+							if($_POST['menu']['editor'] == "true") {
+								$insid = $etlap->saveMenu(array(
+									'daydate' => $ondate,
+									'etel_fo' => (int)$_POST['menu']['etel_fo']['id'],
+									'etel_leves' => (int)$_POST['menu']['etel_leves']['id'],
+									'etel_va' => (int)$_POST['menu']['etel_va']['id'],
+									'etel_vb' => (int)$_POST['menu']['etel_vb']['id'],
+								));
+							} else {
+								$insid = $etlap->addMenu(array(
+									'daydate' => $ondate,
+									'etel_fo' => (int)$_POST['menu']['etel_fo']['id'],
+									'etel_leves' => (int)$_POST['menu']['etel_leves']['id'],
+									'etel_va' => (int)$_POST['menu']['etel_va']['id'],
+									'etel_vb' => (int)$_POST['menu']['etel_vb']['id'],
+								));
+							}
 
 							$re['data'] = (int)$insid;
 						break;

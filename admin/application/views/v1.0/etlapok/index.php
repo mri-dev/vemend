@@ -13,7 +13,7 @@
           <div class="col-md-12">
             <label for="daydate">Nap kiválasztása</label>
             <br>
-            <md-datepicker md-date-filter="checkDisbledDate" ng-change="menuDateChange()" ng-model="create.daydate" id="daydate" md-placeholder="Kiválasztás"></md-datepicker>
+            <md-datepicker md-date-filter="checkDisbledDate" ng-change="menuDateChange(true)" ng-model="create.daydate" id="daydate" md-placeholder="Kiválasztás"></md-datepicker>
             <div class="label label-warning" ng-show="menuDateChecking">
               Menü időpont használatának ellenőrzése...
             </div>

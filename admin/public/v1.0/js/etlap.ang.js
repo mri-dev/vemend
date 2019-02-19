@@ -216,7 +216,6 @@ etlap.controller("Creator", ['$scope', '$http', '$mdToast', function($scope, $ht
   }
 
   $scope.pickEtel = function( where, o ){
-    console.log(o);
     $scope.create[where].text = o.neve;
     $scope.create[where].id = parseInt(o.ID);
   }
@@ -228,26 +227,34 @@ etlap.controller("Creator", ['$scope', '$http', '$mdToast', function($scope, $ht
     };
   }
 
-  $scope.menuDateChange = function() {
-    $scope.create.daydate = $scope.create.daydate.toLocaleDateString('hu-HU');
-    $scope.menuDateChecking = true;
-    $http({
-      method: 'POST',
-      url: '/ajax/get',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      data: $.param({
-        type: "Etlap",
-        key: 'CheckMenuDateUsage',
-        day: $scope.create.daydate
-      })
-    }).success(function( r ){
-      $scope.menuDateChecking = false;
-      if (r.data != 0) {
-        $scope.menuDateUsed = true;
-      } else {
-        $scope.menuDateUsed = false;
+  $scope.menuDateChange = function( ch )
+  {
+    if (true) {
+      if ($scope.create.daydate && $scope.create.daydate instanceof Date) {
+        $scope.create.daydate = $scope.create.daydate.toLocaleDateString('hu-HU');
       }
-    });
+    }
+
+    if ($scope.create.editor == false) {
+      $scope.menuDateChecking = true;
+      $http({
+        method: 'POST',
+        url: '/ajax/get',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        data: $.param({
+          type: "Etlap",
+          key: 'CheckMenuDateUsage',
+          day: $scope.create.daydate
+        })
+      }).success(function( r ){
+        $scope.menuDateChecking = false;
+        if (r.data != 0) {
+          $scope.menuDateUsed = true;
+        } else {
+          $scope.menuDateUsed = false;
+        }
+      });
+    }
   }
 
 	$scope.loadResources = function( callback )
@@ -261,7 +268,6 @@ etlap.controller("Creator", ['$scope', '$http', '$mdToast', function($scope, $ht
         key: 'Load'
       })
     }).success(function( r ){
-        console.log(r);
       if (r.data.length != 0) {
         if (r.data.etelek && r.data.etelek.length != 0) {
           $scope.etelek = r.data.etelek;
@@ -274,7 +280,6 @@ etlap.controller("Creator", ['$scope', '$http', '$mdToast', function($scope, $ht
         }
       }
 
-        console.log($scope.menu);
 			if (typeof callback !== 'undefined') {
 				callback(r);
 			}
@@ -306,7 +311,6 @@ etlap.controller("Creator", ['$scope', '$http', '$mdToast', function($scope, $ht
 
 
   $scope.pickDayEdit = function(d) {
-    console.log(d);
     $scope.create.editor = true;
     $scope.create.daydate = new Date(d.day);
     $scope.create.etel_fo = {
@@ -325,12 +329,12 @@ etlap.controller("Creator", ['$scope', '$http', '$mdToast', function($scope, $ht
       text: (d.menu.etel_vb.neve)?d.menu.etel_vb.neve:'',
       id: d.menu.etel_vb.ID
     };
-    console.log($scope.create);
   }
 
   $scope.menuSave = function(){
     $scope.saveEtlap = true;
-    console.log($scope.create);
+    $scope.menuDateChange(false);
+
     $http({
       method: 'POST',
       url: '/ajax/get',
