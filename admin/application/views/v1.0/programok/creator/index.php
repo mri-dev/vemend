@@ -2,7 +2,7 @@
 	<a href="/programok/kategoriak" class="btn btn-default"><i class="fa fa-bars"></i> program kategóriák</a>
 	<a href="/programok/" class="btn btn-default"><i class="fa fa-th"></i> programok</a>
 </div>
-<h1>programek</h1>
+<h1>programok</h1>
 <?=$this->msg?>
 <? if($this->gets[2] == 'torles'): ?>
 <form action="" method="post">
@@ -74,6 +74,9 @@
 										<div class="col-md-3">
 	                    <label for="idopont">Esemény ideje</label>
 	                    <input type="datetime-local"class="form-control" name="idopont" id="idopont" value="<?=(($this->news && $this->news->getIdopont())  ? date('Y-m-d', strtotime($this->news->getIdopont())).'T'.date('H:i', strtotime($this->news->getIdopont())) : '')?>">
+											<br>
+											<label for="end_idopont">Esemény befejező ideje</label>
+	                    <input type="datetime-local"class="form-control" name="end_idopont" id="end_idopont" value="<?=(($this->news && $this->news->getEndIdopont())  ? date('Y-m-d', strtotime($this->news->getEndIdopont())).'T'.date('H:i', strtotime($this->news->getEndIdopont())) : '')?>">
 	                  </div>
                    <div class="col-md-2">
                       <label for="belyegkep">Bélyegkép <?=\PortalManager\Formater::tooltip('Ajánlott kép paraméterek:<br>Dimenzió: 1400 x * pixel <br>Fájlméret: max. 1 MB <br><br>A túl nagy fájlméretű képek lassítják a betöltés idejét és a facebook sem tudja időben letölteni, így megosztáskor kép nélkül jelenhet meg a megosztott bejegyzés az idővonalon.');?></label>

@@ -68,6 +68,11 @@ class cikkek extends Controller{
 				$this->out('archive_dates', $archive_dates);
 			}
 
+			// Kategória adatok
+			$catdata = $this->db->squery("SELECT ID, neve FROM cikk_kategoriak WHERE slug = :slug", array('slug' => trim($_GET['cat'])))->fetch(\PDO::FETCH_ASSOC);
+			$cat_id = (int)$catdata['ID'];
+			$cat_name = $catdata['neve'];
+
 			if ($cat_slug == '') {
 				$headimgtitle = (!$is_archiv) ? 'Bejegyzéseink': 'Archívum';
 				if (isset($_GET['date'])) {
@@ -77,14 +82,14 @@ class cikkek extends Controller{
 				$this->out( 'head_img_title', $headimgtitle);
 				$this->out( 'head_img', IMGDOMAIN.'/src/uploads/covers/cover-archive.jpg' );
 			} else {
-				$this->out( 'head_img_title', (!$is_archiv) ? $this->view->newscatslist[$cat_slug]['neve'] : 'Archívum:'.$this->view->newscatslist[$cat_slug]['neve']  );
+				$this->out( 'head_img_title', (!$is_archiv) ? $cat_name : 'Archívum:'.$this->view->newscatslist[$cat_slug]['neve']  );
 				$this->out( 'head_img', IMGDOMAIN.'/src/uploads/covers/cover-archive.jpg' );
 			}
 
 			$arg = array(
 				'limit' => 12,
 				'hide_offline' => true,
-				'in_cat' => (int)$this->view->newscatslist[$cat_slug]['ID'],
+				'in_cat' => $cat_id,
 				'page' => (isset($_GET['page'])) ? (int)$_GET['page'] : 1,
 			);
 			if ($is_archiv) {
@@ -96,6 +101,7 @@ class cikkek extends Controller{
 			if (isset($_GET['src']) && !empty($_GET['src'])) {
 				$arg['search'] = trim($_GET['src']);
 			}
+
 			$this->out( 'list', $news->getTree( $arg ) );
 
 			$navroot = (in_array($_GET['cat'], $news->tematic_cikk_slugs)) ? $_GET['cat'] : '/'.__CLASS__.( (isset($_GET['cat'])) ? '/'.$_GET['cat'] : '' );
