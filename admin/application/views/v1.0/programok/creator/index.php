@@ -67,9 +67,13 @@
                 </div>
                 <br>
                 <div class="row">
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<label for="helyszin">Esemény helszíne</label>
 										<input type="text"class="form-control" name="helyszin" id="helyszin" value="<?=(($this->news && $this->news->getHelyszin())  ? $this->news->getHelyszin() : '')?>">
+									</div>
+									<div class="col-md-2">
+										<label for="sorrend">Sorrend</label>
+										<input type="number"class="form-control" name="sorrend" id="sorrend" value="<?=(($this->news && $this->news->getSortNumber())  ? $this->news->getSortNumber() : '')?>">
 									</div>
 										<div class="col-md-3">
 	                    <label for="idopont">Esemény ideje</label>

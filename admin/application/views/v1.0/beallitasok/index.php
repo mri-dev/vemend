@@ -433,6 +433,13 @@
 								<br>
                 <div class="row np">
                     <div class="col-md-12">
+											<label for="basics_konyha_telefon">Konyha telefonszáma</label>
+											<input type="text" id="basics_konyha_telefon" name="konyha_telefon" class="form-control" value="<?=$this->settings['konyha_telefon']?>">
+                    </div>
+                </div>
+								<br>
+                <div class="row np">
+                    <div class="col-md-12">
                         <label for="basics_round_price_5">Árak kerekítése 5-tel osztható számokra</label>
                         <select name="round_price_5" id="basics_round_price_5" class="form-control">
                             <option value="0" <?=($this->settings['round_price_5'] == '0' ? 'selected="selected"' : '')?>>Nem</option>

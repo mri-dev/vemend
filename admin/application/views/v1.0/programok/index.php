@@ -11,7 +11,7 @@
             	<div class="col-md-5">
                 	Cím
                 </div>
-								<div class="col-md-3 center">
+								<div class="col-md-2 center">
               		Kategóriák
                 </div>
                 <div class="col-md-1 center">
@@ -19,6 +19,9 @@
                 </div>
                 <div class="col-md-1 center">
                   Létrehozva
+                </div>
+                <div class="col-md-1 center">
+                	Sorrend
                 </div>
                 <div class="col-md-1 center">
                 	Látható
@@ -39,7 +42,7 @@
                 	<strong><?=$news[cim]?></strong>
                   <div class="subline"><a target="_blank" class="url" href="<?=HOMEDOMAIN?>programok/olvas/<?=$news['eleres']?>" class="news-url"><i title="<?=HOMEDOMAIN?>" class="fa fa-home"></i>/programok/olvas/<strong><?=$news[eleres]?></strong></a></div>
                 </div>
-                <div class="col-md-3 center">
+                <div class="col-md-2 center">
 									<?php if (count($cats['ids']) != 0): $icat = ''; ?>
 										<?php foreach ($cats['list'] as $cat): ?>
 												<?php $icat .= '<span>'.$cat['neve'].'</span>, '; ?>
@@ -54,6 +57,9 @@
                 </div>
                 <div class="col-md-1 center times">
                     <?=\PortalManager\Formater::dateFormat($news['letrehozva'], $this->settings['date_format'])?>
+                </div>
+                 <div class="col-md-1 center">
+                	<?php echo $news['sorrend'];  ?>
                 </div>
                  <div class="col-md-1 center">
                 	<? if($news[lathato] == '1'): ?><i style="color:green;" class="fa fa-check"></i><? else: ?><i style="color:red;" class="fa fa-times"></i><? endif; ?>

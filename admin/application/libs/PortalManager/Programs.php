@@ -98,6 +98,7 @@ class Programs
 		$bevezeto = ($data['bevezeto']) ?: NULL;
 		$kep 	= ($data['belyegkep']) ?: NULL;
 		$lathato= ($data['lathato']) ? 1 : 0;
+		$sorrend= ($data['sorrend']) ?: 1;
     $idopont = ($data['idopont']) ?: NULL;
     $end_idopont = ($data['end_idopont']) ?: NULL;
     $helyszin = ($data['helyszin']) ?: NULL;
@@ -121,6 +122,7 @@ class Programs
 				'end_idopont' => $end_idopont,
 				'lathato' => $lathato,
         'helyszin' => $helyszin,
+        'sorrend' => $sorrend
 			),
 			sprintf("ID = %d", $this->selected_news_id)
 		);
@@ -252,7 +254,8 @@ class Programs
         $qry .= " ORDER BY ".$arg['order']['by']." ".$arg['order']['how'];
       }
 		} else {
-			$qry .= " ORDER BY h.letrehozva DESC ";
+			//$qry .= " ORDER BY (IF(time() > h.idopont, 1, 0)) ASC, h.sorrend ASC, h.idopont DESC ";
+      $qry .= " ORDER BY CASE WHEN now() > h.idopont THEN 1 ELSE 0 END ASC, h.sorrend ASC, h.idopont DESC ";
 		}
 
 		// LIMIT
@@ -524,6 +527,11 @@ class Programs
 	{
 		return $this->current_page;
 	}
+  public function getSortNumber()
+	{
+		return ($this->current_get_item['sorrend'] == 1 ? 1 : $this->current_get_item['sorrend']);
+	}
+
 	public function categoryList()
 	{
 		$q = "SELECT * FROM ".self::DBCAT." ORDER BY sorrend ASC";

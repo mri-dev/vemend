@@ -164,7 +164,7 @@
                 </div>
                 <div class="val">
                   <div class="fin">
-                    06 30 123 1234
+                    <?php echo $this->settings['konyha_telefon']; ?>
                   </div>
                 </div>
               </div>
