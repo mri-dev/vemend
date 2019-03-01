@@ -220,6 +220,10 @@ class Programs
 			FROM ".self::DBTABLE." as h
 			WHERE h.ID IS NOT NULL ";
 
+    if ( !isset($arg['admin']) ) {
+      $qry .= " and h.lathato = 1";
+    }
+
 		if( $arg['except_id'] ) {
 			$qry .= " and h.ID != ".$arg['except_id'];
 		}

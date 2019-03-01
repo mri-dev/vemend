@@ -49,6 +49,11 @@ class cikkek extends Controller{
 				),
 				"except_id" => $this->view->news->getId()
 			);
+			if ($is_archiv) {
+				$arg['only_archiv'] = true;
+			} else {
+				$arg['hide_archiv'] = true;
+			}
 			$this->out( 'related', $news->getTree( $arg ) );
 
 			$url = $this->view->news->getUrl();
@@ -94,6 +99,8 @@ class cikkek extends Controller{
 			);
 			if ($is_archiv) {
 				$arg['only_archiv'] = true;
+			} else {
+				$arg['hide_archiv'] = true;
 			}
 			if ($is_archiv && isset($_GET['date'])) {
 				$arg['on_date'] = $_GET['date'];

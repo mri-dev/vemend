@@ -21,7 +21,8 @@ class programok extends Controller{
 			// Hír fa betöltés
 			$arg = array(
 				'limit' => 25,
-				'page' 	=> Helper::currentPageNum()
+				'page' 	=> Helper::currentPageNum(),
+				'admin' => true
 			);
 			$page_tree 	= $news->getTree( $arg );
 			// Hírek

@@ -1,4 +1,4 @@
-<?
+<?php
 use PortalManager\Programs;
 use PortalManager\Template;
 use PortalManager\Pagination;

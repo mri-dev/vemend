@@ -10,7 +10,6 @@ use PortalManager\Formater;
 */
 class News
 {
-
   const DBVIEW = 'cikk_views';
   const DBVIEWHISTORY = 'cikk_view_history';
 
@@ -674,7 +673,7 @@ class News
 
 		$q = "SELECT
       c.*,
-      (SELECT count(cx.cikk_id) FROM cikk_xref_cat as cx LEFT OUTER JOIN hirek as h ON h.ID = cx.cikk_id WHERE 1=1 ".$searchfilter." and cx.cat_id = c.ID and h.lathato = 1 ".( ($archivfilter)?'and h.archiv = 1':'' )." ) as postc
+      (SELECT count(cx.cikk_id) FROM cikk_xref_cat as cx LEFT OUTER JOIN hirek as h ON h.ID = cx.cikk_id WHERE 1=1 ".$searchfilter." and cx.cat_id = c.ID and h.lathato = 1 ".( ($archivfilter)?'and h.archiv = 1':'and h.archiv = 0' )." ) as postc
     FROM cikk_kategoriak as c
     WHERE
       1=1 ";
@@ -686,7 +685,7 @@ class News
       $qp['szid'] = (int)$arg['childof'];
     }
 
-    $q .= " and (SELECT count(cx.cikk_id) FROM cikk_xref_cat as cx LEFT OUTER JOIN hirek as h ON h.ID = cx.cikk_id WHERE 1=1 ".$searchfilter." and cx.cat_id = c.ID and h.lathato = 1 ".( ($archivfilter)?'and h.archiv = 1':'' )." ) != 0
+    $q .= " and (SELECT count(cx.cikk_id) FROM cikk_xref_cat as cx LEFT OUTER JOIN hirek as h ON h.ID = cx.cikk_id WHERE 1=1 ".$searchfilter." and cx.cat_id = c.ID and h.lathato = 1 ".( ($archivfilter)?'and h.archiv = 1':'and h.archiv = 0' )." ) != 0
     ORDER BY c.sorrend ASC";
 
 		$qry = $this->db->squery( $q, $qp);
@@ -698,7 +697,9 @@ class News
 			$bdata = array();
 			foreach ($data as $d) {
 				$d['label'] = '<span class="cat-label" style="background-color:'.$d['bgcolor'].';">'.$d['neve'].'</span>';
-        $d['children'] = $this->categoryList(array('childof' => $d['ID']));
+        $passarg = $arg;
+        $passarg['childof'] = $d['ID'];
+        $d['children'] = $this->categoryList($passarg);
 				$bdata[$d['slug']] = $d;
 			}
 			unset($data);

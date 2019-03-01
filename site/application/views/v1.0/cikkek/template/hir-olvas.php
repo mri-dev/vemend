@@ -33,6 +33,17 @@
 		</div>
 	</div>
 
+	<?php if ($optional_nyitvatartas != ''): $nyitvatartas = json_decode($optional_nyitvatartas, \JSON_UNESCAPED_UNICODE); ?>
+	<?php $noopensdata = 0; foreach ((array)$nyitvatartas as $nap => $v): if($v == '') $noopensdata++; endforeach; ?>
+	<?php if ($noopensdata < 7): ?>
+		<a href="#nyitvatartas" class="mob-quicknav show-on-mobile">Nyitva tartás</a>
+	<?php endif; ?>
+	<?php endif; ?>
+
+	<?php if ($optional_maps != ''): ?>
+		<a href="#terkep" class="mob-quicknav show-on-mobile">Térkép</a>
+	<?php endif; ?>
+
 	<div class="content">
 		<?php if ($optional_firstimage): ?>
 		<div class="content-firstimage">
@@ -59,7 +70,6 @@
 	</div>
 
 	<div class="clr"></div>
-
 	<div class="row">
 		<?php if ($optional_nyitvatartas != ''): $nyitvatartas = json_decode($optional_nyitvatartas, \JSON_UNESCAPED_UNICODE); ?>
 		<?php $noopensdata = 0; foreach ((array)$nyitvatartas as $nap => $v): if($v == '') $noopensdata++; endforeach; ?>
@@ -68,6 +78,7 @@
 			<div class="content-block content-nyitvatartas">
 				<div class="wrapper">
 					<div class="header">
+						<a name="nyitvatartas"></a>
 						<i class="fa fa-clock-o"></i> Nyitvatartási idő
 					</div>
 					<div class="nyitvatartas">
@@ -92,6 +103,7 @@
 			<div class="content-block content-map">
 				<div class="wrapper">
 					<div class="header">
+						<a name="terkep"></a>
 						<i class="fa fa-map"></i> <?php echo $optional_maps; ?>
 					</div>
 					<div class="map" id="map">
@@ -110,8 +122,4 @@
 		</div>
 		<?php endif; ?>
 	</div>
-
-
-
-
 </div>
