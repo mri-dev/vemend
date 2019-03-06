@@ -74,8 +74,11 @@
 					<label for="option_contacts_email">E-mail cím</label>
 					<input type="text" id="option_contacts_email"name="optional[contacts][email]" class="form-control" value="<?=($this->news)?$contacts_values['email']:false?>">
 					<br>
-					<label for="option_contacts_phone">Telefonszám</label>
+					<label for="option_contacts_phone">Mobil</label>
 					<input type="text" id="option_contacts_phone"name="optional[contacts][phone]" class="form-control" value="<?=($this->news)?$contacts_values['phone']:false?>">
+					<br>
+					<label for="option_contacts_phone_wired">Vezetékes telefon</label>
+					<input type="text" id="option_contacts_phone_wired"name="optional[contacts][phone_wired]" class="form-control" value="<?=($this->news)?$contacts_values['phone_wired']:false?>">
 				</div>
 
 				<div class="con cont-option" data-cont-option="boltok,vendeglatas,turizmus,szolgaltatasok,latnivalok">
@@ -105,7 +108,7 @@
                     <label for="cim">Cím*</label>
                       <input type="text"class="form-control" name="cim" id="cim" value="<?=($this->news ? $this->news->getTitle() : '')?>">
                   </div>
-                  <div class="col-md-5">
+                  <div class="col-md-4">
                       <label for="eleres">Elérési kulcs: <?=\PortalManager\Formater::tooltip('Hagyja üresen, hogy a rendszer automatikusan generáljon elérési kulcsot. <br><br>Kérjük ne használjon ékezeteket, speciális karaktereket és üres szóközöket.<br> Példa a helyes használathoz: ez_az_elso_bejegyzesem');?></label>
                       <div class="input-group">
                         <span class="input-group-addon">
@@ -113,6 +116,10 @@
                           </span>
                         <input type="text" class="form-control" placeholder="valami_szoveg" name="eleres" id="eleres" value="<?=($this->news ? $this->news->getAccessKey() : '')?>">
                       </div>
+                  </div>
+                  <div class="col-md-1">
+                      <label for="sorrend">Sorrend:</label>
+                      <input type="number" class="form-control" value="<?=($this->news)?$this->news->getSort():'100'?>" id="sorrend" name="sorrend" />
                   </div>
                   <div class="col-md-1">
                       <label for="lathato">Látható:</label>

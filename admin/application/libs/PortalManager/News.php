@@ -64,6 +64,7 @@ class News
 		$bevezeto = ($data['bevezeto']) ?: NULL;
 		$lathato= ($data['lathato'] == 'on') ? 1 : 0;
 		$archiv = ($data['archiv']) ? 1 : 0;
+		$sorrend = ($data['sorrend']) ? (int)$data['sorrend'] : 100;
     $archivalva = NULL;
     $optional = $data['optional'];
     $optional_data = array();
@@ -96,7 +97,8 @@ class News
       'optional_nyitvatartas' => ($optional_data['nyitvatartas']) ? json_encode($optional_data['nyitvatartas'], \JSON_UNESCAPED_UNICODE) : NULL,
       'optional_maps' => ($optional_data['maps'] != '') ? $optional_data['maps'] : NULL,
       'optional_logo' => ($optional_data['logo'] != '') ? $optional_data['logo'] : NULL,
-      'optional_firstimage' => ($optional_data['firstimage'] != '') ? $optional_data['firstimage'] : NULL
+      'optional_firstimage' => ($optional_data['firstimage'] != '') ? $optional_data['firstimage'] : NULL,
+      'sorrend' => $sorrend
     );
 
 		$this->db->insert(
@@ -137,6 +139,7 @@ class News
 		$kep 	= ($data['belyegkep']) ?: NULL;
 		$lathato= ($data['lathato']) ? 1 : 0;
 		$archiv = ($data['archiv']) ? 1 : 0;
+		$sorrend = ($data['sorrend']) ? (int)$data['sorrend'] : 100;
     $archivalva = NULL;
     $optional = $data['optional'];
     $optional_data = array();
@@ -169,7 +172,8 @@ class News
       'optional_maps' => ($optional_data['maps'] != '') ? $optional_data['maps'] : NULL,
       'optional_logo' => ($optional_data['logo'] != '') ? $optional_data['logo'] : NULL,
       'optional_firstimage' => ($optional_data['firstimage'] != '') ? $optional_data['firstimage'] : NULL,
-      'archiv' => $archiv
+      'archiv' => $archiv,
+      'sorrend' => $sorrend
     );
 
     // Check archivalás
@@ -336,7 +340,7 @@ class News
         $qry .= " ORDER BY ".$arg['order']['by']." ".$arg['order']['how'];
       }
 		} else {
-			$qry .= " ORDER BY h.idopont DESC ";
+			$qry .= " ORDER BY h.sorrend ASC, h.idopont DESC ";
 		}
 
 		// LIMIT
@@ -612,6 +616,10 @@ class News
 	public function getVisitCount()
 	{
 		return (int)$this->current_get_item['uvisit'];
+	}
+  public function getSort()
+	{
+		return (int)$this->current_get_item['sorrend'];
 	}
 	public function getIdopont( $format = false )
 	{

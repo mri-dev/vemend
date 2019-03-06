@@ -18,6 +18,12 @@ class etlap extends Controller{
 			$this->out( 'set', $etlap->menuSet( $from, $to) );
 			$this->out( 'mondayfriday', $etlap->aktualisHet());
 
+			// Hónap utolsó hete
+			$month_last_day = date("Y-m-t", strtotime(NOW));
+			$payday = date('Y-m-d', strtotime($month_last_day.' - 7 days'));
+			$this->out( 'payday', $payday);
+
+
 			$this->out('homepage', true);
 			$this->out('bodyclass', 'homepage');
 

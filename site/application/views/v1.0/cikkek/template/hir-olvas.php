@@ -56,13 +56,18 @@
 			<div class="contact-infos">
 				<h2>Kapcsolat adatok</h2>
 				<?php if ($contacts['email']): ?>
-				<div class="">
+				<div class="" title="E-mail cím">
 					<i class="fa fa-envelope-o"></i> <a href="mailto:<?=$contacts['email']?>"><?=$contacts['email']?></a>
 				</div>
 				<?php endif; ?>
 				<?php if ($contacts['phone']): ?>
-				<div class="">
-					<i class="fa fa-phone"></i> <a href="tel:<?=$contacts['phone']?>"><?=$contacts['phone']?></a>
+				<div class="" title="Mobil">
+					<i class="fa fa-mobile"></i> <a href="tel:<?=$contacts['phone']?>"><?=$contacts['phone']?></a>
+				</div>
+				<?php endif; ?>
+				<?php if ($contacts['phone_wired']): ?>
+				<div class="" title="Vezetékes telefonszám">
+					<i class="fa fa-phone"></i> <a href="tel:<?=$contacts['phone_wired']?>"><?=$contacts['phone_wired']?></a>
 				</div>
 				<?php endif; ?>
 			</div>

@@ -15,10 +15,10 @@
 	<div class="col-md-12">
     	<div class="con con-row-list">
           <div class="row row-header">
-          	<div class="col-md-5">
+          		<div class="col-md-5">
               	Cím
               </div>
-							<div class="col-md-3 center">
+							<div class="col-md-2 center">
             		Kategóriák
               </div>
               <div class="col-md-1 center">
@@ -26,6 +26,9 @@
               </div>
               <div class="col-md-1 center">
                 Létrehozva
+              </div>
+              <div class="col-md-1 center">
+              	Sorrend
               </div>
               <div class="col-md-1 center">
               	Látható
@@ -37,7 +40,7 @@
           		<div class="col-md-5">
               	<input type="text" class="form-control" name="nev" value="<?=$_COOKIE['filter_nev']?>" placeholder="Keresés...">
               </div>
-							<div class="col-md-3 center">
+							<div class="col-md-2 center">
 								<select class="form-control"  name="kategoria">
 				        	<option value="" selected="selected"># Mind</option>
 		            	<?	while( $this->categories->walk() ): $cat = $this->categories->the_cat(); ?>
@@ -45,7 +48,7 @@
 									<? endwhile; ?>
 		            </select>
               </div>
-              <div class="col-md-3 center"></div>
+              <div class="col-md-4 center"></div>
               <div class="col-md-1 right">
 								<?php if ($_COOKIE[filtered] == '1'): ?>
 								<a href="/cikkek/clearfilters" class="btn btn-danger" title="Szűrőfeltételek törlése"><i class="fa fa-times"></i></a>
@@ -69,7 +72,7 @@
                 	<strong><?=$news[cim]?></strong>
                   <div class="subline"><a target="_blank" class="url" href="<?=HOMEDOMAIN?><?=$url?>" class="news-url"><i title="<?=HOMEDOMAIN?>" class="fa fa-home"></i> <?=$url?></a></div>
                 </div>
-                <div class="col-md-3 center">
+                <div class="col-md-2 center">
 									<?php if (count($cats['ids']) != 0): $icat = ''; ?>
 										<?php foreach ($cats['list'] as $cat): ?>
 												<?php $icat .= '<span>'.$cat['neve'].'</span>, '; ?>
@@ -84,6 +87,9 @@
                 </div>
                 <div class="col-md-1 center times">
                     <?=\PortalManager\Formater::dateFormat($news['letrehozva'], $this->settings['date_format'])?>
+                </div>
+                <div class="col-md-1 center">
+                	<?php echo $news[sorrend]; ?>
                 </div>
                  <div class="col-md-1 center">
                 	<? if($news[lathato] == '1'): ?><i style="color:green;" class="fa fa-check"></i><? else: ?><i style="color:red;" class="fa fa-times"></i><? endif; ?>

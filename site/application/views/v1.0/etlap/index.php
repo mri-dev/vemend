@@ -145,12 +145,12 @@
               <div class="wrapper">
                 <div class="text">
                   <div class="fin">
-                    <i class="fa fa-clock-o"></i> A következő heti menü befizetésének időpontja:
+                    <i class="fa fa-clock-o"></i> A következő hónap befizetésének határideje:
                   </div>
                 </div>
                 <div class="val">
                   <div class="fin">
-                    <?php echo date('Y.m.d.', strtotime($this->mondayfriday[1])); ?>
+                    <?php echo date('Y.m.d.', strtotime($this->payday)); ?>
                   </div>
                 </div>
               </div>
@@ -187,7 +187,7 @@
         <?php if (isset($_GET['from']) && isset($_GET['to'])): ?>
           <a name="/menuset"></a>
           <h2 class="datefilterweek">Kiválasztott időpontok szerinti étlapok <span class="daterange"><?=date('Y.m.d.', strtotime($_GET['from']))?> - <?=(isset($_GET['to']) && !empty($_GET['to']))?date('Y.m.d.', strtotime($_GET['to'])):''?></span></h2>
-          <?php $weeks = $set['weeks']; unset($weeks[$menu['hetvege']]); ?>
+          <?php $weeks = $set['weeks']; //unset($weeks[$menu['hetvege']]); ?>
           <?php if (empty($weeks)): ?>
             <div class="no-etlap-selection">
               A kiválasztott időpontra nincs elérhető étlap. Kérjük, hogy nézzen vissza később vagy adjon meg közelebbi dátumot.
