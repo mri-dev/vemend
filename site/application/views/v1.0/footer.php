@@ -168,6 +168,9 @@
 					</div>
 					<div class="right-side">
 						<div class="flex emblems">
+							<div class="szod">
+								<img src="<?=IMG?>szod_emblem.png" alt="SZÖD" style="height:60px;">
+							</div>
 							<div class="tett">
 								<img src="<?=IMG?>tett_emblem.png" alt="Tett">
 							</div>
