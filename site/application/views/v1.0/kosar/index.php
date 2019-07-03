@@ -50,7 +50,9 @@ if ($k['items']) {
 						<div class="mobile-table-container overflowed">
 
 						<?php foreach ($k['items'] as $shop): ?>
-							<h3><?=$shop['shopnev']?></h3>
+							<div class="shoper-name">
+								<h3><?=$shop['shopnev']?></h3>
+							</div>
 							<? if( count($shop[items]) > 0 ): ?>
 							<table class="table table-bordered">
 								<thead>
@@ -148,11 +150,11 @@ if ($k['items']) {
 	        	<a name="step" id="step"></a>
 	        	<div class="p10">
 					<?
-						$vegosszeg 				= 0;
-						$orderedProducts 	= array();
+						$vegosszeg = 0;
+						$orderedProducts  = array();
 
 						foreach($this->orderInfo[items] as $d):
-							$vegosszeg 			+= $d[subAr];
+							$vegosszeg += $d[subAr];
 							$orderedProducts[] 	= $d[nev];
 						endforeach;
 
@@ -204,6 +206,11 @@ if ($k['items']) {
 					<?php
 					// Megrendelés menete
 					else: ?>
+						<?php if (count($k['items']) > 1): ?>
+						<div class="more-order-alert">
+							FIGYELEM! Ön <?=count($k['items'])?> különböző eladótól készül termékeket vásárolni. Önnek <?=count($k['items'])?> db megrendelése lesz, melynél esetenként megrendelésenként extra költségek terhelhetik Önt. Ezek rendszerint szállítási költségek, amennyiben nem személyes átvétel lehetőséget választ.
+						</div>
+						<?php endif; ?>
 						<div class="nextOrded">
 		            <div class="box">
 		                <h2 class="title">Termékek megrendelése</h2>
@@ -432,99 +439,162 @@ if ($k['items']) {
 		                <!--/ORDER STEP 0.-->
 		                <!--ORDER STEP 1.-->
 		                <div class="steps step1 <?=($this->gets[1] == '1')?'on':''?>">
-		                	<div class="row np">
+											<div class="row np">
 		                    	<div class="col-sm-6 col1">
 		                        	<div class="head">Számlázási adatok</div>
 		                            <div class="p10 input-fields">
 		                            	<div class="row">
 		                            		<div class="col-sm-8">
-	                                       <input type="text" class="form-control" name="szam_nev" value="<?=($this->orderExc)?$_POST[szam_nev]:(($this->storedString[1])?$this->storedString[1][szam_nev]:$this->user[szamlazasi_adat][nev])?>" placeholder="Név" />
+	                                       <input type="text" class="form-control" name="szam_nev" value="<?=($this->orderExc)?$_POST[szam_nev]:(($this->storedString[1])?$this->storedString[1][szam_nev]:$this->user[szamlazasi_adat][nev])?>" placeholder="* Név" />
 	                                       <? if($this->orderExc && in_array('szam_nev',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
 	                                  </div>
 																		<div class="col-sm-4">
-	                                       <input type="text" class="form-control" name="szam_adoszam" value="<?=($this->orderExc)?$_POST[szam_adoszam]:(($this->storedString[1])?$this->storedString[1][szam_adoszam]:$this->user[szamlazasi_adat][adoszam])?>" placeholder="Adószám" />
+	                                       <input type="text" class="form-control" name="szam_adoszam" value="<?=($this->orderExc)?$_POST[szam_adoszam]:(($this->storedString[1])?$this->storedString[1][szam_adoszam]:$this->user[data][company_adoszam])?>" placeholder="Adószám" />
 	                                       <? if($this->orderExc && in_array('szam_adoszam',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
 	                                  </div>
 		                            	</div>
-		                            	<div class="row">
-		                            		<div class="col-sm-12">
-		                                         <input type="text" class="form-control" name="szam_uhsz" value="<?=($this->orderExc)?$_POST[szam_uhsz]:(($this->storedString[1])?$this->storedString[1][szam_uhsz]:$this->user[szamlazasi_adat][uhsz])?>" placeholder="Utca, házszám, emelet, ajtó" />
-		                                         <? if($this->orderExc && in_array('szam_uhsz',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
-		                                    </div>
-		                            	</div>
-		                            	<div class="row">
-	                                    	<div class="col-sm-6">
-		                                    	<select name="szam_state" class="form-control" id="szam_state">
-		                                    		<option value="">-- válassza ki a megyét --</option>
-		                                    		<option value="" disabled="disabled"></option>
-							                        <? foreach( $this->states as $s ): ?>
-							                            <option value="<?=$s?>" <?=( ( $this->storedString[1][szam_state] == $s ) || ( $this->orderExc && $_POST['szam_state'] == $s) || ($this->user && $this->user['szamlazasi_adat']['state'] == $s) ) ? 'selected="selected"' : ''?>><?=$s?></option>
-							                        <? endforeach; ?>
-							                    </select>
-		                                        <? if($this->orderExc && in_array('szam_state',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
-		                                    </div>
-		                                    <div class="col-sm-6">
-		                                         <input type="text" class="form-control" name="szam_city" value="<?=($this->orderExc)?$_POST[szam_city]:(($this->storedString[1])?$this->storedString[1][szam_city]:$this->user[szamlazasi_adat][city])?>" placeholder="Város" />
-		                                         <? if($this->orderExc && in_array('szam_city',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
-		                                    </div>
-	                                    </div>
-	                                    <div class="row">
-	                                    	<div class="col-sm-4">
-		                                         <input type="text" class="form-control" name="szam_irsz" value="<?=($this->orderExc)?$_POST[szam_irsz]:(($this->storedString[1])?$this->storedString[1][szam_irsz]:$this->user[szamlazasi_adat][irsz])?>" placeholder="Irányítószám" />
-		                                         <? if($this->orderExc && in_array('szam_irsz',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
-		                                    </div>
-	                                    </div>
-	                                    <div class="row">
-	                                    	 <div class="col-sm-12">
-		                                    	<input type="checkbox" id="sameOfSzam"/><label for="sameOfSzam">a szállítási adatokkal megegyezik</label>
-		                                    </div>
-	                                    </div>
+																	<div class="row">
+																		<div class="col-sm-3">
+																				 <input type="text" class="form-control" autocomplete="off" name="szam_irsz" value="<?=($this->orderExc)?$_POST[szam_irsz]:(($this->storedString[1])?$this->storedString[1][szam_irsz]:$this->user[szamlazasi_adat][irsz])?>" placeholder="* Irányítószám" ng-keyup="findCityByIrsz($event, 'szam_city')" />
+																				 <? if($this->orderExc && in_array('szam_irsz',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
+																		</div>
+																		<div class="col-sm-3">
+																			<input type="text" class="form-control" name="szam_kerulet" value="<?=($this->orderExc)?$_POST[szam_kerulet]:(($this->storedString[1])?$this->storedString[1][szam_kerulet]:$this->user[szamlazasi_adat][kerulet])?>" placeholder="Kerület" />
+																			<? if($this->orderExc && in_array('szam_kerulet',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
+																		</div>
+																		<div class="col-sm-6 hint-holder-col">
+																			<input type="text" readonly="readonly" class="form-control" name="szam_city" value="<?=($this->orderExc)?$_POST[szam_city]:(($this->storedString[1])?$this->storedString[1][szam_city]:$this->user[szamlazasi_adat][city])?>" placeholder="Város: adja meg az irányítószámot..." id="szam_city" />
+																			<div class="hint-holder" ng-show="findedCity['szam_city'] && findedCity['szam_city'].length != 0" id="szam_city">
+																				<div class="hint-list">
+																					<div class="cityhint" ng-click="fillCityHint('szam_city', city)" ng-repeat="city in findedCity['szam_city']">{{city.varos}} <span ng-show="city.megye" class="megye">({{city.megye}} megye)</span></div>
+																				</div>
+																			</div>
+																			<? if($this->orderExc && in_array('szam_city',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="col-sm-6">
+																			<input type="text" class="form-control" name="szam_kozterulet_nev" value="<?=($this->orderExc)?$_POST[szam_kozterulet_nev]:(($this->storedString[1])?$this->storedString[1][szam_kozterulet_nev]:$this->user[szamlazasi_adat][kozterulet_nev])?>" placeholder="* Közterület neve" />
+																			<? if($this->orderExc && in_array('szam_kozterulet_nev',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
+																		</div>
+																		<div class="col-sm-3">
+																			<select name="szam_kozterulet_jelleg" class="form-control" id="szam_kozterulet_jelleg">
+																					<option value="">* Közterület jellege</option>
+																					<option value="" disabled="disabled"></option>
+																					<? foreach( $this->kozterulet_jellege as $s ): ?>
+																					<option value="<?=$s?>" <?=( ( $this->storedString[1][szam_kozterulet_jelleg] == $s ) || ( $this->orderExc && $_POST['szam_kozterulet_jelleg'] == $s) || ($this->user && $this->user['szamlazasi_adat']['kozterulet_jelleg'] == $s) ) ? 'selected="selected"' : ''?>><?=$s?></option>
+																					<? endforeach; ?>
+																				</select>
+																		</div>
+																		<div class="col-sm-3">
+																			<input type="text" class="form-control" name="szam_hazszam" value="<?=($this->orderExc)?$_POST[szam_hazszam]:(($this->storedString[1])?$this->storedString[1][szam_hazszam]:$this->user[szamlazasi_adat][hazszam])?>" placeholder="* Házszám" />
+																			<? if($this->orderExc && in_array('szam_hazszam',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="col-sm-3">
+																			<input type="text" class="form-control" name="szam_epulet" value="<?=($this->orderExc)?$_POST[szam_epulet]:(($this->storedString[1])?$this->storedString[1][szam_epulet]:$this->user[szamlazasi_adat][epulet])?>" placeholder="Épület" />
+																			<? if($this->orderExc && in_array('szam_epulet',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
+																		</div>
+																		<div class="col-sm-3">
+																			<input type="text" class="form-control" name="szam_lepcsohaz" value="<?=($this->orderExc)?$_POST[szam_lepcsohaz]:(($this->storedString[1])?$this->storedString[1][szam_lepcsohaz]:$this->user[szamlazasi_adat][lepcsohaz])?>" placeholder="Lépcsőház" />
+																			<? if($this->orderExc && in_array('szam_lepcsohaz',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
+																		</div>
+																		<div class="col-sm-3">
+																			<input type="text" class="form-control" name="szam_szint" value="<?=($this->orderExc)?$_POST[szam_szint]:(($this->storedString[1])?$this->storedString[1][szam_szint]:$this->user[szamlazasi_adat][szint])?>" placeholder="Szint" />
+																			<? if($this->orderExc && in_array('szam_szint',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
+																		</div>
+																		<div class="col-sm-3">
+																			<input type="text" class="form-control" name="szam_ajto" value="<?=($this->orderExc)?$_POST[szam_ajto]:(($this->storedString[1])?$this->storedString[1][szam_ajto]:$this->user[szamlazasi_adat][ajto])?>" placeholder="Ajtó" />
+																			<? if($this->orderExc && in_array('szam_ajto',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
+																		</div>
+																	</div>
+                                  <div class="row">
+                                  	 <div class="col-sm-12">
+                                    	<input type="checkbox" id="sameOfSzam"/><label for="sameOfSzam">a szállítási adatokkal megegyezik</label>
+                                    </div>
+                                  </div>
 		                            </div>
 		                        </div>
 		                      <div class="col-sm-6 divCol left col2">
 		                        	<div class="head">Szállítási adatok</div>
 		                            <div class="p10 input-fields">
-		                            	<div class="row">
-		                                    <div class="col-sm-12">
-		                                         <input type="text" class="form-control" name="szall_nev" value="<?=($this->orderExc)?$_POST[szall_nev]:(($this->storedString[1])?$this->storedString[1][szall_nev]:$this->user[szallitasi_adat][nev])?>" placeholder="Név" />
-		                                         <? if($this->orderExc && in_array('szall_nev',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
-		                                    </div>
-		                                </div>
-		                                <div class="row">
-		                                	<div class="col-sm-12">
-		                                         <input type="text" class="form-control" name="szall_uhsz" value="<?=($this->orderExc)?$_POST[szall_uhsz]:(($this->storedString[1])?$this->storedString[1][szall_uhsz]:$this->user[szallitasi_adat][uhsz])?>" placeholder="Utca, házszám, emelet, ajtó" />
-		                                         <? if($this->orderExc && in_array('szall_uhsz',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
-		                                    </div>
-		                                </div>
-	                                    <div class="row">
-	                                    	<div class="col-sm-6">
-		                                    	<select name="szall_state" class="form-control" id="szall_state">
-		                                    		<option value="">-- válassza ki a megyét --</option>
-		                                    		<option value="" disabled="disabled"></option>
-							                        <? foreach( $this->states as $s ): ?>
-							                            <option value="<?=$s?>" <?=( ( $this->storedString[1][szall_state] == $s ) || ( $this->orderExc && $_POST['szall_state'] == $s) || ($this->user && $this->user['szallitasi_adat']['state'] == $s) ) ? 'selected="selected"' : ''?>><?=$s?></option>
-							                        <? endforeach; ?>
-							                    </select>
-		                                        <? if($this->orderExc && in_array('szall_state',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
-		                                    </div>
-		                                    <div class="col-sm-6" >
-		                                         <input type="text" class="form-control" name="szall_city" value="<?=($this->orderExc)?$_POST[szall_city]:(($this->storedString[1])?$this->storedString[1][szall_city]:$this->user[szallitasi_adat][city])?>" placeholder="Város" />
-		                                         <? if($this->orderExc && in_array('szall_city',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
-		                                    </div>
-	                                    </div>
-	                                    <div class="row">
-	                                    	<div class="col-sm-4">
-		                                         <input type="text" class="form-control" name="szall_irsz" value="<?=($this->orderExc)?$_POST[szall_irsz]:(($this->storedString[1])?$this->storedString[1][szall_irsz]:$this->user[szallitasi_adat][irsz])?>" placeholder="Irányítószám" />
-		                                         <? if($this->orderExc && in_array('szall_irsz',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
-		                                    </div>
-
-	                                    	<div class="col-sm-8">
-		                                         <input type="text" class="form-control" name="szall_phone" value="<?=($this->orderExc)?$_POST[szall_phone]:(($this->storedString[1])?$this->storedString[1][szall_phone]:$this->user[szallitasi_adat][phone])?>" placeholder="Telefonszám" />
-		                                         <? if($this->orderExc && in_array('szall_phone',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
-		                                    </div>
-	                                    </div>
-	                                    <div class="row">
-	                                    </div>
+																	<div class="row">
+		                            		<div class="col-sm-8">
+	                                       <input type="text" class="form-control" name="szall_nev" value="<?=($this->orderExc)?$_POST[szall_nev]:(($this->storedString[1])?$this->storedString[1][szall_nev]:$this->user[szallitasi_adat][nev])?>" placeholder="* Név" />
+	                                       <? if($this->orderExc && in_array('szall_nev',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
+	                                  </div>
+																		<div class="col-sm-4">
+	                                       <input type="text" class="form-control" name="szall_adoszam" value="<?=($this->orderExc)?$_POST[szall_adoszam]:(($this->storedString[1])?$this->storedString[1][szall_adoszam]:$this->user[data][company_adoszam])?>" placeholder="Adószám" />
+	                                       <? if($this->orderExc && in_array('szall_adoszam',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
+	                                  </div>
+		                            	</div>
+																	<div class="row">
+																		<div class="col-sm-3">
+																				 <input type="text" class="form-control" autocomplete="off" name="szall_irsz" value="<?=($this->orderExc)?$_POST[szall_irsz]:(($this->storedString[1])?$this->storedString[1][szall_irsz]:$this->user[szallitasi_adat][irsz])?>" placeholder="* Irányítószám" ng-keyup="findCityByIrsz($event, 'szall_city')" />
+																				 <? if($this->orderExc && in_array('szall_irsz',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
+																		</div>
+																			<div class="col-sm-3">
+																				<input type="text" class="form-control" name="szall_kerulet" value="<?=($this->orderExc)?$_POST[szall_kerulet]:(($this->storedString[1])?$this->storedString[1][szall_kerulet]:$this->user[szallitasi_adat][kerulet])?>" placeholder="Kerület" />
+																				<? if($this->orderExc && in_array('szall_kerulet',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
+																			</div>
+																		<div class="col-sm-6 hint-holder-col">
+																			<input type="text" readonly="readonly" class="form-control" name="szall_city" value="<?=($this->orderExc)?$_POST[szall_city]:(($this->storedString[1])?$this->storedString[1][szall_city]:$this->user[szallitasi_adat][city])?>" placeholder="Város: adja meg az irányítószámot..." id="szall_city" />
+																			<div class="hint-holder" ng-show="findedCity['szall_city'] && findedCity['szall_city'].length != 0" id="szall_city">
+																				<div class="hint-list">
+																					<div class="cityhint" ng-click="fillCityHint('szall_city', city)" ng-repeat="city in findedCity['szall_city']">{{city.varos}} <span ng-show="city.megye" class="megye">({{city.megye}} megye)</span></div>
+																				</div>
+																			</div>
+																			<? if($this->orderExc && in_array('szall_city',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="col-sm-6">
+																			<input type="text" class="form-control" name="szall_kozterulet_nev" value="<?=($this->orderExc)?$_POST[szall_kozterulet_nev]:(($this->storedString[1])?$this->storedString[1][szall_kozterulet_nev]:$this->user[szallitasi_adat][kozterulet_nev])?>" placeholder="* Közterület neve" />
+																			<? if($this->orderExc && in_array('szall_kozterulet_nev',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
+																		</div>
+																		<div class="col-sm-3">
+																			<select name="szall_kozterulet_jelleg" class="form-control" id="szall_kozterulet_jelleg">
+																					<option value="">* Közterület jellege</option>
+																					<option value="" disabled="disabled"></option>
+																					<? foreach( $this->kozterulet_jellege as $s ): ?>
+																					<option value="<?=$s?>" <?=( ( $this->storedString[1][szall_kozterulet_jelleg] == $s ) || ( $this->orderExc && $_POST['szall_kozterulet_jelleg'] == $s) || ($this->user && $this->user['szallitasi_adat']['kozterulet_jelleg'] == $s) ) ? 'selected="selected"' : ''?>><?=$s?></option>
+																					<? endforeach; ?>
+																				</select>
+																		</div>
+																		<div class="col-sm-3">
+																			<input type="text" class="form-control" name="szall_hazszam" value="<?=($this->orderExc)?$_POST[szall_hazszam]:(($this->storedString[1])?$this->storedString[1][szall_hazszam]:$this->user[szallitasi_adat][hazszam])?>" placeholder="* Házszám" />
+																			<? if($this->orderExc && in_array('szall_hazszam',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="col-sm-3">
+																			<input type="text" class="form-control" name="szall_epulet" value="<?=($this->orderExc)?$_POST[szall_epulet]:(($this->storedString[1])?$this->storedString[1][szall_epulet]:$this->user[szallitasi_adat][epulet])?>" placeholder="Épület" />
+																			<? if($this->orderExc && in_array('szall_epulet',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
+																		</div>
+																		<div class="col-sm-3">
+																			<input type="text" class="form-control" name="szall_lepcsohaz" value="<?=($this->orderExc)?$_POST[szall_lepcsohaz]:(($this->storedString[1])?$this->storedString[1][szall_lepcsohaz]:$this->user[szallitasi_adat][lepcsohaz])?>" placeholder="Lépcsőház" />
+																			<? if($this->orderExc && in_array('szall_lepcsohaz',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
+																		</div>
+																		<div class="col-sm-3">
+																			<input type="text" class="form-control" name="szall_szint" value="<?=($this->orderExc)?$_POST[szall_szint]:(($this->storedString[1])?$this->storedString[1][szall_szint]:$this->user[szallitasi_adat][szint])?>" placeholder="Szint" />
+																			<? if($this->orderExc && in_array('szall_szint',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
+																		</div>
+																		<div class="col-sm-3">
+																			<input type="text" class="form-control" name="szall_ajto" value="<?=($this->orderExc)?$_POST[szall_ajto]:(($this->storedString[1])?$this->storedString[1][szall_ajto]:$this->user[szallitasi_adat][ajto])?>" placeholder="Ajtó" />
+																			<? if($this->orderExc && in_array('szam_ajto',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="col-md-3">
+																			<input type="text" class="form-control" name="szall_phone_korzet" value="<?=($this->orderExc)?$_POST[szall_phone_korzet]:(($this->storedString[1])?$this->storedString[1][szall_phone_korzet]:$this->user[szallitasi_adat][phone_korzet])?>" placeholder="* Körzetszám" />
+																			<? if($this->orderExc && in_array('szall_phone_korzet',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
+																		</div>
+																		<div class="col-md-6">
+																			<input type="text" class="form-control" name="szall_phone" value="<?=($this->orderExc)?$_POST[szall_phone]:(($this->storedString[1])?$this->storedString[1][szall_phone]:$this->user[szallitasi_adat][phone])?>" placeholder="* Telefonszám" />
+																			<? if($this->orderExc && in_array('szall_phone',$this->orderExc[input])): ?><span class="errMsg">Kérjük, töltse ki ezt a mezőt!</span><? endif; ?>
+																		</div>
+																	</div>
 		                            </div>
 		                            <div class="clr"></div>
 		                        </div>
@@ -614,128 +684,180 @@ if ($k['items']) {
 		                			$szallitasiKoltseg = 0;
 		                		}
 
-								$kedvezmeny 		= ($this->user && $this->user[kedvezmeny] > 0) ? (($k[totalPrice] - $szuperakcios_termekek_ara) * (($this->user[kedvezmeny]/100))) : 0;
-								$vegosszeg 			= $calc_final_total;
+												$kedvezmeny 		= ($this->user && $this->user[kedvezmeny] > 0) ? (($k[totalPrice] - $szuperakcios_termekek_ara) * (($this->user[kedvezmeny]/100))) : 0;
+												$vegosszeg 			= $calc_final_total;
 
 							?>
-		                	<div class="row np" style="margin-top:5px;">
-		                    	<div class="col-sm-6 col1">
-		                        	<div class="head"><h4>Számlázási adatok</h4></div>
-		                            <? if($this->orderExc && in_array(1,$this->orderMustFillStep)): ?>
-		                            	<div align="center" class="p10"><span class="mustSelect"><i class="fa fa-warning"></i> Figyelem! Hiányoznak a számlázási adatok. Kérjük pótolja!</span></div>
-		                            <? else: ?>
-		                            <div class="order-contact-info">
-		                            	<div class="row np">
-		                                	<div class="col-sm-5">
-		                                    	<strong>Név</strong>
-		                                    </div>
-		                                    <div class="col-sm-7 right">
-		                                    	<?=$this->storedString[1][szam_nev]?>
-		                                    </div>
-		                                </div>
-																		<?php if ( $this->storedString[1][szam_adoszam] != '' ): ?>
-																		<div class="row np">
-			                                	<div class="col-sm-5">
-			                                    	<strong>Adószám</strong>
-			                                    </div>
-			                                    <div class="col-sm-7 right">
-			                                    	<?=$this->storedString[1][szam_adoszam]?>
-			                                    </div>
-			                                </div>
-																		<?php endif; ?>
-		                                <div class="row np">
-		                                	<div class="col-sm-5">
-		                                    	<strong>Utca, házszám</strong>
-		                                    </div>
-		                                    <div class="col-sm-7 right">
-		                                    	<?=$this->storedString[1][szam_uhsz]?>
-		                                    </div>
-		                                </div>
-		                                <div class="row np">
-		                                	<div class="col-sm-5">
-		                                    	<strong>Város</strong>
-		                                    </div>
-		                                    <div class="col-sm-7 right">
-		                                    	<?=$this->storedString[1][szam_city]?>
-		                                    </div>
-		                                </div>
-		                                 <div class="row np">
-		                                	<div class="col-sm-5">
-		                                    	<strong>Megye</strong>
-		                                    </div>
-		                                    <div class="col-sm-7 right">
-		                                    	<?=$this->storedString[1][szam_state]?>
-		                                    </div>
-		                                </div>
-										<div class="row np">
-		                                	<div class="col-sm-5">
-		                                    	<strong>Irányítószám</strong>
-		                                    </div>
-		                                    <div class="col-sm-7 right">
-		                                    	<?=$this->storedString[1][szam_irsz]?>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <? endif; ?>
-		                        </div>
-		                        <div class="col-sm-6 col2" style="border-left:1px solid #ddd;">
-		                        	<div class="head"><h4>Szállítási adatok</h4></div>
-		                             <? if($this->orderExc && in_array(1,$this->orderMustFillStep)): ?>
-		                            	<div align="center" class="p10"><span class="mustSelect"><i class="fa fa-warning"></i> Figyelem! Hiányoznak a szállítási adatok. Kérjük pótolja!</span></div>
-		                            <? else: ?>
-		                            <div class="order-contact-info">
-		                            	<div class="row np">
-		                                	<div class="col-sm-5">
-		                                    	<strong>Név</strong>
-		                                    </div>
-		                                    <div class="col-sm-7 right">
-		                                    	<?=$this->storedString[1][szall_nev]?>
-		                                    </div>
-		                                </div>
-		                                <div class="row np">
-		                                	<div class="col-sm-5">
-		                                    	<strong>Utca, házszám</strong>
-		                                    </div>
-		                                    <div class="col-sm-7 right">
-		                                    	<?=$this->storedString[1][szall_uhsz]?>
-		                                    </div>
-		                                </div>
-		                                <div class="row np">
-		                                	<div class="col-sm-5">
-		                                    	<strong>Város</strong>
-		                                    </div>
-		                                    <div class="col-sm-7 right">
-		                                    	<?=$this->storedString[1][szall_city]?>
-		                                    </div>
-		                                </div>
-		                                 <div class="row np">
-		                                	<div class="col-sm-5">
-		                                    	<strong>Megye</strong>
-		                                    </div>
-		                                    <div class="col-sm-7 right">
-		                                    	<?=$this->storedString[1][szall_state]?>
-		                                    </div>
-		                                </div>
-		 								<div class="row np">
-		                                	<div class="col-sm-5">
-		                                    	<strong>Irányítószám</strong>
-		                                    </div>
-		                                    <div class="col-sm-7 right">
-		                                    	<?=$this->storedString[1][szall_irsz]?>
-		                                    </div>
-		                                </div>
-		                                <div class="row np">
-		                                	<div class="col-sm-5">
-		                                    	<strong>Telefonszám</strong>
-		                                    </div>
-		                                    <div class="col-sm-7 right">
-		                                    	<?=$this->storedString[1][szall_phone]?>
-		                                    </div>
-		                                </div>
-		                            </div>
-		                            <? endif; ?>
-		                        </div>
-		                    </div>
+							<div class="row np" style="margin-top:5px;">
+								<div class="col-sm-6 col1">
+									<div class="head"><h4>Számlázási adatok</h4></div>
+										<? if($this->orderExc && in_array(1,$this->orderMustFillStep)): ?>
+											<div align="center" class="p10"><span class="mustSelect"><i class="fa fa-warning"></i> Figyelem! Hiányoznak a számlázási adatok. Kérjük pótolja!</span></div>
+										<? else: ?>
+										<div class="order-contact-info">
+											<div class="row np">
+													<div class="col-sm-5">
+															<strong>Név</strong>
+														</div>
+														<div class="col-sm-7 right">
+															<?=$this->storedString[1][szam_nev]?>
+														</div>
+												</div>
+												<?php if ( $this->storedString[1][szam_adoszam] != '' ): ?>
+												<div class="row np">
+														<div class="col-sm-5">
+																<strong>Adószám</strong>
+															</div>
+															<div class="col-sm-7 right">
+																<?=$this->storedString[1][szam_adoszam]?>
+															</div>
+													</div>
+												<?php endif; ?>
+												<?php if ( $this->storedString[1][szam_kerulet] != '' ): ?>
+												<div class="row np">
+													<div class="col-sm-5">
+															<strong>Kerület</strong>
+														</div>
+														<div class="col-sm-7 right">
+															<?=$this->storedString[1][szam_kerulet]?>
+														</div>
+												</div>
+												<?php endif; ?>
+												<div class="row np">
+													<div class="col-sm-5">
+															<strong>Település</strong>
+														</div>
+														<div class="col-sm-7 right">
+															<?=$this->storedString[1][szam_irsz]?> <?=$this->storedString[1][szam_city]?>
+														</div>
+												</div>
+												<div class="row np">
+													<div class="col-sm-7">
+														<strong>Cím</strong> <br>
+														<em>(közterület neve, közterület jellege, házszám)</em>
+													</div>
+													<div class="col-sm-5 right">
+														<?=$this->storedString[1][szam_kozterulet_nev]?> <?=$this->storedString[1][szam_kozterulet_jelleg]?> <?=$this->storedString[1][szam_hazszam]?>
+													</div>
+												</div>
+												<?php if ( $this->storedString[1][szam_epulet] != '' ): ?>
+												<div class="row np">
+													<div class="col-sm-5">
+															<strong>Épület</strong>
+														</div>
+														<div class="col-sm-7 right">
+															<?=$this->storedString[1][szam_epulet]?>
+														</div>
+												</div>
+												<?php endif; ?>
+												<?php if ( $this->storedString[1][szam_emelet] != '' ): ?>
+												<div class="row np">
+													<div class="col-sm-5">
+															<strong>Emelet</strong>
+														</div>
+														<div class="col-sm-7 right">
+															<?=$this->storedString[1][szam_emelet]?>
+														</div>
+												</div>
+												<?php endif; ?>
+												<?php if ( $this->storedString[1][szam_ajto] != '' ): ?>
+												<div class="row np">
+													<div class="col-sm-5">
+															<strong>Ajtó</strong>
+														</div>
+														<div class="col-sm-7 right">
+															<?=$this->storedString[1][szam_ajto]?>
+														</div>
+												</div>
+												<?php endif; ?>
+											</div>
+											<? endif; ?>
+									</div>
+									<div class="col-sm-6 col2" style="border-left:1px solid #ddd;">
+										<div class="head"><h4>Szállítási adatok</h4></div>
+											 <? if($this->orderExc && in_array(1,$this->orderMustFillStep)): ?>
+												<div align="center" class="p10"><span class="mustSelect"><i class="fa fa-warning"></i> Figyelem! Hiányoznak a szállítási adatok. Kérjük pótolja!</span></div>
+											<? else: ?>
+											<div class="order-contact-info">
+												<div class="row np">
+														<div class="col-sm-5">
+																<strong>Név</strong>
+															</div>
+															<div class="col-sm-7 right">
+																<?=$this->storedString[1][szall_nev]?>
+															</div>
+													</div>
+													<?php if ( $this->storedString[1][szall_adoszam] != '' ): ?>
+													<div class="row np">
+															<div class="col-sm-5">
+																	<strong>Adószám</strong>
+																</div>
+																<div class="col-sm-7 right">
+																	<?=$this->storedString[1][szall_adoszam]?>
+																</div>
+														</div>
+													<?php endif; ?>
+													<?php if ( $this->storedString[1][szall_kerulet] != '' ): ?>
+													<div class="row np">
+														<div class="col-sm-5">
+																<strong>Kerület</strong>
+															</div>
+															<div class="col-sm-7 right">
+																<?=$this->storedString[1][szall_kerulet]?>
+															</div>
+													</div>
+													<?php endif; ?>
+													<div class="row np">
+														<div class="col-sm-5">
+																<strong>Település</strong>
+															</div>
+															<div class="col-sm-7 right">
+																<?=$this->storedString[1][szall_irsz]?> <?=$this->storedString[1][szall_city]?>
+															</div>
+													</div>
+													<div class="row np">
+														<div class="col-sm-7">
+															<strong>Cím</strong> <br>
+															<em>(közterület neve, közterület jellege, házszám)</em>
+														</div>
+														<div class="col-sm-5 right">
+															<?=$this->storedString[1][szall_kozterulet_nev]?> <?=$this->storedString[1][szall_kozterulet_jelleg]?> <?=$this->storedString[1][szall_hazszam]?>
+														</div>
+													</div>
+													<?php if ( $this->storedString[1][szall_epulet] != '' ): ?>
+													<div class="row np">
+														<div class="col-sm-5">
+																<strong>Épület</strong>
+															</div>
+															<div class="col-sm-7 right">
+																<?=$this->storedString[1][szall_epulet]?>
+															</div>
+													</div>
+													<?php endif; ?>
+													<?php if ( $this->storedString[1][szall_emelet] != '' ): ?>
+													<div class="row np">
+														<div class="col-sm-5">
+																<strong>Emelet</strong>
+															</div>
+															<div class="col-sm-7 right">
+																<?=$this->storedString[1][szall_emelet]?>
+															</div>
+													</div>
+													<?php endif; ?>
+													<?php if ( $this->storedString[1][szall_ajto] != '' ): ?>
+													<div class="row np">
+														<div class="col-sm-5">
+																<strong>Ajtó</strong>
+															</div>
+															<div class="col-sm-7 right">
+																<?=$this->storedString[1][szall_ajto]?>
+															</div>
+													</div>
+													<?php endif; ?>
+											</div>
+											<? endif; ?>
+									</div>
+							</div>
 		                    <div class="row np topDiv">
 		                    	<div class="col-sm-12">
 		                        	<div class="p10">
@@ -874,11 +996,14 @@ if ($k['items']) {
 
 		                    <? if( $k[has_request_price] > 0 ): ?>
 		                    <div class="has-requested-price">
-					        	<i class="fa fa-exclamation-triangle"></i>
-					        	<h4>FIGYELEM!</h4>
-					        	<div>A "Termékek ára", "Szállítási költség" és a "Kedvezmény összege" adat nem mérvadó, csak tájékoztató jellegű, mivel megrendelt termékei közt van olyan termék, ahol <a href="/kapcsolat" target="_blank">érdeklődni</a> kell a vételár felől!</div>
-					        </div>
-					    	<? endif; ?>
+									        	<i class="fa fa-exclamation-triangle"></i>
+									        	<h4>FIGYELEM!</h4>
+									        	<div>A "Termékek ára", "Szállítási költség" és a "Kedvezmény összege" adat nem mérvadó, csak tájékoztató jellegű, mivel megrendelt termékei közt van olyan termék, ahol <a href="/kapcsolat" target="_blank">érdeklődni</a> kell a vételár felől!</div>
+									        </div>
+									    	<? endif; ?>
+												<div class="shipping-order-alert">
+													Az esetlegesen felmerülő szállítási költségeket a megrendelés visszaigazolás után az eladó határozhatja meg. További információkért érdeklődjön az eladónál!
+												</div>
 		                    <div class="row np">
 		                    	<div class="col-sm-12 price">
 		                       		<div class="p10">
@@ -898,15 +1023,11 @@ if ($k['items']) {
 		                                    <span class="a"><span class="ar"><?=($this->user[kedvezmeny]> 0)? '<span class="kedv">'.$this->user[kedvezmeny].'%</span>':'</span>&mdash;'?></span>
 		                                </div>
 		                           		<? endif; ?>
-		                            	<div class="p">
-		                                	<span class="n">Szállítási költség:</span>
-		                                    <span class="a"><span class="ar"><?=($szallitasiKoltseg > 0)?'+'.Helper::cashFormat($szallitasiKoltseg):'0'?></span> Ft</span>
-		                                </div>
 		                                <div class="p end">
 		                                	<?
-		                                    	if($szallitasiKoltseg > 0){	$vegosszeg += $szallitasiKoltseg; }
-												//if($kedvezmeny > 0){	$vegosszeg -= $kedvezmeny; }
-											?>
+		                                  	if($szallitasiKoltseg > 0){	$vegosszeg += $szallitasiKoltseg; }
+																				//if($kedvezmeny > 0){	$vegosszeg -= $kedvezmeny; }
+																			?>
 		                                	<span class="n">Végösszeg:</span>
 		                                    <span class="a">bruttó <span class="ar"><?=Helper::cashFormat($vegosszeg)?></span> Ft</span>
 		                                    <input type="hidden" name="kedvezmeny" value="<?=($this->kosar[kedvezmeny] > 0)?1:0?>" />
@@ -1060,10 +1181,9 @@ if ($k['items']) {
 					var e = $(this).attr('name');
 					$('input[name=szall_'+e.replace('szam_','')+']').val($(this).val());
 				});
-				var megye_id = $('#szam_state').val();
 
-				$('#szall_state option:contains("'+megye_id+'")').prop('selected', true);
-				console.log(megye_id);
+				var kjid = $('#szam_kozterulet_jelleg').val();
+				$('#szall_kozterulet_jelleg option[value='+kjid+']').prop('selected', true);
 			}else{
 
 			}

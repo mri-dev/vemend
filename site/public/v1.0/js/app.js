@@ -297,6 +297,7 @@ app.controller('App', ['$scope', '$sce', '$http', '$mdToast', '$mdDialog', '$loc
     $scope.syncFavs(function(err, n){
       $scope.fav_num = n;
     });
+    */
 
     if (typeof ordernow !== 'undefined' && ordernow === true ) {
       $scope.loadSettings( ['tuzvedo_order_pretext','tuzvedo_order_pretext_wanted','tuzvedo_order_pretext_title'], function(settings){
@@ -308,7 +309,7 @@ app.controller('App', ['$scope', '$sce', '$http', '$mdToast', '$mdDialog', '$loc
           $scope.order_accepted = true;
         }
       });
-    }*/
+    }
   }
 
   $scope.loadSettings = function( key, callback ){
@@ -534,6 +535,37 @@ app.controller('App', ['$scope', '$sce', '$http', '$mdToast', '$mdDialog', '$loc
       }
     });
   }
+
+  $scope.findedCity = {};
+$scope.findCityByIrsz = function( event, tinput )
+{
+  event.preventDefault();
+  var val = event.target.value;
+
+  $http({
+    method: 'POST',
+    url: '/ajax/get',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    data: $.param({
+      type: "irszCityHint",
+      irsz: val
+    })
+  }).success(function(r){
+    if (r.data && r.data.length != 0) {
+      if (r.data.length == 1) {
+        $('input#'+tinput).val( r.data[0].varos );
+      } else {
+        $scope.findedCity[tinput] = r.data;
+      }
+    } else if( r.data && r.data.length == 0) {
+      $scope.findedCity[tinput] = [];
+    }
+  });
+}
+$scope.fillCityHint = function( tinput, city ) {
+  $('input#'+tinput).val( city.varos );
+  $scope.findedCity[tinput] = [];
+}
 
   $scope.toast = function( text, mode, delay ){
     mode = (typeof mode === 'undefined') ? 'simple' : mode;

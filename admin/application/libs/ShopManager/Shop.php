@@ -1939,61 +1939,72 @@ class Shop
 				}
 			break;
 			case 1:
-				$err 		= false;
-				$inputErr 	= array();
+			$err 		= false;
+			$inputErr 	= array();
 
-				if($szam_nev == ''){
-					$err 		= 'Alapvető adatok megadása kötelező vagy jelentkezzen be.';
-					$inputErr[] = 'szam_nev';
-				}
-				if($szam_uhsz == ''){
-					$err 		= 'Alapvető adatok megadása kötelező vagy jelentkezzen be.';
-					$inputErr[] = 'szam_uhsz';
-				}
-				if($szam_city == ''){
-					$err 		= 'Alapvető adatok megadása kötelező vagy jelentkezzen be.';
-					$inputErr[] = 'szam_city';
-				}
-				if($szam_state == ''){
-					$err 		= 'Alapvető adatok megadása kötelező vagy jelentkezzen be.';
-					$inputErr[] = 'szam_state';
-				}
-				if($szam_irsz == ''){
-					$err 		= 'Alapvető adatok megadása kötelező vagy jelentkezzen be.';
-					$inputErr[] = 'szam_irsz';
-				}
-				if($szall_nev == ''){
-					$err 		= 'Alapvető adatok megadása kötelező vagy jelentkezzen be.';
-					$inputErr[] = 'szall_nev';
-				}
-				if($szall_uhsz == ''){
-					$err 		= 'Alapvető adatok megadása kötelező vagy jelentkezzen be.';
-					$inputErr[] = 'szall_uhsz';
-				}
-				if($szall_city == ''){
-					$err 		= 'Alapvető adatok megadása kötelező vagy jelentkezzen be.';
-					$inputErr[] = 'szall_city';
-				}
-				if($szall_state == ''){
-					$err 		= 'Alapvető adatok megadása kötelező vagy jelentkezzen be.';
-					$inputErr[] = 'szall_state';
-				}
-				if($szall_irsz == ''){
-					$err 		= 'Alapvető adatok megadása kötelező vagy jelentkezzen be.';
-					$inputErr[] = 'szall_irsz';
-				}
-				if($szall_phone == ''){
-					$err 		= 'Alapvető adatok megadása kötelező vagy jelentkezzen be.';
-					$inputErr[] = 'szall_phone';
-				}
+			// Számlázási adatok check
+			if($szam_nev == ''){
+				$err 		= 'Kötelező adat: Számlázási név hiányzik!';
+				$inputErr[] = 'szam_nev';
+			}
+			if($szam_hazszam == ''){
+				$err 		= 'Kötelező adat: Számlázási cím / Házszám hiányzik!';
+				$inputErr[] = 'szam_hazszam';
+			}
+			if($szam_city == ''){
+				$err 		= 'Kötelező adat: Számlázási cím / Település hiányzik!';
+				$inputErr[] = 'szam_city';
+			}
+			if($szam_irsz == ''){
+				$err 		= 'Kötelező adat: Számlázási cím / Irányítószám hiányzik!';
+				$inputErr[] = 'szam_irsz';
+			}
+			if($szam_kozterulet_nev == ''){
+				$err 		= 'Kötelező adat: Számlázási cím / Közterület neve hiányzik!';
+				$inputErr[] = 'szam_kozterulet_nev';
+			}
+			if($szam_kozterulet_jelleg == ''){
+				$err 		= 'Kötelező adat: Számlázási cím / Közterület jellege hiányzik!';
+				$inputErr[] = 'szam_kozterulet_jelleg';
+			}
 
-				if($err){
-					$errArr[input] = $inputErr;
-					throw new OrderException($err, $errArr);
-				}else{
-					setcookie(self::ORDER_COOKIE_KEY_STEP,$step+1,time()+3600*24,'/');
-					\Helper::setStoredPOSTData('order_step_'.($step+1),$post_str);
-				}
+			// Szállítási
+			if($szall_nev == ''){
+				$err 		= 'Kötelező adat: Szállítási név hiányzik!';
+				$inputErr[] = 'szall_nev';
+			}
+			if($szall_hazszam == ''){
+				$err 		= 'Kötelező adat: Számlázási cím / Házszám hiányzik!';
+				$inputErr[] = 'szall_hazszam';
+			}
+			if($szall_city == ''){
+				$err 		= 'Kötelező adat: Szállítási cím / Település hiányzik!';
+				$inputErr[] = 'szall_city';
+			}
+			if($szall_irsz == ''){
+				$err 		= 'Kötelező adat: Szállítási cím / Irányítószám hiányzik!';
+				$inputErr[] = 'szall_irsz';
+			}
+			if($szall_kozterulet_nev == ''){
+				$err 		= 'Kötelező adat: Szállítási cím / Közterület neve hiányzik!';
+				$inputErr[] = 'szall_kozterulet_nev';
+			}
+			if($szall_kozterulet_jelleg == ''){
+				$err 		= 'Kötelező adat: Szállítási cím / Közterület jellege hiányzik!';
+				$inputErr[] = 'szall_kozterulet_jelleg';
+			}
+			if($szall_phone == ''){
+				$err 		= 'Kötelező adat: Telefonszám hiányzik!';
+				$inputErr[] = 'szall_phone';
+			}
+
+			if($err){
+				$errArr[input] = $inputErr;
+				throw new OrderException($err, $errArr);
+			}else{
+				setcookie(self::ORDER_COOKIE_KEY_STEP,$step+1,time()+3600*24,'/');
+				\Helper::setStoredPOSTData('order_step_'.($step+1),$post_str);
+			}
 			break;
 			case 2:
 				$err 		= false;

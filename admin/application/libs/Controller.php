@@ -58,14 +58,6 @@ class Controller {
           $this->view->adm->logged = $this->AdminUser->isLogged();
         }
 
-        // keresés controller
-        $searchercontrol = array(
-          'placeholder' => 'Keresés...',
-          'url' => '/cikkek/'
-        );
-        $this->out('searchercontrol', $searchercontrol);
-
-
         $this->User = new Users(array(
           'db' => $this->db,
           'view' => $this->view,
@@ -89,101 +81,112 @@ class Controller {
         $this->out( 'db',   $this->db );
         $this->out( 'user', $this->User->get( self::$user_opt ) );
 
-        // Only admin
-        if ( !defined('PRODUCTIONSITE') )
+        if ($this->gets[0] != 'ajax')
         {
-          $this->out( 'modules', $this->installer->listModules(array('only_active' => true)) );
-        }
+          // keresés controller
+          $searchercontrol = array(
+            'placeholder' => 'Keresés...',
+            'url' => '/cikkek/'
+          );
+          $this->out('searchercontrol', $searchercontrol);
 
-        // Bannerek
-        if ( defined('PRODUCTIONSITE') )
-        {
-          $this->BANNERS = new Banners(array( 'db' => $this->db ));
-          $this->out('BANNERS', $this->BANNERS);
-        }
+          // Only admin
+          if ( !defined('PRODUCTIONSITE') )
+          {
+            $this->out( 'modules', $this->installer->listModules(array('only_active' => true)) );
+          }
 
-        // Kategóriák
-        if ( defined('PRODUCTIONSITE') )
-        {
-          $this->Categories = new Categories(array( 'db' => $this->db, 'ws' => true ));
-          $this->Categories->getTree();
-          $this->out( 'categories', $this->Categories );
-        }
+          // Bannerek
+          if ( defined('PRODUCTIONSITE') )
+          {
+            $this->BANNERS = new Banners(array( 'db' => $this->db ));
+            $this->out('BANNERS', $this->BANNERS);
+          }
 
-        // redirector
-        if ( defined('PRODUCTIONSITE') )
-        {
-          $redrirector = new Redirector('shop', ltrim($_SERVER['REQUEST_URI'], '/'), array('db' => $this->db));
-          $redrirector->start();
-        }
+          // Kategóriák
+          if ( defined('PRODUCTIONSITE') )
+          {
+            $this->Categories = new Categories(array( 'db' => $this->db, 'ws' => true ));
+            $this->Categories->getTree();
+            $this->out( 'categories', $this->Categories );
+          }
 
-        $templates = new Template( VIEW . 'templates/' );
-        $this->out( 'templates', $templates );
-        $this->out( 'highlight_text', $this->Portal->getHighlightItems() );
-        $this->out( 'slideshow', $this->Portal->getSlideshow() );
-        $showwebshop = false;
-        if (isset($_COOKIE['showwebshop'])) {
-          $showwebshop = true;
-        }
-        $this->out( 'show_webshop', $showwebshop);
+          // redirector
+          if ( defined('PRODUCTIONSITE') )
+          {
+            $redrirector = new Redirector('shop', ltrim($_SERVER['REQUEST_URI'], '/'), array('db' => $this->db));
+            $redrirector->start();
+          }
 
-        // Menük
-        $tree = null;
-        $menu_header  = new Menus( false, array( 'db' => $this->db ) );
-        // Header menü
-        $menu_header->addFilter( 'menu_type', 'header' );
-        $menu_header->isFinal(true);
-        $tree   = $menu_header->getTree(false, array('admin' => false));
-        $this->out( 'menu_header',  $tree );
+          $templates = new Template( VIEW . 'templates/' );
+          $this->out( 'templates', $templates );
+          $this->out( 'highlight_text', $this->Portal->getHighlightItems() );
+          $this->out( 'slideshow', $this->Portal->getSlideshow() );
+          $showwebshop = false;
+          if (isset($_COOKIE['showwebshop'])) {
+            $showwebshop = true;
+          }
+          $this->out( 'show_webshop', $showwebshop);
 
-        // Menük
-        $tree = null;
-        $menu_top  = new Menus( false, array( 'db' => $this->db ) );
-        // Header menü
-        $menu_top->addFilter( 'menu_type', 'top' );
-        $menu_top->isFinal(true);
-        $tree   = $menu_top->getTree(false, array('admin' => false));
-        $this->out( 'menu_top',  $tree );
+          // Menük
+          $tree = null;
+          $menu_header  = new Menus( false, array( 'db' => $this->db ) );
+          // Header menü
+          $menu_header->addFilter( 'menu_type', 'header' );
+          $menu_header->isFinal(true);
+          $tree   = $menu_header->getTree(false, array('admin' => false));
+          $this->out( 'menu_header',  $tree );
 
-        // Megabox
-        $tree = null;
-        $menu_megabox  = new Menus( false, array( 'db' => $this->db ) );
-        // Header menü
-        $menu_megabox->addFilter( 'menu_type', 'megabox' );
-        $menu_megabox->isFinal(true);
-        $tree   = $menu_megabox->getTree(false, array('admin' => false));
-        $this->out( 'menu_megabox',  $tree );
+          // Menük
+          $tree = null;
+          $menu_top  = new Menus( false, array( 'db' => $this->db ) );
+          // Header menü
+          $menu_top->addFilter( 'menu_type', 'top' );
+          $menu_top->isFinal(true);
+          $tree   = $menu_top->getTree(false, array('admin' => false));
+          $this->out( 'menu_top',  $tree );
 
-        // Footer menü
-        $tree = null;
-        $menu_footer  = new Menus( false, array( 'db' => $this->db ) );
-        $menu_footer->addFilter( 'menu_type', 'footer' );
-        $menu_footer->isFinal(true);
-        $tree   = $menu_footer->getTree(false, array('admin' => false));
-        $this->out( 'menu_footer',  $tree );
+          // Megabox
+          $tree = null;
+          $menu_megabox  = new Menus( false, array( 'db' => $this->db ) );
+          // Header menü
+          $menu_megabox->addFilter( 'menu_type', 'megabox' );
+          $menu_megabox->isFinal(true);
+          $tree   = $menu_megabox->getTree(false, array('admin' => false));
+          $this->out( 'menu_megabox',  $tree );
 
-        // Mobil menü
-        $tree = null;
-        $menu_footer  = new Menus( false, array( 'db' => $this->db ) );
-        $menu_footer->addFilter( 'menu_type', 'mobil' );
-        $menu_footer->isFinal(true);
-        $tree   = $menu_footer->getTree(false, array('admin' => false));
-        $this->out( 'menu_mobil',  $tree );
+          // Footer menü
+          $tree = null;
+          $menu_footer  = new Menus( false, array( 'db' => $this->db ) );
+          $menu_footer->addFilter( 'menu_type', 'footer' );
+          $menu_footer->isFinal(true);
+          $tree   = $menu_footer->getTree(false, array('admin' => false));
+          $this->out( 'menu_footer',  $tree );
 
-        unset($tree);
+          // Mobil menü
+          $tree = null;
+          $menu_footer  = new Menus( false, array( 'db' => $this->db ) );
+          $menu_footer->addFilter( 'menu_type', 'mobil' );
+          $menu_footer->isFinal(true);
+          $tree   = $menu_footer->getTree(false, array('admin' => false));
+          $this->out( 'menu_mobil',  $tree );
 
-        // Kapcsolat menü üzenet
-        if ( Post::on('contact_form') ) {
-              try {
-                $this->Portal->sendContactMsg();
-                Helper::reload('?msgkey=page_msg&page_msg=Üzenetét sikeresen elküldte. Hamarosan válaszolni fogunk rá!');
-              } catch (Exception $e) {
-                $this->out( 'page_msg', Helper::makeAlertMsg('pError', $e->getMessage()) );
-              }
-        }
+          unset($tree);
 
-        if ( $_GET['msgkey'] ) {
-            $this->out( $_GET['msgkey'], Helper::makeAlertMsg('pSuccess', $_GET[$_GET['msgkey']]) );
+          // Kapcsolat menü üzenet
+          if ( Post::on('contact_form') ) {
+                try {
+                  $this->Portal->sendContactMsg();
+                  Helper::reload('?msgkey=page_msg&page_msg=Üzenetét sikeresen elküldte. Hamarosan válaszolni fogunk rá!');
+                } catch (Exception $e) {
+                  $this->out( 'page_msg', Helper::makeAlertMsg('pError', $e->getMessage()) );
+                }
+          }
+
+          if ( $_GET['msgkey'] ) {
+              $this->out( $_GET['msgkey'], Helper::makeAlertMsg('pSuccess', $_GET[$_GET['msgkey']]) );
+          }
+
         }
 
         $this->out( 'states', array(
@@ -208,6 +211,9 @@ class Controller {
             18=>"Veszprém",
             19=>"Zala",
         ) );
+
+
+          $this->out( 'kozterulet_jellege', $this->kozterulet_jellege() );
 
         if(!$arg[hidePatern]){ $this->hidePatern = false; }
 
@@ -245,6 +251,210 @@ class Controller {
         $this->view->called = $this->fnTemp;
     }
 
+    public function kozterulet_jellege()
+    {
+       $arr = array(
+            'akna',
+            'akna-alsó',
+            'akna-felső',
+            'alagút',
+            'alsórakpart',
+            'arborétum',
+            'autóút',
+            'barakképület',
+            'barlang',
+            'bejáró',
+            'bekötőút',
+            'bánya',
+            'bányatelep',
+            'bástya',
+            'bástyája',
+            'csárda',
+            'csónakházak',
+            'domb',
+            'dűlő',
+            'dűlők',
+            'dűlősor',
+            'dűlőterület',
+            'dűlőút',
+            'egyetemváros',
+            'egyéb',
+            'elágazás',
+            'emlékút',
+            'erdészház',
+            'erdészlak',
+            'erdő',
+            'erdősor',
+            'fasor',
+            'fasora',
+            'felső',
+            'forduló',
+            'főmérnökség',
+            'főtér',
+            'főút',
+            'föld',
+            'gyár',
+            'gyártelep',
+            'gyárváros',
+            'gyümölcsös',
+            'gát',
+            'gátsor',
+            'gátőrház',
+            'határsor',
+            'határút',
+            'hegy',
+            'hegyhát',
+            'hegyhát dűlő',
+            'hegyhát',
+            'köz',
+            'hrsz',
+            'hrsz.',
+            'ház',
+            'hídfő',
+            'iskola',
+            'játszótér',
+            'kapu',
+            'kastély',
+            'kert',
+            'kertsor',
+            'kerület',
+            'kilátó',
+            'kioszk',
+            'kocsiszín',
+            'kolónia',
+            'korzó',
+            'kultúrpark',
+            'kunyhó',
+            'kör',
+            'körtér',
+            'körvasútsor',
+            'körzet',
+            'körönd',
+            'körút',
+            'köz',
+            'kút',
+            'kültelek',
+            'lakóház',
+            'lakókert',
+            'lakónegyed',
+            'lakópark',
+            'lakótelep',
+            'lejtő',
+            'lejáró',
+            'liget',
+            'lépcső',
+            'major',
+            'malom',
+            'menedékház',
+            'munkásszálló',
+            'mélyút',
+            'műút',
+            'oldal',
+            'orom',
+            'park',
+            'parkja',
+            'parkoló',
+            'part',
+            'pavilon',
+            'piac',
+            'pihenő',
+            'pince',
+            'pincesor',
+            'postafiók',
+            'puszta',
+            'pálya',
+            'pályaudvar',
+            'rakpart',
+            'repülőtér',
+            'rész',
+            'rét',
+            'sarok',
+            'sor',
+            'sora',
+            'sportpálya',
+            'sporttelep',
+            'stadion',
+            'strandfürdő',
+            'sugárút',
+            'szer',
+            'sziget',
+            'szivattyútelep',
+            'szállás',
+            'szállások',
+            'szél',
+            'szőlő',
+            'szőlőhegy',
+            'szőlők',
+            'sánc',
+            'sávház',
+            'sétány',
+            'tag',
+            'tanya',
+            'tanyák',
+            'telep',
+            'temető',
+            'tere',
+            'tető',
+            'turistaház',
+            'téli kikötő',
+            'tér',
+            'tömb',
+            'udvar',
+            'utak',
+            'utca',
+            'utcája',
+            'vadaskert',
+            'vadászház',
+            'vasúti megálló',
+            'vasúti őrház',
+            'vasútsor',
+            'vasútállomás',
+            'vezetőút',
+            'villasor',
+            'vágóhíd',
+            'vár',
+            'várköz',
+            'város',
+            'vízmű',
+            'völgy',
+            'zsilip',
+            'zug',
+            'állat és növ.kert',
+            'állomás',
+            'árnyék',
+            'árok',
+            'átjáró',
+            'őrház',
+            'őrházak',
+            'őrházlak',
+            'út',
+            'útja',
+            'útőrház',
+            'üdülő',
+            'üdülő-part',
+            'üdülő-sor',
+            'üdülő-telep',
+            );
+
+        asort($arr);
+        uasort($arr, array('Controller', 'Hcmp'));
+
+        return $arr;
+    }
+
+    /**
+    * Magyar ékezetes betűk korrigálás/rewrite rendezéshez
+    * */
+    static function Hcmp($a, $b)
+    {
+      static $Hchr = array('á'=>'az', 'é'=>'ez', 'í'=>'iz', 'ó'=>'oz', 'ö'=>'ozz', 'ő'=>'ozz', 'ú'=>'uz', 'ü'=>'uzz', 'ű'=>'uzz', 'cs'=>'cz', 'zs'=>'zz',
+       'ccs'=>'czcz', 'ggy'=>'gzgz', 'lly'=>'lzlz', 'nny'=>'nznz', 'ssz'=>'szsz', 'tty'=>'tztz', 'zzs'=>'zzzz', 'Á'=>'az', 'É'=>'ez', 'Í'=>'iz',
+       'Ó'=>'oz', 'Ö'=>'ozz', 'Ő'=>'ozz', 'Ú'=>'uz', 'Ü'=>'uzz', 'Ű'=>'uzz', 'CS'=>'cz', 'ZZ'=>'zz', 'CCS'=>'czcz', 'GGY'=>'gzgz', 'LLY'=>'lzlz',
+       'NNY'=>'nznz', 'SSZ'=>'szsz', 'TTY'=>'tztz', 'ZZS'=>'zzzz');
+       $a = strtr($a,$Hchr);   $b = strtr($b,$Hchr);
+       $a=strtolower($a); $b=strtolower($b);
+       return strcmp($a, $b);
+    }
 
 
     function setTitle($title){
