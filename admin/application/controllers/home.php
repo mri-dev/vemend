@@ -30,7 +30,7 @@ class home extends Controller{
 			// STATISZTIKÁK
 			/////////////////////////////////////////////////////////
 			// Általános statisztikák
-			$this->view->stats 		= $this->AdminUser->getStats();
+			$this->view->stats 		= $this->AdminUser->getStats($this->view->adm->user);
 			// Forgalom statisztikák
 			$this->traffic     		= new Traffic( array( 'db' => $this->db ));
 			$this->view->tafficInfo = $this->traffic->calcTrafficInfo();

@@ -16,7 +16,6 @@ class megrendelesek extends Controller
 				$perm = $this->User->hasPermission($this->view->adm->user, array('adminuser'), 'webshop', true);
 			}
 
-
 			if($_GET['showarchive'] == '1')
 			{
 				setcookie('filter_archivalt',1,time()+60*24,'/'.$this->view->gets[0]);
@@ -94,6 +93,11 @@ class megrendelesek extends Controller
 
 			$arg = array();
 			$arg[limit] = 50;
+
+			if ( $this->view->adm->user['user_group'] != \PortalManager\Users::USERGROUP_ADMIN ) {
+				$arg['author'] = $this->view->adm->user['ID'];
+			}
+
 			$filters = Helper::getCookieFilter('filter',array('filtered'));
 
 			$arg[filters] 	= $filters;
@@ -147,7 +151,14 @@ class megrendelesek extends Controller
 			Helper::reload('/'.$this->view->gets[0]);
 		}
 
-		function allapotok(){
+		function allapotok()
+		{
+
+			if ( $this->view->adm->user['user_group'] != 'admin' )
+			{
+				$perm = $this->User->hasPermission($this->view->adm->user, array('adminuser'), 'webshop_order_allapotok', true);
+			}
+
 			if(Post::on('save')){
 				try{
 					$this->AdminUser->saveMegrendelesAllapot($_POST);
@@ -182,7 +193,13 @@ class megrendelesek extends Controller
 			$this->view->sm = $this->view->o[Helper::getFromArrByAssocVal($this->view->o,'ID',$this->view->gets[3])];
 		}
 
-		function termek_allapotok(){
+		function termek_allapotok()
+		{
+			if ( $this->view->adm->user['user_group'] != 'admin' )
+			{
+				$perm = $this->User->hasPermission($this->view->adm->user, array('adminuser'), 'webshop_termek_allapotok', true);
+			}
+
 			if(Post::on('save')){
 				try{
 					$this->AdminUser->saveMegrendelesTermekAllapot($_POST);

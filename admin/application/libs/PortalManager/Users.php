@@ -20,11 +20,10 @@ class Users
 	const TABLE_CONTAINERS 		= 'user_container';
 	const TABLE_CONTAINERS_XREF = 'user_container_xref';
 
-	const USERGROUP_USER 		= 'user';
-	const USERGROUP_PARTNER		= 'partner';
-	const USERGROUP_RESELLER 	= 'reseller';
-	const USERGROUP_SALES 		= 'sales';
-	const USERGROUP_COMPANY 	= 'company';
+	const USERGROUP_USER = 'user';
+	const USERGROUP_ADMIN	= 'admin';
+	const USERGROUP_ADMINUSER = 'adminuser';
+	const USERGROUP_COMPANY = 'company';
 
 	private $user_groupes = array(
 		'user' => 'Felhasználó',
@@ -48,6 +47,8 @@ class Users
 		'redirects' => 'Átirányítások',
 
 		'webshop' => 'Webáruház használata',
+		'webshop_order_allapotok' => 'Webáruház megrendelés állapotok kezelése',
+		'webshop_termek_allapotok' => 'Webáruház termék állapotok kezelése',
 		'kuponok' => 'Webáruház - kuponok',
 		'arcsoportok' => 'Webáruház - Árcsoportok',
 
@@ -59,7 +60,7 @@ class Users
 
 	public $user_group_permissions = array(
 		'user' => array(),
-		'admin' => array('adminsettings', 'users','belsouzenetek','menu', 'oldalak', 'emails', 'galeria','dokumentumok','cikkek','feliratok','popup','slideshow','redirects','webshop','kuponok','arcsoportok','etlap','bannerek','szallasok','programok'),
+		'admin' => array('adminsettings', 'users','belsouzenetek','menu', 'oldalak', 'emails', 'galeria','dokumentumok','cikkek','feliratok','popup','slideshow','redirects','webshop','webshop_order_allapotok', 'webshop_termek_allapotok', 'kuponok','arcsoportok','etlap','bannerek','szallasok','programok'),
 		'adminuser' => array('webshop','kuponok','arcsoportok','szallasok')
 	);
 
@@ -222,19 +223,6 @@ class Users
 				$miss = rtrim($miss,',');
 				\Helper::reload( '/user/beallitasok?safe=1&missed_details='.$miss );
 			}
-		}
-
-		// Kedvezmény - Viszonteladóknál
-		if( $ret['data']['user_group'] == self::USERGROUP_RESELLER )
-		{
-			$kedv = $this->getKedvezmeny($ret[data][ID]);
-			$torzsvasarloi_kedvezmeny = $kedv[szazalek];
-
-			$kedvezmenyek[] = array(
-				'nev' => 'Viszonteladói kedvezmény',
-				'kedvezmeny' => $torzsvasarloi_kedvezmeny,
-				'link' => '/p/viszonteladoi_kedvezmeny'
-			);
 		}
 
 		/**
@@ -476,21 +464,6 @@ class Users
 	{
 		$has_alerts 	= 0;
 		$alerts 		= array();
-		$is_reseller 	= ( $user_group == self::USERGROUP_RESELLER ) ? true : false;
-		$is_sales 		= ( $user_group == self::USERGROUP_SALES) ? true : false;
-
-		// Csak viszonteladók
-		if( $is_reseller )
-		{
-
-		}
-
-		// Csak értékesítők
-		if( $is_sales )
-		{
-
-		}
-
 		// Mindenki
 
 		$has_unseen_doc = false;

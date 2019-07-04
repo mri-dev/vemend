@@ -922,7 +922,11 @@ class ajax extends Controller{
 					);
 
 					// Feldolgozásra váró megrendelések száma
-					$order = $this->db->query("SELECT ID FROM orders WHERE allapot = 1");
+					if ( $this->view->adm->user['user_group'] != \PortalManager\Users::USERGROUP_ADMIN )
+					{
+						$orderwhere = ' and author = '.(int)$this->view->adm->user['ID'];
+					}
+					$order = $this->db->query("SELECT ID FROM orders WHERE allapot = 1 ".$orderwhere);
 					$re[data][new_order] = $order->rowCount();
 
 					// Elfogadásra váró casadapont

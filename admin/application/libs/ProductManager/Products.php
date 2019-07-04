@@ -670,9 +670,16 @@ class Products
 		LEFT OUTER JOIN shop_termek_parameter as pa ON pa.termekID = p.ID
 		WHERE 1 = 1	";
 
+
 		$whr = '';
 		$size_whr = '';
 		$add = '';
+
+		if ( isset($arg['author']) ) {
+			$add = " and p.author = ".(int)$arg['author']." ";
+			$whr .= $add;
+			$size_whr .= $add;
+		}
 
 		if (!$admin_listing) {
 			$add = " and (SELECT ws.author_id FROM shop_settings as ws WHERE p.author = ws.author_id) IS NOT NULL and p.lathato = 1 and p.profil_kep IS NOT NULL ";
@@ -947,7 +954,6 @@ class Products
 				}
 			}
 		}
-
 		// Összes kategórián belüli termék ID összegyűjtése
 		$ids_query = $this->db->query( "SELECT p.ID FROM shop_termekek as p WHERE 1=1 ".$whr );
 

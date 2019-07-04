@@ -2136,8 +2136,6 @@ class Shop
 						$order_stack[$c['termek_author']][] = $c;
 					}
 
-					print_r($order_stack); exit;
-
 					$referer_partner_id =($referer_partner_id) ? "'".$referer_partner_id."'" : 'NULL';
 					$coupon_code 		= ($coupon_code) ? "'".$coupon_code."'" : 'NULL';
 
@@ -2152,7 +2150,7 @@ class Shop
 							$shop_author,
 							nextOrderID(".$shop_author."),
 							'$email',
-							(($uid == 0) ? 'NULL': $uid),
+							".(($uid == 0) ? 'NULL': $uid).",
 							'$mid',
 							'$atvetel',
 							'$fizetes',
@@ -2238,6 +2236,7 @@ class Shop
 									$this->db->insert(
 										'order_termekek',
 										array(
+											'author' => $shop_author,
 											'orderKey' => $orderID,
 											'gepID' => $mid,
 											'userID' => $uid,

@@ -154,6 +154,9 @@ class termekek extends Controller
 					'how' => 'DESC'
 				)
 			);
+			if ( $this->view->adm->user['user_group'] != \PortalManager\Users::USERGROUP_ADMIN ) {
+				$arg['author'] = $this->view->adm->user['ID'];
+			}
 			$products_list = $products->prepareList( $arg )->getList();
 			$this->out( 'products', $products );
 			$this->out( 'termekek', $products_list );

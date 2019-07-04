@@ -126,108 +126,138 @@ class AdminUser
 		}
 	}
 
-	function getStats(){
+	function getStats( $user_data )
+	{
 		$ret = array();
-			// Új megrendelések
-			$inew = array(
-				'tetel' => 0,
-				'ar' 	=> 0,
-				'db'  	=> 0
-			);
-			$new = $this->db->query("SELECT count(orderKey) as me, sum(me) as tetel, sum(me*egysegAr+szallitasi_koltseg-kedvezmeny) as ar FROM `order_termekek` as t LEFT OUTER JOIN orders as o ON o.ID = t.orderKey WHERE o.allapot = ".self::ORDER_STATUS_KEY_DEFAULT." GROUP BY t.orderKey");
-			$inew[db] 	= $new->rowCount();
-			$data 		= $new->fetchAll(\PDO::FETCH_ASSOC);
+		$author_qry = '';
 
-			foreach($data as $newd){
-				$inew[tetel] += $newd[tetel];
-				$inew[ar] += $newd[ar];
+		if ( $user_data['user_group'] != \PortalManager\Users::USERGROUP_ADMIN ) {
+			$author_id = (int)$user_data['ID'];
+			$author_qry = 'o.author = '.$author_id.' and ';
+		}
+
+		// Új megrendelések
+		$inew = array(
+			'tetel' => 0,
+			'ar' 	=> 0,
+			'db'  	=> 0
+		);
+		$new = $this->db->query("SELECT count(orderKey) as me, sum(me) as tetel, sum(me*egysegAr+szallitasi_koltseg-kedvezmeny) as ar FROM `order_termekek` as t LEFT OUTER JOIN orders as o ON o.ID = t.orderKey WHERE {$author_qry} o.allapot = ".self::ORDER_STATUS_KEY_DEFAULT." GROUP BY t.orderKey");
+		$inew[db] 	= $new->rowCount();
+		$data 		= $new->fetchAll(\PDO::FETCH_ASSOC);
+
+		foreach($data as $newd){
+			$inew[tetel] += $newd[tetel];
+			$inew[ar] += $newd[ar];
+		}
+
+		$ret[orders][news] = array(
+			'tetel' => $inew[tetel],
+			'ar' 	=> $inew[ar],
+			'db' 	=> $inew[db]
+		);
+
+		// Folyamatban lévő megrendelések
+		$iprogress = array(
+			'tetel' => 0,
+			'ar' 	=> 0,
+			'db'  	=> 0
+		);
+		$progress = $this->db->query("SELECT count(orderKey) as me, sum(me) as tetel, sum(me*egysegAr+szallitasi_koltseg-kedvezmeny) as ar FROM `order_termekek` as t LEFT OUTER JOIN orders as o ON o.ID = t.orderKey WHERE {$author_qry} o.allapot != ".self::ORDER_STATUS_KEY_DONE." and o.allapot != ".self::ORDER_STATUS_KEY_DELETED." and o.allapot != ".self::ORDER_STATUS_KEY_DEFAULT." GROUP BY t.orderKey");
+		$iprogress[db] 	= $progress->rowCount();
+		$data 			= $progress->fetchAll(\PDO::FETCH_ASSOC);
+
+		foreach($data as $progressd){
+			$iprogress[tetel] += $progressd[tetel];
+			$iprogress[ar] += $progressd[ar];
+		}
+
+		$ret[orders][progress] = array(
+			'tetel' => $iprogress[tetel],
+			'ar' 	=> $iprogress[ar],
+			'db' 	=> $iprogress[db]
+		);
+
+		// Teljesített megrendelések
+		$idone = array(
+			'tetel' => 0,
+			'ar' 	=> 0,
+			'db'  	=> 0
+		);
+		$done = $this->db->query("SELECT count(orderKey) as me, sum(me) as tetel, sum(me*egysegAr+szallitasi_koltseg-kedvezmeny) as ar FROM `order_termekek` as t LEFT OUTER JOIN orders as o ON o.ID = t.orderKey WHERE {$author_qry} o.allapot = 4 GROUP BY t.orderKey");
+		$idone[db] 	= $done->rowCount();
+		$data 			= $done->fetchAll(\PDO::FETCH_ASSOC);
+
+		foreach($data as $doned){
+			$idone[tetel] += $doned[tetel];
+			$idone[ar] += $doned[ar];
+		}
+
+		$ret[orders][done] = array(
+			'tetel' => $idone[tetel],
+			'ar' 	=> $idone[ar],
+			'db' 	=> $idone[db]
+		);
+
+		// Felhasználók
+		$users 		= $this->db->query("SELECT *,datediff(now(), utoljara_belepett) as lastLoginDiff FROM felhasznalok");
+		$thisMonth 	= date('Y-m');
+
+		$aktivalt 	= 0;
+		$ebbenahonapban = 0;
+		$loginInThisWeek = 0;
+
+		foreach($users->fetchAll() as $d){
+			// Aktivált
+			if(!is_null($d[aktivalva])) $aktivalt++;
+			// Ebben a hónapban
+			$regYM = substr($d[regisztralt],0,7);
+			if($regYM == $thisMonth){
+				$ebbenahonapban++;
 			}
-
-			$ret[orders][news] = array(
-				'tetel' => $inew[tetel],
-				'ar' 	=> $inew[ar],
-				'db' 	=> $inew[db]
-			);
-
-			// Folyamatban lévő megrendelések
-			$iprogress = array(
-				'tetel' => 0,
-				'ar' 	=> 0,
-				'db'  	=> 0
-			);
-			$progress = $this->db->query("SELECT count(orderKey) as me, sum(me) as tetel, sum(me*egysegAr+szallitasi_koltseg-kedvezmeny) as ar FROM `order_termekek` as t LEFT OUTER JOIN orders as o ON o.ID = t.orderKey WHERE o.allapot != ".self::ORDER_STATUS_KEY_DONE." and o.allapot != ".self::ORDER_STATUS_KEY_DELETED." and o.allapot != ".self::ORDER_STATUS_KEY_DEFAULT." GROUP BY t.orderKey");
-			$iprogress[db] 	= $progress->rowCount();
-			$data 			= $progress->fetchAll(\PDO::FETCH_ASSOC);
-
-			foreach($data as $progressd){
-				$iprogress[tetel] += $progressd[tetel];
-				$iprogress[ar] += $progressd[ar];
+			// Az elmúlt héten beléptek
+			if($d[lastLoginDiff] <= 7){
+				$loginInThisWeek++;
 			}
+		}
+		$ret[users][total] 			= $users->rowCount();
+		$ret[users][activated] 		= $aktivalt;
+		$ret[users][regInThisMonth] = $ebbenahonapban;
+		$ret[users][loginInThisWeek] = $loginInThisWeek;
 
-			$ret[orders][progress] = array(
-				'tetel' => $iprogress[tetel],
-				'ar' 	=> $iprogress[ar],
-				'db' 	=> $iprogress[db]
-			);
+		$search = $this->getSearchMostStat();
+		$ret[search][total] = $search[info][total_num];
+		$ret[search][data] = $search[data];
 
-			// Felhasználók
-			$users 		= $this->db->query("SELECT *,datediff(now(), utoljara_belepett) as lastLoginDiff FROM felhasznalok");
-			$thisMonth 	= date('Y-m');
+		$termekView = $this->getTermekMostViewStat();
+		$ret[termekView][total] = $termekView[info][total_num];
+		$ret[termekView][data] = $termekView[data];
 
-			$aktivalt 	= 0;
-			$ebbenahonapban = 0;
-			$loginInThisWeek = 0;
+		$kat = $this->getKategoriaAvStat();
+		$ret[kategoria][total] = $kat[info][total_num];
+		$ret[kategoria][data] = $kat[data];
 
-			foreach($users->fetchAll() as $d){
-				// Aktivált
-				if(!is_null($d[aktivalva])) $aktivalt++;
-				// Ebben a hónapban
-				$regYM = substr($d[regisztralt],0,7);
-				if($regYM == $thisMonth){
-					$ebbenahonapban++;
-				}
-				// Az elmúlt héten beléptek
-				if($d[lastLoginDiff] <= 7){
-					$loginInThisWeek++;
-				}
-			}
-			$ret[users][total] 			= $users->rowCount();
-			$ret[users][activated] 		= $aktivalt;
-			$ret[users][regInThisMonth] = $ebbenahonapban;
-			$ret[users][loginInThisWeek] = $loginInThisWeek;
+		$q = "SELECT
+			u.*,
+			t.nev as item_nev,
+			getTermekUrl(u.item_id,'".$this->settings['page_url']."') as item_url
+		FROM uzenetek as u
+		LEFT OUTER JOIN shop_termekek as t ON t.ID = u.item_id
+		LEFT OUTER JOIN shop_markak as m ON m.ID = t.marka
+		WHERE
+			u.ID IS NOT NULL and
+			IF(
+				u.felado_email IS NOT NULL,
+				IF(u.valaszolva IS NULL and u.archivalva = 0,1,0),
+				IF(u.archivalva = 0, 1, 0)
+			) = 1
+		ORDER BY
+			u.elkuldve DESC LIMIT 0, 10;";
 
-			$search = $this->getSearchMostStat();
-			$ret[search][total] 		= $search[info][total_num];
-			$ret[search][data] 			= $search[data];
+		// Last Messages
+		$lastMsg = $this->db->query( $q )->fetchAll(\PDO::FETCH_ASSOC);
+		$ret[lastMessages][data] = $lastMsg;
 
-			$termekView = $this->getTermekMostViewStat();
-			$ret[termekView][total] 		= $termekView[info][total_num];
-			$ret[termekView][data] 			= $termekView[data];
-
-			$kat = $this->getKategoriaAvStat();
-			$ret[kategoria][total] 			= $kat[info][total_num];
-			$ret[kategoria][data] 			= $kat[data];
-
-			$q = "SELECT
-				u.*,
-				t.nev as item_nev,
-				getTermekUrl(u.item_id,'".$this->settings['page_url']."') as item_url
-			FROM uzenetek as u
-			LEFT OUTER JOIN shop_termekek as t ON t.ID = u.item_id
-			LEFT OUTER JOIN shop_markak as m ON m.ID = t.marka
-			WHERE
-				u.ID IS NOT NULL and
-				IF(
-					u.felado_email IS NOT NULL,
-					IF(u.valaszolva IS NULL and u.archivalva = 0,1,0),
-					IF(u.archivalva = 0, 1, 0)
-				) = 1
-			ORDER BY
-				u.elkuldve DESC LIMIT 0, 10;";
-
-			// Last Messages
-			$lastMsg = $this->db->query( $q )->fetchAll(\PDO::FETCH_ASSOC);
-			$ret[lastMessages][data] = $lastMsg;
 		return $ret;
 	}
 
@@ -301,6 +331,7 @@ class AdminUser
 
 		return $data;
 	}
+
 	function getMegrendelesek($arg = array())
 	{
 		$stat = array();
@@ -309,6 +340,11 @@ class AdminUser
 		FROM orders as o
 		LEFT OUTER JOIN order_allapot as oa ON oa.ID = o.allapot
 		WHERE 1=1 ";
+
+		if (isset($arg['author']))
+		{
+			$q .= " and o.author ='".(int)$arg['author']."'";
+		}
 
 		if (isset($arg['archivalt']))
 		{
@@ -335,27 +371,25 @@ class AdminUser
 			$q .= " and o.coupon_code = '".$arg['couponcode']."'";
 		}
 
-			// FILTERS
-			if($arg[filters][ID]){
-				$q .= " and o.ID = '".trim($arg[filters][ID])."'"	;
-			}
-			if($arg[filters][azonosito]){
-				$q .= " and o.azonosito = '".trim($arg[filters][azonosito])."'"	;
-			}
-			if($arg[filters][access]){
-				$q .= " and o.accessKey = '".trim($arg[filters][access])."'"	;
-			}
-			if($arg[filters][fallapot]){
-				$q .= " and o.allapot = '".trim($arg[filters][fallapot])."'"	;
-			}
-			if($arg[filters][fszallitas]){
-				$q .= " and o.szallitasiModID = '".trim($arg[filters][fszallitas])."'"	;
-			}
-			if($arg[filters][ffizetes]){
-				$q .= " and o.fizetesiModID = '".trim($arg[filters][ffizetes])."'"	;
-			}
-
-
+		// FILTERS
+		if($arg[filters][ID]){
+			$q .= " and o.ID = '".trim($arg[filters][ID])."'"	;
+		}
+		if($arg[filters][azonosito]){
+			$q .= " and o.azonosito = '".trim($arg[filters][azonosito])."'"	;
+		}
+		if($arg[filters][access]){
+			$q .= " and o.accessKey = '".trim($arg[filters][access])."'"	;
+		}
+		if($arg[filters][fallapot]){
+			$q .= " and o.allapot = '".trim($arg[filters][fallapot])."'"	;
+		}
+		if($arg[filters][fszallitas]){
+			$q .= " and o.szallitasiModID = '".trim($arg[filters][fszallitas])."'"	;
+		}
+		if($arg[filters][ffizetes]){
+			$q .= " and o.fizetesiModID = '".trim($arg[filters][ffizetes])."'"	;
+		}
 
 		if (isset($arg['order']))
 		{
