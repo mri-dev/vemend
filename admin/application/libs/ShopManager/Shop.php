@@ -2056,7 +2056,7 @@ class Shop
 				{
 					$go 					= true;
 					$orderID 				= 0;
-					$uid 					= ($orderUserID == '') ? 'NULL' : $orderUserID;
+					$uid 					= ($orderUserID == '') ? 0 : $orderUserID;
 					$total 					= 0;
 					$pppkod 				= ($ppp_uzlet_str) ? "'".$ppp_uzlet_str."'" : 'NULL';
 					$pp_pont 				= ($pp_selected_point) ? "'".$pp_selected_point."'": 'NULL';
@@ -2108,12 +2108,13 @@ class Shop
 					$cart_data = $this->db->query("
 						SELECT
 							c.*,
+							t.author as termek_author,
 							t.nev,
 							t.meret,
 							t.szin,
 							t.raktar_articleid,
 							getTermekUrl(t.ID,'".$this->settings['domain']."') as url,
-							IF(t.egyedi_ar IS NOT NULL, t.egyedi_ar, getTermekAr(t.marka, IF(t.akcios,t.akcios_brutto_ar,t.brutto_ar))) as ar,
+							getTermekAr(t.ID, ".$uid.") as ar,
 							t.referer_price_discount,
 							m.neve as markaNev
 						FROM shop_kosar as c
@@ -2122,243 +2123,263 @@ class Shop
 						WHERE c.gepID = $mid");
 					$cart = $cart_data->fetchAll(\PDO::FETCH_ASSOC);
 
+
+
 					if( count($cart) == 0 ){
 						return false;
 					}
 
+					// collect group cart by author
+					$order_stack = array();
+
+					foreach ((array)$cart as $c) {
+						$order_stack[$c['termek_author']][] = $c;
+					}
+
+					print_r($order_stack); exit;
+
 					$referer_partner_id =($referer_partner_id) ? "'".$referer_partner_id."'" : 'NULL';
 					$coupon_code 		= ($coupon_code) ? "'".$coupon_code."'" : 'NULL';
 
-					// Create new order
-					if($go){
-						$szamlazasi_keys = \Helper::getArrayValueByMatch($post,'szam_');
-						$szallitasi_keys = \Helper::getArrayValueByMatch($post,'szall_');
-						$iq = "INSERT INTO orders(nev,azonosito,email,userID,gepID,szallitasiModID,fizetesiModID,kedvezmeny,szallitasi_koltseg,szamlazasi_keys,szallitasi_keys,pickpackpont_uzlet_kod,comment,postapont,referer_code,coupon_code, used_cash) VALUES(
-						'$nev',
-						nextOrderID(),
-						'$email',
-						$uid,
-						'$mid',
-						'$atvetel',
-						'$fizetes',
-						'$kedvezmeny_ft',
-						'$szallitasi_koltseg',
-						'".json_encode($szamlazasi_keys,JSON_UNESCAPED_UNICODE)."',
-						'".json_encode($szallitasi_keys,JSON_UNESCAPED_UNICODE)."',
-						$pppkod,
-						'$comment',
-						$pp_pont,
-						$referer_partner_id,
-						$coupon_code,
-						$used_cash
-						);";
+					foreach ( (array)$order_stack as $shop_author => $o )
+					{
+						// Create new order
+						if($go){
+							$szamlazasi_keys = \Helper::getArrayValueByMatch($post,'szam_');
+							$szallitasi_keys = \Helper::getArrayValueByMatch($post,'szall_');
+							$iq = "INSERT INTO orders(nev,author,azonosito,email,userID,gepID,szallitasiModID,fizetesiModID,kedvezmeny,szallitasi_koltseg,szamlazasi_keys,szallitasi_keys,pickpackpont_uzlet_kod,comment,postapont,referer_code,coupon_code, used_cash) VALUES(
+							'$nev',
+							$shop_author,
+							nextOrderID(".$shop_author."),
+							'$email',
+							(($uid == 0) ? 'NULL': $uid),
+							'$mid',
+							'$atvetel',
+							'$fizetes',
+							'$kedvezmeny_ft',
+							'$szallitasi_koltseg',
+							'".json_encode($szamlazasi_keys,JSON_UNESCAPED_UNICODE)."',
+							'".json_encode($szallitasi_keys,JSON_UNESCAPED_UNICODE)."',
+							$pppkod,
+							'$comment',
+							$pp_pont,
+							$referer_partner_id,
+							$coupon_code,
+							$used_cash
+							);";
 
-						$this->db->query($iq);
+							$this->db->query($iq);
 
-						$orderID 	= $this->db->lastInsertId();
-						$accessKey	= md5($orderID.'.'.$email);
+							$orderID 	= $this->db->lastInsertId();
+							$accessKey	= md5($orderID.'.'.$email);
 
-						$this->db->update('orders',
-							array(
-								'accessKey' => $accessKey
-							),
-							"ID = $orderID"
-						);
+							$this->db->update('orders',
+								array(
+									'accessKey' => $accessKey
+								),
+								"ID = $orderID"
+							);
 
-						if ( $used_cash )
-						{
-							// Kedvezmény levonása
-							if ( $orderUserID )
+							/*
+							if ( $used_cash )
 							{
-								$this->db->query("UPDATE ".\PortalManager\Users::TABLE_NAME." SET cash = cash - ".$used_cash." WHERE ID = ".$orderUserID);
-
-								// Log cash
-								$this->db->insert(
-									'cash_log',
-									array(
-										'felh_id' 		=> $orderUserID,
-										'referer' 		=> 'Egyenleg felhasználás',
-										'referer_id' 	=> $orderID,
-										'cash' 			=> $used_cash,
-										'direction' 	=> 'out'
-									)
-								);
-							}
-						}
-					}
-
-					// Copy items to order items and connect with order parent
-					if($go){
-						$temp_cart 		= array();
-
-						foreach($cart as $d)
-						{
-							$kedv = 0;
-
-							if( $kedvezmeny > 0 )
-							{
-								//\PortalManager\Formater::discountPrice( $d[ar], $kedvezmeny );
-							}
-
-							if( $allow_partner_discount )
-							{
-								$kedv 			= $d['referer_price_discount'];
-								$kedvezmeny_ft 	+= $d['referer_price_discount'] * $d['me'];
-							}
-
-							if ($allow_coupon_discount && !$coupon->isOffForAllProduct())
-							{
-								if ($coupon->thisProductAllowed($d['raktar_articleid']))
+								// Kedvezmény levonása
+								if ( $orderUserID )
 								{
-									$kedv 			= $coupon->calcPrice( $d['ar'] );
-									$kedvezmeny_ft += $coupon->calcPrice( $d['ar'] ) * $d['me'];
+									$this->db->query("UPDATE ".\PortalManager\Users::TABLE_NAME." SET cash = cash - ".$used_cash." WHERE ID = ".$orderUserID);
+
+									// Log cash
+									$this->db->insert(
+										'cash_log',
+										array(
+											'felh_id' 		=> $orderUserID,
+											'referer' 		=> 'Egyenleg felhasználás',
+											'referer_id' 	=> $orderID,
+											'cash' 			=> $used_cash,
+											'direction' 	=> 'out'
+										)
+									);
+								}
+							}
+							*/
+
+							// Copy items to order items and connect with order parent
+							if($go)
+							{
+								$temp_cart = array();
+								foreach($o as $d)
+								{
+									$kedv = 0;
+
+									/*
+									if( $kedvezmeny > 0 )
+									{
+										//\PortalManager\Formater::discountPrice( $d[ar], $kedvezmeny );
+									}
+
+									if( $allow_partner_discount )
+									{
+										$kedv 			= $d['referer_price_discount'];
+										$kedvezmeny_ft 	+= $d['referer_price_discount'] * $d['me'];
+									}
+
+									if ($allow_coupon_discount && !$coupon->isOffForAllProduct())
+									{
+										if ($coupon->thisProductAllowed($d['raktar_articleid']))
+										{
+											$kedv 			= $coupon->calcPrice( $d['ar'] );
+											$kedvezmeny_ft += $coupon->calcPrice( $d['ar'] ) * $d['me'];
+										}
+									}
+									*/
+
+									$total += ( $d[ar] * $d[me] );
+
+									$this->db->insert(
+										'order_termekek',
+										array(
+											'orderKey' => $orderID,
+											'gepID' => $mid,
+											'userID' => $uid,
+											'email' => $email,
+											'termekID' => $d['termekID'],
+											'me' => $d['me'],
+											'egysegAr' => $d['ar'],
+											'egysegArKedvezmeny'=> $kedv
+									));
+
+									// Készlet levonás
+									if ( $this->settings['stock_withdrawal'] == '1' ) {
+										$levon = (int)$d['me'];
+										$this->db->query("UPDATE shop_termekek SET raktar_keszlet = raktar_keszlet - ".$levon." WHERE ID = ".$d['termekID']);
+									}
+
+									$temp_cart[] = $d;
 								}
 
+								// A teljes megrendelésből vonja le a kupon kedvezményt
+								if ($allow_coupon_discount && $coupon->isOffForAllProduct())
+								{
+									$kedvezmeny_ft = $coupon->calcPrice( $total );
+								}
+
+								// Kedvezmény mentése
+								$this->db->query("UPDATE orders SET kedvezmeny = $kedvezmeny_ft WHERE ID = $orderID;");
+
+								$cart = $temp_cart;
+								unset( $temp_cart );
+
 							}
 
-							$total += ( $d[ar] * $d[me] );
+							// Alert orders and admin about new order
+							$orderData = $this->db->query("SELECT * FROM orders WHERE ID = $orderID")->fetch(\PDO::FETCH_ASSOC);
 
-							$this->db->insert('order_termekek', array(
-									'orderKey' => $orderID,
-									'gepID' => $mid,
-									'userID' => $uid,
-									'email' => $email,
-									'termekID' => $d['termekID'],
-									'me' => $d['me'],
-									'egysegAr' => $d['ar'],
-									'egysegArKedvezmeny'=> $kedv
-							));
+							// Admin alert
+							$total = 0;
 
-							// Készlet levonás
-							if ( $this->settings['stock_withdrawal'] == '1' ) {
-								$levon = (int)$d['me'];
-								$this->db->query("UPDATE shop_termekek SET raktar_keszlet = raktar_keszlet - ".$levon." WHERE ID = ".$d['termekID']);
-							}
+							$is_pickpackpont 	= ( $this->getSzallitasiModeData($atvetel,'nev') 	== $this->settings['flagkey_pickpacktransfer_id'] ) ? true : false;
+							$is_eloreutalas 	= ( $this->getFizetesiModeData($fizetes,'nev') 		== 'Banki átutalás' ) ? true : false;
+							$is_payu 			= ( $this->getFizetesiModeData($fizetes,'nev') 		== 'Bankkártyás fizetés (PayU)' ) ? true : false;
 
-							$temp_cart[] = $d;
+							// Értesítő e-mail az adminisztrátornak
+							$mail = new Mailer(
+								$this->settings['page_title'],
+								SMTP_USER,
+								$this->settings['mail_sender_mode']
+							);
+							$mail->add( $this->settings['alert_email'] );
+
+							$arg = array(
+								'settings' 		=> $this->settings,
+								'infoMsg' 		=> 'Ezt az üzenetet a rendszer küldte. Kérjük, hogy ne válaszoljon rá!',
+								'nev' 			=> $nev,
+								'email' 		=> $email,
+								'uid' 			=> $uid,
+								'orderData' 	=> $orderData,
+								'cart' 			=> $cart,
+								'total' 		=> $total,
+								'szallitasi_koltseg' => $szallitasi_koltseg,
+								'kedvezmeny' 	=> $kedvezmeny_ft,
+								'szamlazasi_keys' => $szamlazasi_keys,
+								'szallitasi_keys' => $szallitasi_keys,
+								'atvetel' 		=> $this->getSzallitasiModeData($atvetel,'nev'),
+								'fizetes' 		=> $this->getFizetesiModeData($fizetes,'nev'),
+								'ppp_uzlet_str' => $pppkod,
+								'is_pickpackpont' => $is_pickpackpont,
+								'orderID' 		=> $orderID,
+								'megjegyzes' 	=> $comment
+							);
+							$mail->setSubject( 'Értesítő: Új megrendelés érkezett' );
+							$mail->setMsg( (new Template( VIEW . 'templates/mail/' ))->get( 'order_new_admin', $arg ) );
+							$re = $mail->sendMail();
+
+							// User alert
+							$total 		= 0;
+							$mail = new Mailer(
+								$this->settings['page_title'],
+								$this->settings['email_noreply_address'],
+								$this->settings['mail_sender_mode']
+							);
+
+							$mail->add( $email );
+
+							$arg = array(
+								'settings' 		=> $this->settings,
+								'infoMsg' 		=> 'Ezt az üzenetet a rendszer küldte. Kérjük, hogy ne válaszoljon rá!',
+								'nev' 			=> $nev,
+								'email' 		=> $email,
+								'uid' 			=> $uid,
+								'orderData' 	=> $orderData,
+								'cart' 			=> $cart,
+								'total' 		=> $total,
+								'szallitasi_koltseg' => $szallitasi_koltseg,
+								'kedvezmeny' 	=> $kedvezmeny_ft,
+								'szamlazasi_keys' => $szamlazasi_keys,
+								'szallitasi_keys' => $szallitasi_keys,
+								'atvetel' 		=> $this->getSzallitasiModeData($atvetel,'nev'),
+								'fizetes' 		=> $this->getFizetesiModeData($fizetes,'nev'),
+								'ppp_uzlet_str' => $pppkod,
+								'is_pickpackpont' => $is_pickpackpont,
+								'orderID' 		=> $orderID,
+								'megjegyzes' 	=> $comment,
+								'is_eloreutalas' => $is_eloreutalas,
+								'accessKey' => $accessKey
+							);
+
+							$mail->setSubject( 'Megrendelését fogadtuk: '.$orderData[azonosito] );
+							$mail->setMsg( (new Template( VIEW . 'templates/mail/' ))->get( 'order_new_user', $arg ) );
+							$re = $mail->sendMail();
 						}
-
-						// A teljes megrendelésből vonja le a kupon kedvezményt
-						if ($allow_coupon_discount && $coupon->isOffForAllProduct())
-						{
-							$kedvezmeny_ft = $coupon->calcPrice( $total );
-						}
-
-						// Kedvezmény mentése
-						$this->db->query("UPDATE orders SET kedvezmeny = $kedvezmeny_ft WHERE ID = $orderID;");
-
-						$cart = $temp_cart;
-						unset( $temp_cart );
-
-					}
-
+					} // END of order_stack foreach
 
 					// Clear shoping cart by machineID
 					if($go){
 						$this->db->query("DELETE FROM shop_kosar WHERE gepID = $mid");
 					}
-						// Alert orders and admin about new order
-						$orderData = $this->db->query("SELECT * FROM orders WHERE ID = $orderID")->fetch(\PDO::FETCH_ASSOC);
 
-						// Admin alert
-						$total 		= 0;
+					// Feliratkozás
+					if ( isset($_POST['subscribe']) ) {
+						$portal = new Portal( array( 'db' => $this->db ));
+						$portal->feliratkozas( $nev, $email, 'megrendelés' );
+					}
 
-						$is_pickpackpont 	= ( $this->getSzallitasiModeData($atvetel,'nev') 	== $this->settings['flagkey_pickpacktransfer_id'] ) ? true : false;
-						$is_eloreutalas 	= ( $this->getFizetesiModeData($fizetes,'nev') 		== 'Banki átutalás' ) ? true : false;
-						$is_payu 			= ( $this->getFizetesiModeData($fizetes,'nev') 		== 'Bankkártyás fizetés (PayU)' ) ? true : false;
+					// Kupon felhasználtság
+					if ($allow_coupon_discount)
+					{
+						$coupon->used();
+					}
 
-						// Értesítő e-mail az adminisztrátornak
-						$mail = new Mailer(
-							$this->settings['page_title'],
-							SMTP_USER,
-							$this->settings['mail_sender_mode']
-						);
-						$mail->add( $this->settings['alert_email'] );
+					// Clear cookies
+					setcookie('__order_step_1poststr',null,time()-3600,'/');
+					setcookie('__order_step_2poststr',null,time()-3600,'/');
+					setcookie('__order_step_3poststr',null,time()-3600,'/');
+					setcookie('__order_step_4poststr',null,time()-3600,'/');
+					//setcookie('orderStep',null,time()-3600,'/');
+					setcookie('partner_code',null,time()-3600,'/');
+					setcookie('coupon_code',null,time()-3600,'/');
 
-						$arg = array(
-							'settings' 		=> $this->settings,
-							'infoMsg' 		=> 'Ezt az üzenetet a rendszer küldte. Kérjük, hogy ne válaszoljon rá!',
-							'nev' 			=> $nev,
-							'email' 		=> $email,
-							'uid' 			=> $uid,
-							'orderData' 	=> $orderData,
-							'cart' 			=> $cart,
-							'total' 		=> $total,
-							'szallitasi_koltseg' => $szallitasi_koltseg,
-							'kedvezmeny' 	=> $kedvezmeny_ft,
-							'szamlazasi_keys' => $szamlazasi_keys,
-							'szallitasi_keys' => $szallitasi_keys,
-							'atvetel' 		=> $this->getSzallitasiModeData($atvetel,'nev'),
-							'fizetes' 		=> $this->getFizetesiModeData($fizetes,'nev'),
-							'ppp_uzlet_str' => $pppkod,
-							'is_pickpackpont' => $is_pickpackpont,
-							'orderID' 		=> $orderID,
-							'megjegyzes' 	=> $comment
-						);
-						$mail->setSubject( 'Értesítő: Új megrendelés érkezett' );
-						$mail->setMsg( (new Template( VIEW . 'templates/mail/' ))->get( 'order_new_admin', $arg ) );
-						$re = $mail->sendMail();
-
-						// User alert
-						$total 		= 0;
-						$mail = new Mailer(
-							$this->settings['page_title'],
-							$this->settings['email_noreply_address'],
-							$this->settings['mail_sender_mode']
-						);
-
-						$mail->add( $email );
-
-						$arg = array(
-							'settings' 		=> $this->settings,
-							'infoMsg' 		=> 'Ezt az üzenetet a rendszer küldte. Kérjük, hogy ne válaszoljon rá!',
-							'nev' 			=> $nev,
-							'email' 		=> $email,
-							'uid' 			=> $uid,
-							'orderData' 	=> $orderData,
-							'cart' 			=> $cart,
-							'total' 		=> $total,
-							'szallitasi_koltseg' => $szallitasi_koltseg,
-							'kedvezmeny' 	=> $kedvezmeny_ft,
-							'szamlazasi_keys' => $szamlazasi_keys,
-							'szallitasi_keys' => $szallitasi_keys,
-							'atvetel' 		=> $this->getSzallitasiModeData($atvetel,'nev'),
-							'fizetes' 		=> $this->getFizetesiModeData($fizetes,'nev'),
-							'ppp_uzlet_str' => $pppkod,
-							'is_pickpackpont' => $is_pickpackpont,
-							'orderID' 		=> $orderID,
-							'megjegyzes' 	=> $comment,
-							'is_eloreutalas' => $is_eloreutalas,
-							'accessKey' => $accessKey
-						);
-
-						$mail->setSubject( 'Megrendelését fogadtuk: '.$orderData[azonosito] );
-						$mail->setMsg( (new Template( VIEW . 'templates/mail/' ))->get( 'order_new_user', $arg ) );
-						$re = $mail->sendMail();
-
-						// Feliratkozás
-						if ( isset($_POST['subscribe']) ) {
-							$portal = new Portal( array( 'db' => $this->db ));
-							$portal->feliratkozas( $nev, $email, 'megrendelés' );
-						}
-
-						// Kupon felhasználtság
-						if ($allow_coupon_discount)
-						{
-							$coupon->used();
-						}
-
-						// Clear cookies
-						setcookie('__order_step_1poststr',null,time()-3600,'/');
-						setcookie('__order_step_2poststr',null,time()-3600,'/');
-						setcookie('__order_step_3poststr',null,time()-3600,'/');
-						setcookie('__order_step_4poststr',null,time()-3600,'/');
-						//setcookie('orderStep',null,time()-3600,'/');
-						setcookie('partner_code',null,time()-3600,'/');
-						setcookie('coupon_code',null,time()-3600,'/');
-
-						setcookie('acceptedOrder',null,time()-3600,'/kosar');
-						setcookie('lastOrderedKey',$accessKey,time()+3600,'/kosar');
+					setcookie('acceptedOrder',null,time()-3600,'/kosar');
+					setcookie('lastOrderedKey',$accessKey,time()+3600,'/kosar');
 				}
 			break;
 		}

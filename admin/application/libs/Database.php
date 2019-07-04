@@ -246,7 +246,7 @@ DELIMITER ;";
 						DELIMITER ;";
 				$f .= "DROP FUNCTION IF EXISTS nextOrderID;
 					DELIMITER $$
-					CREATE FUNCTION nextOrderID()
+					CREATE FUNCTION nextOrderID(UID INT)
 					  RETURNS VARCHAR(15)
 					BEGIN
 					  DECLARE orderPrefix VARCHAR(10);
@@ -257,7 +257,7 @@ DELIMITER ;";
 					  DECLARE prevKey INT DEFAULT 0;
 					  DECLARE prevKeyStr VARCHAR(5) DEFAULT '0000';
 
-					  SET orderPrefix = 'TUZVED';
+					  SET orderPrefix = 'VM';
 					  SET cYear 	= SUBSTR(YEAR(NOW()),3);
 					  SET cMonth 	= MONTH(NOW());
 
@@ -265,7 +265,7 @@ DELIMITER ;";
 						SET cMonth = CONCAT('0',cMonth);
 					  END IF;
 
-					  SET mainKey = CONCAT(orderPrefix,cYear,cMonth);
+					  SET mainKey = CONCAT(orderPrefix,'\/U',UID,'\/',cYear,cMonth);
 
 					  SELECT REPLACE(azonosito,mainKey,'') INTO prevKey FROM `orders` WHERE azonosito LIKE CONCAT(mainKey,'%') ORDER BY idopont DESC LIMIT 0,1;
 
