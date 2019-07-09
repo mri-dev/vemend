@@ -91,6 +91,14 @@ class termekek extends Controller {
 				'favorite' => $myfavorite
 			);
 
+			if (isset($_GET['listbyauthor'])) {
+				$arg['author'] = $_GET['listbyauthor'];
+				$shopauthor = $this->User->get(array('user' => $arg['author'], 'userby' => 'shopslug'));
+				if ($shopauthor) {
+					$this->out('shopauthor', $shopauthor);
+				}
+			}
+
 			if (isset($_GET['src']) && $_GET['src'] != '') {
 				$search = explode(" ", trim($_GET['src']));
 				if (!empty($search)) {

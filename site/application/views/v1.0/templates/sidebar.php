@@ -1,5 +1,8 @@
 <div class="sidebar-holder">
     <?php if ( !$this->hide_categories ): ?>
+      <?php if ($this->shopauthor): ?>
+        <? $this->render('templates/shop_author'); ?>
+      <?php endif; ?>
       <? $this->render('templates/sidebar_menu'); ?>
     <?php endif; ?>
 

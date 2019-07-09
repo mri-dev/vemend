@@ -676,9 +676,20 @@ class Products
 		$add = '';
 
 		if ( isset($arg['author']) ) {
-			$add = " and p.author = ".(int)$arg['author']." ";
-			$whr .= $add;
-			$size_whr .= $add;
+
+			if (!is_numeric($arg['author'])) {
+				$author_id = (int)$this->db->squery("SELECT author_id FROM shop_settings WHERE shopslug = :slug", array('slug' => $arg['author']))->fetchColumn();
+			} else {
+				$author_id = (int)$arg['author'];
+			}
+
+			if ($author_id != 0)
+			{				
+				$add = " and p.author = ".$author_id." ";
+				$whr .= $add;
+				$size_whr .= $add;
+			}
+
 		}
 
 		if (!$admin_listing) {

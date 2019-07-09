@@ -202,6 +202,7 @@ class Users
 		if(!$user) return false;
 
 		$ret[data] 	= ($user) ? $this->getData($user, $getby) : false;
+		$ret[shop] = $ret['data']['shop'];
 		$ret[permissions] 	= $ret[data][permissions];
 		$ret[user_group] 	= $ret[data][user_group];
 		$ret[email] = $ret[data][email];
@@ -225,21 +226,7 @@ class Users
 			}
 		}
 
-		/**
-		 * Casada shop adatok
-		 * */
-		$casadashop 		= false;
 		$totalOrderPrice 	= 0;
-
-		if ( $this->db->query("SELECT ID FROM ".\PortalManager\CasadaShop::DB_XREF." WHERE 1=1 and user_id = ".$ret['data']['ID'])->rowCount() != 0 ) {
-			$shop = new CasadaShop(false,array(
-				'db' => $this->db
-			));
-
-			$casadashop = $shop->getUserShopData( $ret['data']['ID'] );
-
-			unset($shop);
-		}
 
 		// Korábban rendelt, lezárt termékek össz. értéke
 		$q = "
@@ -256,13 +243,7 @@ class Users
 			$totalOrderPrice = (float)$ordpc['ar'] - (float)$ordpc['kedv'];
 		}
 
-		if( $totalOrderPrice > $this->settings['referer_min_price'] || $casadashop )
-		{
-			$referer_allow = true;
-		}
 
-		$ret['referer_allow'] 	= $referer_allow;
-		$ret['casadashop'] 		= $casadashop;
 		$ret['kedvezmenyek'] 	= $kedvezmenyek;
 		$ret['torzsvasarloi_kedvezmeny'] = $torzsvasarloi_kedvezmeny;
 		$ret['torzsvasarloi_kedvezmeny_next_price_step'] = $kedv[next_price_step];
@@ -873,7 +854,19 @@ class Users
 
 	function getData($what, $by = 'email'){
 		if($what == '') return false;
-		$q = "SELECT *, refererID(ID) as refererID FROM ".self::TABLE_NAME." WHERE `".$by."` = '$what'";
+		$q = "SELECT
+		f.*,
+		ss.shopslug as shopslug,
+		refererID(f.ID) as refererID
+		FROM ".self::TABLE_NAME." as f
+		LEFT OUTER JOIN shop_settings as ss ON ss.author_id = f.ID
+		WHERE 1=1";
+
+		if ($by == 'shopslug') {
+			$q .= " and ss.shopslug = '$what'";
+		} else {
+			$q .= " and f.".$by." = '$what'";
+		}
 
 		extract($this->db->q($q));
 
@@ -883,6 +876,7 @@ class Users
 		if ( !$data['ID'] ) {
 			return false;
 		}
+
 
 		$details = $this->db->query($q = "SELECT nev, ertek FROM ".self::TABLE_DETAILS_NAME." WHERE fiok_id = ".$data['ID'].";");
 
@@ -897,6 +891,28 @@ class Users
 
 		$data = array_merge($data, $detailslist);
 
+		if ($data['shopslug']) {
+			$data['shop'] = $this->getWebshopSettings( $data['shopslug'] );
+		}
+
+		return $data;
+	}
+
+	public function getWebshopSettings( $slug )
+	{
+		$q = "SELECT * FROM shop_settings	WHERE shopslug = :slug";
+
+		$data = $this->db->squery( $q, array('slug' => $slug));
+
+		if ($data->rowCount() == 0) {
+			return array();
+		}
+
+		$data = $data->fetch(\PDO::FETCH_ASSOC);
+
+		if ($data) {
+			$data['nyitvatartas'] = json_decode($data['nyitvatartas'], true);
+		}
 		return $data;
 	}
 

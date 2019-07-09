@@ -38,7 +38,11 @@
                       <?php elseif($this->category->getName() != ''): ?>
                         <h1><?=$this->category->getName()?></h1>
                       <?php else: ?>
-                        <h1>Termékek</h1>
+                        <?php if ($this->shopauthor['shop']): ?>
+                          <h1><span class="shop"><?=$this->shopauthor['shop']['shopnev']?></span> termékei</h1>
+                        <?php else: ?>
+                          <h1>Termékek</h1>
+                        <?php endif; ?>
                         <?php if (isset($this->searched_by)): ?>
                           <div class="search-for">
                            <i class="fa fa-search"></i> Keresés, mint: <?php foreach ($this->searched_by as $s): ?>
@@ -47,16 +51,19 @@
                           </div>
                         <?php endif; ?>
                       <?php endif; ?>
-                      <?php $navh = '/termekek/'; ?>
+                      <?php $navh = '/webshop/'; ?>
                       <ul class="cat-nav">
                         <li><a href="/"><i class="fa fa-home"></i></a></li>
                         <li><a href="<?=$navh?>">Webshop</a></li>
+                        <?php if ($this->shopauthor['shop']): ?>
+                        <li><a href="<?=$navh?><?=$this->shopauthor['shop']['shopslug']?>"><?=$this->shopauthor['shop']['shopnev']?></a></li>
+                        <?php endif; ?>
                         <?php if ($this->myfavorite): ?>
                         <li>Kedvencek</li>
                         <?php endif; ?>
                         <?php
                         foreach ( $this->cat_nav as $nav ): $navh = \Helper::makeSafeUrl($nav['neve'],'_-'.$nav['ID']); ?>
-                        <li><a href="/termekek/<?=$navh?>"><?php echo $nav['neve']; ?></a></li>
+                        <li><a href="/webshop/<?=$navh?>"><?php echo $nav['neve']; ?></a></li>
                         <?php endforeach; ?>
                       </ul>
                       <div id="cart-msg"></div>
