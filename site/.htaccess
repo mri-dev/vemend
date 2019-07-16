@@ -33,13 +33,13 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
-RewriteRule ^webshop/boltok(/)?$ index.php?tag=termekek&boltlist=1 [QSA,L]
+RewriteRule ^webshop/boltok(/)?$ index.php?tag=boltok&boltlist=1 [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
-RewriteRule ^webshop/([0-9a-zA-Z_-]+)$ index.php?tag=termekek&listbyauthor=$1 [QSA,L]
+RewriteRule ^webshop/([0-9a-zA-Z_-]+)(/)?([0-9+])?$ index.php?tag=termekek&listbyauthor=$1&page=$3 [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

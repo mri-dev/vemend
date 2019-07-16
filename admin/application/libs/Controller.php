@@ -88,6 +88,29 @@ class Controller {
             'placeholder' => 'Keresés...',
             'url' => '/cikkek/'
           );
+          // Webshop kereső controller
+          if ( rtrim($_GET['tag'],'/') == 'termekek' || strpos($_GET['tag'],'termek/') !== false )
+    			{
+            $xservuri = explode("?", $_SERVER['REQUEST_URI']);
+            $searchercontrol = array(
+              'placeholder' => 'Keresés a termékekben...',
+              'url' => $xservuri[0]
+            );
+
+            if (strpos($_GET['tag'],'termek/') !== false) {
+              $xservuri[0] = ltrim($xservuri[0], "/");
+              $xservuri[0] = rtrim($xservuri[0], "/");
+              //var_dump(count($xservuritemp));
+              $slastrimuri = explode("/", $xservuri[0]);
+              unset($slastrimuri[count($slastrimuri)-1]);
+              $slastrimuri = implode("/",$slastrimuri);
+
+              if ($slastrimuri) {
+                $searchercontrol['url'] = '/'.$slastrimuri;
+              }
+            }
+    			}
+
           $this->out('searchercontrol', $searchercontrol);
 
           // Only admin

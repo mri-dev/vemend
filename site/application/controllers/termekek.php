@@ -18,7 +18,6 @@ class termekek extends Controller {
 				$title = 'Kedvenc termékeim';
 				$this->out( 'myfavorite', $myfavorite );
 			}
-
 			// Template
 			$temp = new Template( VIEW . 'templates/' );
 			$this->out( 'template', $temp );
@@ -80,6 +79,13 @@ class termekek extends Controller {
 				$order['how'] 	= $xord[1];
 			}
 
+			$current_page = Helper::currentPageNum();
+
+			if ( !empty($_GET['listbyauthor']) && !empty($_GET['page']) )
+			{
+				$current_page = (int)$_GET['page'];
+			}
+
 			$arg = array(
 				'filters' 	=> $filters,
 				'paramfilters' 	=> $paramfilters,
@@ -87,7 +93,7 @@ class termekek extends Controller {
 				'meret' 	=> $_GET['meret'],
 				'order' 	=> $order,
 				'limit' 	=> 30,
-				'page' 		=> Helper::currentPageNum(),
+				'page' 		=> $current_page,
 				'favorite' => $myfavorite
 			);
 
@@ -95,6 +101,7 @@ class termekek extends Controller {
 				$arg['author'] = $_GET['listbyauthor'];
 				$shopauthor = $this->User->get(array('user' => $arg['author'], 'userby' => 'shopslug'));
 				if ($shopauthor) {
+					$title = $shopauthor['shop']['shopnev'].' termékei';
 					$this->out('shopauthor', $shopauthor);
 				}
 			}
@@ -156,16 +163,28 @@ class termekek extends Controller {
 			) ))->getLiveviewedList( \Helper::getMachineID(), 5, $arg );
 			$this->out( 'live_products_list', $live_products );
 
-
+			/**
+			* Pagination / Navigator
+			**/
 			$get = $_GET;
 			unset($get['tag']);
+			unset($get['listbyauthor']);
+			unset($get['page']);
 			$get = http_build_query($get);
 			$this->out( 'cget', $get );
+
+			$navroot = '/'.__CLASS__.'/'.$this->view->gets[1].($this->view->gets[2] ? '/'.$this->view->gets[2] : '/-');
+
+			if ( !empty($_GET['listbyauthor']) )
+			{
+				$navroot = '/webshop/'.$_GET['listbyauthor'];
+			}
+
 			$this->out( 'navigator', (new Pagination(array(
 				'class' => 'pagination pagination-sm center',
 				'current' => $products->getCurrentPage(),
 				'max' => $products->getMaxPage(),
-				'root' => '/'.__CLASS__.'/'.$this->view->gets[1].($this->view->gets[2] ? '/'.$this->view->gets[2] : '/-'),
+				'root' => $navroot,
 				'after' => ( $get ) ? '?'.$get : '',
 				'item_limit' => 12
 			)))->render() );

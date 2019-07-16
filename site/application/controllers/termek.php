@@ -17,9 +17,9 @@ class termek extends Controller{
 
 			$product =  $products->get( Product::getTermekIDFromUrl() );
 			$product['links'] = $products->getProductLinksFromStr($product['linkek']);
-
+			$this->out( 'shopauthor', array('shop' => $product['ws']));
 			$this->out( 'product', $product );
-			$this->out( 'slideshow', $this->Portal->getSlideshow( $product['nev'] ) );
+			//$this->out( 'slideshow', $this->Portal->getSlideshow( $product['nev'] ) );
 
 
 			// Nincs kép a termékről - átirányítás
