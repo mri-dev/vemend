@@ -684,7 +684,7 @@ class Products
 			}
 
 			if ($author_id != 0)
-			{				
+			{
 				$add = " and p.author = ".$author_id." ";
 				$whr .= $add;
 				$size_whr .= $add;

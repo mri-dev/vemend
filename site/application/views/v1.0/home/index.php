@@ -309,7 +309,7 @@
       </div>
     </div>
   </div>
-  <?php if ($this->show_webshop): ?>
+  <?php if ($this->show_webshop && $this->products->getItemNumbers() != 0): ?>
   <div class="content-wrapper webshop">
     <div class="pw">
       <div class="webshop">
@@ -321,20 +321,26 @@
             Webshop ajánlatok
           </div>
           <div class="desc">
-            Oldalunkon jelenleg 0 db termék közül tud választani.
+            Oldalunkon jelenleg <?=$this->products->getItemNumbers()?> db termék közül tud választani.
           </div>
           <div class="webshopnavbar">
             <div class="wrapper">
               <div class="buttons">
                 <div class="fresh current">
-                  <a href="/webshop/termekek/?order=fresh&orderby=ASC"><i class="fa fa-clock-o"></i> Legújabb</a>
+                  <a href="/webshop/?order=fresh&orderby=ASC"><i class="fa fa-clock-o"></i> Legújabb</a>
                 </div>
                 <div class="popular">
-                  <a href="/webshop/termekek/?order=popular&orderby=ASC"><i class="fa fa-star"></i> Legnépszerűbb</a>
+                  <a href="/webshop/?order=popular&orderby=ASC"><i class="fa fa-star"></i> Legnépszerűbb</a>
                 </div>
-                <div class="total">
-                  <a href="/webshop/"><i class="fa fa-archive"></i> Összes webshop</a>
-                </div>
+                <?php if (false): ?>
+                  <div class="total">
+                    <a href="/webshop/"><i class="fa fa-archive"></i> Összes webshop</a>
+                  </div>
+                <?php else: ?>
+                  <div class="total">
+                    <a href="/webshop/"><i class="fa fa-archive"></i> Összes termék</a>
+                  </div>
+                <?php endif; ?>
               </div>
             </div>
           </div>

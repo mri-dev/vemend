@@ -105,7 +105,7 @@ class home extends Controller{
 
 
 			$arg = array(
-				'limit' 	=> 2
+				'limit' => 4
 			);
 
 			$products = (new Products( array(

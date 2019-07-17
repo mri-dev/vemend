@@ -16,6 +16,9 @@
       <div class="phone">
         <?=$this->shopauthor['shop']['telefon']?>
       </div>
+      <div class="ws">
+        <a href="<?=$this->shopauthor['shop']['shopurl']?>">Összes termék</a>
+      </div>
     </div>
     <div class="opens">
       <h4>Nyitva tartás</h4>

@@ -145,7 +145,7 @@ class Controller {
           $this->out( 'templates', $templates );
           $this->out( 'highlight_text', $this->Portal->getHighlightItems() );
           $this->out( 'slideshow', $this->Portal->getSlideshow() );
-          $showwebshop = false;
+          $showwebshop = true;
           if (isset($_COOKIE['showwebshop'])) {
             $showwebshop = true;
           }
